@@ -58,6 +58,7 @@ Draws an elliptical arc from the current point.
 | bgcolor="white" | '''large'''
 |}
 </TD><TD WIDTH=25% VALIGN=MIDDLE>
+
 <pre>
 pen yellow
 line-width 3
@@ -66,12 +67,13 @@ shape [
    arc 300x200 120 50 0
 ]
 </pre>
+
 </TD><TD WIDTH=30% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/SARC-1.png|200px]]
 </TD></TR></TABLE>
 
 <p>Set SWEEP to draw arcs in a "positive-angle" direction:</p>
-<code><pre>
+
 <pre>
 pen yellow
 line-width 3
@@ -80,12 +82,12 @@ shape [
 	arc 300x200 120 50 0 sweep
 ]
 </pre>
-</pre></code>
+
 [[images/SARC-2.png|200px]]
 
 <br>
 <p>Set LARGE for arc sweeps greater than 180°:</p>
-<code><pre>
+
 <pre>
 pen yellow
 line-width 3
@@ -94,13 +96,13 @@ shape [
 	arc 300x200 120 50 0 sweep large
 ]
 </pre>
-</pre></code>
+
 [[images/SARC-3.png|ARC example 3]]
 
 <br>
 
 <p>More complex usage of '''arc''':</p>
-<code><pre>
+
 <pre>
 pen yellow
 line-width 3
@@ -118,12 +120,12 @@ shape [
 	move 0x0 
 ]
 </pre>
-</pre></code>
+
 [[images/SARC-4.png|ARC example 4]]
 
 <br>
 <p>Same complex example but with relative positioning commands:</p>
-<code><pre>
+
 <pre>
 pen red
 line-width 3
@@ -142,7 +144,7 @@ shape [
 	move 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/SARC-5.png|ARC example 5]]
 
 <br>
@@ -157,7 +159,7 @@ This command has no arguments.
 <p>In some case it is easier to use the CLOSE command as a shortcut instead of calculating the closing lines.</p>
 
 <p>This is without CLOSE commands:</p>
-<code><pre>
+
 <pre>
 line-width 3
 pen yellow
@@ -170,12 +172,13 @@ shape [
 	line 200x160 200x0 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/CLOSE-1.png|CLOSE example 1]]
 
 <br>	
 <p>And here with CLOSE commands:</p>
 <code><pre>	
+
 <pre>
 line-width 3
 pen yellow
@@ -190,7 +193,7 @@ shape [
 	line 200x160 200x0 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/CLOSE-2.png|CLOSE example 2]]
 
 <br>
@@ -233,7 +236,7 @@ the current point. (If there is no previous curve command,
 the first control point is the current point.)"</p>
 
 <p>Simple example:</p>
-<code><pre>
+
 <pre>
 line-width 3
 pen yellow
@@ -244,12 +247,13 @@ shape [
 	move 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/CURV-1.png|CURV example 1]]
 
 <br>	
 <p>Same example but with relative positioning commands:</p>
 <code><pre>	
+
 <pre>
 line-width 3
 pen red
@@ -260,7 +264,7 @@ shape [
 	move 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/CURV-2.png|CURV example 2]]
 
 <br>
@@ -304,7 +308,7 @@ Draws a cubic Bézier curve.
 <p>A cubic Bézier curve is defined by a start point, an end point,
 and two control points.</p>
 
-<code><pre>
+
 <pre>
 line-width 3
 pen yellow
@@ -314,12 +318,13 @@ shape [
 	move 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/SCURVE-1.png|CURVE example 1]]
 
 <br>	
 <p>Same example but with relative positioning commands:</p>
 <code><pre>	
+
 <pre>
 line-width 3
 pen red
@@ -328,7 +333,7 @@ shape [
 	move 0x0
 ]
 </pre>
-</pre></code>
+
 [[images/SCURVE-2.png|CURVE example 2]]
 
 <br>
@@ -350,10 +355,11 @@ Draws a horizontal line from the current point.
 |}
 <br>'''Notes and Examples'''
 <p>Using absolute coordinates:</p>
-<code><pre>
+
 pen yellow
 line-width 4
 shape [
+
 <pre>
 move 100x100
 hline 300
@@ -362,16 +368,18 @@ hline 250
 move 100x200
 hline 200
 </pre>
+
 ]
-</pre></code>
+
 [[images/HLINE-1.png|HLINE example 1]]
 
 <br>
 <p>Using relative coordinates:</p>
-<code><pre>
+
 pen red
 line-width 4
 shape [
+
 <pre>
 move 100x100
 'hline 200
@@ -380,8 +388,9 @@ move 100x100
 'move -150x50
 'hline 100
 </pre>
+
 ]
-</pre></code>
+
 [[images/HLINE-2.png|HLINE example 2]]
 
 <br>
@@ -423,32 +432,36 @@ Draws a line from the current point through the given points,	the last of which 
 |}
 <br>'''Notes and Examples'''
 <p>Using absolute coordinates:</p>
-<code><pre>
+
 pen yellow
 line-width 4
 shape [
+
 <pre>
 move 50x50
 line 300x120 50x120 300x50
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/SLINE-1.png|LINE example 1]]
 
 <br>
 <p>Using relative coordinates:</p>
-<code><pre>
+
 pen red
 line-width 4
 shape [
+
 <pre>
 move 50x50
 move 50x50 'line 250x70 -250x0 250x-70
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/SLINE-2.png|LINE example 2]]
 
 <br>
@@ -476,48 +489,56 @@ location.</p>
 from being drawn as a closed polygon.</p>
 
 <p>Note: Every path defined in SHAPE block is automatically closed. To disable the auto-close feature just put at the end of the SHAPE block: '''move 0x0'''</p>
-<code><pre>
+
 line-width 4
 pen red
 shape [
+
 <pre>
 move 100x100
 line 20x20 150x50
 move 0x0
 </pre>
+
 ]
 pen blue
 shape [
+
 <pre>
 move 100x200
 line 20x120 150x150
 </pre>
+
 ]
-</pre></code>
+
 [[images/MOVE-1.png|MOVE example 1]]
 
 <br>
 <p>Using relative coordinates for the second shape:</p>
-<code><pre>
+
 line-width 4
 pen red
 shape [
+
 <pre>
 move 100x100
 line 20x20 150x50
 move 0x0
 </pre>
+
 ]
 pen blue
 shape [
+
 <pre>
 move 100x100
 'move 0x100
 'line -80x-80 130x30
 'move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/MOVE-2.png|MOVE example 2]]
 
 <br>
@@ -542,34 +563,38 @@ Smooth '''QCURVE''' command shortcut.
 <p>See: http://www.w3.org/TR/SVG11/paths.html and CURV</p>
 
 <p>Using absolute coordinates:</p>
-<code><pre>
+
 pen yellow
 line-width 4
 shape [
+
 <pre>
 move 0x150
 qcurve 100x250 200x150
 qcurv 400x150
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/QCURV-1.png|QCURV example 1]]
 
 <br>
 <p>Using relative coordinates:</p>
-<code><pre>
+
 pen red
 line-width 4
 shape [
+
 <pre>
 move 0x150
 'qcurve 100x100 200x0
 'qcurv 200x0
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/QCURV-2.png|QCURV example 2]]
 
 <br>
@@ -609,32 +634,36 @@ Draws quadratic Bézier curve.
 point, and one control point.</p>
 
 <p>Using absolute coordinates:</p>
-<code><pre>
+
 pen yellow
 line-width 4
 shape [
+
 <pre>
 move 100x50
 qcurve 200x150 300x50
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/QCURVE-1.png|QCURVE example 1]]
 
 <br>
 <p>Using relative coordinates:</p>
-<code><pre>
+
 pen red
 line-width 4
 shape [
+
 <pre>
 move 100x50
 'qcurve 100x100 200x0
 move 0x0
 </pre>
+
 ]
-</pre></code>
+
 [[images/QCURVE-2.png|QCURVE example 2]]
 
 <br>
@@ -656,32 +685,36 @@ Draws a vertical line from the current point.
 |}
 <br>'''Notes and Examples'''
 <p>Using absolute coordinates:</p>
-<code><pre>
+
 pen yellow
 line-width 4
 shape [
+
 <pre>
 move 100x100  vline 300
 move 150x100  vline 250
 move 200x100  vline 200
 </pre>
+
 ]
-</pre></code>
+
 [[images/VLINE-1.png|VLINE example 1]]
 
 <br>
 <p>Using relative coordinates:</p>
-<code><pre>
+
 pen red
 line-width 4
 shape [
+
 <pre>
 move 100x100   'vline 200
 'move 50x-200  'vline 150
 'move 50x-150  'vline 100
 </pre>
+
 ]
-</pre></code>
+
 [[images/VLINE-2.png|VLINE example 2]]
 
 <br>

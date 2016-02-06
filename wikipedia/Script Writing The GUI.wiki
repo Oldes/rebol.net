@@ -11,9 +11,11 @@ VID is Rebol's Visual Interface Dialect. A dialect is an extension of the Rebol 
 GUI's are created by specifying a series of faces and their attributes.
 The script to the right illustrates the general syntax of a face written with the VID dialect:
 </TD><TD>
+
 <pre>
 ''variable: face inline-options'' OPTIONS ''options'' '' actions''
 </pre>
+
 </TD></TR>
 </TABLE>
 <TABLE style="color:green; cellpadding="20" cellspacing="0" border="0" width=100%>
@@ -53,9 +55,11 @@ Here are some examples to illustrate how the syntax may be applied:
 
 Just to provide a simple starting point, here's a GUI that consists of two buttons:
 <TABLE style="color:green; background-color:#ffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
+
 <pre>
 <TD WIDTH=50%>
 </pre>
+
 [[images/Gui-basics-buttons.jpg|No Description]]
 
 Rebol [ ]
@@ -64,6 +68,7 @@ Rebol [ ]
 ::button "Rebol" browse http://www.rebol.com
 ::button "Close" close
 :]
+
 <pre>
 </TD>
 <TD align=center valign=MIDDLE>
@@ -127,6 +132,7 @@ For the sake of illustration, let's toss in a few more faces and their styles to
 :::button "Cancel" close
 ::]
 :]
+
 <pre>
 </TD>
 <TD align=center valign=MIDDLE>[[images/Gui-basics-survey2.jpg|216px 221px]]
@@ -178,6 +184,7 @@ view [
 :] options [spacer: -3x-3]
 ]
 </TD>
+
 <pre>
 <TD align=center valign=MIDDLE>[[images/Gui-basics-test-panel2.jpg|298px 393px]]
 </pre>

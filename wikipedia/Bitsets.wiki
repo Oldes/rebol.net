@@ -204,18 +204,22 @@ The only one missing feature is a fast way to enumerate all stored integers.
 i can do this:
 
 repeat n 65536 [
+
 <pre>
 if find Index n - 1 [print n - 1]
 </pre>
+
 ]
 
 But it's slow.
 We should have a thing like:
 
 foreach int Index [
+
 <pre>
 print int
 </pre>
+
 ]
 
 Any idea ? [[User:Steeve|Steeve]] 09:10, 17 January 2008 (EST)

@@ -67,6 +67,7 @@ But let us do a careful study of what ''actually'' happens during an assignment.
 >> foo
 == 10
 </pre>
+
 </pre>
 
 SET-WORD! is an abstract symbol type, that the parser ascribes to any legal word identifier which has a colon at the end.  While the DO dialect has chosen to interpret a SET-WORD! followed by an expression as an assignment, other dialects can ascribe arbitrary meaning to such tokens.
@@ -164,6 +165,7 @@ bar
 >> print "Hello World"
 Hello World
 </pre>
+
 </pre>
 
 You can imagine that this flexibility affords significant power, although the potential for redefining the interpreter in a way that could seriously confuse things.  The self-modifying character is something like a game of [http://en.wikipedia.org/wiki/Nomic Nomic], and much like in Nomic there are tools to help make parts of the system immutable.  (See for instance PROTECT.)
@@ -252,6 +254,7 @@ b: none
 [a: 10 b: none none]
 == [a: 10 b: none none]
 </pre>
+
 </pre>
 
 :''Note: Since this can leak if you have a static specification that you reuse several times in the same function, the behavior is under reconsideration for R3.  See the [[Talk:Scoping in Rebol|Talk Page]]''
@@ -329,6 +332,7 @@ global foo
 >> print bar
 local bar
 </pre>
+
 </pre>
 
 It is relatively easy to add a new SET-WORD! to the body of a function that one intends to be local and forget to add it to the /LOCAL list.  It's also easy to forget to remove a local after a SET-WORD! has been deleted or renamed.
@@ -378,6 +382,7 @@ global foo
 >> print bar
 global bar
 </pre>
+
 </pre>
 
 Though it's only one "T" of difference, it has a significant effect&mdash;and will likely become the preferred option for those writing functions where you don't need more exact control over which words are declared as local variables. Sometimes you don't want to collect all of the set-words in a function, such as in functions that build objects. You can also specify locals directly with functions created with FUNCT if you need to, which happens when you assign local variables using methods other than with set-words, such as with certain PARSE actions. FUNC also does less work at creation time, so it's faster.

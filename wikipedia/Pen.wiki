@@ -26,7 +26,7 @@ Sets the color or image for outline rendering.
 <br>'''Notes and Examples'''
 <p>The colors can include an alpha channel value for transparency.</p>
 <p>Setting '''pen''' to '''off''' will disable the pen color to fully transparent.</p>
-<code><pre>
+
 line-width 3
 pen yellow
 box 20x20 200x200
@@ -36,7 +36,7 @@ box 50x50 250x250
 pen logo.gif
 fill-pen off
 box 100x100 300x300
-</pre></code>
+
 [[images/PEN-1.png|PEN example 1]]
 
 <br>

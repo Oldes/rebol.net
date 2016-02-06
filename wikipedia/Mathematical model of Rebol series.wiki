@@ -13,26 +13,35 @@ This article:
 <pre>
 S datatype
 </pre>
+
 is one of the series! datatypes
+
 <pre>
 S displacement
 </pre>
+
 is an integer value
+
 <pre>
 S payload
 </pre>
+
 is a payload.
 
 Series! datatypes are: string!, binary!, block!, ...
 
 '''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>
+
 <pre>
 D t size
 </pre>
+
 is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>
+
 <pre>
 D t i
 </pre>
+
 is a Rebol value.
 
 Note that <code>N = 0</code> is allowed, in which case the payload size is 0 and the payload is empty. Note also that payloads depend on execution time, i.e., they can change in time.
@@ -50,10 +59,13 @@ The <code>at-head?</code> function is a function accepting a Rebol series <code>
 <pre>
 (at-head? S) = #[true]
 </pre>
+
 , if <code>(S displacement) = 0</code>
+
 <pre>
 (at-head? S) = #[false]
 </pre>
+
 , if <code>(S displacement) <> 0</code>
 
 Tests suggest that this model matches the <code>head?</code> function defined in the <code>rebol/version == 2.7.8.3.1</code> interpreter. The <code>at-head?</code> name has been chosen just for compatibility with the function naming convention in the subsequent cases.
@@ -79,10 +91,13 @@ The <code>pre-head?</code> function is a function accepting a Rebol series <code
 <pre>
 (pre-head? S) = #[true]
 </pre>
+
 , if <code>S displacement</code> is negative
+
 <pre>
 (pre-head? S) = #[false]
 </pre>
+
 , if <code>S displacement</code> is nonnegative
 
 This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct such series, as this example demonstrates:
@@ -109,10 +124,13 @@ The <code>at-tail?</code> function is a function accepting a Rebol series <code>
 <pre>
 (at-tail? S) = #[true]
 </pre>
+
 , if <code>(S displacement) = (do S payload t size)</code>
+
 <pre>
 (at-tail? S) = #[false]
 </pre>
+
 , if <code>(S displacement) <> (do S payload t size)</code>
 
 This function does not exist in the current interpreter. It can be defined as a mezzanine:
@@ -147,10 +165,13 @@ The <code>past-tail?</code> function is a function accepting a Rebol series <cod
 <pre>
 (past-tail? S) = #[true]
 </pre>
+
 , if <code>(S displacement) > (do S payload t size)</code>
+
 <pre>
 (past-tail? S) = #[false]
 </pre>
+
 , if <code>(S displacement) <= (do S payload t size)</code>
 
 This function does not exist in the current interpreter, while the interpreter can construct such series as this example demonstrates:
@@ -179,10 +200,13 @@ The <code>in-bounds?</code> function is a function accepting a Rebol series <cod
 <pre>
 (in-bounds? S) = #[true]
 </pre>
+
 , if <code>((S displacement) >= 0) and ((S displacement) <= (do S payload t size))</code>
+
 <pre>
 (in-bounds? S) = #[false]
 </pre>
+
 otherwise.
 
 This function is not defined in the current interpreter, but it can be defined as a mezzanine:
@@ -203,14 +227,19 @@ The <code>constrain</code> function is a function accepting a Rebol series <code
 <pre>
 T = head S
 </pre>
+
 , if <code>pre-head? S</code>
+
 <pre>
 T = S
 </pre>
+
 , unless <code>(pre-head? S) or (past-tail? S)</code>
+
 <pre>
 T = tail S
 </pre>
+
 otherwise.
 
 This function can be defined as a mezzanine:
@@ -517,8 +546,11 @@ The <code>curr</code> function is a function accepting a Rebol series <code>S</c
 <pre>
 (curr S) = (do S payload t S displacement)
 </pre>
+
 , if <code>in-bounds? S</code>
+
 <pre>
 (curr S) = #[none]
 </pre>
+
 otherwise.

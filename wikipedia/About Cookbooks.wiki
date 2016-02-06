@@ -22,7 +22,11 @@ The list of Cookbooks is avaliable [[Cookbooks|here]].
 == Making a Recipe ==
 
 For a Cookbook recipe, simply create a page with any title in DocBase. Add the template
-  <nowiki>{{Cookbook | title=Short Title | author=Name | level=[1, 2 or 3] | category=Category}}</nowiki>
+
+<pre>
+{{Cookbook | title=Short Title | author=Name | level=[1, 2 or 3] | category=Category}}
+</pre>
+
 at the top of the document. Then add the document page name in the [[Cookbooks|Cookbook list]] and then link to it from there.
 
 To initiate a new DocBase page, the easiest way is to type your preferred page title into the Search field of the DocBase Navigation section and press Go.
@@ -35,17 +39,20 @@ While not totally necessary, cookbooks should start with the <nowiki>{{Cookbook}
 *category should be Tip, Code, Networking, Data Processing etcetera.  Defaults to '''Code'''.
 
 ===Example 1===
-<nowiki>
+
+<pre>
 {{Cookbook|title=Handling Binary Data|level=3|category=Code}}
-</nowiki>
+</pre>
 
 Would produce
 {{Cookbook|title=Handling Binary Data|level=3|category=Code}}
 
 ===Example 2===
-<nowiki>
+
+<pre>
 {{Cookbook|title=Client Server|author=Luke Lakeswimmer|level=2|category=Networking}}
-</nowiki>
+</pre>
+
 produces
 {{Cookbook|title=Client Server|author=Luke Lakeswimmer|level=2|category=Networking}}
 

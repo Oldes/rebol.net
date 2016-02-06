@@ -280,9 +280,11 @@ As a corollary to this principle we obtain
 '''Observation''' (Leibniz's law): The '''identical?''' function has to be the finest equivalence in Rebol.
 
 '''Proof:''' We demonstrated that '''identical?''' has to be an equivalence. Let's have an equivalence '''eq''' and a block '''block''' having two entries for which the expression
+
 <pre>
 identical? first block second block
 </pre>
+
 yields '''true'''. If the '''identical?''' function is the Rebol identity, we know that the first and second entries of the block refer to one Rebol value. According to the principle of indiscernibility of identicals the '''eq''' equivalence cannot discern <code>first block</code> from <code>second block</code>, which proves that '''identical?''' is finer or as fine as '''eq''' '''q.e.d.'''
 
 We use Leibniz's law to define
@@ -337,9 +339,11 @@ equal-type? first block second block
 yields '''false'''.
 
 If we define
+
 <pre>
 block: [a a:]
 </pre>
+
 then
 
 <pre>
@@ -400,6 +404,7 @@ new-line-attribute? one-nl ; == true
 , i.e., we successfully demonstrated that there are values with the new-line attribute set to '''false''' as well as values with the attribute set to '''true'''.
 
 Now we demonstrate that molding a block having an entry referring to the '''one-nl''' value creates a string containing line-break
+
 <pre>
 mold head insert copy [] one-nl ; == "[^/    1^/]"
 </pre>
@@ -458,19 +463,25 @@ apply/only :f1 arguments: [1] ; == 2
 '''Note:''' we use the <code>/only</code> refinement of the '''apply''' function to make sure the function obtains the arguments contained in the block "as is".
 
 If we examine the block of '''arguments''' after the call, we see that it looks unchanged, which suggests that the argument value hasn't been modified by '''f1'''
+
 <pre>
 arguments ; == [1]
 </pre>
+
 Let's see another example
+
 <pre>
 f2: function [i [integer!]] [i + 1]
 f2 1 ; == 2
 </pre>
+
 Now again, one may be tempted to say that '''f2''' changed the argument value, but when verified
+
 <pre>
 apply/only :f2 arguments: [1] ; == 2
 arguments ; == [1]
 </pre>
+
 one observes that the block containing the argument value remains unchanged.
 
 Another function, for which a reader may not immediately know whether the function modifies its argument is the '''new-line-attribute''' function defined above. Let's check
@@ -1089,6 +1100,7 @@ same-series-references?: func [
 </pre>
 
 Let's check our previous finding:
+
 <pre>
 same-series-references? c 2 d 1 ; == true
 </pre>

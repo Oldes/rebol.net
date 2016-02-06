@@ -359,6 +359,7 @@ integer! decimal! percent! money! char! pair! tuple! time!
 |align="right"| -4.940'656'458'412'465'4E-324
 |align="right"| -4.940'656'458'412'465'4E-322%
 |}
+
 <pre>
 >> min-integer: to integer! #{8000 0000 0000 0000}
 == -9223372036854775808
@@ -524,6 +525,7 @@ img/alpha ;== #{00000000...
 </pre>
 
 Note: if you want to make image transparent use:
+
 <pre>
 img/alpha: 255
 </pre>
@@ -548,6 +550,7 @@ view layout [image img 200x80]
 [[images/Hello-world-encoded-as-an-image.png|No Description]]
 
 If you have raw RGBA binary data, you can create image! from it using:
+
 <pre>
 img: to image! #{FFFFFFC0000000C0}
 view layout [image img 200x100]
@@ -557,17 +560,23 @@ view layout [image img 200x100]
 
 Another note:
 In Rebol2 you have to use:
+
 <pre>
 view layout [image img]
 </pre>
+
 ... but in Rebol3 (alpha version) you can use just:
+
 <pre>
 view [image img]
 </pre>
+
 ... but it would be nice to have chance to do just:
+
 <pre>
 view img
 </pre>
+
 ... which is easy to add and it's already submited as a wish.
 
 ===map!===

@@ -29,6 +29,7 @@ These modes are implemented in the COPY API with two refinements:
 Here is a table of types copied by default on COPY/deep and MAKE object!:
 
 <TABLE BORDER="1" CELLPADDING="4" CELLSPACING="0">
+
 <pre>
 <TR>
 	<TD BGCOLOR="#99CCFF"><B>Datatype</B></TD>
@@ -95,6 +96,7 @@ Here is a table of types copied by default on COPY/deep and MAKE object!:
 	<TD>no</TD>
 </TR>
 </pre>
+
 </TABLE>
 
 ==Internal copy operations==

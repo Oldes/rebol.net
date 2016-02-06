@@ -45,17 +45,23 @@ Rebol is designed as a practical language. It has been notoriously difficult to 
 The PARSE dialect is an enhanced member of the family of Top-down parsing languages (TDPL family) including the [http://en.wikipedia.org/wiki/Top-down_parsing_language Top-down parsing language (TDPL)], the [http://en.wikipedia.org/wiki/Top-down_parsing_language#Generalized_TDPL Generalized top-down parsing language (GTDPL)] and the [http://en.wikipedia.org/wiki/Parsing_expression_grammar Parsing expression grammar (PEG)] and uses the same "ordered choice" parsing method as the other members of the family.
 
 The prioritization of the ordered choice (a.k.a. "alternative", but the "ordered choice" name is more appropriate since the order of rules matters) causes that the second choice in the
+
 <pre>
 ["a" | "ab"]
 </pre>
+
 rule never succeeds since the first one takes precedence. This causes the greediness of repetition operators, e.g.:
+
 <pre>
 repeated-rule: [any rule]
 </pre>
+
 has a recursive definition:
+
 <pre>
 repeated-rule: [rule repeated-rule | none]
 </pre>
+
 , which is greedy since the first choice always takes precedence when possible.
 
 There is one formal difference between PARSE and the other members of the TDPL family: All other TDPL family members succeed when the start rule succeeds. As opposed to that, for PARSE to succeed the RULES rule (which is the PARSE counterpart of TDPL family start rule) has to succeed and the final PARSE position has to be the end of the input. This property is essential. It's part of the basic purpose of PARSE, and has been for years. If you are only concerned about a section of the data and are using the return value of the PARSE function, you can put [to end] on the end of your start (RULES) rule.
@@ -313,9 +319,11 @@ Purpose: For block parsing, escapes values from the PARSE dialect. Semi-construc
 Importance: 
 *The PARSE dialect uses a range of terminal tokens, and those cannot be used as direct matches during block parsing. For example, if you write the numeral 1, it is considered a count parameter to the command that follows. A solution is to provide a general escape mechanism for matching literal tokens.
 *The great value of LIT is that a rule can directly match input tokens without evaluating a paren block (a production). Previously, you would have to write rules like this to do literal matching:
+
 <pre>
 set w set-word! (if w = to-set-word 'abc [...])
 </pre>
+
 *This variant is more flexible than the non-constructive one, which may require an enhancement later.
 
 Syntax:
@@ -328,14 +336,19 @@ The '''LIT block''' syntax can be used to match a sequence of values. A counterp
 
 Examples:
 *To match a [1 2] sequence:
+
 <pre>
 parse [1 2] [lit [1 2]]
 </pre>
+
 *To match a subblock:
+
 <pre>
 parse <nowiki>[[1]] [lit [[1]]]</nowiki>
 </pre>
+
 *To match a paren:
+
 <pre>
 parse [(1)] [lit [(1)]]
 </pre>
@@ -344,14 +357,19 @@ The '''LIT paren''' syntax is constructive. It evaluates the paren. The result i
 
 Examples:
 *To match 2:
+
 <pre>
 parse [2] [lit (1 + 1)]
 </pre>
+
 *To match a [1 2] sequence:
+
 <pre>
 parse [1 2] [lit (reduce [1 + 0 1 + 1])]
 </pre>
+
 *To match a paren:
+
 <pre>
 parse [(1)] [lit (lit (1))]
 </pre>
@@ -360,34 +378,49 @@ The '''LIT other''' syntax is for other cases. Non-constructive.
 
 Examples:
 *To match a value 1:
+
 <pre>
 lit 1
 </pre>
+
 *To match two values of 1:
+
 <pre>
 2 lit 1
 </pre>
+
 *To match a word:
+
 <pre>
 lit abc
 </pre>
+
 *To match a lit-word:
+
 <pre>
 lit 'abc
 </pre>
+
 *To match a set-word:
+
 <pre>
 lit abc:
 </pre>
+
 *To match a get-word:
+
 <pre>
 lit :abc
 </pre>
+
 *To match a path:
+
 <pre>
 lit a/b/c
 </pre>
+
 *To match a lit-path:
+
 <pre>
 lit 'a/b/c
 </pre>
@@ -403,20 +436,26 @@ Importance:
 *By not consuming input this would be a direct inversion of the rule.
 *Works as a look-ahead operation. PARSE, as a member of the TDPL family already has unlimited look-ahead capability. This operation allows even an inexperienced user to make use of it.
 *Replaces the tricky idiom (which proves, that the capability is already present in PARSE):
+
 <pre>
 [rule (cont: [end skip]) | (cont: none)] cont
 </pre>
 
 Explanation: Together with the AND operation this will make the Parse dialect directly compatible with the Parsing expression grammar. The behavior of this NOT operator is consistent with the other proposed basic operations of the TDPL family PARSE doesn't directly support yet:
 *Is consistent with the AND operation:
+
 <pre>
 [AND rule] = [NOT NOT rule]
 </pre>
+
 *Is consistent with the EITHER operation:
+
 <pre>
 [NOT rule] = [EITHER rule FAIL NONE]
 </pre>
+
 *Is consistent with itself:
+
 <pre>
 [NOT NOT NOT rule] = [NOT rule]
 </pre>
@@ -455,6 +494,7 @@ Syntax:
 *AND rule
 
 Notes: The recursion-safe idiom known to do the same is:
+
 <pre>
 [rule (cont: none) | (cont: [end skip])] [end skip] | cont
 </pre>
@@ -558,10 +598,13 @@ Importance:
 *Together with [[#FAIL|FAIL]] it allows direct usage of the GTDPL in PARSE.
 *Dynamic rules tend to be a tricky process to write and debug, not to mention the potential binding issues if they aren't done just right. The more language patterns we can recognize without dynamic rules, the better.
 *Replaces the idiom:
+
 <pre>
 [rule1 (cont: rule2) | (cont: rule3)] cont
 </pre>
+
 *This rule is not as important as the other proposed rules in this group ([[#FAIL|FAIL]], [[#NOT|NOT]], [[#AND|AND]]). Using the [[#NOT|NOT]] operator it can be replaced by a simple idiom:
+
 <pre>
 [rule1 rule2 | not rule1 rule3]
 </pre>
@@ -590,6 +633,7 @@ Importance:
 *Together with [[#FAIL|FAIL]] it allows direct usage of the GTDPL in PARSE.
 *Dynamic rules tend to be a tricky process to write and debug, not to mention the potential binding issues if they aren't done just right. The more language patterns we can recognize without dynamic rules, the better.
 *Replaces the idiom:
+
 <pre>
 [rule1 (cont: rule2) | (cont: rule3)] cont
 </pre>
@@ -620,9 +664,11 @@ Purpose: Deliberately cause the rule to fail and backtrack to the next alternati
 Importance:
 *This is helpful when you want more fine-grained control over your parse rules.
 *It would make the 
+
 <pre>
 end skip
 </pre>
+
 idiom used by advanced PARSE programmers available to regular programmers.
 *Compatible with the TDPL - allows direct usage of the TDPL in Parse.
 
@@ -682,17 +728,23 @@ With [[#NOT|NOT]] (Editor's Note: Peta's suggestion and my favorite), TO NOT and
 Editor's Note: With the same rules that would cause TO NOT to fail, the greediness of ANY will cause it to go into an endless loop, a common error in PARSE usage. That would be a good argument for a non-greedy or at least safe equivalent.
 
 However, TO NOT RULE isn't generally equivalent to ANY RULE, e.g.:
+
 <pre>
 to [not "ab"]
 </pre>
+
 isn't equivalent to
+
 <pre>
 any "ab"
 </pre>
+
 , since e.g.
+
 <pre>
 parse "ababab" [a position: (print ["success" index? position])]
 </pre>
+
 :the A: [TO [NOT "ab"]] rule would succeed reaching index 2 in the given string, while A: [ANY "ab"] would advance to the tail of the input.
 
 TO [NOT RULE | END] is equivalent to ANY [AND RULE SKIP].
@@ -1042,9 +1094,13 @@ The [http://www.rebol.org/view-script.r?script=use-rule.r USE-RULE function] def
 Notes: The rule argument to USE would likely need to be have BIND/copy applied, and only nested blocks and parens would be bound, just like with USE in Rebol. It is the initial rebinding that makes this multitasking-safe. We might be able to use the semantics of R3 function! contexts with a little memoization - the overhead should be compared to the BIND/copy overhead to see which is better. However, this would prevent the bound words from being used outside the extent of the USE operation.
 
 In Rebol 2 (and in the public Rebol 3 alpha from January 2008), the PARSE keywords can be used as variables without influencing the PARSE functionality, like here:
- <nowiki>rebol/version ; == 2.99.4.3.1
+
+<pre>
+rebol/version ; == 2.99.4.3.1
 parse [] b: [(end: 11) end (print [end same? bind? second b bind? 'end])]
-; 11 true</nowiki>
+; 11 true
+</pre>
+
 Similarly, the binding of the PARSE keywords does not change and does not influence the functionality, as can be proven too.
 
 ===IF (condition)===
@@ -1062,7 +1118,9 @@ The Rebol expression in the paren following the IF keyword is executed like any 
 
 Previously you had to do something like this:
 
-  <nowiki>(cont: unless condition [[end skip]]) cont</nowiki>
+<pre>
+(cont: unless condition [[end skip]]) cont
+</pre>
 
 Examples:
 
@@ -1238,6 +1296,7 @@ Notes:
 
 Examples:
 *Parsing a string in a block.
+
 <pre>
 parse [1 "abc" 2] [integer! and string! into [some alpha] integer!]
 </pre>

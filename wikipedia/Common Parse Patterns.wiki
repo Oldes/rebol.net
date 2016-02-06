@@ -131,6 +131,7 @@ Note that this code does not work properly if the text contains CRs. See notes a
 Also, if you put this in a function, make '''s''' a local variable.
 
 ==Match XML Opening and Closing Tags==
+
 <pre>
 open-tag: none
 close-tag: none

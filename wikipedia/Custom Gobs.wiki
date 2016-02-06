@@ -91,6 +91,7 @@ my-gob: make gob! [
 </pre>
 
 =Changes required in current Rebol version (A107) to make it work=
+
 <pre>
 Note: This is in a constent state of flux and for now is only intended as an example
       of what to expect, eventually.
@@ -121,6 +122,7 @@ Additionally, we could even support this for AGG rendering, allowing nice tricks
 *add a new entry in the '''''GOB_TYPES''''' enum:  '''''GOBT_CUSTOM'''''
 *define IS_GOB_CUSTOM(g)   (GOB_CONTENT(g) && GOB_TYPE(g) == GOBT_CUSTOM)
 *define the '''''gob_renderer''''' struct something like (its changing daily and is not up to date):
+
 <pre>
 struct gob_renderer {
     //*************** 
@@ -166,6 +168,7 @@ struct gob_renderer {
 
 ==agg_compo.cpp==
 *Adding a case within '''''compositor::cp_process_gobs()''''' to support the GOBT_CUSTOM gob type.
+
 <pre>
 case GOBT_CUSTOM:
     // call rendering hook here

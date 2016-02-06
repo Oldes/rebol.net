@@ -107,14 +107,19 @@
 <tr> 
 <th> error! </th> 
 <td> ** User error: ""
+
 <pre>
 </td>
 </pre>
+
 <td> ** User error: ""
+
 <pre>
 </td>
 </pre>
+
 <td> make error! [
+
 <pre>
 code: 800
 type: 'User
@@ -125,8 +130,10 @@ arg3: none
 near: none
 where: none
 </pre>
+
 ] </td> 
 <td> #[error! [
+
 <pre>
 code: 800
 type: User
@@ -137,11 +144,14 @@ arg3: #[none]
 near: #[none]
 where: #[none]
 </pre>
+
 ]] </td> 
 <td> ** User error: ""
+
 <pre>
 </td>
 </pre>
+
 </tr> 
 <tr> 
 <th> event! </th> 
@@ -308,29 +318,39 @@ where: #[none]
 <tr> 
 <th> object! </th> 
 <td> a: none
+
 <pre>
 b: none </td>
 </pre>
+
 <td>a: none
+
 <pre>
 b: none </td>
 </pre>
+
 <td> make object! [
+
 <pre>
 a: none
 b: none
 </pre>
+
 ] </td> 
 <td> #[object! [
+
 <pre>
 a: none
 b: none
 </pre>
+
 ]] </td> 
 <td> a: none
+
 <pre>
 b: none </td>
 </pre>
+
 </tr> 
 <tr> 
 <th> op! </th> 

@@ -19,9 +19,11 @@ Turns anti-aliasing on or off; it is on by default
 '''Anti-Alias On'''
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
+
 <pre>
 anti-alias on   line-width 10  circle 200x200 100
 </pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ANTI-ALIAS-2.png|200px 200px]]</TD>
 </TR></TABLE>
@@ -30,9 +32,11 @@ anti-alias on   line-width 10  circle 200x200 100
 '''Anti-Alias Off'''
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
+
 <pre>
 anti-alias off  line-width 10  circle 200x200 100
 </pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ANTI-ALIAS-1.png|200px 200px]]</TD>
 </TR></TABLE>
@@ -41,6 +45,7 @@ anti-alias off  line-width 10  circle 200x200 100
 The ANTI-ALIAS command can be used multiple times in DRAW block to easily switch between rendering modes.
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
+
 <pre>
 anti-alias off
 line-width 10
@@ -49,6 +54,7 @@ anti-alias on
 line-width 10
 circle 250x250 100
 </pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ANTI-ALIAS-3.png|200px 200px]]</TD>
 </TR></TABLE>

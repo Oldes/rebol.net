@@ -676,6 +676,7 @@ name-panel: group 2 [
 
 Scoping example:
 ﻿
+
 <pre>
 data-panel: group 1 [
   value1: field record [table1] ; would use value 1 in table 1

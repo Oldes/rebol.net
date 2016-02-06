@@ -19,6 +19,7 @@ print form blk
 >> tweet [Looks like it's dinner time!]
 Looks like it's dinner time!
 </pre>
+
 </pre>
 
 Note that it ''appeared'' to work pretty well.  Even though TIME! is defined in the DO dialect, it is perfectly acceptable to repurpose it in your own.  And "it's" is a legal identifier in Rebol.
@@ -93,6 +94,7 @@ Technically speaking, there is nothing ''wrong'' with this.  It allows the usual
 >> structuredDialogue/2/character
 == "Hamlet"
 </pre>
+
 </pre>
 
 But Rebol allows alternatives which liberate the dialect user from writing things that are quite so unnatural.  The following is also legitimate Rebol, and far more inviting to type in and read:

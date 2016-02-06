@@ -46,6 +46,7 @@ Adjusting Fonts in /View
 This is just a little tip from a while ago when I was having font display issues under Linux. The issues have gone away, but this tip still applies on any system where you don't care for the default fonts being used by Rebol/View.
 
 It's very easy, actually. Important customization rules are contained in your personal user.r file, located at ~/.rebol/view/user.r on Linux machines. Once you have some decent fonts installed, add the following code to your user.r file.
+
 <pre>
 if (not none? system/view) [
     system/view/screen-face/options: none
