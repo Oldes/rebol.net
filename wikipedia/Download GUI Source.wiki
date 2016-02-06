@@ -7,15 +7,15 @@ Here are the steps to obtain the current GUI source code:
 Now type this at the chat console:
 
 <pre>
-    >> 2586
-    R3/GUI/Source:
-    ...
-    >> get *
-    
-    >> 2656
-    R3/GUI/Source/styles-proto
-    ...
-    >> get *
+>> 2586
+R3/GUI/Source:
+...
+>> get *
+
+>> 2656
+R3/GUI/Source/styles-proto
+...
+>> get *
 </pre>
 
 Now, open the source dir:

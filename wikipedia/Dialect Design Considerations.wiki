@@ -24,20 +24,20 @@ Note that it ''appeared'' to work pretty well.  Even though TIME! is defined in 
 But there are problems:
 
 <pre>
-    ; Whitespace is collapsed
-    
-    >> tweet [Looks     like     it's    dinner    time!]
-    Looks like it's dinner time!
-    
-    ; Many tokens valid in strings can cause parser errors
-    
-    >> tweet [LOL :)]
-    ** Syntax error: invalid "word-get" -- ":"
-    ** Near: (line 1) tweet [LOL :)]
-    
-    >> tweet [4Chan is down.]
-    ** Syntax error: invalid "integer" -- "4Chan"
-    ** Near: (line 1) tweet [4Chan is down.]
+; Whitespace is collapsed
+
+>> tweet [Looks     like     it's    dinner    time!]
+Looks like it's dinner time!
+
+; Many tokens valid in strings can cause parser errors
+
+>> tweet [LOL :)]
+** Syntax error: invalid "word-get" -- ":"
+** Near: (line 1) tweet [LOL :)]
+
+>> tweet [4Chan is down.]
+** Syntax error: invalid "integer" -- "4Chan"
+** Near: (line 1) tweet [4Chan is down.]
 </pre>
 
 An additional issue is the technical limit on the number of unique words that the interpreter can support.  This number [http://stackoverflow.com/questions/1658062/in-rebol-is-it-possible-to-clean-up-some-global-words-from-memory has been steadily growing] in successive versions of Rebol, but treating a large body of text and names as words could exhaust the space.
@@ -47,35 +47,35 @@ An additional issue is the technical limit on the number of unique words that th
 If you are used to building domain-specific notations in systems like XML or JSON, you will probably gravitate toward dialects which have the user call out structure explicitly.  For instance, if you were implementing a dialect for plays your first approach might be:
 
 <pre>
-    structuredDialogue: [
-        [
-            character: "Polonius" 
-            action: none
-            text: "What is the matter, my lord?"
-        ] [
-            character: "Hamlet" 
-            action: none 
-            text: "Between who?"
-        ] [
-            character: "Polonius" 
-            action: none
-            text: "I mean, the matter that you read, my lord."
-        ] [
-            character: "Hamlet"
-            action: none
-            text: {Slanders, sir; for the satirical rogue says here that old men
-            have grey beards, that their faces are wrinkled, their eyes purging
-            thick amber and plum-tree gum, and that they have a plentiful
-            lack of wit, together with most weak hams; all which, sir, though
-            I most powerfully and potently believe, yet I hold it not honesty
-            to have it thus set down, for yourself, sir, shall grow old as I am, if
-            like a crab you could go backward.}
-        ] [
-            character: "Polonius"
-            action: "Aside"
-            text: "Though this be madness, yet there is method in't."
-        ]
+structuredDialogue: [
+    [
+        character: "Polonius" 
+        action: none
+        text: "What is the matter, my lord?"
+    ] [
+        character: "Hamlet" 
+        action: none 
+        text: "Between who?"
+    ] [
+        character: "Polonius" 
+        action: none
+        text: "I mean, the matter that you read, my lord."
+    ] [
+        character: "Hamlet"
+        action: none
+        text: {Slanders, sir; for the satirical rogue says here that old men
+        have grey beards, that their faces are wrinkled, their eyes purging
+        thick amber and plum-tree gum, and that they have a plentiful
+        lack of wit, together with most weak hams; all which, sir, though
+        I most powerfully and potently believe, yet I hold it not honesty
+        to have it thus set down, for yourself, sir, shall grow old as I am, if
+        like a crab you could go backward.}
+    ] [
+        character: "Polonius"
+        action: "Aside"
+        text: "Though this be madness, yet there is method in't."
     ]
+]
 </pre>
 
 Technically speaking, there is nothing ''wrong'' with this.  It allows the usual inspection that people have come to expect from structured data.
@@ -94,20 +94,20 @@ Technically speaking, there is nothing ''wrong'' with this.  It allows the usual
 But Rebol allows alternatives which liberate the dialect user from writing things that are quite so unnatural.  The following is also legitimate Rebol, and far more inviting to type in and read:
 
 <pre>
-    dialogue: [
-        Polonius: "What is the matter, my lord?"
-        Hamlet: "Between who?"
-        Polonius: "I mean, the matter that you read, my lord."
-        Hamlet:
-            {Slanders, sir; for the satirical rogue says here that old men
-            have grey beards, that their faces are wrinkled, their eyes purging
-            thick amber and plum-tree gum, and that they have a plentiful
-            lack of wit, together with most weak hams; all which, sir, though
-            I most powerfully and potently believe, yet I hold it not honesty
-            to have it thus set down, for yourself, sir, shall grow old as I am, if
-            like a crab you could go backward.}
-        Polonius: ("Aside") "Though this be madness, yet there is method in't."
-    ]
+dialogue: [
+    Polonius: "What is the matter, my lord?"
+    Hamlet: "Between who?"
+    Polonius: "I mean, the matter that you read, my lord."
+    Hamlet:
+        {Slanders, sir; for the satirical rogue says here that old men
+        have grey beards, that their faces are wrinkled, their eyes purging
+        thick amber and plum-tree gum, and that they have a plentiful
+        lack of wit, together with most weak hams; all which, sir, though
+        I most powerfully and potently believe, yet I hold it not honesty
+        to have it thus set down, for yourself, sir, shall grow old as I am, if
+        like a crab you could go backward.}
+    Polonius: ("Aside") "Though this be madness, yet there is method in't."
+]
 </pre>
 
 Here we see SET-WORD! being used to indicate the character who is about to speak.  If there is a character action, that is put inside of a PAREN! group.

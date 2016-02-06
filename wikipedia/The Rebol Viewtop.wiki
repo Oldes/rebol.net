@@ -44,13 +44,13 @@ The version of Rebol that includes GUI libraries has been historically called "R
 The viewtop is able to get its index of demos from any file or URL, however the default is:
 
 <pre>
-    >> viewtop http://rebol.com/index.r
+>> viewtop http://rebol.com/index.r
 </pre>
 
 By using an [http://stackoverflow.com/questions/1544974/rebol-and-unset-optional-parameter unset! optional parameter], it is possible to subvert Rebol's usual requirement that a function take a fixed number of parameters and merely type:
 
 <pre>
-    >> viewtop
+>> viewtop
 </pre>
 
 :''Note that this trick can only be used on the last operation in a series of commands, and is intended only for functions designed for usage in interactive mode!''

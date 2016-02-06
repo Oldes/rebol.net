@@ -22,28 +22,28 @@ It may be a surprise for many, but, actually, we don't even have to change the i
 To support the subpixel accuracy we can adjust the LOAD, MOLD, FORM functions to take the subpixel interpretation into account. This is how we can modify the LOAD function to accept two decimal coordinates X and Y for a pair:
 
 <pre>
-    ; this defines the interpretation (accuracy) of the pair:
-    subpixel-count: 65536
-    load-pair: func [
-    	{convert decimal coordinates to subpixels}
-    	x [number!]
-    	y [number!]
-    ] [
-    	return (x * subpixel-count + 0.5 * 1x0) + (y * subpixel-count + 0.5 * 0x1)
-    ]
-    mold-pair: func [
-    	{mold a subpixel accuracy pair to a "human readable" form}
-    	s [pair!] {a subpixel-accuracy pair}
-    ] [
-    	rejoin [round/to s/x / subpixel-count 0.000015 "x" round/to s/y / subpixel-count 0.000015]
-    ]
+; this defines the interpretation (accuracy) of the pair:
+subpixel-count: 65536
+load-pair: func [
+	{convert decimal coordinates to subpixels}
+	x [number!]
+	y [number!]
+] [
+	return (x * subpixel-count + 0.5 * 1x0) + (y * subpixel-count + 0.5 * 0x1)
+]
+mold-pair: func [
+	{mold a subpixel accuracy pair to a "human readable" form}
+	s [pair!] {a subpixel-accuracy pair}
+] [
+	rejoin [round/to s/x / subpixel-count 0.000015 "x" round/to s/y / subpixel-count 0.000015]
+]
 </pre>
 
 <pre>
-    ;example usage
-    ; a 123.45x678.90 pair
-    load-pair 123.45 678.90 ; == 8090419x44492390 (this would be the "internal representation")
-    mold-pair 8090419x44492390 ; == "123.45x678.9"
+;example usage
+; a 123.45x678.90 pair
+load-pair 123.45 678.90 ; == 8090419x44492390 (this would be the "internal representation")
+mold-pair 8090419x44492390 ; == "123.45x678.9"
 </pre>
 
 =====Why 1 / 65536 pixel looks like a reasonable accuracy?=====

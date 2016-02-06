@@ -7,7 +7,7 @@ Default scoping behavior in Rebol is geared toward memory and execution efficien
 Assigning a variable in most languages involves something like:
 
 <pre>
-    foo = 10;
+foo = 10;
 </pre>
 
 This is generally parsed into an abstract syntax tree as three elements.  Those are:
@@ -21,7 +21,7 @@ Some languages require you to declare the variable in advance of assigning a val
 A typical assignment in Rebol looks deceptively similar:
 
 <pre>
-    foo: 10
+foo: 10
 </pre>
 
 But let us do a careful study of what ''actually'' happens during an assignment.
@@ -72,27 +72,27 @@ SET-WORD! is an abstract symbol type, that the parser ascribes to any legal word
 As a fairly realistic example, if you were making a dialect for people writing plays it might be natural to use SET-WORD! for characters in lines of dialogue...
 
 <pre>
-    dialogue: [
-        Polonius: "What is the matter, my lord?"
-        Hamlet: "Between who?"
-        Polonius: "I mean, the matter that you read, my lord."
-        Hamlet:
-            {Slanders, sir; for the satirical rogue says here that old men
-            have grey beards, that their faces are wrinkled, their eyes purging
-            thick amber and plum-tree gum, and that they have a plentiful
-            lack of wit, together with most weak hams; all which, sir, though
-            I most powerfully and potently believe, yet I hold it not honesty
-            to have it thus set down, for yourself, sir, shall grow old as I am, if
-            like a crab you could go backward.}
-        Polonius: ("Aside") "Though this be madness, yet there is method in't."
-    ]
+dialogue: [
+    Polonius: "What is the matter, my lord?"
+    Hamlet: "Between who?"
+    Polonius: "I mean, the matter that you read, my lord."
+    Hamlet:
+        {Slanders, sir; for the satirical rogue says here that old men
+        have grey beards, that their faces are wrinkled, their eyes purging
+        thick amber and plum-tree gum, and that they have a plentiful
+        lack of wit, together with most weak hams; all which, sir, though
+        I most powerfully and potently believe, yet I hold it not honesty
+        to have it thus set down, for yourself, sir, shall grow old as I am, if
+        like a crab you could go backward.}
+    Polonius: ("Aside") "Though this be madness, yet there is method in't."
+]
 </pre>
 
 Although this block contains SET-WORD! elements, if you refrain from using DO on it then you can handle them however you like. To get a list of unique characters in the above dialogue, we can use COLLECT-WORDS:
 
 <pre>
-    >> collect-words/set dialogue
-    == [Polonius Hamlet]
+>> collect-words/set dialogue
+== [Polonius Hamlet]
 </pre>
 
 Clearly this is not something that represents a series of assignments.  So merely entering a SET-WORD! in the source does not allocate memory for a "Hamlet" variable or a "Polonious" variable.  We must look at the context in which an expression appears to know its semantics, and that applies equally to all Rebol constructs.
@@ -171,32 +171,32 @@ You can imagine that this flexibility affords significant power, although the po
 There is no difference between a context and an object in Rebol, although idiomatically the functions used to construct them are applied to slightly different cases.  MAKE OBJECT! is the basic one, it collects all set-words in the top-level code block and makes an object out of them, then executes the code in the block, which can have side effects.
 
 <pre>
-    make-employee: func [name id] [
-        employee: make object! compose [
-            name: (name) 
-            id: (id)
-        ]
-        return employee
+make-employee: func [name id] [
+    employee: make object! compose [
+        name: (name) 
+        id: (id)
     ]
-    
-    e1: make-employee "Alice" 100
-    e2: make-employee "Bob" 101
+    return employee
+]
+
+e1: make-employee "Alice" 100
+e2: make-employee "Bob" 101
 </pre>
 
 CONTEXT is just a shortcut for MAKE OBJECT!. CONTEXT is typically used in situations where some code contains assignments that are not supposed to contaminate the enclosing context.  In the example below, the presence of a context means that an inner loop index can be given the same name as the outer loop index, while not overwriting it:
 
 <pre>
-    fill-terminal-screen: func [letter [char!]] [
-        for index 1 25 1 [ ; 'index is local to for
-            context [
-                index: 0 
-                while [++ index < 80] [ ; 'index is not local to while
-                    prin letter
-                ]
+fill-terminal-screen: func [letter [char!]] [
+    for index 1 25 1 [ ; 'index is local to for
+        context [
+            index: 0 
+            while [++ index < 80] [ ; 'index is not local to while
+                prin letter
             ]
-            assert [index <= 25] ; would throw an error if 'index was overridden above
         ]
+        assert [index <= 25] ; would throw an error if 'index was overridden above
     ]
+]
 </pre>
 
 OBJECT is basically the same as CONTEXT, except the value NONE is is appended to the end of the code block so that assignment at the end of the code block won't just throw an error, it will assign the NONE as a default value. 
@@ -263,15 +263,15 @@ These are all of the rules that are needed to make it easier to use CONSTRUCT fo
 CONSTRUCT is very forgiving of errors as well, and won't complain if the spec block doesn't follow the set-word, value pairs list model. CONSTRUCT only takes the immediate symbol after each SET-WORD! and throws the rest away, like this:
 
 <pre>
-    >> construct [
-        a: 10 + 20 
-        print "Hello"
-        b: 30 + 40
-    ]
-    == make object! [
-        a: 10
-        b: 30
-    ]
+>> construct [
+    a: 10 + 20 
+    print "Hello"
+    b: 30 + 40
+]
+== make object! [
+    a: 10
+    b: 30
+]
 </pre>
 
 If you don't want CONSTRUCT to do those tricks and want to just assign the literals as-is, and are lucky enough to be using R3, then use CONSTRUCT/only. The /only option means only assign the values, no translation. CONSTRUCT/only will even assign unset or error values; that kind of thing would throw an error if you used CONTEXT. CONSTRUCT/only is typically used to construct objects from spec blocks that are generated by other code.

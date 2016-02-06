@@ -136,33 +136,33 @@ Various wrapper functions for these types of events can be found in host-event.c
 The SYSTEM port scheme defines the AWAKE function as:
 
 <pre>
-    awake: func [
-        sport "System port (State block holds events)"
-        ports "Port list (Copy of block passed to WAIT)"
-        /local event port waked
-    ][
-        waked: sport/data ; The wake list (pending awakes)
-    
-        ; Process all events (even if no awake ports).
-        ; Do only 8 events at a time (to prevent polling lockout).
-        loop 8 [
-            if not event: take sport/state [break]
-            port: event/port
-            if wake-up port event [
-                ; Add port to wake list:
-                if not find waked port [append waked port]
-            ]
+awake: func [
+    sport "System port (State block holds events)"
+    ports "Port list (Copy of block passed to WAIT)"
+    /local event port waked
+][
+    waked: sport/data ; The wake list (pending awakes)
+
+    ; Process all events (even if no awake ports).
+    ; Do only 8 events at a time (to prevent polling lockout).
+    loop 8 [
+        if not event: take sport/state [break]
+        port: event/port
+        if wake-up port event [
+            ; Add port to wake list:
+            if not find waked port [append waked port]
         ]
-    
-        ; No wake ports (just a timer), return now.
-        if not block? ports [return none]
-    
-        ; Remove ports not awakened from return block,
-        ; and remove ports awakened from the wake list:
-        remove-each p ports [not take find waked p]
-    
-        not tail? ports ; anything left to wake-up from WAIT?
     ]
+
+    ; No wake ports (just a timer), return now.
+    if not block? ports [return none]
+
+    ; Remove ports not awakened from return block,
+    ; and remove ports awakened from the wake list:
+    remove-each p ports [not take find waked p]
+
+    not tail? ports ; anything left to wake-up from WAIT?
+]
 </pre>
 
 '''It is important to note that the WAIT function processes all port events even if it is called with a timeout value.''' This is how the port awake handlers are able to run on top of the stack.

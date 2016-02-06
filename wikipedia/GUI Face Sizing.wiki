@@ -99,11 +99,11 @@ Here are two test cases:
 Case 1:
 
 <pre>
-    view [
-        title "Example"
-        area
-        button "Submit"
-    ]
+view [
+    title "Example"
+    area
+    button "Submit"
+]
 </pre>
 
 A good result would be for the area to be full width and full height (less title and button), with the button being perhaps 30% wide.
@@ -111,14 +111,14 @@ A good result would be for the area to be full width and full height (less title
 Case 2:
 
 <pre>
-    view [
-        title "Example"
-        area
-        group [
-            button "Submit"
-            button "Cancel"
-        ]
+view [
+    title "Example"
+    area
+    group [
+        button "Submit"
+        button "Cancel"
     ]
+]
 </pre>
 
 Same results as above, except each button is 30% wide.
