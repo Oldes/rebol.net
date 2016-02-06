@@ -12,8 +12,9 @@ To help you test for bugs in the lower level system, such as in GOBs or the DRAW
 
 It's pretty easy to do. Take a look at this code:
 
+<pre>
     Rebol [Title: "Base level (minimum) window code"]
-
+    
     win: make gob! [text: "test" offset: 100x100 size: 300x300]
     append win make gob! [
         draw: [
@@ -23,9 +24,9 @@ It's pretty easy to do. Take a look at this code:
     ]
     append system/view/screen-gob win
     show system/view/screen-gob
-
-    ask "ok?"
     
+    ask "ok?"
+</pre>
 
 This draws a red rounded box in a small window. None of the GUI system is used here so you can work at debugging the problem in your DRAW code.
 
@@ -35,16 +36,17 @@ Note that ASK will stop the process from terminating, and there is no GUI event 
 
 If you need a minimal event handler to refresh the windows, you can remove the ASK in the code above, and add these lines.
 
+<pre>
     system/view/event-port: make port! [scheme: 'event]
-
+    
     system/view/event-port/awake: func [event] [
         print ["EVENT:" event/type event/offset event/flags]
         if event/type = 'close [quit]
         tail? system/view/screen-gob
     ]
-
-    wait system/view/event-port
     
+    wait system/view/event-port
+</pre>
 
 This code will show events, but will only act on one event, a CLOSE.
 

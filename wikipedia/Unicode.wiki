@@ -24,57 +24,59 @@ A few examples will help you quickly understand the general idea of Unicode in R
 
 Here we use the Greek character alpha (&alpha;), which you can see in this [http://en.wikibooks.org/wiki/Windows_Programming/Unicode/Character_reference/0000-0FFF> handy Unicode table] is character U+03B1, or 945 as integer. We use this character for the example because it is far beyond the Latin-1 8-bit range.
 
+<pre>
     >> #"^(3B1)"     ; char as a hex encoded literal
     == #"α"
-
+    
     >> to-char #3b1
     == #"α"
-
+    
     >> to-char 945
     == #"α"
-
+    
     >> "testα"
     == "testα"
-
+    
     >> "test^(3b1)"  ; string containing hex char literal
     == "testα"
-
+    
     >> str: append "test" to-char 945
     == "testα"
-
+    
     >> length? str
     == 5
-
+    
     >> last str
     == #"α"
-
+    
     >> to-binary str
     == #{74657374CEB1}  ; note, it is UTF-8 encoded!
-
+    
     >> to-string to-binary str  ; to UTF-8 and back again
     == "testα"
-
+    
     >> uppercase str
     == "TESTΑ"
-
+    
     >> testα: 10
     == 10
-
+    
     >> testα
     == 10
-
+    
     >> write %testα.txt "example"
     == port!
-
+    
     >> read %.
     == [%abc.r %testα.txt]
-    
+</pre>
 
 Of course, if we use an eastern character, what I see in my console is just a box; no character is rendered because it's not available in the current font. However, if I cut and paste it here:
 
+<pre>
     >> #"^(905)"
     == #"अ"
-    
+</pre>
 
 You will see the character in the browser (if your current browser font supports it). So it's correct value is being preserved, even if it does not display properly.
 
@@ -92,10 +94,11 @@ Other encodings such as the popular Latin-1 (ISO-8859-1) are supported, but such
 
 Script headers can specify the encoding of the script. For example:
 
+<pre>
     Rebol [
         encoding: latin-1
     ]
-    
+</pre>
 
 {{more}}
 

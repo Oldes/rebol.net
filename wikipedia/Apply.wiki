@@ -78,13 +78,14 @@ APPLY comes in handy when pre-processing arguments and refinements before passin
 
 For example, if we want to create a function that is exactly like INSERT but REDUCEs its value argument first and passes all refinements as needed, it could look something like this:
 
+<pre>
     reinsert: func [
         "Insert a reduced block into series"
         series value /part length /only /dup count
     ][
         apply :insert [series reduce value part length only dup count]
     ]
-    
+</pre>
 
 Using APPLY here saves you the effort of dynamically building a function path to call the INSERT function with the given refinements and arguments.
 

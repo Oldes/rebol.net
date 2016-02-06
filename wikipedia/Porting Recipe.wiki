@@ -12,6 +12,7 @@ This is what's happening at startup, when a user run a Rebol exe:
 
 The file src/include/host-lib.h show the list of OS dependent callback functions.
 
+<pre>
     extern void *OS_Make(size_t size);    // host-lib.c
     extern void OS_Free(void *mem);    // host-lib.c
     extern void OS_Exit(int code);    // host-lib.c
@@ -55,7 +56,7 @@ The file src/include/host-lib.h show the list of OS dependent callback functions
     extern REBINT OS_Draw_Image(REBSER *image, REBSER *block);    // host-window.c
     extern REBINT OS_Effect_Image(REBSER *image, REBSER *block);    // host-window.c
     extern void OS_Cursor_Image(REBINT n, REBSER *image);    // host-window.c
-    
+</pre>
 
 ===POSIX===
 

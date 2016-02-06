@@ -8,7 +8,9 @@ The code in this article was tested in Rebol/View 2.7.6.3.1. It is possible that
 
 A reader who wants to check all the examples can run this code: 
 
+<pre>
     do http://www.rebol.org/download-a-script.r?script-name=contexts.r
+</pre>
 
 , which defines all functions from this article.
 
@@ -265,12 +267,15 @@ Observation (MAKE, TO and unbound words): All words contained in a result block 
 
 Illustration:
 
+<pre>
     bind? first make block! "unbound" ; == none
     bind? first first first make block! "[[unbound-too]]" ; == none
+</pre>
 
 ==Local contexts==
 Definition (Local words/local variables): The words that are neither unbound nor global we call local words (local variables):
 
+<pre>
     local?: func [
         {find out, if a WORD is local}
         word [any-word!]
@@ -280,6 +285,7 @@ Definition (Local words/local variables): The words that are neither unbound nor
             global? :word
         ]
     ]
+</pre>
 
 Definition (Local context): A context is called local context if its words are local words.
 
@@ -627,6 +633,7 @@ The answer is positive and the function able to do this is defined below.
 
 First of all a function that can extract all local words of a function from its SPEC:
 
+<pre>
     locals?: func [
         {Get all locals from a spec block.}
         spec [block!]
@@ -643,7 +650,7 @@ First of all a function that can extract all local words of a function from its 
         parse spec [any item-rule]
         locals
     ]
-
+    
     set-words: func [
         {Get all set-words from a block}
         block [block!]
@@ -667,7 +674,7 @@ First of all a function that can extract all local words of a function from its 
         parse block rule
         words
     ]
-
+    
     funcs: func [
         {Define a function with auto local and static variables.}
         [throw]
@@ -694,6 +701,7 @@ First of all a function that can extract all local words of a function from its 
         do init
         make function! spec body
     ]
+</pre>
 
 ==Model of Rebol functions==
 Our model of Rebol functions will be a Rebol object FUNCTION!-MODEL having the appropriate attributes. The totally necessary attributes of Rebol functions are SPEC and BODY.

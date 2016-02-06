@@ -7,37 +7,38 @@ Rebol words don't require any quote marks around them.  This makes them very att
 For instance, let's imagine you start to write a Twitter dialect.  You might think it's "cleaner" to use WORD!s in a BLOCK! instead of a STRING!:
 
     ; Make a Tweet function that just PRINTs the result of a FORM for now...
-
+    
     >> tweet: func [blk [block!]] [
     print form blk
     ]
     == ...
-
+    
     ; Try it and it appears to work
-
+    
     >> tweet [Looks like it's dinner time!]
     Looks like it's dinner time!
-    
+</pre>
 
 Note that it ''appeared'' to work pretty well.  Even though TIME! is defined in the DO dialect, it is perfectly acceptable to repurpose it in your own.  And "it's" is a legal identifier in Rebol.
 
 But there are problems:
 
+<pre>
     ; Whitespace is collapsed
-
+    
     >> tweet [Looks     like     it's    dinner    time!]
     Looks like it's dinner time!
-
+    
     ; Many tokens valid in strings can cause parser errors
-
+    
     >> tweet [LOL :)]
     ** Syntax error: invalid "word-get" -- ":"
     ** Near: (line 1) tweet [LOL :)]
-
+    
     >> tweet [4Chan is down.]
     ** Syntax error: invalid "integer" -- "4Chan"
     ** Near: (line 1) tweet [4Chan is down.]
-    
+</pre>
 
 An additional issue is the technical limit on the number of unique words that the interpreter can support.  This number [http://stackoverflow.com/questions/1658062/in-rebol-is-it-possible-to-clean-up-some-global-words-from-memory has been steadily growing] in successive versions of Rebol, but treating a large body of text and names as words could exhaust the space.
 
@@ -45,6 +46,7 @@ An additional issue is the technical limit on the number of unique words that th
 
 If you are used to building domain-specific notations in systems like XML or JSON, you will probably gravitate toward dialects which have the user call out structure explicitly.  For instance, if you were implementing a dialect for plays your first approach might be:
 
+<pre>
     structuredDialogue: [
         [
             character: "Polonius" 
@@ -74,23 +76,24 @@ If you are used to building domain-specific notations in systems like XML or JSO
             text: "Though this be madness, yet there is method in't."
         ]
     ]
-    
+</pre>
 
 Technically speaking, there is nothing ''wrong'' with this.  It allows the usual inspection that people have come to expect from structured data.
 
     ; Count the number of lines in the dialogue
-
+    
     >> length? structuredDialogue
     == 5
-
+    
     ; See which character spoke the second line of dialogue
-
+    
     >> structuredDialogue/2/character
     == "Hamlet"
-    
+</pre>
 
 But Rebol allows alternatives which liberate the dialect user from writing things that are quite so unnatural.  The following is also legitimate Rebol, and far more inviting to type in and read:
 
+<pre>
     dialogue: [
         Polonius: "What is the matter, my lord?"
         Hamlet: "Between who?"
@@ -105,7 +108,7 @@ But Rebol allows alternatives which liberate the dialect user from writing thing
             like a crab you could go backward.}
         Polonius: ("Aside") "Though this be madness, yet there is method in't."
     ]
-    
+</pre>
 
 Here we see SET-WORD! being used to indicate the character who is about to speak.  If there is a character action, that is put inside of a PAREN! group.
 

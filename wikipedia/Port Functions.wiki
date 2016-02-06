@@ -62,16 +62,17 @@ This tells READ to decode the file into a string. Note that the WRITE does not r
 
 The READ function is currently defined as:
 
+<pre>
     USAGE:
             READ source /binary /string /as encoding /lines /part size /skip length
-
+    
     DESCRIPTION:
             Reads from a port, file, or URL.
             READ is an action value.
-
+    
     ARGUMENTS:
             source (port! file! url! block!)
-
+    
     REFINEMENTS:
             /binary -- Read as bytes, no conversion
             /string -- Read as string, encoded from BOM, default to UTF-8, converts terminators
@@ -82,7 +83,7 @@ The READ function is currently defined as:
                     size (number!)
             /skip -- Skip a number of bytes (not chars)
                     length -- Byte offset, negative end offset, or 'end (number!)
-    
+</pre>
 
 As stated above, the /binary refinement is the default.
 

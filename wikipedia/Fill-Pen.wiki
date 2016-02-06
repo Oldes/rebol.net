@@ -26,9 +26,10 @@ Sets the color or image pattern for area filling. The '''fill-pen''' color will 
 Simple Color Fill
 <TABLE CELLPADDING=1O CELLSPACING=1O WIDTH=100%><TR><TD WIDTH=60% VALIGN=TOP>
 
+<pre>
     fill-pen blue
     box 100x100 300x300
-    
+</pre>
 
 </TD><TD WIDTH=40% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/FILL-PEN-1b.png|FILL-PEN example 1]]
@@ -41,9 +42,10 @@ Simple Color Fill
 Image Pattern Fill
 <TABLE CELLPADDING=1O CELLSPACING=1O WIDTH=100%><TR><TD WIDTH=60% VALIGN=TOP>
 
+<pre>
     fill-pen logo.gif
     box 100x100 300x300
-    
+</pre>
 
 </TD><TD WIDTH=40% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/FILL-PEN-2b.png|FILL-PEN example 2]]
@@ -57,13 +59,14 @@ Image Pattern Fill
 Switching the '''fill-pen''' states
 <TABLE CELLPADDING=1O CELLSPACING=1O WIDTH=100%><TR><TD WIDTH=60% VALIGN=TOP>
 
+<pre>
     fill-pen blue
     box 100x100 300x300
     fill-pen logo.gif
     box 150x150 250x250
     fill-pen off
     box 50x50 350x350
-    
+</pre>
 
 </TD><TD WIDTH=40% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/FILL-PEN-3b.png|FILL-PEN example 3]]

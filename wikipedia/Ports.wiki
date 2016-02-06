@@ -311,17 +311,18 @@ Ports also allow basic equality comparisons:
 
 For the exact usage of each action use Rebol's built-in help function. (In this way the action information is always accurate.)
 
+<pre>
     >> ? open
     USAGE:
             OPEN spec /new /read /write /seek /allow access
-
+    
     DESCRIPTION:
             Opens a port. Makes a new port from a specification, if necessary.
             OPEN is an action value.
-
+    
     ARGUMENTS:
             spec (port! file! url! block!)
-
+    
     REFINEMENTS:
             /new -- Create new file - if it exists, reset it (truncate)
             /read -- Open for read access
@@ -329,7 +330,7 @@ For the exact usage of each action use Rebol's built-in help function. (In this 
             /seek -- Optimize for random access
             /allow -- Specifies protection attributes
                     access (block!)
-    
+</pre>
 
 All of the port actions are provided with the port (or spec in the case of implicit port usage) as their first argument.
 

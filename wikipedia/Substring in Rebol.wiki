@@ -8,27 +8,29 @@ It is certainly possible to implement such a function if you truly feel you want
 
 The following function implements substring functionality in Rebol:
 
+<pre>
     substring: func [string [string!] offset [integer!] length [integer!]] [
         copy/part at string offset length
     ]
-    
+</pre>
 
 How it works is better shown with an intermediate local variable and, for those new to Rebol's idea of "a function returns its last value"...a return:
 
+<pre>
     substring: func [string [string!] offset [integer!] length [integer!] /local startPosition] [
-
+    
         ; use AT to translate from the offset into a series position 
         ; This is like an iterator in other languages
         ; (if you want to, you can translate back using OFFSET?)
-
+    
         startPosition: at string offset 
-
+    
         ; use a variation of copy which takes two parameters instead of one
         ; first parameter is where to start the copy and second is the limit
-
+    
         return (copy/part startPosition length)
     ]
-    
+</pre>
 
 == Definition Flexibility ==
 
@@ -38,23 +40,25 @@ How it works is better shown with an intermediate local variable and, for those 
 
 If you want to copy to the end of the series instead of limiting the copy to a certain length, you omit the /PART refinement and then drop the <tt>length</tt> parameter.
 
+<pre>
     >> copy at "Rebol" 3
     == "bol"
-
+    
     >> copy at [foo baz bar mumble frotz] 3
     == [bar mumble frotz]
-    
+</pre>
 
 === Copying from the beginning ===
 
 If you are happy starting with the beginning and just want to limit how many things you copy, you keep the /PART but drop the AT
 
+<pre>
     >> copy/part "Rebol" 2
     == "Re"
-
+    
     >> copy/part [foo baz bar mumble frotz] 2
     == [foo baz]
-    
+</pre>
 
 === Using positions instead of integer offsets ===
 
@@ -62,12 +66,13 @@ Also, you are not limited in using indexes with COPY.  You can use series positi
 
 Here we can see copying out of a string from the position before the first occurrence of "e" to the position right after the first occurrence of "o"
 
+<pre>
     >> str: "Rebol"
     == "Rebol"
-
+    
     >> copy/part str (find str "e") (find/tail str "o")
     == "ebo"
-    
+</pre>
 
 Once again, the same methods work on any series, even a block of Rebol symbols.  We can copy out of <tt>list</tt> from the position before the first occurrence of <tt>baz</tt> to the position after the first occurrence of <tt>mumble</tt>.
 

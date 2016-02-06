@@ -25,6 +25,7 @@ The RETURN and EXIT model described in the [[Exception_proposals#Hybrid_return_m
 
 The [http://www.rebol.com/r3/notes/errors.html R3 Exception/Error Mechanism] article mentions that there are two types of exceptions in Rebol: unwinds and throws. Since every exception type can be emulated using the other one, I decided to make a couple of speed tests to find out what the relative speed of the respective exception types is:
 
+<pre>
     ; the relative speed of throw is 100%
     base-throw: time-block [try [none]] 0,05
     base-unwind: round to percent! base-throw / time-block [catch [none]] 0,05
@@ -33,14 +34,17 @@ The [http://www.rebol.com/r3/notes/errors.html R3 Exception/Error Mechanism] art
     handled-throw: time-block [try [do error]] 0,05
     handled-unwind: round to percent! handled-throw / time-block [catch [throw none]] 0,05
     ; == 139%
+</pre>
 
 This simple test seems to suggest, that unwinds are faster than throws. Nevertheless, we only tested "jump up one level", so here is a "jump up many levels" test:
 
+<pre>
     g: func [i] [if i = 1 [do error] g i - 1]
     throw-40: time-block [try [g 40]] 0,05
     f: func [i] [if i = 1 [throw "OK"] f i - 1]
     unwind40: round to percent! throw-40 / time-block [catch [f 40]] 0,05
     ; == 98%
+</pre>
 
 ==Dynamic versus definitional exceptions==
 
@@ -50,14 +54,18 @@ Dynamic exceptions are caught by the (at run-time) closest (i.e. the last execut
 
 Example using dynamic return:
 
+<pre>
     c1: func [arg][do arg]
     f1: does [print ["c1 returned:" c1 [return 1]] return 2]
     print ["f1 returned:" f1]
+</pre>
 
 Results are:
 
+<pre>
     c1 returned: 1
     f1 returned: 2
+</pre>
 
 Notice, that the <code>return 1</code> has been caught by the '''c1''' function, since that was the closest (last executed) catching construct for it.
 
@@ -67,13 +75,17 @@ Definitional exceptions are caught by the (at definition time) closest (i.e. the
 
 Example using definitional return:
 
+<pre>
     c1: func [arg][do arg]
     f1: does [print ["c1 returned:" c1 [return 1]] return 2]
     print ["f1 returned:" f1]
+</pre>
 
 Results are:
 
+<pre>
     f1 returned: 1
+</pre>
 
 Notice, that the <code>return 1</code> has been caught by the '''f1''' function, since that was the closest (last defining) catching construct for it.
 
@@ -89,6 +101,7 @@ As mentioned in the [http://www.rebol.com/r3/notes/errors.html Errors article], 
 
 The '''use''' function is currently implemented as follows:
 
+<pre>
     use: func [
         "Defines words local to a block."
         vars [block! word!] "Local word(s) to the block"
@@ -96,6 +109,7 @@ The '''use''' function is currently implemented as follows:
     ][
         apply make closure! reduce [to block! vars copy/deep body][]
     ]
+</pre>
 
 Problems:
 *The '''use''' function and other control functions, like the '''collect''' function below are not supposed to catch return or exit from the '''body''' block. The place where they should return should be related to the "context of '''body''' origin" instead. Since that does not happen due to the fact, that the inner closure catches the dynamic '''return''', the implementation is subject to bug [http://curecode.org/rebol3/ticket.rsp?id=539 #539].
@@ -107,6 +121,7 @@ Problems:
 
 The current implementation looks as follows:
 
+<pre>
     collect: make function! [[
         {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
         body [block!] "Block to evaluate"
@@ -120,6 +135,7 @@ The current implementation looks as follows:
         ]
         either into [output][head output]
     ]]
+</pre>
 
 Problems:
 *The anonymous function inside the '''collect''' function body catches the dynamic '''return''', causing the bug [http://curecode.org/rebol3/ticket.rsp?id=539 #539].
@@ -138,6 +154,7 @@ R2 uses the dynamic return enhanced by the <code>[throw]</code> function attribu
 
 The '''let''' function creates a new selfless context containing the given '''vars''', sets '''vars''' to '''values''', binds (/copy) the given '''body''' block and evaluates it.
 
+<pre>
     let: funct [
         {Defines words local to a block.}
         [throw]
@@ -152,6 +169,7 @@ The '''let''' function creates a new selfless context containing the given '''va
             bind/copy :body :word
         ][:body]
     ]
+</pre>
 
 Advantages of having such a function in Rebol:
 *'''let''' yields a result that is wanted, as opposed to the '''context''' function, which yields the object
@@ -163,6 +181,7 @@ Advantages of having such a function in Rebol:
 
 The '''use''' function can be implemented as follows:
 
+<pre>
     use: func [
         {Defines words local to a block.}
         [throw]
@@ -171,10 +190,11 @@ The '''use''' function can be implemented as follows:
     ][
         ; this initializes all VARS to #[unset!]
         ; let vars #[unset!] body
-
+    
         ; this initializes all VARS to #[none!]
         let vars #[none!] body
     ]
+</pre>
 
 Notes:
 *The implementation uses the <code>[throw]</code> function attribute.
@@ -185,6 +205,7 @@ Notes:
 
 The '''collect''' function can be implemented as follows:
 
+<pre>
     collect: make function! [[
         {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
         [throw]
@@ -199,6 +220,7 @@ The '''collect''' function can be implemented as follows:
         ] body
         either into [output][head output]
     ]]
+</pre>
 
 Notes:
 *The implementation uses the <code>[throw]</code> function attribute.
@@ -211,6 +233,7 @@ General iteration constructs can be used to express any standard sort of loop, a
 
 Implementation:
 
+<pre>
     iterate: func [
         {General cycle control function}
         [throw]
@@ -228,6 +251,7 @@ Implementation:
             :while test body
         ]
     ]
+</pre>
 
 Notes:
 *The implementation uses the <code>throw:</code> function attribute.
@@ -235,13 +259,16 @@ Notes:
 
 Example:
 
+<pre>
     ; this example doubles the cycle variable after every iteration
     iterate [i: 1][i <= 2000][i: i + i][print i]
+</pre>
 
 ====Definitional mezzanine CATCH/THROW pair====
 
 This is how a definitional '''catch'''/'''throw''' mezzanine pair can be implemented:
 
+<pre>
     make object! [
         sys-catch: :catch
         sys-throw: :throw
@@ -278,6 +305,7 @@ This is how a definitional '''catch'''/'''throw''' mezzanine pair can be impleme
         ]
         unset 'throw
     ]
+</pre>
 
 Notes:
 *Unhandled throw is not localized well in R2.
@@ -310,6 +338,7 @@ There are suggestions, that the '''make''' function should be able to not bind t
 
 The '''let''' function creates a new selfless context containing the given '''vars''', sets vars to '''values''', binds (/copy) the given '''body''' block and evaluates it.
 
+<pre>
     let: funct [
         {Defines words local to a block.}
         vars [block! word!] "Local word(s) to the block"
@@ -323,6 +352,7 @@ The '''let''' function creates a new selfless context containing the given '''va
             bind/copy :body :word
         ][:body]
     ]
+</pre>
 
 Advantages of having such a function in Rebol:
 *'''let''' yields a result that is wanted, as opposed to the '''context''' function, which yields the object
@@ -332,18 +362,25 @@ Advantages of having such a function in Rebol:
 
 Let-example #1 (using a local 'sqrt2 variable to compute the final result):
 
+<pre>
     print ["result:" let 'sqrt2 square-root 2 [1 / sqrt2]]
+</pre>
 
 Let-example #2 (using a local 'x variable to not modify the original 'x variable outside):
 
+<pre>
     x: 121 print ["result:" let 'x :x [x: x + 1 x / 2 + x]]
+</pre>
 
 Let-example #3 (emulates the R2 variant of the '''use''' function):
 
+<pre>
     let vars #[unset!] body
+</pre>
 
 Context-example #1 (notice, that it needs a 'result field to "get the result outside"):
 
+<pre>
     print [
         "result:" get in context [
             sqrt2: square-root 2
@@ -352,9 +389,11 @@ Context-example #1 (notice, that it needs a 'result field to "get the result out
             result: 1 / sqrt2
         ] 'result
     ]
+</pre>
 
 Context-example #2 (the method used works only if the "outside 'x" is in the user context):
 
+<pre>
     x: 121
     print [
         "result:" get in context [
@@ -363,27 +402,37 @@ Context-example #2 (the method used works only if the "outside 'x" is in the use
             result: x / 2 + x
         ] 'result
     ]
+</pre>
 
 Use-example #1:
 
+<pre>
     print ["result:" use 'sqrt2 [sqrt2: square-root 2 1 / sqrt2]]
+</pre>
 
 Use-example #2 (works only if the "outside 'x" is in the user context):
 
+<pre>
     x: 121 print ["result:" use 'x [x: system/contexts/user/x x: x + 1 x / 2 + x]]
+</pre>
 
 Func-example #1:
 
+<pre>
     print ["result:" do has [sqrt2] [sqrt2: square-root 2 1 / sqrt2]]
+</pre>
 
 Func-example #2:
 
+<pre>
     x: 121 print ["result:" do func [x] [x: x + 1 x / 2 + x] :x]
+</pre>
 
 ====USE====
 
 The '''use''' function can be implemented as follows:
 
+<pre>
     use: func [
         {Defines words local to a block.}
         vars [block! word!] "Local word(s) to the block"
@@ -391,10 +440,11 @@ The '''use''' function can be implemented as follows:
     ][
         ; this initializes all VARS to #[unset!]
         ; let vars #[unset!] body
-
+    
         ; this initializes all VARS to #[none!]
         let vars #[none!] body
     ]
+</pre>
 
 Notes:
 *The implementation does not need to use any function attribute.
@@ -405,6 +455,7 @@ Notes:
 
 The '''collect''' function can be implemented as follows:
 
+<pre>
     collect: make function! [[
         {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
         body [block!] "Block to evaluate"
@@ -418,6 +469,7 @@ The '''collect''' function can be implemented as follows:
         ] body
         either into [output][head output]
     ]]
+</pre>
 
 Notes:
 *The implementation does not need to use function attribute.
@@ -430,6 +482,7 @@ General iteration constructs can be used to express any standard sort of loop, a
 
 Implementation:
 
+<pre>
     iterate: func [
         {General cycle}
         init [block!] {cycle initialization}
@@ -446,6 +499,7 @@ Implementation:
             :while test body
         ]
     ]
+</pre>
 
 Notes:
 *The implementation uses the <code>throw:</code> function attribute.
@@ -453,13 +507,16 @@ Notes:
 
 Example:
 
+<pre>
     ; this example doubles the cycle variable after every iteration
     iterate [i: 1][i <= 2000][i: i + i][print i]
+</pre>
 
 ====Definitional mezzanine CATCH/THROW pair====
 
 Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pair can be defined as a mezzanine as follows:
 
+<pre>
     catch: func [
         {Catches a throw from a block and returns its value.}
         body [block!]
@@ -468,17 +525,17 @@ Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pa
         ; use the new definitional RETURN as THROW in the BODY
         do does [let 'throw :return body]
     ]</pre>	
-
+    
     Notice, how the definitional return of the anonymous function is used as definitional throw.
-
+    
     A mezzanine definitional break looks to be implementable the same way.
-
+    
     ====Definitional mezzanine CONTINUE====
-
+    
     This is not as perfect as the above definitional mezzanine '''catch'''/'''throw''' solution, but usable, when needed.
-
+    
     This version binds the given BLOCK just once, not at the start of every loop:
-
+    
     <pre>c-aware: func [
         {make a block definitional mezzanine CONTINUE-aware}
         block [block!]
@@ -496,13 +553,16 @@ Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pa
         
         reduce [:do-block block]
     ]
+</pre>
 
 Usage:
 
+<pre>
     for n 1 5 1 c-aware [
         if n < 3 [continue]
         print n
     ]
+</pre>
 
 ====Advantages====
 
@@ -529,6 +589,7 @@ As stated in the [http://www.rebol.com/r3/notes/errors.html Errors article], it 
 
 The '''let''' function creates a new selfless context containing the given '''vars''', sets vars to '''values''', binds (/copy) the given '''body''' block and evaluates it.
 
+<pre>
     let: funct [
         {Defines words local to a block.}
         vars [block! word!] "Local word(s) to the block"
@@ -543,6 +604,7 @@ The '''let''' function creates a new selfless context containing the given '''va
             bind/copy :body :word
         ][:body]
     ]
+</pre>
 
 Advantages of having such a function in Rebol:
 *'''let''' yields a result that is wanted, as opposed to the '''context''' function, which yields the object
@@ -552,18 +614,25 @@ Advantages of having such a function in Rebol:
 
 Let-example #1 (using a local 'sqrt2 variable to compute the final result):
 
+<pre>
     print ["result:" let 'sqrt2 square-root 2 [1 / sqrt2]]
+</pre>
 
 Let-example #2 (using a local 'x variable to not modify the original 'x variable outside):
 
+<pre>
     x: 121 print ["result:" let 'x :x [x: x + 1 x / 2 + x]]
+</pre>
 
 Let-example #3 (emulates the R2 variant of the '''use''' function):
 
+<pre>
     let vars #[unset!] body
+</pre>
 
 Context-example #1 (notice, that it needs a 'result field to "get the result outside"):
 
+<pre>
     print [
         "result:" get in context [
             sqrt2: square-root 2
@@ -572,9 +641,11 @@ Context-example #1 (notice, that it needs a 'result field to "get the result out
             result: 1 / sqrt2
         ] 'result
     ]
+</pre>
 
 Context-example #2 (the method used works only if the "outside 'x" is in the user context):
 
+<pre>
     x: 121
     print [
         "result:" get in context [
@@ -583,27 +654,37 @@ Context-example #2 (the method used works only if the "outside 'x" is in the use
             result: x / 2 + x
         ] 'result
     ]
+</pre>
 
 Use-example #1:
 
+<pre>
     print ["result:" use 'sqrt2 [sqrt2: square-root 2 1 / sqrt2]]
+</pre>
 
 Use-example #2 (works only if the "outside 'x" is in the user context):
 
+<pre>
     x: 121 print ["result:" use 'x [x: system/contexts/user/x x: x + 1 x / 2 + x]]
+</pre>
 
 Func-example #1:
 
+<pre>
     print ["result:" do has [sqrt2] [sqrt2: square-root 2 1 / sqrt2]]
+</pre>
 
 Func-example #2:
 
+<pre>
     x: 121 print ["result:" do func [x] [x: x + 1 x / 2 + x] :x]
+</pre>
 
 ====USE====
 
 The '''use''' function can be implemented as follows:
 
+<pre>
     use: func [
         {Defines words local to a block.}
         vars [block! word!] "Local word(s) to the block"
@@ -612,11 +693,12 @@ The '''use''' function can be implemented as follows:
     ][
         ; this initializes all VARS to #[unset!]
         let vars #[unset!] body
-
+    
         ; if we wanted to initialize all VARS to #[none!]
         ; we could have used:
         ; let vars #[none!] body
     ]
+</pre>
 
 Notes:
 *The implementation does not need to use any function attribute.
@@ -627,6 +709,7 @@ Notes:
 
 The '''collect''' function can be implemented as follows:
 
+<pre>
     collect: make function! [[
         {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
         body [block!] "Block to evaluate"
@@ -641,6 +724,7 @@ The '''collect''' function can be implemented as follows:
         ] body
         either into [output][head output]
     ]]
+</pre>
 
 Notes:
 *The implementation does not need to use function attribute.
@@ -653,6 +737,7 @@ General iteration constructs can be used to express any standard sort of loop, a
 
 Implementation:
 
+<pre>
     iterate: func [
         {General cycle}
         init [block!] {cycle initialization}
@@ -670,6 +755,7 @@ Implementation:
             :while test body
         ]
     ]
+</pre>
 
 Notes:
 *The implementation uses the <code>throw:</code> function attribute.
@@ -677,13 +763,16 @@ Notes:
 
 Example:
 
+<pre>
     ; this example doubles the cycle variable after every iteration
     iterate [i: 1][i <= 2000][i: i + i][print i]
+</pre>
 
 ====Definitional mezzanine CATCH/THROW pair====
 
 Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pair can be defined as a mezzanine as follows:
 
+<pre>
     catch: func [
         {Catches a throw from a block and returns its value.}
         body [block!]
@@ -693,17 +782,17 @@ Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pa
         ; use the new definitional RETURN as THROW in the BODY
         do does [let 'throw :return body]
     ]</pre>	
-
+    
     Notice, how the definitional return of the anonymous function is used as definitional throw.
-
+    
     A mezzanine definitional break looks to be implementable the same way.
-
+    
     ====Definitional mezzanine CONTINUE====
-
+    
     This is not as perfect as the above definitional mezzanine '''catch'''/'''throw''' solution, but usable, when needed.
-
+    
     This version binds the given BLOCK just once, not at the start of every loop:
-
+    
     <pre>c-aware: func [
         {make a block definitional mezzanine CONTINUE-aware}
         block [block!]
@@ -722,13 +811,16 @@ Having definitional return in Rebol, the definitional '''catch'''/'''throw''' pa
         
         reduce [:do-block block]
     ]
+</pre>
 
 Usage:
 
+<pre>
     for n 1 5 1 c-aware [
         if n < 3 [continue]
         print n
     ]
+</pre>
 
 ====Advantages====
 
@@ -763,17 +855,21 @@ Except for bugs (counting QUIT/NOW as one too), HALT is the only exception in Re
 
 To illustrate that there is an analogy to the bug [http://curecode.org/rebol3/ticket.rsp?id=539 #539], we define this ("artificial") control function. Its purpose is to evaluate the subblocks of the given block. Implementation:
 
+<pre>
     do-all: func [
         {evaluate the subblocks of the given BLOCK}
         block [block!]
     ][
         foreach subblock block [do subblock]
     ]
+</pre>
 
 =====Analogy to #539=====
 
+<pre>
     loop 1 [do-all [[break/return 1]] 2]
     ; == 2 (1 is expected)
+</pre>
 
 ====Advantages====
 

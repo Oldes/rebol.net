@@ -189,7 +189,7 @@ To create an icon consisting of an image with a text name under it:
 
     icon: make image! 32x32
     icon-text: "Icon name"
-
+    
     icon: make-gobs [
         ; first gob:
         center 0
@@ -244,18 +244,18 @@ The next example creates an icon with some effects to highlight the selection:
         width (icon/size/x + 8)
         height (icon/size/y + 8)
         effect [shadow only icon 4x4 3.9 blue]
-
+    
         left + 4
         top 8
         width icon/size/x
         height icon/size/y
         effect [contrast icon 10]
-
+    
         top 36
         left 2
         right 2
         text [anti-alias on center icon-text]
-
+    
         size + 2x2
         top - 2
         center 0

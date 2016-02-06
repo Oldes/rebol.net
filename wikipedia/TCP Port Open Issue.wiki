@@ -40,13 +40,14 @@ Here is an example of a minimal raw TCP case that makes an HTTP request (without
 
 The AWAKE handler code shows the lookup and other states. Note that the handler itself requests the next state. The state machine is not built into the port or device C code, so you can manage the state at the lowest levels.
 
+<pre>
     http-request: {GET / HTTP/1.1
     Host: www.rebol.net
-
+    
     }
-
+    
     wp: make port! tcp://www.rebol.net
-
+    
     wp/awake: func [event /local port] [
         port: event/port
         print ["==TCP-event:" event/type]
@@ -57,12 +58,12 @@ The AWAKE handler code shows the lookup and other states. Note that the handler 
             connect [write port http-request]
         ][true]
     ]
-
+    
     open wp
     wait [wp 3]
     print wp/data
     close wp
-    
+</pre>
 
 Here, the event handler actions in the switch are listed according to frequency (although it won't make much difference in speed -- just a habit.)
 

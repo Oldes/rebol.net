@@ -115,7 +115,7 @@ An option is a special keyword followed by a specification block.
 For example:
 
     image effect [colorize blue]
-
+    
     text-list data list-values
     
 

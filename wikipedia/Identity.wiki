@@ -21,7 +21,9 @@ This version of the article was tested in Rebol/View 2.7.6.3.1. Other versions o
 
 A reader, wanting to check all the examples can run this code:
 
+<pre>
     do http://www.rebol.org/download-a-script.r?script-name=identity.r
+</pre>
 
 , which defines the functions from this article.
 
@@ -33,44 +35,62 @@ Let's call a function having these properties a ''relation''.
 ==Reflexivity==
 As is well known, we can refer to Rebol values using Rebol blocks or words. Example:
 
+<pre>
     a-char: #"a"
+</pre>
 
 The effect is that the '''''a-char''''' variable refers to the character as we expected:
 
+<pre>
     a-char ; == #"a"
+</pre>
 
 Let's now evaluate this expression:
 
+<pre>
     a-block: head insert copy [] a-char
+</pre>
 
 The effect is that now even the first entry of the above block refers to the character.
 
 For the referring operation to behave consistently we expect that for any non-empty block the expression
 
+<pre>
     identical? first block first block
+</pre>
 
 shall yield '''true''' and the same consistency requirement leads us to expect that for any variable '''var''' the expression:
 
+<pre>
     identical? get/any var get/any var
+</pre>
 
 shall yield '''true''' too. This property we call ''reflexivity''.
 
 ==Symmetry==
 Let's have a block '''block''' having two entries such that the expression
 
+<pre>
     identical? first block second block
+</pre>
 
 yields '''true'''. Knowing that we can conclude that the two entries of the block refer to one value. If that is true then
 
+<pre>
     identical? second block first block
+</pre>
 
 shall yield '''true''' too. Using the same reasoning we expect that for every two variables '''var1''' and '''var2''' if
 
+<pre>
     identical? get/any var1 get/any var2
+</pre>
 
 yields '''true''' then the expression
 
+<pre>
     identical? get/any var2 get/any var1
+</pre>
 
 shall yield '''true''' too.
 
@@ -81,29 +101,41 @@ Analogically as above we can come to the conclusion that the '''identical?''' fu
 
 If '''block''' is a block having three entries and both
 
+<pre>
     identical? first block second block
+</pre>
 
 and
 
+<pre>
     identical? second block third block
+</pre>
 
 yield '''true''' then
 
+<pre>
     identical? first block third block
+</pre>
 
 shall yield '''true''' too.
 
 If '''var1''', '''var2''' and '''var3''' are variables and both
 
+<pre>
     identical? get/any var1 get/any var2
+</pre>
 
 and
 
+<pre>
     identical? get/any var2 get/any var3
+</pre>
 
 yield '''true''' then
 
+<pre>
     identical? get/any var1 get/any var3
+</pre>
 
 shall yield '''true''' too.
 
@@ -116,19 +148,23 @@ In accordance with our previous observations we restate that Rebol identity has 
 
 Let's use the definition to find out whether some functions are equivalences. For example, the '''never''' function implementing the "N opinion" from the summary
 
+<pre>
     never: func [
         a [any-type!]
         b [any-type!]
     ] [false]
+</pre>
 
 is a relation that is both symmetric and transitive. However, it isn't reflexive and therefore it isn't an equivalence.
 
 On the other hand, the '''always''' function
 
+<pre>
     always: func [
         a [any-type!]
         b [any-type!]
     ] [true]
+</pre>
 
 is an equivalence, although a trivial one.
 
@@ -138,35 +174,45 @@ is an equivalence, although a trivial one.
 *The '''same?''' function is undefined for '''unset!''' and '''error!''' type values and therefore it isn't a relation.
 *The '''same?''' function is undefined for closed ports and therefore it isn't a relation.
 
+<pre>
     block: reduce [make port! http://]
     same? first block first block
     ;** Access Error: Port none not open
     ;** Near: same? first block first block
+</pre>
 
 *The '''same?''' function is undefined for '''money!''' values with different denominations and therefore it isn't a relation.
 
+<pre>
     same? USD$1 EUR$1
     ** Script Error: USD$1.00 not same denomination as EUR$1.00
     ** Near: same? USD$1.00 EUR$1.00
+</pre>
 
 *The '''same?''' function does not return a '''logic!''' type value when obtaining '''struct!''' type values as arguments and therefore it isn't a relation.
 
+<pre>
     block: reduce [make struct! [] none]
     same? first block first block ; == none
+</pre>
 
 *The '''same?''' function isn't transitive when comparing '''decimal!''' values.
 
+<pre>
     block: reduce [1.0 1.0 + 5e-16 1.0 + 1e-15]
     same? first block second block ; == true
     same? second block third block ; == true
     same? first block third block ; == false
+</pre>
 
 *The '''same?''' function isn't transitive when comparing '''date!''' values.
 
+<pre>
     block: [5/Sep/2006/0:00 5/Sep/2006 5/Sep/2006/1:00]
     same? first block second block ; == true
     same? second block third block ; == true
     same? first block third block ; == false
+</pre>
 
 Any of the above points suffices to demonstrate our observation '''q.e.d.'''
 
@@ -176,7 +222,9 @@ Actually, no relation comes built into the interpreter. This can be demonstrated
 
 '''Terminology:''' Let's have an equivalence '''eq''' and a block '''block''' having two entries. If the expression
 
+<pre>
     eq first block second block
+</pre>
 
 yields '''true''', we say
 :"For the '''eq''' equivalence the value referenced by the first entry of the '''block''' block is ''equivalent'' to the value referenced by the second entry of the '''block''' block."
@@ -192,21 +240,29 @@ To be able to compare equivalences we use
 
 '''Definition''' (Fineness): We say that equivalence '''eq1''' is ''finer or as fine as'' '''eq2''' (resp. '''eq2''' is ''coarser or as coarse as'' '''eq1''') if for any block '''block''' having two entries for which
 
+<pre>
     eq1 first block second block
+</pre>
 
 yields '''true''',
 
+<pre>
     eq2 first block second block
+</pre>
 
 yields '''true''' too.
 
 '''Definition''' (Equal fineness): We say that equivalence '''eq1''' is ''as fine as'' '''eq2''' if for any block '''block''' having two entries holds that:
 
+<pre>
     eq1 first block second block
+</pre>
 
 yields '''true''' if and only if
 
+<pre>
     eq2 first block second block
+</pre>
 
 yields '''true'''.
 
@@ -246,11 +302,13 @@ To be able to implement the identity we need to collect more informations about 
 ==The type attribute==
 Let's note that every Rebol value has a type. A type-comparing equivalence can be defined as follows:
 
+<pre>
     equal-type?: func [
         {do the values have equal type?}
         a [any-type!]
         b [any-type!]
     ] [equal? type? get/any 'a type? get/any 'b]
+</pre>
 
 '''Observation''': The '''equal-type?''' function discerns values with different datatypes.
 
@@ -258,15 +316,21 @@ Let's note that every Rebol value has a type. A type-comparing equivalence can b
 
 '''Proof:''' If we define
 
+<pre>
     block: [3 3.0]
+</pre>
 
 then
 
+<pre>
     same? first block second block
+</pre>
 
 yields '''true''', while
 
+<pre>
     equal-type? first block second block
+</pre>
 
 yields '''false'''.
 
@@ -274,11 +338,15 @@ If we define
  block: [a a:]
 then
 
+<pre>
     same? first block second block
+</pre>
 
 yields '''true''', while
 
+<pre>
     equal-type? first block second block
+</pre>
 
 yields '''false''' '''q.e.d.'''
 
@@ -293,17 +361,20 @@ We start with the documentation. The new-line attribute is a value that can be e
 
 The '''new-line-attribute?''' function examining the new-line attribute of any value can be defined as
 
+<pre>
     new-line-attribute?: func [
         {returns the new-line attribute of a value}
         value [any-type!]
     ] [
         new-line? head insert/only copy [] get/any 'value
     ]
+</pre>
 
 It isn't hard to observe that the '''new-line-attribute?''' function returns just '''true''' or '''false''' for any given value.
 
 Another function called '''new-line-attribute''' can return values with the new-line attribute set as required
 
+<pre>
     new-line-attribute: func [
         {returns a value with the new-line attribute set as specified}
         value [any-type!]
@@ -311,13 +382,16 @@ Another function called '''new-line-attribute''' can return values with the new-
     ] [
         return first new-line head change/only [1] get/any 'value attribute
     ]
+</pre>
 
 Now we can define
 
+<pre>
     one: 1
     new-line-attribute? one ; == false
     one-nl: new-line-attribute 1 true
     new-line-attribute? one-nl ; == true
+</pre>
 
 , i.e., we successfully demonstrated that there are values with the new-line attribute set to '''false''' as well as values with the attribute set to '''true'''.
 
@@ -328,6 +402,7 @@ This completes the proof of our new-line attribute observation '''q.e.d.'''
 
 The knowledge of the new-line attribute and our above defined '''new-line-attribute?''' function can help us to define a function comparing the new-line attribute
 
+<pre>
     equal-new-line?: func [
         {compares new-line attribute of the values}
         a [any-type!]
@@ -335,25 +410,34 @@ The knowledge of the new-line attribute and our above defined '''new-line-attrib
     ] [
         equal? new-line-attribute? get/any 'a new-line-attribute? get/any 'b
     ]
+</pre>
 
 It is easy to observe that the '''equal-new-line?''' is an equivalence discerning values with distinct new-line attributes. Illustration:
 
+<pre>
     equal-new-line? one one ; == true
     equal-new-line? one-nl one-nl ; == true
     equal-new-line? one one-nl ; == false
+</pre>
 
 On the other hand, it is equally easy to observe that the '''same?''' function does not discern values with distinct new-line attributes:
 
+<pre>
     same? one one-nl ; == true
+</pre>
 
 ==Functions that do not modify their arguments==
 In Rebol, some functions modify their arguments (it is usually stated in their documentation). It is not easy to write a simple definition of what the phrase "a function modifying its argument(s)" means, so, let's start with simple examples
 
+<pre>
     f1: func [a] [2]
+</pre>
 
 When observing the behaviour like
 
+<pre>
     f1 1 ; == 2
+</pre>
 
 , a reader unfamiliar with the meaning of the "function modifying its argument" phrase may be tempted to say that "'''f1''' modified the argument value 1 to return the value 2". This is not the case since the modification we are trying to describe here has to be of a different nature.
 
@@ -361,7 +445,9 @@ To help us with the demonstration, let's use the '''apply''' function applying a
 
 In the case of the above '''f1''' function we can use '''apply''' to obtain
 
+<pre>
     apply/only :f1 arguments: [1] ; == 2
+</pre>
 
 '''Note:''' we use the <code>/only</code> refinement of the '''apply''' function to make sure the function obtains the arguments contained in the block "as is".
 
@@ -377,27 +463,33 @@ one observes that the block containing the argument value remains unchanged.
 
 Another function, for which a reader may not immediately know whether the function modifies its argument is the '''new-line-attribute''' function defined above. Let's check
 
+<pre>
     one-nl: apply/only :new-line-attribute arguments: [1 #[true]]
     new-line-attribute? one-nl ; == true
     new-line-attribute? first arguments ; == false
+</pre>
 
 This shows that while the function yields a value with the new-line attribute set to '''true''', the original argument value remains unchanged having the new-line attribute set to '''false'''.
 
 ==Functions modifying their arguments==
 We use the '''set''' function as our first example of a function modifying its first (the '''word''') argument.
 
+<pre>
     a: [1]
     arguments: [a [2]]
     get first arguments ; == [1]
     apply/only :set arguments
     get first arguments ; == [2]
+</pre>
 
 This example shows that the first argument (the variable '''''a''''') originally referred to one block, while after being set it now refers to another block.
 
 Our next example will examine the behaviour of the '''change''' function.
 
+<pre>
     apply/only :change arguments: [[1] 2]
     first arguments ; == [2]
+</pre>
 
 In this case we see, that the '''change''' function changed its first argument too.
 
@@ -410,45 +502,58 @@ We can convert the situation to the function case by defining an appropriate fun
 
 Example: let's find out whether an expression like
 
+<pre>
     1 + 1
+</pre>
 
 modifies the values in it or not. To find out, let's define a function as follows:
 
+<pre>
     f: func [a b] [
         do reduce [a '+ b]
     ]
+</pre>
 
 and supply the appropriate values as arguments
 
+<pre>
     apply/only :f arguments: [1 1]
     arguments ; == [1 1]
+</pre>
 
 In this case our finding is that the expression actually doesn't modify the values in it.
 
 Here is a case of an expression modifying the value in it
 
+<pre>
     block/1: 2
+</pre>
 
 , as we will find out examining
 
+<pre>
     block: [1]
     g: func [block value] [block/1: value]
     arguments: reduce [block 2] ; == [[1] 2]
     apply/only :g arguments
     arguments ; == [[2] 2]
+</pre>
 
 Contrast the above with a seemingly similar case
 
+<pre>
     tuple: 1.1.1
     h: func [tuple value] [tuple/1: value]
     arguments: reduce [tuple 2] ; == [1.1.1 2]
     apply/only :h arguments
     arguments [1.1.1 2]
+</pre>
 
 , which shows that in this case the first argument remains unmodified.
 
 Pardon? The last example is the case of a situation, where a reader probably springs to attention. It is evident that even the last expression changed something! The only problem is that we didn't correctly guess what it was! So, let's try again, this time guessing that the expression modifies the variable
 
+<pre>
     h2: func [variable value /local path expression] [
         path: to set-path! reduce [variable 1]
         expression: reduce [path value]
@@ -459,6 +564,7 @@ Pardon? The last example is the case of a situation, where a reader probably spr
     get first arguments ; == 1.1.1
     apply/only :h2 arguments
     get first arguments ; == 2.1.1
+</pre>
 
 , and indeed, our second guess is proven correct.
 
@@ -474,12 +580,15 @@ Pardon? The last example is the case of a situation, where a reader probably spr
 ==Mutations used to discern values==
 While our excursion to the realms of modifying functions looked like a detour on our quest, now we show that mutations can be used to discern values. In the following example we define two bitsets
 
+<pre>
     bs1: make bitset! #{00}
     bs2: make bitset! #{00}
     same? bs1 bs2 ; == true
+</pre>
 
 , so, according to the '''same?''' function '''bs1''' and '''bs2''' are indiscernible. Let's define a special equivalence called '''equal-mutation?''' as follows
 
+<pre>
     equal-mutation?: func [
         bs1 [any-type!]
         bs2 [any-type!]
@@ -511,7 +620,7 @@ While our excursion to the realms of modifying functions looked like a detour on
         ] [
             ; both bitsets don't contain #"^(00)", so let's insert it into bs1
             insert bs1 "^(00)"
-
+    
             ; we inserted #"^(00)" into bs1,
             ; check, whether we find it in bs2
             state2: find bs2 #"^(00)"
@@ -523,16 +632,20 @@ While our excursion to the realms of modifying functions looked like a detour on
         ; bitsets are discernible, if STATE1 and STATE2 are equal
         state1 <> state2
     ]
+</pre>
 
 This equivalence can discern the above '''bs1''' and '''bs2''' bitsets
 
+<pre>
     equal-mutation? bs1 bs2 ; == false
+</pre>
 
 ==Implementation of '''identical?'''==
 We have collected all the necessary informations. The '''same?''' function is close to our goal, so we will try to use it as much as possible and take care of the cases when it fails to do what we want.
 
 Observation: The finest equivalence in Rebol is
 
+<pre>
     identical?: func [
         {are the values identical?}
         a [any-type!]
@@ -542,20 +655,20 @@ Observation: The finest equivalence in Rebol is
         case [
             ; compare types
             not-equal? type? get/any 'a type? get/any 'b [false]
-
+    
             ; compare new-line attributes
             not-equal? new-line-attribute? get/any 'a
                 new-line-attribute? get/any 'b [false]
-
+    
             ; handle #[unset!]
             not value? 'a [true]
-
+    
             ; errors can be disarmed and compared afterwards
             error? :a [same? disarm :a disarm :b]
-
+    
             ; money with different denominations are discernible
             all [money? :a not-equal? first a first b] [false]
-
+    
             (
                 ; for money with equal denominations it suffices to compare values
                 if money? :a [a: second a b: second b]
@@ -568,10 +681,10 @@ Observation: The finest equivalence in Rebol is
                 stateb/b:  b
                 equal? third statea third stateb
             ]
-
+    
             ; this is finer than same? and transitive for dates
             date? :a [and~ a =? b a/time =? b/time]
-
+    
             ; compare even the closed ports, do not ignore indices
             port? :a [
                 error? try [statea: index? :a]
@@ -580,7 +693,7 @@ Observation: The finest equivalence in Rebol is
                     statea = stateb ; ports with different indices are discernible
                     equal? reduce [a] reduce [b]
             ]
-
+    
             bitset? :a [
                 ; bitsets differing in #"^(00)" are discernible
                 either not-equal? statea: find a #"^(00)" find b #"^(00)" [false] [
@@ -597,17 +710,19 @@ Observation: The finest equivalence in Rebol is
                     statea <> stateb
                 ]
             ]
-
+    
             ; for structs we compare third
             struct? :a [same? third a third b]
-
+    
             true [:a =? :b]
         ]
     ]
+</pre>
 
 ==Indices of series==
 The '''index?''' function gives us useful information about series. Unfortunately, it doesn't work as expected sometimes:
 
+<pre>
     a: "1"
     b: next a
     index? b ; == 2
@@ -617,11 +732,13 @@ The '''index?''' function gives us useful information about series. Unfortunatel
     insert tail a #"1"
     index? a ; == 1
     index? b ; == 2
+</pre>
 
 The example demonstrates that the index of the block '''b''' although printed as 1 once, was actually 2 all the time!
 
 We can define a function able to yield a "more stable" value:
 
+<pre>
     real-index?: func [
         {return a realistic index for any series}
         series [series!]
@@ -633,18 +750,22 @@ We can define a function able to yield a "more stable" value:
         clear :orig-tail
         result
     ]
+</pre>
 
 Test:
 
+<pre>
     a: "11"
     b: next a
     clear a
     index? b ; == 1
     real-index? b ; == 2
+</pre>
 
 ==Rebol identity doesn't depend on the '''same?''' function==
 While we used the '''same?''' function above to obtain an "efficient" implementation of '''identical?''', there is a possibility that '''identical?''' actually doesn't depend on the '''same?''' function. To check we create another (even though a less efficient) implementation of '''identical?''' not using '''same?''' or '''=?''' at all
 
+<pre>
     id2?: func [
         {are the values identical?}
         a [any-type!]
@@ -654,20 +775,20 @@ While we used the '''same?''' function above to obtain an "efficient" implementa
         case [
             ; compare types first
             not-equal? type? get/any 'a type? get/any 'b [false]
-
+    
             ; compare new-line attributes
             not-equal? new-line-attribute? get/any 'a
                 new-line-attribute? get/any 'b [false]
-
+    
             ; handle #[unset!]
             not value? 'a [true]
-
+    
             ; errors can be disarmed and compared afterwards
             error? :a [equal? disarm :a disarm :b]
-
+    
             ; money with different denominations are discernible
             all [money? :a not-equal? first a first b] [false]
-
+    
             (
                 ; for money with equal denominations it suffices to compare values
                 if money? :a [a: second a b:  second b]
@@ -680,10 +801,10 @@ While we used the '''same?''' function above to obtain an "efficient" implementa
                 stateb/b:  b
                 equal? third statea third stateb
             ]
-
+    
             ; this is finer than same? and transitive for dates
             date? :a [and~ a = b a/time = b/time]
-
+    
             ; compare even the closed ports, do not ignore indices
             port? :a [
                 error? try [statea: index? :a]
@@ -692,7 +813,7 @@ While we used the '''same?''' function above to obtain an "efficient" implementa
                     statea = stateb ; ports with different indices are discernible
                     equal? reduce [a] reduce [b]
             ]
-
+    
             bitset? :a [
                 ; bitsets differing in #"^(00)" are discernible
                 either not-equal? statea: find a #"^(00)" find b #"^(00)" [false] [
@@ -709,28 +830,28 @@ While we used the '''same?''' function above to obtain an "efficient" implementa
                     statea <> stateb
                 ]
             ]
-
+    
             (
                 ; for structs we compare third
                 if struct? :a [a: third a b: third b]
-
+    
                 series? :a
             ) [
                 either equal? real-index? :a real-index? :b [
                     ; A and B have equal index, it is sufficient to compare tails
                     a: tail :a
                     b: tail :b
-
+    
                     ; use INSERT to mutate A
                     insert a #"1"
                     stateb: 1 = length? b
-
+    
                     ; undo the mutation
                     clear a
                     stateb
                 ] [false]
             ]
-
+    
             any-word? :a [
                 ; compare spelling
                 either not-strict-equal? mold :a mold :b [false] [
@@ -738,10 +859,11 @@ While we used the '''same?''' function above to obtain an "efficient" implementa
                     equal? bind? :a bind? :b
                 ]
             ]
-
+    
             true [:a = :b]
         ]
     ]
+</pre>
 
 An attentive reader may object that this finding looks like a coincidence, because our definition of identity requires it to be the finest equivalence, so if an implementor defined a finer '''same?''' function he would certainly affect the identity too.
 
@@ -755,6 +877,7 @@ Having implemented Rebol identity, let's try to define other interesting notions
 ==Relatives==
 Example (Errors and objects):
 
+<pre>
     error? f: make error! "OK"
     error? g: f
     h: disarm f
@@ -769,19 +892,23 @@ Example (Errors and objects):
     probe disarm g
     probe h
     probe disarm i
+</pre>
 
 In this example the change affected the object referenced by the word '''''h''''' and the error referenced by '''''f''''' and '''''g''''', while it didn't affect the error value referenced by '''''i'''''. We can say that the values referenced by '''''g''''' and '''''h''''', while not being the same, are relatives in a sense.
 
 A similar property is observable for words too:
 
+<pre>
     set 'a 1
     alias 'a "aa"
     set 'aa 2
     get 'a ; == 2
     same? 'a 'aa ; == false
+</pre>
 
 Let's define an equivalence coarser than '''identical?''' corresponding to the property we have seen in the previous examples. The '''relatives?''' equivalence yields '''true''' if every change of its first argument is a change of its second argument and vice versa, every change of its second argument is a change of its first argument.
 
+<pre>
     relatives?: func [
         {
             Two values are relatives, if every change of one
@@ -858,9 +985,11 @@ Let's define an equivalence coarser than '''identical?''' corresponding to the p
         ; all other values
         true
     ]
+</pre>
 
 Usage:
 
+<pre>
     a: [1]
     insert a reduce [a]
     b: [1]
@@ -872,12 +1001,13 @@ Usage:
     b: tail a
     remove a
     relatives? b b ; == true
-
+    
     a: "11"
     b: next a
     relatives? a b ; == true
     index? a ; == 1
     index? b ; == 2
+</pre>
 
 ==Identity of references==
 In the example showing that the '''set''' function modifies its first argument we caused the variable '''''a'''' to refer to another block. A different formulation may look as follows: "We changed the variable '''''a''''''s reference."
@@ -885,6 +1015,7 @@ In the example showing that the '''set''' function modifies its first argument w
 ===Variables and references===
 Let's see another example of the behaviour:
 
+<pre>
     alias 'a "ax"
     a: [1]
     b: a
@@ -894,6 +1025,7 @@ Let's see another example of the behaviour:
     a ; == [2]
     ax ; == [2]
     b ; == [1]
+</pre>
 
 Similarly as before we can say that we didn't change the block, but in this case it looks that we changed the '''''a''''''s as well as the '''''ax''''''s reference. Indeed, '''''a''''' and '''''ax''''' are aliases and use a common reference, which means that '''''a''''''s reference and '''''ax''''''s reference are just different names for one reference.
 
@@ -902,6 +1034,7 @@ In other words, we can speak about the identity of references too. The '''same-v
 ===Series and references===
 Yet another example of the behaviour:
 
+<pre>
     c: []
     insert/only tail c [1]
     insert/only tail c first c
@@ -913,11 +1046,13 @@ Yet another example of the behaviour:
     first c ; == [1]
     second c ; == [2]
     first d ; == [2]
+</pre>
 
 Our question: "Did we change the block referred to by <code>second c</code>?" The answer is no, similarly as above, because the block referred to by <code>second c</code> was referred to by <code>first c</code> too and we see no change of <code>first c</code>. The conclusion: "We changed the <code>second c</code> reference only." Moreover, we see that both <code>second c</code> and <code>first d</code> are only different names of one reference.
 
 Here is a function checking the identity of two series references. The function uses the PICK function's indexing convention, although a less complicated indexing would lead to simpler implementation:
 
+<pre>
     same-series-references?: func [
         {
             Find out, whether the INDEX1 reference in the SERIES1
@@ -939,18 +1074,21 @@ Here is a function checking the identity of two series references. The function 
                 (real-index? :series2) + index2
         ]
     ]
+</pre>
 
 Let's check our previous finding:
  same-series-references? c 2 d 1 ; == true
 
 Unfortunately, this isn't the whole truth. Although our implementation and findings are correct, some access methods don't work for series in some state. That is why we obtain:
 
+<pre>
     clear c
     same-series-references? c 2 d 1 ; == true
     pick c 2 ; == none
     pick d 1
     ** Script Error: Out of range or past end
     ** Near: pick d 1
+</pre>
 
 , which looks as if the references weren't the same, although the difference is caused by '''pick''', which didn't use the reference after examining '''d'''.
 
@@ -959,6 +1097,7 @@ An attentive reader may notice that we left out the identity of bitset reference
 ==Finding a reference to a value==
 It might be useful to have a function able to find a reference to a given value:
 
+<pre>
     find-reference: func [
         {find a reference to a given value in a series}
         series [series!]
@@ -972,9 +1111,11 @@ It might be useful to have a function able to find a reference to a given value:
         ]
         none
     ]
+</pre>
 
 Another function of this kind may be a function searching for a relative of a given value:
 
+<pre>
     find-relative: func [
         {find a reference to a relative of a value in a given series}
         series [series!]
@@ -988,10 +1129,12 @@ Another function of this kind may be a function searching for a relative of a gi
         ]
         none
     ]
+</pre>
 
 ==Finding values with a given property==
 Application of the FIND-REFERENCE function, a function able to recursively find out whether a block or its subblocks contain a value with a given property. The function works even for cyclic blocks:
 
+<pre>
     rfind: function [
         {
             find out whether a block
@@ -1023,6 +1166,7 @@ Application of the FIND-REFERENCE function, a function able to recursively find 
         ]
         rf block
     ]
+</pre>
 
 ==Comparing state==
 Two values may be in equal state even if they aren't identical. Let's define another equivalence able to find out whether two Rebol values are in equal state. Because the defined function will be an equivalence, it will not have the main disadvantages of the '''equal?''', '''strict-equal?''', etc. functions.
@@ -1033,6 +1177,7 @@ The below defined '''equal-state?''' function will test every possible attribute
 
 An auxiliary function:
 
+<pre>
     find-pair: func [
         {find a pair of occurrences in a given series}
         series [series!]
@@ -1048,7 +1193,7 @@ An auxiliary function:
         ]
         none
     ]
-
+    
     equal-state?: function [
         {are the values in equal state?}
         a [any-type!]
@@ -1105,6 +1250,7 @@ An auxiliary function:
         ]
         rc get/any 'a get/any 'b
     ]
+</pre>
 
 Observation (Another informal description of '''identical?'''): Two Rebol expression evaluations yield one value, if the state of the result of the first expression evaluation is equal as the state of the result of the second expression evaluation and every mutation of the result of the first expression evaluation is a mutation of the result of the second expression evaluation.
 
@@ -1113,6 +1259,7 @@ Corollary: Two expression evaluations in Rebol yield one value if the result is 
 ==Finding out whether a given block is cyclic==
 We can use a lot of different definitions of block cyclicity. The first one is probably the most strict:
 
+<pre>
     strict-cyclic?: function [
         block [any-block!]
     ] [rec in] [
@@ -1136,9 +1283,11 @@ We can use a lot of different definitions of block cyclicity. The first one is p
         ]
         rec :block
     ]
+</pre>
 
 Here is another one that yields results more closely related to results of native functions:
 
+<pre>
     native-cyclic?: function [
         block [any-block!]
     ] [rec in] [
@@ -1162,9 +1311,11 @@ Here is another one that yields results more closely related to results of nativ
         ]
         rec :block
     ]
+</pre>
 
 ==Making a deep copy of a (possibly cyclic) block==
 
+<pre>
     deepcopy: function [
         block [any-block!]
     ] [rc copied copies] [
@@ -1190,6 +1341,7 @@ Here is another one that yields results more closely related to results of nativ
         ]
         rc :block
     ]
+</pre>
 
 ==Attributes of Rebol values==
 Attributes of Rebol values are the values that are associated with them. The state of a Rebol value is a "composition" of its attributes. Every Rebol value has at least one attribute: its type. Another attribute every Rebol value has is its new-line attribute.
@@ -1381,6 +1533,7 @@ The spec and body attributes are volatile, individual variables in the local con
 ==Mutable values==
 A function comprising our knowledge on mutability of values:
 
+<pre>
     mutable?: function [
         {finds out, if the VALUE is mutable}
         value [any-type!]
@@ -1392,5 +1545,6 @@ A function comprising our knowledge on mutability of values:
             ) r
         ]
     ]
+</pre>
 
 The end.

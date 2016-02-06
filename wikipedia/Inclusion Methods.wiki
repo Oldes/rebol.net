@@ -229,6 +229,7 @@ Disadvantages:
 
 If the usage of #issue values as dialect keywords is undesirable, there is still a variant to use words. They just need to be somewhat "outstanding" to make them immediately visible and to suppress the probability, that the keywords will be used for other, incompatible purposes. For example, the INCLUDE function already took the <code>comment</code> word (since it is highly unlikely that it can cause any undesirable interference) as its keyword to support automatic stripping of comments. The following alternatives look like being available:
 
+<pre>
     !include
     &include
     *include
@@ -245,6 +246,7 @@ If the usage of #issue values as dialect keywords is undesirable, there is still
     .include.
     *include*
     **include
+</pre>
 
 etc.
 

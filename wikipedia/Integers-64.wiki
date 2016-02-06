@@ -5,11 +5,15 @@ equal to: (2 ** 63) - 1
 
 It's problematic to produce those values with the help of decimals, because of decimal precision. This works:
 
+<pre>
     min-int: to integer! negate 2 ** 63
+</pre>
 
 While this produces a number overflow:
 
+<pre>
     max-int: to integer! 2 ** 63 - 1
+</pre>
 
 The reason is, that the power operator (**) returns a decimal, which doesn't have all the precision needed.
 

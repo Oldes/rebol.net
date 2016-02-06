@@ -47,13 +47,14 @@ It will open a window with a single button. Notice that the button has a default
 
 Now try this:
 
+<pre>
     view [
        button "First"
        button "Second"
        button "Third"
        button "Fourth"
     ]
-    
+</pre>
 
 You will see a vertical layout of the buttons:
 
@@ -62,6 +63,7 @@ You will see a vertical layout of the buttons:
 
 If instead you want horizontal buttons, you use ''group'' such as this:
 
+<pre>
     view [
        group [
            button "First"
@@ -70,7 +72,7 @@ If instead you want horizontal buttons, you use ''group'' such as this:
            button "Fourth"
        ]
     ]
-    
+</pre>
 
 It will display:
 
@@ -82,6 +84,7 @@ Here, '''group''' is a special type of style that creates a panel in which the b
 
 You can also use groups to organize your layout into columns. Here we request two columns of buttons:
 
+<pre>
     view [
        group 2 [
            button "First"
@@ -90,7 +93,7 @@ You can also use groups to organize your layout into columns. Here we request tw
            button "Fourth"
        ]
     ]
-    
+</pre>
 
 It looks like &rarr;
 
@@ -101,6 +104,7 @@ This column-alignment feature is very useful for creating forms and many other p
 
 Now, if you want a group that is just vertical you can write:
 
+<pre>
     view [
        group 1 [
            button "First"
@@ -109,7 +113,7 @@ Now, if you want a group that is just vertical you can write:
            button "Fourth"
        ]
     ]
-    
+</pre>
 
 That makes sense. It is just one column.
 
@@ -129,33 +133,34 @@ The fastest way to learn the basic styles is to show them! Here's a sample of st
 
 <!--
 
+<pre>
     view [
        h1 "Style Examples"
-
+    
        h2 "Buttons:"
        button "Button"
        toggle "Toggle"
        btn "Btn"
        tog "Tog"
-
+    
        h2 "Text:"
        text "Normal text here"
        label "Field label"
-
+    
        h2 "Slider bars:"
        slider 200x24
        scroller 200x24
        progress 33.33%
-
+    
        h2 "Text input:"
        field "Field"
        area "Text area"
-
+    
        h2 "Images:"
        image %city.jpg
        draw (need little drawing here)
     ]
-    
+</pre>
 
 They will display like this:
 
@@ -164,28 +169,29 @@ They will display like this:
 {{need|Deal with the commented section here.  Carl's example was cleaner, but the groupings allowed a screen capture}}
 {{caution|about logo.gif;  The line  pen logo.gif will not work in the Rebol Alpha.  It can be worked around by using<br>  >> save/all %/tmp/logo.gif logo.gif  <br>from Rebol/View 1.3.2.  Then <br> >> logo.gif: load %/tmp/logo.gif <br> in the alpha.}}
 
+<pre>
     view [
         h1 "Style Examples"
-
+    
         h2 "Buttons:"
         group [button "Button" filler]
         group [btn "Btn" filler]
         group [toggle "Toggle" filler]
         group [tgl "Tgl" filler]
-
+    
         h2 "Text:"
         text "Normal text here"
         label "Field label"
-
+    
         h2 "Slider bars:"
         slider 200x24
         scroller 200x24
         progress 33.33%
-
+    
         h2 "Text input:"
         field "Field"
         area "Text area"
-
+    
         h2 "Images:"
         group [
             image %bay.jpg
@@ -197,7 +203,7 @@ They will display like this:
             ]
         ]
     ]
-    
+</pre>
 
 Displays as:
 [[images/Vid-tutorial-style-examples.png|center]]
@@ -253,7 +259,7 @@ To get even greater control over a style, you can specify precise ''options''. H
     toggle "Toggle" options [rounding: 10]
     button "Button" options [material: 'sand]
     toggle "Toggle" options [material: 'sand led-colors: [red green]]
-
+    
     field "Field" options [
         rounding: 0
         back-colors: [200.10.10 255.40.40]
@@ -277,6 +283,7 @@ It will look like this:
 
 Easy to create drawing...
 
+<pre>
     view [
         draw [
             pen blue
@@ -286,7 +293,7 @@ Easy to create drawing...
             circle
         ]
     ]
-    
+</pre>
 
 [[images/Vid-tutorial-style-resize1.png|center]]
 
@@ -298,27 +305,28 @@ Now, resize the window.
 
 Now that you know the main concepts for layouts and styles, it's time to combine them to create something useful: an input form.
 
+<pre>
     view [
        h2 "Account Information"
-
+    
        text "Please enter your account details here."
-
+    
        group 2 [
-
+    
            label "First name" field
            label "Last name" field
            label "Email" field
            label "City" field
-
+    
            blank
            group [
                button gold "Submit"
                button sky "Cancel"
            ]
-
+    
        ]
     ]
-    
+</pre>
 
 It will display like this:
 

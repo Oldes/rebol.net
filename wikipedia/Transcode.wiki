@@ -8,16 +8,17 @@ Note that normal translation of source code is performed in LOAD by TO BLOCK!, n
 
 ==Usage==
 
+<pre>
     USAGE:
             TRANSCODE source
-
+    
     DESCRIPTION:
              Translates code/data from string into value. Returns [value next-source].
              TRANSCODE is a native value.
-
+    
     ARGUMENTS:
              source -- (Type: string!)
-    
+</pre>
 
 For example:
 

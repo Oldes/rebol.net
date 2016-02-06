@@ -400,15 +400,21 @@ Define a <code>head-index?</code> function obtaining a series <code>s</code> and
 
 This is the solution working when the <code>index?</code> function and the <code>pick</code> function both use indexing method compatible with the <code>skip</code> function indexing method:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [i + index? s]
+</pre>
 
 This is the solution working when the <code>index?</code> function and the <code>pick</code> function use the indexing methods from R3:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]
+</pre>
 
 This is the solution working in the present state of R2:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]
+</pre>
 
 '''Summary:'''
 

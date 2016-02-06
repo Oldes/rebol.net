@@ -89,13 +89,16 @@ I (Ladislav) support the variant 1, i.e. the variant based on Rebol dialect, a.k
 
 Therefore, I think, that a definition like:
 
+<pre>
     a-struct: make struct! [
         number [integer!]
         character [char!]
     ] none
+</pre>
 
 is actually an error. What is needed, is to be able to define structs containing C datatypes, like:
 
+<pre>
     a-struct: make struct! [
         a-32-bit-integer [int]
         a-64-bit-integer [I64]
@@ -103,6 +106,7 @@ is actually an error. What is needed, is to be able to define structs containing
         a-double [double]
         a-character [char]
     ] none
+</pre>
 
 This change will make the interface less confusing, especially for newcomers.
 
@@ -110,84 +114,110 @@ This change will make the interface less confusing, especially for newcomers.
 
 In C, it is possible to nest structs. This means, that it is possible to write something like:
 
+<pre>
     a-struct: make struct! [
         innner-struct [struct! [i [int] c [char]]]
     ] none
+</pre>
 
 having essentially the same meaning as:
 
+<pre>
     a-struct: make struct! [
         i [int] c [char]
     ] none
+</pre>
 
 with the exception, that in the former case the items are seen as "grouped together", even though they occupy exactly the same places in the resulting structure.
 
 As opposed to that, the current (R2) behaviour is, that the former case is interpreted as a struct containing a pointer to struct, which should have been rather described as:
 
+<pre>
     a-struct: make struct! [
         innner-struct [struct*! [i [int] c [char]]]
     ] none
+</pre>
 
 ===Structs can be returned from C===
 
 This means, that we should be able to write:
 
+<pre>
     ret-struct: make routine! [
         return: [struct! [x [float] y [float]]]
     ] lib "ret_struct"
+</pre>
 
 Meaning, that the ret_struct function returns a structure, not a pointer to structure. Currently, there is no way how to circumvent this problem.
 
 When expecting a pointer to structure, we should write:
 
+<pre>
     ret-struct: make routine! [
         return: [struct*! [a [int] b [float]]]
     ] lib "ret_struct"
+</pre>
 
 ===Fixed length arrays===
 
 In C it is possible to define fixed length arrays in a structure. I suggest to support that using a syntax:
 
+<pre>
     a-struct: make struct! [
         ca [char [10]]
     ] none
+</pre>
 
 Note: This is not the same as the current behaviour of the char-array construct in R2. Char-array actually inserts into the structure just a pointer, i.e. the current R2 construct:
 
+<pre>
     a-struct: make struct! [
         ca [char-array 10]
     ] none
+</pre>
 
 Actually corresponds to the declaration below, which I propose as a more adequate replacement, having greater flexibility:
 
+<pre>
     a-struct: make struct! [
         ca [struct*! [char [10]]]
     ] none
+</pre>
 
 ===C pointers===
 
 I propose to use a new struct*! datatype to represent C pointers, i.e. to represent a C pointer like:
 
+<pre>
     void *p;
+</pre>
 
 I suggest to use the syntax:
 
+<pre>
     p [struct*!]
+</pre>
 
 The same holds for
 
+<pre>
     char *ptr;
+</pre>
 
 , which may be represented by
 
+<pre>
     ptr [struct*! [c [char]]]
+</pre>
 
 To be as user-friendly as possible we need to allow for struct*! conversions like:
 
+<pre>
     to string! ptr ; converts char* to Rebol string using the nul-character convention
     bp: to #[struct*! [char [10]]] p ; converts void *p to a pointer to array of 10 characters
     to binary! bp ; converts the pointer to Rebol binary! having length (10)
     op: to #[struct*! [x [float] y [float]]] p ; converts p to a pointer to a structure containing two floats
+</pre>
 
 ===Existing code===
 

@@ -151,6 +151,7 @@ In addition, it would be good to specify arguments by name and allow access by n
 
 For example a keyword entry (here as a style) for the DELECT dialect would become:
 
+<pre>
     button: context [
         name: string!
         size: pair!
@@ -160,12 +161,13 @@ For example a keyword entry (here as a style) for the DELECT dialect would becom
         action: block!
         alt-action: block!
     ]
-    
+</pre>
 
 After the button style is parsed, the object can be cloned with the argument values mapped as provided.
 
 Or an alternate method would be to use the same syntax as function definitions:
 
+<pre>
     button: [
         name [string!]
         size [pair!]
@@ -175,7 +177,7 @@ Or an alternate method would be to use the same syntax as function definitions:
         action [block!]
         alt-action [block!]
     ]
-    
+</pre>
 
 Then call a function (via APPLY) that would accept those arguments.
 

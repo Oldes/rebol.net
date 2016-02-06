@@ -62,14 +62,14 @@ General usage has been kept very simple -- to be on par (or better) with what ot
 Here is an example that shows the most common usage patterns:
 
     d: make map! 1000
-
+    
     d/test: 10
     print d/test
     10
-
+    
     print d/notest
     none
-
+    
     d/test: 20
     print d/test
     20

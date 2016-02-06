@@ -84,6 +84,7 @@ To determine whether the <code>next</code> function is the successor operator we
 
 It turns out that our concerns are justified. To prove it, let's define:
 
+<pre>
     succ: func [
         "Returns the series at its next position."
         series [series!]
@@ -95,6 +96,7 @@ It turns out that our concerns are justified. To prove it, let's define:
         clear :t
         :series
     ]
+</pre>
 
 Now our testing reveals:
 
@@ -163,6 +165,7 @@ When testing the above <code>succ-next-s</code> series we obtain:
 
 Similarly as we patched the <code>next</code> function we can patch also the <code>index?</code> function:
 
+<pre>
     index?': func [
         {Returns the index number of the current position in the series.}
         series [series! port!]
@@ -176,6 +179,7 @@ Similarly as we patched the <code>next</code> function we can patch also the <co
         clear :t
         i
     ]
+</pre>
 
 Now we obtain:
 
@@ -231,19 +235,25 @@ Define a <code>head-index?</code> function obtaining a series <code>s</code> and
 
 The solution working when the <code>index?</code> function and the <code>pick</code> function both use indexing method compatible with the <code>skip</code> function indexing method:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [i + index? s]
+</pre>
 
 (This solution is the simplest.)
 
 The solution working when the <code>index?</code> function and the <code>pick</code> function use the indexing methods from R3:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]
+</pre>
 
 (This solution is the second simplest.)
 
 The solution working in the present state of R2:
 
+<pre>
     head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]
+</pre>
 
 (This solution is the most complicated and it is neither "simple" nor "arithmetic". Neither it can be, having to deal with a successor to successor incompatible non-arithmetic indexing method.)
 

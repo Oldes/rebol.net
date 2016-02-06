@@ -48,6 +48,7 @@ Or, you can explicitly specify that unset! is allowed as a value:
 
 To help show how it works, here are examples of arg as a 'word. These are all true expressions.
 
+<pre>
     ; Arg as 'word:
     f: func ['arg] [:arg]
     1 = f 1
@@ -55,14 +56,15 @@ To help show how it works, here are examples of arg as a 'word. These are all tr
     'path/word = f path/word
     2 = f (1 + 1)
     n: 3  3 = f :n
-
+    
     ; Allows unset value:
     f: func ['arg [integer! unset!]] [:arg]
     do [unset? f]
-    
+</pre>
 
 And, here are examples of arg as a :word. These are all true expressions.
 
+<pre>
     ; Arg as :word:
     f: func [:arg] [:arg]
     1 = f 1
@@ -70,11 +72,11 @@ And, here are examples of arg as a :word. These are all true expressions.
     'path/word = f path/word
     paren? f (1 + 1)
     get-word? f :n
-
+    
     ; Allows unset value:
     f: func [:arg [integer! unset!]] [:arg]
     do [unset? f]
-    
+</pre>
 
 ==Pending==
 

@@ -40,8 +40,9 @@ You can also modify the state of tickets that you've submitted earlier.
 
 CureCode API URLs must be in the following format:
 
-    http://curecode.org/rebol3/api.rsp?<parameter 1>&<parameter 2>&<parameter n> 
-    
+<pre>
+    http://curecode.org/rebol3/api.rsp?<parameter 1>&<parameter 2>&<parameter n>
+</pre>
 
 Parameters are separated using the ampersand character (&). You can specify as many parameters as you like, in any order. Parameters can be passed in URL or as POST data.
 
@@ -55,12 +56,12 @@ All responses are encapsulated using the following format :
     <blockquote>
     * '''<tt>ok</tt>''' : valid request, <span style="color:green">'''<tt><data></tt>'''</span> can be a ''block!'' or ''integer!'' value.
     * '''<tt>error</tt>''' : invalid request, <span style="color:green">'''<tt><data></tt>'''</span> will be a ''string!'' containing an error message.
-
+    
     <pre>
     [ok 492]
     [ok [403 202 404]]
     [ok [summary: "Crash calling BROWSE function" description:...]]
-
+    
     [error "FILTER argument is invalid"]
     
 
@@ -68,7 +69,7 @@ You can use LOAD to query the remote API and get Rebol data back. If you don't t
 
     >> load http://curecode.org/rebol3/api.rsp?type=list&filter=2&mode=count
     == [ok 492]
-
+    
     >> read http://curecode.org/rebol3/api.rsp?type=list&filter=2&mode=count
     == "[ok 492]"
     
