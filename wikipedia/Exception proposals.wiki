@@ -331,12 +331,19 @@ Advantages of having such a function in Rebol:
 *'''let''' is shorter and simpler than the <code>do func [variables] block</code> idiom
 
 Let-example #1 (using a local 'sqrt2 variable to compute the final result):
+
 <pre>print ["result:" let 'sqrt2 square-root 2 [1 / sqrt2]]</pre>
+
 Let-example #2 (using a local 'x variable to not modify the original 'x variable outside):
+
 <pre>x: 121 print ["result:" let 'x :x [x: x + 1 x / 2 + x]]</pre>
+
 Let-example #3 (emulates the R2 variant of the '''use''' function):
+
 <pre>let vars #[unset!] body</pre>
+
 Context-example #1 (notice, that it needs a 'result field to "get the result outside"):
+
 <pre>print [
     "result:" get in context [
         sqrt2: square-root 2
@@ -345,7 +352,9 @@ Context-example #1 (notice, that it needs a 'result field to "get the result out
         result: 1 / sqrt2
     ] 'result
 ]</pre>
+
 Context-example #2 (the method used works only if the "outside 'x" is in the user context):
+
 <pre>x: 121
 print [
     "result:" get in context [
@@ -354,13 +363,21 @@ print [
         result: x / 2 + x
     ] 'result
 ]</pre>
+
 Use-example #1:
+
 <pre>print ["result:" use 'sqrt2 [sqrt2: square-root 2 1 / sqrt2]]</pre>
+
 Use-example #2 (works only if the "outside 'x" is in the user context):
+
 <pre>x: 121 print ["result:" use 'x [x: system/contexts/user/x x: x + 1 x / 2 + x]]</pre>
+
 Func-example #1:
+
 <pre>print ["result:" do has [sqrt2] [sqrt2: square-root 2 1 / sqrt2]]</pre>
+
 Func-example #2:
+
 <pre>x: 121 print ["result:" do func [x] [x: x + 1 x / 2 + x] :x]</pre>
 
 ====USE====
@@ -479,7 +496,9 @@ This version binds the given BLOCK just once, not at the start of every loop:
     
     reduce [:do-block block]
 ]</pre>
+
 Usage:
+
 <pre>for n 1 5 1 c-aware [
     if n < 3 [continue]
     print n
@@ -532,12 +551,19 @@ Advantages of having such a function in Rebol:
 *'''let''' is shorter and simpler than the <code>do func [variables] block</code> idiom
 
 Let-example #1 (using a local 'sqrt2 variable to compute the final result):
+
 <pre>print ["result:" let 'sqrt2 square-root 2 [1 / sqrt2]]</pre>
+
 Let-example #2 (using a local 'x variable to not modify the original 'x variable outside):
+
 <pre>x: 121 print ["result:" let 'x :x [x: x + 1 x / 2 + x]]</pre>
+
 Let-example #3 (emulates the R2 variant of the '''use''' function):
+
 <pre>let vars #[unset!] body</pre>
+
 Context-example #1 (notice, that it needs a 'result field to "get the result outside"):
+
 <pre>print [
     "result:" get in context [
         sqrt2: square-root 2
@@ -546,7 +572,9 @@ Context-example #1 (notice, that it needs a 'result field to "get the result out
         result: 1 / sqrt2
     ] 'result
 ]</pre>
+
 Context-example #2 (the method used works only if the "outside 'x" is in the user context):
+
 <pre>x: 121
 print [
     "result:" get in context [
@@ -555,13 +583,21 @@ print [
         result: x / 2 + x
     ] 'result
 ]</pre>
+
 Use-example #1:
+
 <pre>print ["result:" use 'sqrt2 [sqrt2: square-root 2 1 / sqrt2]]</pre>
+
 Use-example #2 (works only if the "outside 'x" is in the user context):
+
 <pre>x: 121 print ["result:" use 'x [x: system/contexts/user/x x: x + 1 x / 2 + x]]</pre>
+
 Func-example #1:
+
 <pre>print ["result:" do has [sqrt2] [sqrt2: square-root 2 1 / sqrt2]]</pre>
+
 Func-example #2:
+
 <pre>x: 121 print ["result:" do func [x] [x: x + 1 x / 2 + x] :x]</pre>
 
 ====USE====
@@ -686,7 +722,9 @@ This version binds the given BLOCK just once, not at the start of every loop:
     
     reduce [:do-block block]
 ]</pre>
+
 Usage:
+
 <pre>for n 1 5 1 c-aware [
     if n < 3 [continue]
     print n

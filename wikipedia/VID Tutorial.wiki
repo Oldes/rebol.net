@@ -55,12 +55,14 @@ Now try this:
     button "Fourth"
  ]
 </pre>
+
 You will see a vertical layout of the buttons:
 
 [[images/Vid-tutorial-buttons1.png|center]]
 
 
 If instead you want horizontal buttons, you use ''group'' such as this:
+
 <pre>
  view [
     group [
@@ -71,6 +73,7 @@ If instead you want horizontal buttons, you use ''group'' such as this:
     ]
  ]
 </pre>
+
 It will display:
 
 [[images/Vid-tutorial-buttons2.png|center]]
@@ -91,6 +94,7 @@ You can also use groups to organize your layout into columns. Here we request tw
     ]
  ]
 </pre>
+
 It looks like &rarr;
 
 [[images/Vid-tutorial-buttons3.png|center]]
@@ -128,6 +132,7 @@ VID provides the most common styles, so you can just start creating user interfa
 The fastest way to learn the basic styles is to show them! Here's a sample of styles:
 
 <!--
+
 <pre>
  view [
     h1 "Style Examples"
@@ -163,6 +168,7 @@ They will display like this:
 -->
 {{need|Deal with the commented section here.  Carl's example was cleaner, but the groupings allowed a screen capture}}
 {{caution|about logo.gif;  The line  pen logo.gif will not work in the Rebol Alpha.  It can be worked around by using<br>  >> save/all %/tmp/logo.gif logo.gif  <br>from Rebol/View 1.3.2.  Then <br> >> logo.gif: load %/tmp/logo.gif <br> in the alpha.}}
+
 <pre>
 view [
     h1 "Style Examples"

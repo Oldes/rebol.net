@@ -43,6 +43,7 @@ polygon 20x20 180x130 10x100
 <br>
 
 '''Additional notes about LINE-CAP and LINE-JOIN'''
+
 <pre>
 How are lines drawn
 

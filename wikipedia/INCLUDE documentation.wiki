@@ -272,6 +272,7 @@ include/link %script-base.r %verbose-script.r</pre>
 
 To create the two versions of the script containing everything they need to run it is sufficient to do:
  
+
 <pre>include %script-builder.r</pre>
 
 , which takes care of creating both script versions.
@@ -450,6 +451,7 @@ To create a Windows Explorer association so that you can right-click on a <code>
 *Download the <code>%include.r</code> script.
 *Create a script file including any script
 :This is an example file (use your own directory paths):
+
 <pre>Rebol [
 	Title: "Incl.r3"
 	File: %incl.r3
@@ -466,6 +468,7 @@ include %/d/ladislav/saphirion/trunk/r3-gui/loader/loader.r3
 
 ; include the argument script
 include to-rebol-file system/script/args</pre>
+
 *Add a new association for <code>.r</code> files. (Actually, you can add more associations. For example, I have one called <code>r2</code> to evaluate the script using '''include''' and Rebol 2 interpreter and one called <code>r3</code> to evaluate the script using '''include''' and the Rebol 3 interpreter.)
 
 ====How to add the new association for <code>.r</code> files in Windows XP or older====

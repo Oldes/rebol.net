@@ -280,6 +280,7 @@ None of the above mentioned problems is too serious (except [http://curecode.org
 ===Example mezzanine implementation of definitional CATCH/THROW===
 
 If we had a definitional '''return''' in Rebol, the definitional '''catch'''/'''throw''' pair could be defined as a mezzanine, using code like:
+
 <pre>catch: func [
     {Catches a throw from a block and returns its value.}
     body [block!]
@@ -309,6 +310,7 @@ Disadvantages (mostly to all uses of '''throw/'''name at the moment):
 *Name conflicts when the flow of execution goes through code that is written by different people who aren't coordinating their efforts well enough. Also solved by [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744].
 
 Here's an unspoofable '''quit/'''now replacement implemented using dynamic '''throw/'''name with [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] and [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744] fixed:
+
 <pre>use [name] [ ; Local 'name makes it unspoofable
     quit-now: func [retcode] [throw/name retcode 'name]
     catch-quit-now: func [body [block! file! url!]] [quit/return catch/name [return do body] 'name]

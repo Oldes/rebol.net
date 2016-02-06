@@ -36,6 +36,7 @@ mold-pair: func [
 ] [
 	rejoin [round/to s/x / subpixel-count 0.000015 "x" round/to s/y / subpixel-count 0.000015]
 ]</pre>
+
 <pre>;example usage
 ; a 123.45x678.90 pair
 load-pair 123.45 678.90 ; == 8090419x44492390 (this would be the "internal representation")

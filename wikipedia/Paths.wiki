@@ -20,6 +20,7 @@ If the concept of paths seems difficult to understand, perhaps just think of the
 In Rebol, a path is formed from root value and a list of refinements. Each refinement provides more specific information about how to select a value, starting from the root. Each refinement is separated by a slash (/) - a method that is identical to how URL's are written on the Internet.
 
 Here are a few example paths:
+
 <pre>
 names/12
 image/100x20

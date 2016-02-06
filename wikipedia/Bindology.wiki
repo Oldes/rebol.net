@@ -7,7 +7,9 @@ I would like to thank the men that influenced this article in some way. Those ar
 The code in this article was tested in Rebol/View 2.7.6.3.1. It is possible that other versions of the interpreter yield different results.
 
 A reader who wants to check all the examples can run this code: 
+
 <pre>do http://www.rebol.org/download-a-script.r?script-name=contexts.r</pre>
+
 , which defines all functions from this article.
 
 ==Word types==
@@ -262,11 +264,13 @@ Observation (Automatic growth): The global context can be enlarged using the MAK
 Observation (MAKE, TO and unbound words): All words contained in a result block of MAKE BLOCK!, TO BLOCK! and in its subblocks are unbound if the SPEC argument is a string.
 
 Illustration:
+
 <pre>bind? first make block! "unbound" ; == none
 bind? first first first make block! "[[unbound-too]]" ; == none</pre>
 
 ==Local contexts==
 Definition (Local words/local variables): The words that are neither unbound nor global we call local words (local variables):
+
 <pre>local?: func [
     {find out, if a WORD is local}
     word [any-word!]
@@ -276,6 +280,7 @@ Definition (Local words/local variables): The words that are neither unbound nor
         global? :word
     ]
 ]</pre>
+
 Definition (Local context): A context is called local context if its words are local words.
 
 Observation (Local context types): User defined objects, function contexts and USE contexts are local contexts. In addition to these we can use the BIND? function to "convert" user defined objects and ports to contexts and using the DISARM function we can convert errors to objects. All the results are local contexts. The main distinction between the function- and USE- contexts and all other context types lies in the fact that the function- and USE- contexts don't need to contain a word equal to the word 'self.
@@ -621,6 +626,7 @@ Before we try to model the function evaluation, we can ask whether we can use th
 The answer is positive and the function able to do this is defined below.
 
 First of all a function that can extract all local words of a function from its SPEC:
+
 <pre>locals?: func [
     {Get all locals from a spec block.}
     spec [block!]
