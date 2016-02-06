@@ -4,14 +4,18 @@ The TAKE function removes values from a series and returns them as a result.
 
 A common pattern found in queues and stacks is to remove a value, returning the value as a result:
 
-    value: first series
-    remove series
+<pre>
+value: first series
+remove series
+</pre>
 
 This code would return the value, and also remove it from the series.
 
 The pattern is so common that R3 adds a new function, TAKE, that can be used on all series datatypes. Using TAKE, the above example would be reduced to just:
 
-    value: take series
+<pre>
+value: take series
+</pre>
 
 and, the result is the same as above.
 
@@ -19,15 +23,19 @@ and, the result is the same as above.
 
 TAKE can be used with INSERT or APPEND to implement a number of stack and queue methods. For example, a queue can be implemented as:
 
-    append stack value1
-    ...
-    value2: take stack
+<pre>
+append stack value1
+...
+value2: take stack
+</pre>
 
 And, with the TAKE/last refinement, a stack is implemented with:
 
-    append stack value1
-    ...
-    value2: take/last stack
+<pre>
+append stack value1
+...
+value2: take/last stack
+</pre>
 
 ==Usage==
 
@@ -55,52 +63,66 @@ Note that TAKE works anywhere within a series, not just at the head and tail.
 
 For example:
 
-    value: take at series 10
+<pre>
+value: take at series 10
+</pre>
 
 will remove the value at series position 10 and return it.
 
 So, the TAKE/last refinement is also roughly equivalent to:
 
-    value: take back tail series
+<pre>
+value: take back tail series
+</pre>
 
 ==Take/part refinement==
 
 take/part works like the copy/part, with a few differences.
 
-    >> take/part [1 2 3 4 5] 1
-    == [1]
+<pre>
+>> take/part [1 2 3 4 5] 1
+== [1]
 
-    >> take/part [1 2 3 4 5] 2
-    == [1 2]
+>> take/part [1 2 3 4 5] 2
+== [1 2]
+</pre>
 
 Copy/part returns [] in the case of an empty series. Take/part returns none, just as it does without the /part refinement.
 
-    >> take []
-    == none
+<pre>
+>> take []
+== none
 
-    >> take/part [] 2
-    == none 
+>> take/part [] 2
+== none
+</pre>
 
 Take/part/last works it's way backwards.
 
-    >> take/last/part [1 2 3 4 5] 2
-    == [4 5]
+<pre>
+>> take/last/part [1 2 3 4 5] 2
+== [4 5]
+</pre>
 
 With /last, /part is negated. Using a negative value for the length, combined with /last, takes values going forward.
 
-    >> take/last/part [1 2 3 4 5] -2
-    == none
+<pre>
+>> take/last/part [1 2 3 4 5] -2
+== none
 
-    >> take/part at [1 2 3 4 5] 3 -2
-    == [1 2]
+>> take/part at [1 2 3 4 5] 3 -2
+== [1 2]
 
-    >> take/last/part at [1 2 3 4 5] 3 -2
-    == [4 5]
+>> take/last/part at [1 2 3 4 5] 3 -2
+== [4 5]
+</pre>
 
 ???
 
-    >> take/part [1 2 3 4 5] -2
-    == [1 2 3 4 5]
+<pre>
+>> take/part [1 2 3 4 5] -2
+== [1 2 3 4 5]
+</pre>
 
 
 TBD - mention /deep for copying subseries values

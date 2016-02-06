@@ -20,7 +20,9 @@ Can, and should they be standard URLs, with the scheme defining the protocol?
 
 Jabber uses an email format for Jabber IDs. The resource-id identifies specific objects that are associated with a user, such as devices or locations.
 
-    user@domain.com/resource-id
+<pre>
+user@domain.com/resource-id
+</pre>
 
 
 What kind of "processes" are we talking about as endpoints? Is it about communication between R3 tasks (within a single process), about multiple R3 processes on the same machine, R3 processes across a LAN? WAN? Heterogenous processes?
@@ -30,7 +32,9 @@ What kind of "processes" are we talking about as endpoints? Is it about communic
 
 What do messages look like? Can it be any simpler than this?
 
-    [opt header  body]
+<pre>
+[opt header  body]
+</pre>
 
 For interop purposes, how do you map from native Rebol format to JSON, XML, or other formats?
 

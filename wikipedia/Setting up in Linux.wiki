@@ -39,7 +39,10 @@ Selecting the ".rebol" folder, and then the "view" folder will reveal the user.r
 
 == Adjusting Fonts ==
 
- 
+<pre>
+
+</pre>
+
 Reprinted here is an article from the Rebol.org library, written by brianwisti
 
 Adjusting Fonts in /View
@@ -47,20 +50,22 @@ Adjusting Fonts in /View
 This is just a little tip from a while ago when I was having font display issues under Linux. The issues have gone away, but this tip still applies on any system where you don't care for the default fonts being used by Rebol/View.
 
 It's very easy, actually. Important customization rules are contained in your personal user.r file, located at ~/.rebol/view/user.r on Linux machines. Once you have some decent fonts installed, add the following code to your user.r file.
- if (not none? system/view) [
-     system/view/screen-face/options: none
-     font-serif: "Georgia"
-     font-sans-serif: "Arial"
-     foreach [style obj] svv/vid-styles [
-         if obj/font [
-             switch obj/font/name [
-                 "helvetica" [obj/font/name: font-sans-serif]
-                 "times" [obj/font/name: font-serif]
-             ]
-         ]
-     ]
- ]
- 
+
+<pre>
+if (not none? system/view) [
+    system/view/screen-face/options: none
+    font-serif: "Georgia"
+    font-sans-serif: "Arial"
+    foreach [style obj] svv/vid-styles [
+        if obj/font [
+            switch obj/font/name [
+                "helvetica" [obj/font/name: font-sans-serif]
+                "times" [obj/font/name: font-serif]
+            ]
+        ]
+    ]
+]
+</pre>
 
 What's going on here? Not much, really. First we check to make sure we're running in a Rebol session with View available. That way nothing blows up if we are running a command line script. Then we name some fonts. I placed them in variables toward the top of the block because every little bit of organization helps a scattered brain like mine. The important part is last - we step through all of the available styles and, if that style cares about fonts, tell them to use our sans-serif and serif fonts wherever they use helvetica and times , respectively.
 
@@ -71,24 +76,26 @@ That's it! Like I said, there's not much going on here. Still, little adjustment
 Under linux you need to setup the font object to be able use text 
 rendered by DRAW dialect. So something like this should work:
 
-    my-font: make face/font [
-        name: "/usr/share/fonts/truetype/freefont/FreeSans.ttf"
-        ;replace with your path to font you want to use
-        size: 12
-    ]
+<pre>
+my-font: make face/font [
+    name: "/usr/share/fonts/truetype/freefont/FreeSans.ttf"
+    ;replace with your path to font you want to use
+    size: 12
+]
 
-    view layout [
-        box snow 100x100 effect [
-            draw [
-                font my-font
-                pen black
-                text 10x10 "Red Box:"
-                pen red
-                fill-pen red
-                box 10x30 80x50
-            ]
+view layout [
+    box snow 100x100 effect [
+        draw [
+            font my-font
+            pen black
+            text 10x10 "Red Box:"
+            pen red
+            fill-pen red
+            box 10x30 80x50
         ]
     ]
+]
+</pre>
 
 by Cyphre, [Linux] group for linux Rebol users, Alme Groups http://www.rebol.org/aga-display-posts.r?post=r3wp226x0  03-mar-2011
 
@@ -99,7 +106,9 @@ by Cyphre, [Linux] group for linux Rebol users, Alme Groups http://www.rebol.org
 The "File:" label of the top menu often appears truncated, as if not have enough length were provided. <BR>
 This line will provide a bit more room for the label:
 
-    replace ctx-edit/22 30x22 40x22
+<pre>
+replace ctx-edit/22 30x22 40x22
+</pre>
 
 The script may be written into the user.r file, or entered into the console.  Type "editor" and  "test" before and after to compare.  
 

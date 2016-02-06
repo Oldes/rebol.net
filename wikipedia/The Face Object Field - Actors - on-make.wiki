@@ -10,12 +10,16 @@ The event that follows on-make is '''[[The Face Object Field - Actors - on-resiz
 
 Setup colors unique to this face.
 
- on-make: [
-   face/facets/colors: copy [255.255.255 128.128.128]
- ]
+<pre>
+on-make: [
+  face/facets/colors: copy [255.255.255 128.128.128]
+]
+</pre>
 
 Setting up panels for a compound style.
 
- on-make: [
-   make-panel2 face
- ]
+<pre>
+on-make: [
+  make-panel2 face
+]
+</pre>

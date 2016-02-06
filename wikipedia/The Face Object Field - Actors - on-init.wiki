@@ -4,6 +4,8 @@
 
 Resetting the face on initialization:
 
- on-init: [
-   do-style face 'on-reset
- ]
+<pre>
+on-init: [
+  do-style face 'on-reset
+]
+</pre>

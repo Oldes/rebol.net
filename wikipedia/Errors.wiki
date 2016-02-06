@@ -6,13 +6,17 @@
 
 For example, in R2, the code:
 
-    result: try block
-    if error? result [print result]
+<pre>
+result: try block
+if error? result [print result]
+</pre>
 
 would need to be written as:
 
-    result: try block
-    if error? :result [print disarm :result]
+<pre>
+result: try block
+if error? :result [print disarm :result]
+</pre>
 
 The the get-word references and DISARM are required to prevent the error from being thrown again.
 
@@ -26,10 +30,12 @@ You can use DO to force error exception handling.
 
 Extending the above example:
 
-    result: try block
-    if error? result [
-        either result/type = 'math [do result][print result]
-    ]
+<pre>
+result: try block
+if error? result [
+    either result/type = 'math [do result][print result]
+]
+</pre>
 
 This code will cause the error if its of the math type, otherwise it will print the error to the console.
 
@@ -39,31 +45,39 @@ In R3, the WHERE field of an error provides a backtrace of the evaluation stack.
 
 Take this example:
 
-    divit: func [a b] [a / b]
-    divit 1 0
-    ** Math error: Attempt to divide by zero
-    ** Where: / divit
-    ** Near: / b
+<pre>
+divit: func [a b] [a / b]
+divit 1 0
+** Math error: Attempt to divide by zero
+** Where: / divit
+** Near: / b
+</pre>
 
 The WHERE field shows the evaluation stack, indicating the error happened in / (divide) within the divit function.
 
 This backtrace information is also available when you process an error with exception code:
 
-    err: try [divit 1 0]
-    probe err/where
+<pre>
+err: try [divit 1 0]
+probe err/where
+</pre>
 
 ==Form Format==
 
 There are times when you want to catch an error and print it using the same "friendly" format used by the console. The FORM function will now do that. In addition, because PRINT uses FORM, you can also use PRINT for nicely formatted errors:
 
-    result: try [divit 1 0]
-    if error? result [print result halt]
+<pre>
+result: try [divit 1 0]
+if error? result [print result halt]
+</pre>
 
 On an error, you will see the result:
 
-    ** Math error: Attempt to divide by zero
-    ** Where: / divit try
-    ** Near: / b
+<pre>
+** Math error: Attempt to divide by zero
+** Where: / divit try
+** Near: / b
+</pre>
 
 ==Error Helper==
 
@@ -71,17 +85,23 @@ If you want to construct an error value, you would normally define it like you w
 
 For example:
 
-   err: make error! [
-       type: 'math
-       id: 'zero-divide
-       near: [here]
-       where: [here]
-   ]
+<pre>
+err: make error! [
+    type: 'math
+    id: 'zero-divide
+    near: [here]
+    where: [here]
+]
+</pre>
 
 But, in most code, you really don't want to go to that much work. Therefore, we provide the CAUSE-ERROR helper function:
 
-   cause-error 'math 'zero-divide none
+<pre>
+cause-error 'math 'zero-divide none
+</pre>
 
 If the error requires arguments, use a block for the last parameter:
 
-   cause-error 'access 'cannot-open [file-name]
+<pre>
+cause-error 'access 'cannot-open [file-name]
+</pre>

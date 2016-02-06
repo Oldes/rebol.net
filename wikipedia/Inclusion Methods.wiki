@@ -32,9 +32,11 @@ Standardization is a key element. Without it, there is no easy way to create pub
 
 It is common to use DO to include other code files in a program.
 
-   do %file1.r
-   do %file2.r
-   if something [do %file3.r]
+<pre>
+do %file1.r
+do %file2.r
+if something [do %file3.r]
+</pre>
 
 ====How it satisfies the needs====
 
@@ -66,18 +68,22 @@ The disadvantages are:
 
 The LOAD function is often used instead of DO. For example, to load data files.
 
-    data: load %data.r
+<pre>
+data: load %data.r
+</pre>
 
 It is also used often to build distributions, using this simple method:
 
-    files: [
-        %file1.r
-        %file2.r
-        ...
-    ]
-    code: []
-    foreach file files [append code load file]
-    save %program.r code
+<pre>
+files: [
+    %file1.r
+    %file2.r
+    ...
+]
+code: []
+foreach file files [append code load file]
+save %program.r code
+</pre>
 
 It turns out, ''this is how the programs that run most RT tools and websites are built''.
 
@@ -111,9 +117,11 @@ The Rebol 3.0 method of dynamically including modules in a program at runtime.
 
 Summary of usage:
 
-    import 'module    ; converts to .r and will use search path
-    import %module.r  ; will use search path
-    import <nowiki>http://www.rebol.com/module.r</nowiki>
+<pre>
+import 'module    ; converts to .r and will use search path
+import %module.r  ; will use search path
+import <nowiki>http://www.rebol.com/module.r</nowiki>
+</pre>
 
 Imported modules are fully encapsulated when loaded. Exported functions are controlled via an export list (see below).
 
@@ -156,11 +164,13 @@ The Rebol 3.0 method of including modules in a program at LOAD time.
 
 Summary of usage:
 
-    Rebol [type: module imports: ['module]]   ; converts to .r and will use search path
-    Rebol [type: module imports: [%module.r]] ; will use search path
-    Rebol [type: module imports: <nowiki>[http://www.rebol.com/module.r]</nowiki>]
-    Rebol [type: module exports: [myfunc myobject]] ; Exported words.
-    Rebol [type: module exports: all] ; Export all locally set words.
+<pre>
+Rebol [type: module imports: ['module]]   ; converts to .r and will use search path
+Rebol [type: module imports: [%module.r]] ; will use search path
+Rebol [type: module imports: <nowiki>[http://www.rebol.com/module.r]</nowiki>]
+Rebol [type: module exports: [myfunc myobject]] ; Exported words.
+Rebol [type: module exports: all] ; Export all locally set words.
+</pre>
 
 Imported modules are fully encapsulated when loaded. Exported words are controlled via an export list.
 
@@ -197,8 +207,10 @@ The Rebol SDK introduced a method called PRebol (Rebol preprocessing).
 
 This method uses the ISSUE! datatype (which is rarely used in code itself) as a type of markup.
 
-    #include %file.r
-    #include %file.r
+<pre>
+#include %file.r
+#include %file.r
+</pre>
 
 ====How it satisfies the needs====
 #Does not execute code.

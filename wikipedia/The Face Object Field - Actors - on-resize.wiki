@@ -10,15 +10,19 @@ If your style is a compound style, the faces inside may also need to be resized,
 
 Resizing a single face:
 
- on-resize: [
-   face/gob/size: arg
-   set-facet face 'size arg
-   set-facet face 'area-size arg - 2   
- ]
+<pre>
+on-resize: [
+  face/gob/size: arg
+  set-facet face 'size arg
+  set-facet face 'area-size arg - 2   
+]
+</pre>
 
 Resizing a compound face with scrollers:
 
- on-resize: [
-   resize-panel face arg
-   update-scrollers face face/gob
- ]
+<pre>
+on-resize: [
+  resize-panel face arg
+  update-scrollers face face/gob
+]
+</pre>

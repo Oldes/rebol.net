@@ -8,6 +8,8 @@ The argument is the drag object. A return value is not necessary.
 
 ===Examples===
 
- on-drop: [
-   ; write an example here
- ]
+<pre>
+on-drop: [
+  ; write an example here
+]
+</pre>

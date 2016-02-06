@@ -30,26 +30,38 @@ Draws a circle or ellipse
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    pen yellow
-    line-width 5
-    circle 200x200 150
+
+<pre>
+pen yellow
+line-width 5
+circle 200x200 150
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/CIRCLE-1b.png|No Description]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    pen logo.gif
-    circle 200x200 150
+
+<pre>
+pen logo.gif
+circle 200x200 150
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/CIRCLE-2b.png|No Description]] <BR>
 A circle using an image as the pen.</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    line-width 2
-    pen yellow
-    fill-pen logo.gif
-    circle 200x200 150
+
+<pre>
+line-width 2
+pen yellow
+fill-pen logo.gif
+circle 200x200 150
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/CIRCLE-3b.png|No Description]] <br>
 Circle using an image as the fill-pen.</p> </TD>

@@ -243,13 +243,17 @@ library!<BR> utype!
 
 No value returned or set. The functions GET and SET have special treatment of unset! values with their /any refinements:
 
- set/any 'a #[unset!]
- get/any 'a
+<pre>
+set/any 'a #[unset!]
+get/any 'a
+</pre>
 
 If functions should be allowed to handle unset! arguments, it should be specified with either unset! or any-type!:
 
- f: func [value [unset!]] [ ... ]
- f: func [value [any-type!]] [ ... ]
+<pre>
+f: func [value [unset!]] [ ... ]
+f: func [value [any-type!]] [ ... ]
+</pre>
 
 ===none!===
 
@@ -270,10 +274,12 @@ If functions should be allowed to handle unset! arguments, it should be specifie
 |#[false]
 |}
 
- >> to integer! true
- == 1
- >> to integer! false
- == 0
+<pre>
+>> to integer! true
+== 1
+>> to integer! false
+== 0
+</pre>
 
 {|border="1" cellpadding="5" cellspacing="0"
 |+ Predefined logics
@@ -355,10 +361,13 @@ integer! decimal! percent! money! char! pair! tuple! time!
 |align="right"| -4.940'656'458'412'465'4E-324
 |align="right"| -4.940'656'458'412'465'4E-322%
 |}
- >> min-integer: to integer! #{8000 0000 0000 0000}
- == -9223372036854775808
- >> max-integer: to integer! #{7FFF FFFF FFFF FFFF}
- == 9223372036854775807
+
+<pre>
+>> min-integer: to integer! #{8000 0000 0000 0000}
+== -9223372036854775808
+>> max-integer: to integer! #{7FFF FFFF FFFF FFFF}
+== 9223372036854775807
+</pre>
 
 ====money!====
 
@@ -391,10 +400,12 @@ integer! decimal! percent! money! char! pair! tuple! time!
 |#"^(FFFF)"
 |}
 
- >> min-char: to char! 0
- == #"^@"
- >> max-char: to char! 65535
- == #"?"
+<pre>
+>> min-char: to char! 0
+== #"^@"
+>> max-char: to char! 65535
+== #"?"
+</pre>
 
 ====pair!====
 
@@ -407,10 +418,12 @@ integer! decimal! percent! money! char! pair! tuple! time!
 |align="center"| 2147483647x2147483647
 |}
 
- >> min-pair: as-pair to integer! #{8000 0000} to integer! #{8000 0000}
- == -2147483648x-2147483648
- >> max-pair: as-pair to integer! #{7FFF FFFF} to integer! #{7FFF FFFF}
- == 2147483647x2147483647
+<pre>
+>> min-pair: as-pair to integer! #{8000 0000} to integer! #{8000 0000}
+== -2147483648x-2147483648
+>> max-pair: as-pair to integer! #{7FFF FFFF} to integer! #{7FFF FFFF}
+== 2147483647x2147483647
+</pre>
 
 
 ====tuple!====
@@ -437,10 +450,12 @@ integer! decimal! percent! money! char! pair! tuple! time!
 |align="right"| 596523:14:07.999999999
 |}
 
- >> min-time: (to time! to integer! #{8000 0001}) - 0.999999999
- == -596523:14:07.999999999
- >> max-time: (to time! to integer! #{7FFF FFFF}) + 0.999999999
- == 596523:14:07.999999999
+<pre>
+>> min-time: (to time! to integer! #{8000 0001}) - 0.999999999
+== -596523:14:07.999999999
+>> max-time: (to time! to integer! #{7FFF FFFF}) + 0.999999999
+== 596523:14:07.999999999
+</pre>
 
 
 ===date!===
@@ -508,45 +523,68 @@ block! paren! path! set-path! get-path! lit-path!
 
 ===image!===
 
-    img: make image! 320x240
-    img/size  ;== 320x240
-    img/rgb   ;== #{00000000...
-    img/alpha ;== #{00000000...
+<pre>
+img: make image! 320x240
+img/size  ;== 320x240
+img/rgb   ;== #{00000000...
+img/alpha ;== #{00000000...
+</pre>
 
 Note: if you want to make image transparent use:
-    
-    img/alpha: 255
+
+<pre>
+img/alpha: 255
+</pre>
 
 (using change and other series manipulations on alpha channel will not work!)
 
 
 To draw into image you can use something like:
 
-    draw img [pen 255.0.0 line 0x0 320x240]
-    view layout [image img]
+<pre>
+draw img [pen 255.0.0 line 0x0 320x240]
+view layout [image img]
+</pre>
 
 You can also create image using binary data directly, like:
 
-    img: make image! reduce [4x1 as-binary "Hello world!"]
-    probe as-string img/rgb ;== "Hello world!"
-    view layout [image img 200x80]
+<pre>
+img: make image! reduce [4x1 as-binary "Hello world!"]
+probe as-string img/rgb ;== "Hello world!"
+view layout [image img 200x80]
+</pre>
 
 
 [[images/Hello-world-encoded-as-an-image.png|No Description]]
 
 If you have raw RGBA binary data, you can create image! from it using:
-   img: to image! #{FFFFFFC0000000C0}
-   view layout [image img 200x100]
+
+<pre>
+img: to image! #{FFFFFFC0000000C0}
+view layout [image img 200x100]
+</pre>
 
 [[images/To-image-example-result.png|No Description]]
 
 Another note:
 In Rebol2 you have to use:
-    view layout [image img]
+
+<pre>
+view layout [image img]
+</pre>
+
 ... but in Rebol3 (alpha version) you can use just:
-    view [image img]
+
+<pre>
+view [image img]
+</pre>
+
 ... but it would be nice to have chance to do just:
-    view img
+
+<pre>
+view img
+</pre>
+
 ... which is easy to add and it's already submited as a wish.
 
 ===map!===

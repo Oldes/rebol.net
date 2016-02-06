@@ -96,11 +96,13 @@ list of URLs where Rebol should not be listed for one reason or another (because
 
 Lispers talk a lot about building their own languages, which is what Rebol is all about too. Would it make sense to do a Rebol-in-Rebol example, like lisp-in-lisp is sometimes done? Or show them how to make Rebol look like Lisp?
 
-    defun: func ['word 'args [paren!] 'body [paren!]] [
-        set word func to block! args to block! body
-    ]
+<pre>
+defun: func ['word 'args [paren!] 'body [paren!]] [
+    set word func to block! args to block! body
+]
 
-    defun dbl (n) (n * 2)
+defun dbl (n) (n * 2)
+</pre>
 
 ====Logo, Forth, other "specialized" languages====
 

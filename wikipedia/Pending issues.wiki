@@ -4,15 +4,21 @@ This page documents a number of pending issues in the R3 definition, design, or 
 
 We must precisely define how math for percent works. It makes sense that:
 
-   5% + 10% = 15%
+<pre>
+5% + 10% = 15%
+</pre>
 
 But does:
 
-   5% + 10 = 10.5 or 15?
+<pre>
+5% + 10 = 10.5 or 15?
+</pre>
 
 And, the same is true for:
 
-   10 + 5%
+<pre>
+10 + 5%
+</pre>
 
 ==Set-Words in Function Specs==
 
@@ -20,17 +26,21 @@ Set-words in function specs will get a new meaning to allow special function mod
 
 Examples:
 
-    f1: func [a [integer!] return: [integer!]]
-    f2: func [a b options: [protect]]
-    f3: func [a b trace: [enter exit]]
-    f4: func [a b trace: [step]]
-    f5: func [a b catch: [all]]
+<pre>
+f1: func [a [integer!] return: [integer!]]
+f2: func [a b options: [protect]]
+f3: func [a b trace: [enter exit]]
+f4: func [a b trace: [step]]
+f5: func [a b catch: [all]]
+</pre>
 
 ==Function Input Stream Access==
 
 Should a function have access to its input evaluation stream. For example, if F1 is a function, do we allow:
 
-    F1 10 "test"
+<pre>
+F1 10 "test"
+</pre>
 
 where F1 can access the block from the point of [10 "test"].
 

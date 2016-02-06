@@ -12,18 +12,22 @@ It's easiest to show an example.
 
 Take the Rebol script quit.r below:
 
- Rebol []
- print "hello"
- quit
- print "end"
+<pre>
+Rebol []
+print "hello"
+quit
+print "end"
+</pre>
 
 If you start Rebol with that script (on the command line or from an icon), the script will print hello, exit, and Rebol will terminate.
 
 However, if you start Rebol and type from the console, the script will return to the console when the QUIT is evaluated:
 
- >> do %quit.r
- hello
- >>
+<pre>
+>> do %quit.r
+hello
+>>
+</pre>
 
 Notice that "end" is not printed.
 
@@ -31,15 +35,19 @@ Notice that "end" is not printed.
 
 If you want the script above to return a value:
 
- Rebol []
- print "hello"
- quit/return "done"
+<pre>
+Rebol []
+print "hello"
+quit/return "done"
+</pre>
 
 Now you can see that result:
 
- >> do %quit.r
- hello
- == "done"
+<pre>
+>> do %quit.r
+hello
+== "done"
+</pre>
 
 ==QUIT/now==
 
@@ -47,7 +55,9 @@ There may be a few places within the code where QUIT must terminate the Rebol sy
 
 This is done with:
 
-  QUIT/now
+<pre>
+QUIT/now
+</pre>
 
 The Rebol system will terminate immediately.
 

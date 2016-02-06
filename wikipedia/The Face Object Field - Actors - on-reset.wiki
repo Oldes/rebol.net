@@ -4,6 +4,8 @@ There are no arguments or return values needed.
 
 ===Examples===
 
- on-reset: [
-   do-style face 'on-set 0
- ]
+<pre>
+on-reset: [
+  do-style face 'on-set 0
+]
+</pre>

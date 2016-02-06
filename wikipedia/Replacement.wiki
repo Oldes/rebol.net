@@ -66,16 +66,28 @@ Here's some some information about the functions we are all familiar with, provi
 =====Verbatim composition=====
 
 REFORM ''partially supports verbatim composition''
- reform ["U can't touch this"] ; == "U can't touch this"
+
+<pre>
+reform ["U can't touch this"] ; == "U can't touch this"
+</pre>
+
 , but
- reform [#"U" " can't" " touch" " this"] ; == "U  can't  touch  this"
+
+<pre>
+reform [#"U" " can't" " touch" " this"] ; == "U  can't  touch  this"
+</pre>
+
 inserts "unnecessary" spaces into the result string.
 
 =====Precomposed parts=====
 
 REFORM ''supports insertion of precomposed parts''
- precomposed: " touch this"
- reform ["U can't" precomposed] ; == "U can't  touch this"
+
+<pre>
+precomposed: " touch this"
+reform ["U can't" precomposed] ; == "U can't  touch this"
+</pre>
+
 , except for the insertion of "unnecessary" spaces like above.
 
 =====Hierarchy composition=====
@@ -87,14 +99,20 @@ Since strings are flat, ''no hierarchy composition is needed''.
 =====Verbatim composition=====
 
 REJOIN ''supports verbatim composition''
- rejoin ["U can't touch this"] ; == "U can't touch this"
- rejoin [#"U" " can't" " touch" " this"] ; == "U can't touch this"
+
+<pre>
+rejoin ["U can't touch this"] ; == "U can't touch this"
+rejoin [#"U" " can't" " touch" " this"] ; == "U can't touch this"
+</pre>
 
 =====Precomposed parts=====
 
 REJOIN ''supports insertion of precomposed parts''
- precomposed: " touch this"
- rejoin ["U can't" precomposed] ; == "U can't touch this"
+
+<pre>
+precomposed: " touch this"
+rejoin ["U can't" precomposed] ; == "U can't touch this"
+</pre>
 
 =====Hierarchy composition=====
 
@@ -105,42 +123,89 @@ Since strings are flat, ''no hierarchy composition is needed''.
 =====Verbatim composition=====
 
 REDUCE ''does not support verbatim composition of blocks''. E.g. to obtain the
- [U can't touch this]
+
+<pre>
+[U can't touch this]
+</pre>
+
 block we need to write
- reduce ['U 'can't 'touch 'this] ; == [U can't touch this]
+
+<pre>
+reduce ['U 'can't 'touch 'this] ; == [U can't touch this]
+</pre>
+
 We can use the /only refinement, which allows us to write
- reduce/only [U can't touch this] [U can't touch this] ; == [U can't touch this]
+
+<pre>
+reduce/only [U can't touch this] [U can't touch this] ; == [U can't touch this]
+</pre>
+
 , but that does not look any better.
 
 If we want to obtain
- [(U can't touch this)]
+
+<pre>
+[(U can't touch this)]
+</pre>
+
 We need to quote the paren somehow, preferably using the [[Replacement#QUOTE|QUOTE]] function
 
- reduce [quote (U can't touch this)] ; == [(U can't touch this)]
+<pre>
+reduce [quote (U can't touch this)] ; == [(U can't touch this)]
+</pre>
 
 In this case the /only refinement works too
- reduce/only [(U can't touch this)] [] ; == [(U can't touch this)]
+
+<pre>
+reduce/only [(U can't touch this)] [] ; == [(U can't touch this)]
+</pre>
 
 To obtain
- ['U 'can't 'touch 'this]
+
+<pre>
+['U 'can't 'touch 'this]
+</pre>
+
 we again have to [[Replacement#QUOTE|QUOTE]] the elements
- reduce [quote 'U quote 'can't quote 'touch quote 'this] ; == ['U 'can't 'touch 'this]
+
+<pre>
+reduce [quote 'U quote 'can't quote 'touch quote 'this] ; == ['U 'can't 'touch 'this]
+</pre>
 
 =====Precomposed parts=====
 
 REDUCE ''does not support insertion of precomposed parts''. E.g. if
- precomposed: [touch this]
+
+<pre>
+precomposed: [touch this]
+</pre>
+
 REDUCE does not provide a way how to write
- reduce ['U 'can't ...]
+
+<pre>
+reduce ['U 'can't ...]
+</pre>
+
 using the PRECOMPOSED block to obtain
- [U can't touch this]
+
+<pre>
+[U can't touch this]
+</pre>
 
 =====Hierarchy composition=====
 
 REDUCE ''does not support hierarchy composition''. We can compose hierarchical blocks using recursive calls to REDUCE, though
- reduce [1 '+ reduce [1 '+ 1 + 1]] ; == [1 + [1 + 2]]
+
+<pre>
+reduce [1 '+ reduce [1 '+ 1 + 1]] ; == [1 + [1 + 2]]
+</pre>
+
 or
- reduce [1 '+ to paren! reduce [1 '+ 1 + 1]] ; == [1 + (1 + 2)]
+
+<pre>
+reduce [1 '+ to paren! reduce [1 '+ 1 + 1]] ; == [1 + (1 + 2)]
+</pre>
+
 Efficiency note: the last example is inefficient, since the TO function copies the contents of the already composed innermost block when transforming it to paren!.
 
 ====COMPOSE====
@@ -148,28 +213,57 @@ Efficiency note: the last example is inefficient, since the TO function copies t
 =====Verbatim composition=====
 
 COMPOSE ''supports verbatim composition of blocks''. E.g. to obtain the
- [U can't touch this]
+
+<pre>
+[U can't touch this]
+</pre>
+
 block we can write
- compose [U can't touch this]
+
+<pre>
+compose [U can't touch this]
+</pre>
 
 If we want to obtain
- [(U can't touch this)]
+
+<pre>
+[(U can't touch this)]
+</pre>
+
 , the situation is more complicated, since parens are used as escape elements. In this case we need to [[Replacement#QUOTE|QUOTE]] the paren
- compose [(quote (U can't touch this))] ; == [(U can't touch this)]
+
+<pre>
+compose [(quote (U can't touch this))] ; == [(U can't touch this)]
+</pre>
 
 =====Precomposed parts=====
 
 COMPOSE ''supports insertion of precomposed parts''. E.g. for
- precomposed: [touch this]
+
+<pre>
+precomposed: [touch this]
+</pre>
+
 we can write
- compose [U can't (precomposed)] ; == [U can't touch this]
+
+<pre>
+compose [U can't (precomposed)] ; == [U can't touch this]
+</pre>
 
 =====Hierarchy composition=====
 
 COMPOSE ''partially supports hierarchy composition''. We can compose hierarchical blocks using the /deep refinement. E.g.
- compose/deep [1 + [1 + (1 + 1)]] ; == [1 + [1 + 2]]
+
+<pre>
+compose/deep [1 + [1 + (1 + 1)]] ; == [1 + [1 + 2]]
+</pre>
+
 , which is much more readable than its REDUCE counterpart. The problem is that the hierarchy may need to contain parens too, which is in fact unsupported since parens are used as escape for evaluation. We can use recursive calls to COMPOSE, though
- compose [1 + (to paren! compose [1 + (1 + 1)])] ; == [1 + (1 + 2)]
+
+<pre>
+compose [1 + (to paren! compose [1 + (1 + 1)])] ; == [1 + (1 + 2)]
+</pre>
+
 Efficiency note: the last example is inefficient since the TO function copies the contents of the already composed innermost block when transforming it to paren!.
 
 ==Team==
@@ -184,21 +278,25 @@ Efficiency note: the last example is inefficient since the TO function copies th
 
 In R3 syntax:
 
- <nowiki>quote: func [
+<pre>
+quote: func [
     "Returns the value thrown at it without evaluation"
     :value [any-type!]
 ] [
     :value
-]</nowiki>
+]
+</pre>
 
 In R2 syntax:
 
- <nowiki>quote: func [
+<pre>
+quote: func [
     "Returns the value thrown at it without evaluation"
     :value [any-type!]
 ] [
     get/any 'value
-]</nowiki>
+]
+</pre>
 
 The R2 version doesn't work with word! arguments because get-word parameters get the value assigned to the word - there's no way to do a full QUOTE in R2. You just have to use lit-words instead of QUOTE word.
 
@@ -211,35 +309,71 @@ This is the ''proposed'' inline composition function. It uses just one escape ke
 ====Verbatim composition====
 
 INLINE ''supports verbatim composition of blocks''. E.g. to obtain the
- [U can't touch this]
+
+<pre>
+[U can't touch this]
+</pre>
+
 block we can write
- inline [U can't touch this]
+
+<pre>
+inline [U can't touch this]
+</pre>
 
 If we want to obtain:
- [(U can't touch this)]
+
+<pre>
+[(U can't touch this)]
+</pre>
+
 using INLINE, we can write
- inline [(U can't touch this)] ; == [(U can't touch this)]
+
+<pre>
+inline [(U can't touch this)] ; == [(U can't touch this)]
+</pre>
 
 Since '''esc''' is the escape keyword, the expression following it is evaluated and inserted into the composed block. E.g. to obtain the
- [esc]
+
+<pre>
+[esc]
+</pre>
+
 block, we need to write
- inline [esc 'esc] ; == [esc]
+
+<pre>
+inline [esc 'esc] ; == [esc]
+</pre>
 
 ====Precomposed parts====
 
 INLINE ''supports insertion of precomposed parts''. E.g. for
- precomposed: [touch this]
+
+<pre>
+precomposed: [touch this]
+</pre>
+
 we can write
- inline [U can't esc precomposed] ; == [U can't touch this]
+
+<pre>
+inline [U can't esc precomposed] ; == [U can't touch this]
+</pre>
 
 ====Hierarchy composition====
 
 INLINE ''supports hierarchy composition''. We can compose hierarchical blocks using the /deep refinement. E.g.
- inline/deep [1 + [1 + esc 1 + 1]] ; == [1 + [1 + 2]]
+
+<pre>
+inline/deep [1 + [1 + esc 1 + 1]] ; == [1 + [1 + 2]]
+</pre>
+
 This is more readable than the REDUCE counterpart while not being substantially less readable than the COMPOSE equivalent.
 
 If the hierarchy contains parens, we can use
- inline/deep [1 + (1 + esc 1 + 1)] ; == [1 + (1 + 2)]
+
+<pre>
+inline/deep [1 + (1 + esc 1 + 1)] ; == [1 + (1 + 2)]
+</pre>
+
 , which is much more readable than either the REDUCE or COMPOSE alternative.
 
 ====Comments====

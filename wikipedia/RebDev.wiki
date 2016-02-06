@@ -196,10 +196,12 @@ However, during development, you may want to work on files outside of the primar
 
 Here is the example structure:
 
- r3/  <-- don't put files here
-     mezzanines/ <-- for official mezzanine files (releases)
-         load/   <-- for development work, experiments, etc.
-         save/   <-- for development work, experiments, etc.
+<pre>
+r3/  <-- don't put files here
+    mezzanines/ <-- for official mezzanine files (releases)
+        load/   <-- for development work, experiments, etc.
+        save/   <-- for development work, experiments, etc.
+</pre>
 
 '''To reduce the load on the submissions acceptance process, it is advised that you develop code like this.''' It also takes less space and network bandwidth.
 
@@ -217,23 +219,29 @@ Note that all names, submissions, and status records are marked with a date, use
 
 File listing commands:
 
- new-files (nf): list all new file changes (similar to n for messages)
- list-files (lf): list files in current heading (detailed format)
- ls: list just the file names (short format)
+<pre>
+new-files (nf): list all new file changes (similar to n for messages)
+list-files (lf): list files in current heading (detailed format)
+ls: list just the file names (short format)
+</pre>
 
 Most other file commands use the id number for the file. Use of the id avoids problems when there are multiple versions of the same filename. However, some commands, such as get and put will also accept a file name or * (for all files).
 
- get: fetch files in current heading
- put: submit one or more files with a comment
- more: view contents of a file
- edit: open editor with given file (external app)
- diff, df: show differences in file (uses external app)
+<pre>
+get: fetch files in current heading
+put: submit one or more files with a comment
+more: view contents of a file
+edit: open editor with given file (external app)
+diff, df: show differences in file (uses external app)
+</pre>
 
 These commands currently require very high ranking:
 
- accept: accepts a submission, requires comment
- deny: deny a submission, requires comment
- rename: rename a file (note: changes name, not location)
+<pre>
+accept: accepts a submission, requires comment
+deny: deny a submission, requires comment
+rename: rename a file (note: changes name, not location)
+</pre>
 
 ===Examples===
 
@@ -241,24 +249,32 @@ These commands currently require very high ranking:
 
 First, goto a topic section that has files.
 
-  >> 26
-  R3/Mezzanines:
+<pre>
+>> 26
+R3/Mezzanines:
+</pre>
 
 Now type:
 
-  ls
+<pre>
+ls
+</pre>
 
 To list files in column view, or:
 
-  lf
+<pre>
+lf
+</pre>
 
 To list files in detail, showing the status of each submission and comment. '''Note that a single file can have multiple entries in the list, one for each change submitted.'''
 
 Use commands like:
 
-  lf submit
-  lf accept
-  lf deny
+<pre>
+lf submit
+lf accept
+lf deny
+</pre>
 
 To see files with specific status.
 
@@ -266,25 +282,35 @@ To see files with specific status.
 
 To download all the files for a topic section into a work dir. Go to the topic section, then
 
-  get *
+<pre>
+get *
+</pre>
 
 The files will download into a directory that matches the path name of the section. So, r3/mezzanine files are in a different location than r2/mezzanine files.
 
 To get just the most recently accepted files:
 
-  get * accept
+<pre>
+get * accept
+</pre>
 
 To download a specific file submission, use:
 
-  get 2345
+<pre>
+get 2345
+</pre>
 
 Or you can get it by name, but it's always the most recent submission (accepted or not):
 
-  get mezz-help.r
+<pre>
+get mezz-help.r
+</pre>
 
 Once files have been downloaded you can use:
 
-  ll
+<pre>
+ll
+</pre>
 
 to view the local listing.
 
@@ -292,15 +318,21 @@ to view the local listing.
 
 You can submit a specific file from your work dir:
 
-  put mezz-help.r
+<pre>
+put mezz-help.r
+</pre>
 
 Or you can open a requestor to select a file:
 
-  put
+<pre>
+put
+</pre>
 
 To submit an entire directory (but with care!):
 
-  put *
+<pre>
+put *
+</pre>
 
 The files will be listed first, and you can add a comment for all of them.
 
@@ -308,16 +340,22 @@ The files will be listed first, and you can add a comment for all of them.
 
 To open the current topic work folder (on your local system):
 
-  open-dir
+<pre>
+open-dir
+</pre>
 
 or just
 
-  od
+<pre>
+od
+</pre>
 
 ====To diff a file====
 
 To see file differences between a given submission (accepted or not) and change you've made in your local work dir:
 
-  diff 2345
+<pre>
+diff 2345
+</pre>
 
 The first time, you will be requested to specify the diff application (for example WinMerge).

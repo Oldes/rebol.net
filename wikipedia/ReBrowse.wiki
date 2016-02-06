@@ -41,7 +41,9 @@ To start the GUI is divided horiztonally into:
 
 The top bar will be:
 
-  [back][forward]  [reload][home][stop]  [url][history][go]  [opts]
+<pre>
+[back][forward]  [reload][home][stop]  [url][history][go]  [opts]
+</pre>
 
 Most of this is obvious to everyone; however, the purpose of the opts button is clarified below.
 

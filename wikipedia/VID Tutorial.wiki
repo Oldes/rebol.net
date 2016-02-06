@@ -21,7 +21,9 @@ We will describe each of these below.
 
 Ok, try it out. Run Rebol 3, and at the prompt, enter this line:
 
- view [button "Click Here" [unview none]]
+<pre>
+view [button "Click Here" [unview none]]
+</pre>
 
 This will open a window and display a single button. When you click on the button the window will close.
 
@@ -41,7 +43,9 @@ To help you learn the rules of layout, we will keep things simple by using only 
 
 Start with this line:
 
- view [button "First"]
+<pre>
+view [button "First"]
+</pre>
 
 It will open a window with a single button. Notice that the button has a default width here. We will talk about that more later.
 
@@ -233,10 +237,12 @@ In addition to the above styles, you can create an endless number of variations 
 
 For example, to change the color of a button, just specify it. In the example below, the second button will be gold in color:
 
- view [
-     button "Normal"
-     button gold "Special"
- ]
+<pre>
+view [
+    button "Normal"
+    button gold "Special"
+]
+</pre>
 
 It looks like this:
 
@@ -244,8 +250,10 @@ It looks like this:
 
 For text, you can write:
 
-    text "Hot text" [browse <nowiki>http://www.rebol.com</nowiki>]
-    text ["This text is " bold red "bold red!"]
+<pre>
+text "Hot text" [browse <nowiki>http://www.rebol.com</nowiki>]
+text ["This text is " bold red "bold red!"]
+</pre>
 
 The second line of text is an example of rich-text, where you can control precisely how text looks.
 
@@ -255,22 +263,23 @@ The result is:
 
 To get even greater control over a style, you can specify precise ''options''. Here's an example:
 
-    button "Button" options [rounding: 10]
-    toggle "Toggle" options [rounding: 10]
-    button "Button" options [material: 'sand]
-    toggle "Toggle" options [material: 'sand led-colors: [red green]]
-    
-    field "Field" options [
-        rounding: 0
-        back-colors: [200.10.10 255.40.40]
-        align: 'right
-        font: make fonts/normal [
-            name: "Verdana"
-            style: 'bold
-            color: yellow
-        ]
+<pre>
+button "Button" options [rounding: 10]
+toggle "Toggle" options [rounding: 10]
+button "Button" options [material: 'sand]
+toggle "Toggle" options [material: 'sand led-colors: [red green]]
+
+field "Field" options [
+    rounding: 0
+    back-colors: [200.10.10 255.40.40]
+    align: 'right
+    font: make fonts/normal [
+        name: "Verdana"
+        style: 'bold
+        color: yellow
     ]
-    
+]
+</pre>
 
 Here, the ''options'' block tells VID how to modify the style.
 

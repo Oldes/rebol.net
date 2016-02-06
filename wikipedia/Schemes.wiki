@@ -8,7 +8,9 @@
 
 The name ''scheme'' comes from the standard description of a URI (URL). In this URL:
 
-    http://www.rebol.net/index.html
+<pre>
+http://www.rebol.net/index.html
+</pre>
 
 HTTP is the scheme name, www.rebol.net is the host, and index.html is the file path. Rebol uses that same naming convention.
 
@@ -59,25 +61,31 @@ More (such as FTP, SMTP, POP) will be included as time and user-base contributio
 
 To obtain a list of the current schemes, you can write:
 
-    probe words-of system/schemes
+<pre>
+probe words-of system/schemes
+</pre>
 
 or:
 
-   foreach val get system/schemes [print [val/name val/title]]
+<pre>
+foreach val get system/schemes [print [val/name val/title]]
+</pre>
 
 == Scheme object structure ==
 
 The scheme object is defined in system/standard as:
 
-    scheme: context [
-        name:       ; word of http, ftp, sound, etc.
-        title:      ; user-friendly title for the scheme
-        spec:       ; custom spec for scheme (if needed)
-        info:       ; prototype info object returned from query
-        actor:      ; standard action handler for scheme port functions
-        awake:      ; standard awake handler for this scheme's ports
-            none
-    ]
+<pre>
+scheme: context [
+    name:       ; word of http, ftp, sound, etc.
+    title:      ; user-friendly title for the scheme
+    spec:       ; custom spec for scheme (if needed)
+    info:       ; prototype info object returned from query
+    actor:      ; standard action handler for scheme port functions
+    awake:      ; standard awake handler for this scheme's ports
+        none
+]
+</pre>
 
 Where:
 

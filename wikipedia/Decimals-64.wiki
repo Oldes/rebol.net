@@ -75,14 +75,16 @@ The exponent is #400 = 1024 and 1024 &minus; 1023 = 1. So we can calculate the n
 
 Other powers of 2:
 
- #{4010 0000 0000 0000} = 4.0
- #{4020 0000 0000 0000} = 8.0
- #{4030 0000 0000 0000} = 16.0
- etc.
- #{3FF0 0000 0000 0000} = 1.0
- #{3FE0 0000 0000 0000} = 0.5
- #{3FD0 0000 0000 0000} = 0.25
- etc.
+<pre>
+#{4010 0000 0000 0000} = 4.0
+#{4020 0000 0000 0000} = 8.0
+#{4030 0000 0000 0000} = 16.0
+etc.
+#{3FF0 0000 0000 0000} = 1.0
+#{3FE0 0000 0000 0000} = 0.5
+#{3FD0 0000 0000 0000} = 0.25
+etc.
+</pre>
 
 ===Range of values===
 
@@ -108,14 +110,18 @@ As noted above the relation between real numbers and IEEE 754 numbers is not sym
 
 Based on the informations from the previous section the R2 interpreter tried to solve the issue by molding Rebol decimal! values using 15 decimal digits of precision. The problem was that 15 decimal digits of precision did not suffice (in general) to represent a given 64-bit IEEE 754 binary floating point number. For example:
 
-    >> mold 1.7976931348623157e308
-    == "1.79769313486232E+308"
+<pre>
+>> mold 1.7976931348623157e308
+== "1.79769313486232E+308"
+</pre>
 
 , while:
 
-    >> load mold 1.7976931348623157e308
-    ** Math Error: Math or number overflow
-    ** Near: load mold 1.79769313486232E+308
+<pre>
+>> load mold 1.7976931348623157e308
+** Math Error: Math or number overflow
+** Near: load mold 1.79769313486232E+308
+</pre>
 
 demonstrates that 15 digits don't suffice for the purpose of representing the above number. Therefore, the question is which representation is sufficient. The criterium can be even defined as a Rebol function:
 
@@ -136,17 +142,23 @@ precise-enough?: func [
 
 , which yields
 
-    precise-enough? "1.79769313486232e308" 1.7976931348623157e308 ; == false
+<pre>
+precise-enough? "1.79769313486232e308" 1.7976931348623157e308 ; == false
+</pre>
 
 This case can be used also to demonstrate that even 16 digits of precision do not suffice for the purpose of representing the given IEEE 754 number:
 
-    precise-enough? "1.797693134862316e308" 1.7976931348623157e308 ; == false
+<pre>
+precise-enough? "1.797693134862316e308" 1.7976931348623157e308 ; == false
+</pre>
 
 On the other hand it is known that 17 decimal digits of precision are sufficient for every 64-bit IEEE 754 binary floating point number.
 
 In R3, the number of digits to be used in forming/molding decimal numbers is specified by:
 
-    system/options/decimal-digits
+<pre>
+system/options/decimal-digits
+</pre>
 
 It defaults to 15 digits.
 
@@ -156,7 +168,9 @@ However, for some cases much shorter representations are sufficient as well.
 
 Example: due to the fact that the format is binary, it cannot exactly represent all decimal fractions. For example, there is no "exact 0.1" in the set of IEEE 754 binary floating point numbers. When using the "round to the nearest" approach the nearest IEEE 754 number to 0.1 is 0.1000000000000000055511151231257827021181583404541015625 . Fortunately enough, it is not necessary to remember or handle such a long string of decimal digits since the "0.1" string is already sufficient to represent it as the reader might expect:
 
-    precise-enough? "0.1" 0.1 ; == true
+<pre>
+precise-enough? "0.1" 0.1 ; == true
+</pre>
 
 This example suggests that it makes sense for MOLD/ALL (or even MOLD, if we decide) to yield the shortest string that represents the given decimal! value precisely enough.
 
@@ -168,8 +182,10 @@ Comparing Rebol decimal numbers is somewhat complicated. The reason for this is 
 
 There are two primary ways to check for zero:
 
- zero? number
- number = 0
+<pre>
+zero? number
+number = 0
+</pre>
 
 The second has a few variations, which are described below in the comparison section.
 
@@ -213,14 +229,18 @@ The precision issues related to decimal (floating point) numbers mentioned above
 
 The example below shows what you would expect as the result:
 
- >> 0.1 + 0.1 + 0.1
- == 0.3
+<pre>
+>> 0.1 + 0.1 + 0.1
+== 0.3
+</pre>
 
 However, if you examine it a little closer, you will find:
 
- >> system/options/decimal-digits: 17
- >> 0.1 + 0.1 + 0.1
- == 0.30000000000000004
+<pre>
+>> system/options/decimal-digits: 17
+>> 0.1 + 0.1 + 0.1
+== 0.30000000000000004
+</pre>
 
 Thus, adding 0.1 three times is not strictly equal to 0.3!
 
@@ -228,13 +248,17 @@ To make it a bit easier on users (especially those of us who do not want to be e
 
 For example:
 
- >> 0.1 + 0.1 + 0.1 = 0.3
- == true
+<pre>
+>> 0.1 + 0.1 + 0.1 = 0.3
+== true
+</pre>
 
 That seems useful, but we know from the above that the values internally are not strictly equal:
 
- >> 0.1 + 0.1 + 0.1 == 0.3
- == false
+<pre>
+>> 0.1 + 0.1 + 0.1 == 0.3
+== false
+</pre>
 
 If you need to know more, please see the notes below for more information.
 

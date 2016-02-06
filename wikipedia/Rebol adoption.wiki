@@ -237,10 +237,12 @@ We actually have the luxury of being able to talk and provide feedback to the Re
 
 === Don't fight them - use them ===
 
- As I said - the web mostly won. There is really strong company who is pushing web forward - Google. Maybe we could expect
- more from company having almost unlimited resources, e.g. to introduce some miracle technology much better than Rebol is.
- Instead - they go with the status quo. The thing is - it works for them, it works for users.
- So - we should not fight web technologies, we should somehow embrace them, and use them to our advantage.
+<pre>
+As I said - the web mostly won. There is really strong company who is pushing web forward - Google. Maybe we could expect
+more from company having almost unlimited resources, e.g. to introduce some miracle technology much better than Rebol is.
+Instead - they go with the status quo. The thing is - it works for them, it works for users.
+So - we should not fight web technologies, we should somehow embrace them, and use them to our advantage.
+</pre>
 
 === Who are our target groups? ===
 
@@ -285,9 +287,11 @@ Let's not just do one thing - let's not spam places, where they are not interest
 
 =The end=
 
- Well, I am not sure I fulfilled my intention, but hopefully I was just able to show general public, that we are aware
- of mostly all of our possible drawbacks, and that we really want to adress them. We use all our available resources to get
- there, but it will take some time, so you could at least wish us a luck to achieve our goals and visions :-)
+<pre>
+Well, I am not sure I fulfilled my intention, but hopefully I was just able to show general public, that we are aware
+of mostly all of our possible drawbacks, and that we really want to adress them. We use all our available resources to get
+there, but it will take some time, so you could at least wish us a luck to achieve our goals and visions :-)
+</pre>
 
 -pekr-
 

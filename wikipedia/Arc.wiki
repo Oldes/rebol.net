@@ -46,9 +46,13 @@ The ARC command draws a partial section of an ellipse (or circle).
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    arc 200x25  100x100 0  90
-    arc 200x125 100x100 0 135
-    arc 200x250 100x100 0 180
+
+<pre>
+arc 200x25  100x100 0  90
+arc 200x125 100x100 0 135
+arc 200x250 100x100 0 180
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-1b.png|No Description]]</TD>
 </TR></TABLE>
@@ -59,9 +63,13 @@ The ARC command draws a partial section of an ellipse (or circle).
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    arc 200x25  100x100 0  120 
-    arc 200x125 100x100 45 120
-    arc 200x250 100x100 90 120
+
+<pre>
+arc 200x25  100x100 0  120 
+arc 200x125 100x100 45 120
+arc 200x250 100x100 90 120
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-2b.png|No Description]]</TD>
 </TR></TABLE>
@@ -78,7 +86,11 @@ that defines the arc.</p>
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    arc 100x100 100x100 0 90  closed
+
+<pre>
+arc 100x100 100x100 0 90  closed
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-3b.png|No Description]]</TD>
 </TR></TABLE>
@@ -87,14 +99,18 @@ that defines the arc.</p>
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    fill-pen red
-    arc 100x100 90x90 135 180
-    fill-pen green
-    arc 300x100 90x90 225 180
-    fill-pen blue
-    arc 100x300 90x90 45  180
-    fill-pen yellow
-    arc 300x300 90x90 315 180
+
+<pre>
+fill-pen red
+arc 100x100 90x90 135 180
+fill-pen green
+arc 300x100 90x90 225 180
+fill-pen blue
+arc 100x300 90x90 45  180
+fill-pen yellow
+arc 300x300 90x90 315 180
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-4b.png|No Description]]</TD>
 </TR></TABLE>
@@ -103,14 +119,18 @@ that defines the arc.</p>
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    fill-pen red
-    arc 150x250 90x90 0   180
-    fill-pen green
-    arc 150x150 90x90 90  180
-    fill-pen blue
-    arc 250x150 90x90 180 180
-    fill-pen yellow
-    arc 250x250 90x90 270 180
+
+<pre>
+fill-pen red
+arc 150x250 90x90 0   180
+fill-pen green
+arc 150x150 90x90 90  180
+fill-pen blue
+arc 250x150 90x90 180 180
+fill-pen yellow
+arc 250x250 90x90 270 180
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-5b.png|No Description]]</TD>
 </TR></TABLE>
@@ -123,14 +143,18 @@ that defines the arc.</p>
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    fill-pen red
-    arc 200x200 90x90 0   90 closed
-    fill-pen green
-    arc 200x200 90x90 90  90 closed
-    fill-pen blue
-    arc 200x200 90x90 180 90 closed
-    fill-pen yellow
-    arc 200x200 90x90 270 90 closed
+
+<pre>
+fill-pen red
+arc 200x200 90x90 0   90 closed
+fill-pen green
+arc 200x200 90x90 90  90 closed
+fill-pen blue
+arc 200x200 90x90 180 90 closed
+fill-pen yellow
+arc 200x200 90x90 270 90 closed
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-6b.png|No Description]]</TD>
 </TR></TABLE>
@@ -142,15 +166,19 @@ that defines the arc.</p>
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    pen white line-width 2
-    fill-pen red
-    arc 204x204 150x150   0  90 closed
-    fill-pen green
-    arc 196x204 150x150  90  30 closed
-    fill-pen blue
-    arc 180x190 150x150 120 150 closed
-    fill-pen yellow
-    arc 204x196 150x150 270  90 closed
+
+<pre>
+pen white line-width 2
+fill-pen red
+arc 204x204 150x150   0  90 closed
+fill-pen green
+arc 196x204 150x150  90  30 closed
+fill-pen blue
+arc 180x190 150x150 120 150 closed
+fill-pen yellow
+arc 204x196 150x150 270  90 closed
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARC-7b.png|No Description]]</TD>
 </TR></TABLE>

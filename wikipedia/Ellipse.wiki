@@ -20,14 +20,14 @@ Draws an ellipse
 |}
 <br>'''Notes and Examples'''
 <p>Three overlapping ellipses</p>
-<code><pre>
+
 fill-pen red
 ellipse 50x25 100x200
 fill-pen white
 ellipse 100x100 200x200
 fill-pen blue
 ellipse 175x250 200x100
-</pre></code>
+
 [[images/ELLIPSE-1.png|ELLIPSE example 1]]
 
 <br>

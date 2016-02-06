@@ -122,7 +122,9 @@ For text character (string) datatypes, you must know how the binary is encoded i
 
 By default, R3 assumes that the binary is [[UTF-8]] encoded. So, if you convert a binary to a string, the UTF-8 decoding method will be used. So, in this case:
 
-   str: to string! read %file.txt
+<pre>
+str: to string! read %file.txt
+</pre>
 
 The READ returns binary that is assumed to be UTF-8 encoded. The TO function will decode the binary into a unicode string.
 

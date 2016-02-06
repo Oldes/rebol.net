@@ -25,7 +25,9 @@
 
 Licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at
 
-		http://www.apache.org/licenses/LICENSE-2.0
+<pre>
+http://www.apache.org/licenses/LICENSE-2.0
+</pre>
 
 ==Description==
 
@@ -190,21 +192,41 @@ Make the error according to the given specifications, compatible with R2 and R3,
 Disarm the error, compatible with R2 and R3.
 
 ===='''''redo-error'''''====
-							
+
+<pre>
+
+</pre>
+
 "enhance" (if needed) and redo the given error.
 
 ===='''''include-error'''''====
-							
+
+<pre>
+
+</pre>
+
 Create and trigger a new include-type error.
-			
+
+<pre>
+
+</pre>
+
 ===='''''split-path'''''====
 
 Splits the given path.
 
 ===='''''findpfile'''''====
-			
+
+<pre>
+
+</pre>
+
 Find the given file using the given search path.
-			
+
+<pre>
+
+</pre>
+
 ===='''''find-file'''''====
 
 Find a file (using INCLUDE-CTX/PATH if desired).
@@ -212,7 +234,11 @@ Find a file (using INCLUDE-CTX/PATH if desired).
 ===The INCLUDE error type===
 
 A new INCLUDE error type is defined, with the following ids:
-		
+
+<pre>
+
+</pre>
+
 ====ENHANCED====
 
 This error represents an, otherwise "normal" error that occurred during code preprocessing. The error is "enhanced" to "know" the file in which it occurred.
@@ -279,7 +305,10 @@ include/link %script-base.r %verbose-script.r
 </pre>
 
 To create the two versions of the script containing everything they need to run it is sufficient to do:
- 
+
+<pre>
+
+</pre>
 
 <pre>
 include %script-builder.r

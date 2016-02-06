@@ -6,7 +6,9 @@ The [[Event_System#WAIT_function | WAIT function]] is used to wait for events.
 
 When the GUI is running, events are being processed. This happens when the VIEW function or the user script calls the DO-EVENTS function, which is defined as:
 
-  wait system/view/event-port
+<pre>
+wait system/view/event-port
+</pre>
 
 In other words, the main program stops at this code, and lets events drive the system, processed by the various event handlers which perform the GUI functions.
 
@@ -16,11 +18,13 @@ However, what happens when a function called within the GUI must wait? For examp
 
 Let's take this example:
 
-   view [
-       button "Read" do [set-face sf read http://www.rebol.com]
-       sf: area
-       button "Quit" quit
-   ]
+<pre>
+view [
+    button "Read" do [set-face sf read http://www.rebol.com]
+    sf: area
+    button "Quit" quit
+]
+</pre>
 
 This code is somewhat problematic. The reason is:
 
@@ -35,10 +39,12 @@ Of course, we have this problem within the GUI itself, but use a simple method t
 
 Consider this code:
 
-    view [
-        button "Ask" do [alert "You have been asked."]
-        button "Quit" quit
-    ]
+<pre>
+view [
+    button "Ask" do [alert "You have been asked."]
+    button "Quit" quit
+]
+</pre>
 
 When the Ask button is clicked, the alert window will open, but ''it is a modal window and events to other GUI windows will be ignored''.
 
@@ -50,27 +56,31 @@ However, this is not the case for the READ above, which internally operates asyn
 
 We can represent it this way:
 
-    WAIT for GUI
-       [awake on GUI event for button]
-       WAIT for HTTP
-           [awake on tcp]
-           process HTTP
-       WAKE makes WAIT return
-       [next GUI event]
-       ...
+<pre>
+WAIT for GUI
+   [awake on GUI event for button]
+   WAIT for HTTP
+       [awake on tcp]
+       process HTTP
+   WAKE makes WAIT return
+   [next GUI event]
+   ...
+</pre>
 
 The second WAIT is occurring during the first WAIT.
 
 But, depending on the network and servers, the WAIT in HTTP can take a few seconds. If the user clicks on the "Read" button a few times for HTTP finishes, this will happen:
 
-    WAIT for GUI
+<pre>
+WAIT for GUI
+   [awake on button]
+   WAIT for HTTP
        [awake on button]
        WAIT for HTTP
            [awake on button]
            WAIT for HTTP
-               [awake on button]
-               WAIT for HTTP
-                   [awake on ...]
+               [awake on ...]
+</pre>
 
 So, the code is now nested within three WAITs.
 
@@ -108,27 +118,31 @@ Some buttons periodically repeat. For example, clicking in the bar or the arrow 
 
 Often a programmer would be tempted to write code such as:
 
-    arrow-button do [
-        while [button-down][
-            bump knob
-            wait .1
-        ]        
-    ]
+<pre>
+arrow-button do [
+    while [button-down][
+        bump knob
+        wait .1
+    ]        
+]
+</pre>
 
 To the user, this code seems to work ok because the mouse is sitting in a single spot and with buttons in a single state (holding the button down).
 
 But, consider what may really be going on:
 
-    WAIT for GUI
-        [awake on arrow button down]
-        WAIT .1
-            [wake on move in arrow button]
-            does something, perhaps ON-OVER
-        WAIT (.1 - time used)
-            [awake on timeout]
-            bump knob
-        WAIT .1
-            ...
+<pre>
+WAIT for GUI
+    [awake on arrow button down]
+    WAIT .1
+        [wake on move in arrow button]
+        does something, perhaps ON-OVER
+    WAIT (.1 - time used)
+        [awake on timeout]
+        bump knob
+    WAIT .1
+        ...
+</pre>
 
 So, this is another case where WAIT is nesting. It tends not to be a problem because the range of possible events is limited.
 
@@ -144,16 +158,18 @@ This would be done by creating an object with whatever required state may be nee
 
 It could look something like this:
 
-   my-event: make event! [
-       type: 'custom
-       window: window-gob (or none)
-       data: context [
-           timer: 0.1
-           field1: 123
-           etc.
-       ]
-   ]
-   write event-port my-event
+<pre>
+my-event: make event! [
+    type: 'custom
+    window: window-gob (or none)
+    data: context [
+        timer: 0.1
+        field1: 123
+        etc.
+    ]
+]
+write event-port my-event
+</pre>
 
 Then the event would be processed at a low level in the GUI event handler functions, calling the higher level style actors as needed. For example, in a scroller style, an on-repeat actor could be called.
 

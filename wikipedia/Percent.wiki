@@ -12,15 +12,21 @@ Although we've added percent as a datatype, it's usefulness in mathematical expr
 
 What this means is that you '''should not expect fancy semantics''' when using percent as a term in math computations.
 
-   12.3 * 10% = 1.23
+<pre>
+12.3 * 10% = 1.23
+</pre>
 
 but:
 
-   12.3 + 10% = 12.4
+<pre>
+12.3 + 10% = 12.4
+</pre>
 
 and it is not the same as:
 
-   12.3 * 110% = 13.53
+<pre>
+12.3 * 110% = 13.53
+</pre>
 
 It is good to keep that in mind, and don't get too excited that you've thought up a great new semantic for using percent. Members of the Rebol community have tried that and deemed it to be quite problematic.
 

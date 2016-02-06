@@ -11,11 +11,11 @@ ABS is an action value.
 Returns a positive value equal in magnitude.
 
 
-<code><pre>
+
 print absolute -123
 
 print absolute -1:23
-</pre></code>
+
 
 
 ==== Categories ==== 

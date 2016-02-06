@@ -55,7 +55,9 @@ A field should have a host of different checking options, that you shouldn't nee
 
 Setting up field checking should be simple flags.
 
- view layout [field options [on-fail: [empty not-email]]]
+<pre>
+view layout [field options [on-fail: [empty not-email]]]
+</pre>
 
 === Displaying Errors ===
 
@@ -63,7 +65,9 @@ When an error occurs for a field, an error should be generated, which you should
 
 For example with an OK-CHECK style (bad name, I know), that displays an X or a checkmark, if the field was filled out correctly or incorrectly. This style would be attachable to the desired field and refresh itself, when the field check is done.
 
- view layout [f: field options [on-fail: [empty]] ok-check attach]
+<pre>
+view layout [f: field options [on-fail: [empty]] ok-check attach]
+</pre>
 
 The values that OK-CHECK would receive would be:
 
@@ -118,24 +122,30 @@ Over time, when developing a database, the value limits for a field may change, 
 
 An example for the issues below:
 
- window: view [
-   vid-form: group 2 [
-     label "Name" name-field: field
-     label "Address" address-field: field
-   ]
- ]
+<pre>
+window: view [
+  vid-form: group 2 [
+    label "Name" name-field: field
+    label "Address" address-field: field
+  ]
+]
+</pre>
 
 === Clearing all fields ===
 
 It should be possible to refer to a single group or an entire window to clear all writable styles.
 
- clear-face name-field
+<pre>
+clear-face name-field
 
- clear-face vid-form
+clear-face vid-form
+</pre>
 
 I know the two first are possible, but I don't know if an entire window can be cleared in one operation:
 
- clear-face window
+<pre>
+clear-face window
+</pre>
 
 Clearing fields should either clear to empty or to a default value.
 
@@ -165,11 +175,15 @@ Every field should have a '''dirty?''' flag and it should be possible to check i
 
 To check if the fields have changed, this could be something like:
 
- if vid-form/dirty? [print "Form has changed!"]
+<pre>
+if vid-form/dirty? [print "Form has changed!"]
+</pre>
 
 To check only one field, just access the field:
 
- if address-field/dirty? [print "Field has changed!"]
+<pre>
+if address-field/dirty? [print "Field has changed!"]
+</pre>
 
 == Multi-part Forms ==
 
