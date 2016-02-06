@@ -120,18 +120,19 @@ Based on the informations from the previous section the R2 interpreter tried to 
 demonstrates that 15 digits don't suffice for the purpose of representing the above number. Therefore, the question is which representation is sufficient. The criterium can be even defined as a Rebol function:
 
 <pre>
-precise-enough?: func [
-    "Does the given STRING represent the given decimal! VALUE precisely enough?"
-    string [string!]
-    value [decimal!]
-] [
-    found? attempt [
-        all [
-           zero? subtract load string value
-           same? load string value 
+    precise-enough?: func [
+        "Does the given STRING represent the given decimal! VALUE precisely enough?"
+        string [string!]
+        value [decimal!]
+    ] [
+        found? attempt [
+            all [
+               zero? subtract load string value
+               same? load string value 
+            ]
         ]
     ]
-]</pre>
+</pre>
 
 , which yields
 

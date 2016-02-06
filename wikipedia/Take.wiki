@@ -34,21 +34,21 @@ And, with the TAKE/last refinement, a stack is implemented with:
 Help returns this information about TAKE:
 
 <pre>
-USAGE:
-        TAKE value /part length /deep /last
-
-DESCRIPTION:
-         Copies and removes from series. (Modifies)
-         TAKE is an action value.
-
-ARGUMENTS:
-         value -- (Type: series! gob! port! none!)
-
-REFINEMENTS:
-         /part -- Limits to a given length or position
-                 length -- (Type: number! series! port! pair!)
-         /deep -- Also copies series values within the block
-         /last -- Take it from the tail end
+    USAGE:
+            TAKE value /part length /deep /last
+    
+    DESCRIPTION:
+             Copies and removes from series. (Modifies)
+             TAKE is an action value.
+    
+    ARGUMENTS:
+             value -- (Type: series! gob! port! none!)
+    
+    REFINEMENTS:
+             /part -- Limits to a given length or position
+                     length -- (Type: number! series! port! pair!)
+             /deep -- Also copies series values within the block
+             /last -- Take it from the tail end
 </pre>
 
 Note that TAKE works anywhere within a series, not just at the head and tail.

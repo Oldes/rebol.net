@@ -116,7 +116,7 @@ For example:
 
 <pre>
     image effect [colorize blue]
-
+    
     text-list data list-values
 </pre>
 

@@ -49,7 +49,6 @@ text 10x120 [anti-alias on font bold20 "Font Size 20 - raster AA"]
 pen yellow
 fill-pen blue
 text 10x150 vectorial [font bold20 "Font Size 20 - vectorial"]
-
 </pre></code>
 [[images/TEXT-1.png|TEXT example 1]]
 

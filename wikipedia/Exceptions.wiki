@@ -13,12 +13,14 @@ The purpose of this article is to find a coherent proposal solving the above pro
 
 The [http://www.rebol.com/r3/notes/errors.html R3 Exception/Error Mechanism] article mentions that there are two types of exceptions in Rebol: unwinds and throws. Since every exception type can be emulated using the other one, I decided to make a couple of speed tests to find out what the relative speed of the respective exception types is:
 
-<pre>; the relative speed of throw is 100%
-base-throw: time-block [try [none]] 0,05
-base-unwind: round to percent! base-throw / time-block [catch [none]] 0,05 ; == 106% 
-error: make error! ""
-handled-throw: time-block [try [do error]] 0,05
-handled-unwind: round to percent! handled-throw / time-block [catch [throw none]] 0,05 ; == 139%</pre>
+<pre>
+    ; the relative speed of throw is 100%
+    base-throw: time-block [try [none]] 0,05
+    base-unwind: round to percent! base-throw / time-block [catch [none]] 0,05 ; == 106% 
+    error: make error! ""
+    handled-throw: time-block [try [do error]] 0,05
+    handled-unwind: round to percent! handled-throw / time-block [catch [throw none]] 0,05 ; == 139%
+</pre>
 
 This simple test seems to suggest, that unwinds are faster than throws, which suggests, that it is preferable to replace throws by unwinds whenever possible (and it should be always possible, as noted above; this should be handled as an implementation detail, and should not "leak" into the user space anyway, correcting the corresponding unwind bugs mentioned in CureCode).
 
@@ -38,13 +40,15 @@ The '''use''' function was proposed by Brian as a good example to illustrate the
 
 ====Closure based USE implementation====
 
-<pre>use: func [
-    "Defines words local to a block."
-    vars [block! word!] "Local word(s) to the block"
-    body [block!] "Block to evaluate"
-] [
-    apply make closure! reduce [to block! vars copy/deep body] []
-]</pre>
+<pre>
+    use: func [
+        "Defines words local to a block."
+        vars [block! word!] "Local word(s) to the block"
+        body [block!] "Block to evaluate"
+    ] [
+        apply make closure! reduce [to block! vars copy/deep body] []
+    ]
+</pre>
 
 This '''use''' implementation does not work as required when:
 
@@ -59,13 +63,15 @@ One more note to the implementation: Since the inner closure is called just once
 
 Instead of using a closure, we can implement the '''use''' function as follows:
 
-<pre>use: func [
-    "Defines words local to a block."
-    vars [block! word!] "Local word(s) to the block"
-    body [block!] "Block to evaluate"
-] [
-    foreach (vars) [#[none]] body
-]</pre>
+<pre>
+    use: func [
+        "Defines words local to a block."
+        vars [block! word!] "Local word(s) to the block"
+        body [block!] "Block to evaluate"
+    ] [
+        foreach (vars) [#[none]] body
+    ]
+</pre>
 
 Advantages:
 *This implementation is simpler than the closure based one.
@@ -79,13 +85,15 @@ Disadvantages:
 
 Those last two disadvantages can be solved by using the following modification:
 
-<pre>use: func [
-    "Defines words local to a block."
-    vars [block! word!] "Local word(s) to the block"
-    body [block!] "Block to evaluate"
-] [
-    do foreach (vars) [#[none]] reduce [to paren! reduce [:break 'return] body]
-]</pre>
+<pre>
+    use: func [
+        "Defines words local to a block."
+        vars [block! word!] "Local word(s) to the block"
+        body [block!] "Block to evaluate"
+    ] [
+        do foreach (vars) [#[none]] reduce [to paren! reduce [:break 'return] body]
+    ]
+</pre>
 
 Now the '''foreach''' loop in the '''use''' implementation just binds the body, and does nothing else. This way, when evaluating the body block, the '''foreach''' loop is not running, which precludes any interference between the '''foreach''' loop and any '''break'''/'''continue''' call made when the body is evaluated. This can be made even simpler with a helper function that calls '''break'''/return. However, this begins to illustrate the problem with requiring regular developers to do such workarounds.
 
@@ -95,39 +103,43 @@ The '''use''' function is not the only one currently caught by this problem, so 
 
 ====FUNC based COLLECT====
 
-<pre>collect: make function! [[
-    {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
-    body [block!] "Block to evaluate"
-    /into {Insert into a buffer instead (returns position after insert)}
-    output [series!] "The buffer series (modified)"
-][
-    unless output [output: make block! 16]
-    do func [keep] body func [value [any-type!] /only] [
-        output: apply :insert [output :value none none only]
-        :value
-    ]
-    either into [output] [head output]
-]]</pre>
+<pre>
+    collect: make function! [[
+        {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
+        body [block!] "Block to evaluate"
+        /into {Insert into a buffer instead (returns position after insert)}
+        output [series!] "The buffer series (modified)"
+    ][
+        unless output [output: make block! 16]
+        do func [keep] body func [value [any-type!] /only] [
+            output: apply :insert [output :value none none only]
+            :value
+        ]
+        either into [output] [head output]
+    ]]
+</pre>
 
 Notice that the given body is bound when the new anonymous function is created; '''func''' is used so that the function bodies are copied. This operation is problematic, if the anonymous function has a definitional return, since in that case all 'return word occurrences in the body are bound, which is not desirable.
 
 ====FOREACH based COLLECT====
 
-<pre>collect: make function! [[
-    {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
-    body [block!] "Block to evaluate"
-    /into {Insert into a buffer instead (returns position after insert)}
-    output [series!] "The buffer series (modified)"
-][
-    unless output [output: make block! 16]
-    do foreach keep reduce [
-        func [value [any-type!] /only] [
-            output: apply :insert [output :value none none only]
-            :value
-        ]
-    ] reduce [body]
-    either into [output] [head output]
-]]</pre>
+<pre>
+    collect: make function! [[
+        {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
+        body [block!] "Block to evaluate"
+        /into {Insert into a buffer instead (returns position after insert)}
+        output [series!] "The buffer series (modified)"
+    ][
+        unless output [output: make block! 16]
+        do foreach keep reduce [
+            func [value [any-type!] /only] [
+                output: apply :insert [output :value none none only]
+                :value
+            ]
+        ] reduce [body]
+        either into [output] [head output]
+    ]]
+</pre>
 
 Notice, that here no 'return in the given body can be bound, as opposed to the word 'keep, binding of which ''is'' wanted. This case is less problematic than the '''use''' solution above.
 
@@ -281,50 +293,52 @@ None of the above mentioned problems is too serious (except [http://curecode.org
 
 If we had a definitional '''return''' in Rebol, the definitional '''catch'''/'''throw''' pair could be defined as a mezzanine, using code like:
 
-<pre>catch: func [
-    {Catches a throw from a block and returns its value.}
-    body [block!]
-] [
-    ; create a new function to have a new definitional RETURN available
-    ; use the new definitional RETURN as THROW in the BODY
-    do func [] [do foreach throw reduce [:return] reduce [body]]
-]</pre>	
-
-Notice, how the definitional '''return''' of the new function defined in '''catch''' is used as definitional '''throw''' in the body.
-
-===Why THROW should be kept dynamic===
-
-Definitional '''throw''' would disable the greatest strength of the dynamic '''catch'''/'''throw''' pair: They can be used to implement all ''other'' dynamic escape functions that we haven't thought of yet, or are so user-specific that they won't be added to the main language. On a practical level, this usually requires the '''catch''' statement and the '''throw''' statement to be in different functions, wrapper functions that implement the exact semantics that are needed. If the code is required to be nested or explicitly bound (side effect of definitional escapes) then you lose the advantages that dynamic escapes give you, which means that you need to use some ''other'' method of doing dynamic escapes, leaving us back where we started.
-
-Advantages of having '''throw''' serve as the general-purpose method for implementing custom dynamic escape functions:
-*It's an easy method, particularly when you use '''throw/'''name. And you don't have to be as smart as Ladislav to do it.
-*There are tricks that you can do with dynamic escapes that you can't do with definitional, and this would be an easy way to do those tricks. This includes replacing '''quit/'''now, which would allow us to remove that option ([http://curecode.org/rebol3/ticket.rsp?id=1743 #1743]). For that matter, '''all''' dynamic escape functions could be implemented using '''throw/'''name, which could be useful when making safe function wrappers used by sandboxed code.
-*When it's built in, you can make a standard method to catch '''throw''' and '''throw/'''name for debug/test code, and this method would extend to ''all'' dynamic escapes that use them. See [http://curecode.org/rebol3/ticket.rsp?id=1520 #1520] for how.
-*Having ''one'' built-in method for future user-created dynamic escapes, and then controlling that method with a built-on option, stops the escape control arms race dead in its tracks.
-
-Disadvantages (mostly to all uses of '''throw/'''name at the moment):
-*'''throw/'''name doesn't currently work: It doesn't get past '''catch''' without /name. See [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] for details.
-*No dynamic escapes work when used in an expression that accepts ''error!'' values. See [http://curecode.org/rebol3/ticket.rsp?id=1509 #1509], [http://curecode.org/rebol3/ticket.rsp?id=1515 #1515], [http://curecode.org/rebol3/ticket.rsp?id=1519 #1519] and more for details.
-*Locality problems of the unhandled '''throw''' error, as discussed in [http://curecode.org/rebol3/ticket.rsp?id=1506 #1506]. See there for solutions that don't involve the definitional approach.
-*To be ''really'' useful for implementing custom escape functions, they have to be unspoofable, and '''throw/'''name is spoofable if you know the name - this is a problem for sandboxing functions. One solution for this is to make '''catch/'''name only catch words that are bound to the same context ('''equiv?''' instead of '''equal?'''), as proposed in [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744]. The alternate solution of including a token with the thrown value is spoofable, because someone can intercept the token and reuse it.
-*Name conflicts when the flow of execution goes through code that is written by different people who aren't coordinating their efforts well enough. Also solved by [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744].
-
-Here's an unspoofable '''quit/'''now replacement implemented using dynamic '''throw/'''name with [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] and [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744] fixed:
-
-<pre>use [name] [ ; Local 'name makes it unspoofable
-    quit-now: func [retcode] [throw/name retcode 'name]
-    catch-quit-now: func [body [block! file! url!]] [quit/return catch/name [return do body] 'name]
-]
-
-chat: funct [
-    "Open Rebol DevBase forum/BBS."
-][
-    print "Fetching chat..."
-    if error? err: try [catch-quit-now http://www.rebol.com/r3/chat.r none] [
-        either err/id = 'protocol [print "Cannot load chat from web."] [do err]
+<pre>
+    catch: func [
+        {Catches a throw from a block and returns its value.}
+        body [block!]
+    ] [
+        ; create a new function to have a new definitional RETURN available
+        ; use the new definitional RETURN as THROW in the BODY
+        do func [] [do foreach throw reduce [:return] reduce [body]]
+    ]</pre>	
+    
+    Notice, how the definitional '''return''' of the new function defined in '''catch''' is used as definitional '''throw''' in the body.
+    
+    ===Why THROW should be kept dynamic===
+    
+    Definitional '''throw''' would disable the greatest strength of the dynamic '''catch'''/'''throw''' pair: They can be used to implement all ''other'' dynamic escape functions that we haven't thought of yet, or are so user-specific that they won't be added to the main language. On a practical level, this usually requires the '''catch''' statement and the '''throw''' statement to be in different functions, wrapper functions that implement the exact semantics that are needed. If the code is required to be nested or explicitly bound (side effect of definitional escapes) then you lose the advantages that dynamic escapes give you, which means that you need to use some ''other'' method of doing dynamic escapes, leaving us back where we started.
+    
+    Advantages of having '''throw''' serve as the general-purpose method for implementing custom dynamic escape functions:
+    *It's an easy method, particularly when you use '''throw/'''name. And you don't have to be as smart as Ladislav to do it.
+    *There are tricks that you can do with dynamic escapes that you can't do with definitional, and this would be an easy way to do those tricks. This includes replacing '''quit/'''now, which would allow us to remove that option ([http://curecode.org/rebol3/ticket.rsp?id=1743 #1743]). For that matter, '''all''' dynamic escape functions could be implemented using '''throw/'''name, which could be useful when making safe function wrappers used by sandboxed code.
+    *When it's built in, you can make a standard method to catch '''throw''' and '''throw/'''name for debug/test code, and this method would extend to ''all'' dynamic escapes that use them. See [http://curecode.org/rebol3/ticket.rsp?id=1520 #1520] for how.
+    *Having ''one'' built-in method for future user-created dynamic escapes, and then controlling that method with a built-on option, stops the escape control arms race dead in its tracks.
+    
+    Disadvantages (mostly to all uses of '''throw/'''name at the moment):
+    *'''throw/'''name doesn't currently work: It doesn't get past '''catch''' without /name. See [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] for details.
+    *No dynamic escapes work when used in an expression that accepts ''error!'' values. See [http://curecode.org/rebol3/ticket.rsp?id=1509 #1509], [http://curecode.org/rebol3/ticket.rsp?id=1515 #1515], [http://curecode.org/rebol3/ticket.rsp?id=1519 #1519] and more for details.
+    *Locality problems of the unhandled '''throw''' error, as discussed in [http://curecode.org/rebol3/ticket.rsp?id=1506 #1506]. See there for solutions that don't involve the definitional approach.
+    *To be ''really'' useful for implementing custom escape functions, they have to be unspoofable, and '''throw/'''name is spoofable if you know the name - this is a problem for sandboxing functions. One solution for this is to make '''catch/'''name only catch words that are bound to the same context ('''equiv?''' instead of '''equal?'''), as proposed in [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744]. The alternate solution of including a token with the thrown value is spoofable, because someone can intercept the token and reuse it.
+    *Name conflicts when the flow of execution goes through code that is written by different people who aren't coordinating their efforts well enough. Also solved by [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744].
+    
+    Here's an unspoofable '''quit/'''now replacement implemented using dynamic '''throw/'''name with [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] and [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744] fixed:
+    
+    <pre>use [name] [ ; Local 'name makes it unspoofable
+        quit-now: func [retcode] [throw/name retcode 'name]
+        catch-quit-now: func [body [block! file! url!]] [quit/return catch/name [return do body] 'name]
     ]
-    exit
-]</pre>
+    
+    chat: funct [
+        "Open Rebol DevBase forum/BBS."
+    ][
+        print "Fetching chat..."
+        if error? err: try [catch-quit-now http://www.rebol.com/r3/chat.r none] [
+            either err/id = 'protocol [print "Cannot load chat from web."] [do err]
+        ]
+        exit
+    ]
+</pre>
 
 Then the chat script at the url would call '''quit-now''' instead of '''quit/'''now'''/'''return.
 

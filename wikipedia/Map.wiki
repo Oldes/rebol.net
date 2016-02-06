@@ -63,14 +63,14 @@ Here is an example that shows the most common usage patterns:
 
 <pre>
     d: make map! 1000
-
+    
     d/test: 10
     print d/test
     10
-
+    
     print d/notest
     none
-
+    
     d/test: 20
     print d/test
     20

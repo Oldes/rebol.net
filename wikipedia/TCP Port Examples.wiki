@@ -7,39 +7,39 @@
 Here is an example TCP server that opens port 8080 and receives new connections. Each connection then gets its own asynchronous handler function (which in this case, simply reads and writes text.)
 
 <pre>
-print "Serving port 8080..."
-
-open-subport: func [port] [
-    print "=== Creating sub-port"
-    port/awake: func [event /local port] [
-        print ["=== Subport event:" event/type]
-        port: event/port
-        switch event/type [
-            read [
-                print ["    " to-string port/data]
-                write port to-binary "got it!"
+    print "Serving port 8080..."
+    
+    open-subport: func [port] [
+        print "=== Creating sub-port"
+        port/awake: func [event /local port] [
+            print ["=== Subport event:" event/type]
+            port: event/port
+            switch event/type [
+                read [
+                    print ["    " to-string port/data]
+                    write port to-binary "got it!"
+                ]
+                wrote [read port]
+                close [close port]
             ]
-            wrote [read port]
-            close [close port]
         ]
+        write port to-binary "connected^/"
     ]
-    write port to-binary "connected^/"
-]
-
-server: open tcp://:8080
-
-server/awake: func [event] [
-    print ["*** Server event:" event/type]
-    if event/type = 'accept [
-        open-subport first event/port
+    
+    server: open tcp://:8080
+    
+    server/awake: func [event] [
+        print ["*** Server event:" event/type]
+        if event/type = 'accept [
+            open-subport first event/port
+        ]
+        false
     ]
-    false
-]
-
-wait 30
-close server
-print "Done serving"
-halt
+    
+    wait 30
+    close server
+    print "Done serving"
+    halt
 </pre>
 
 == TCP Client ==
@@ -47,37 +47,37 @@ halt
 Here is a client that connects to port 8080, then sends strings to the server, and receives a response back from the server.
 
 <pre>
-print "Connecting to port 8080..."
-
-msg-count: 0
-
-client: open tcp://localhost:8080
-
-client/awake: func [event /local port] [
-    print ["=== Client event:" event/type]
-    port: event/port
-    switch event/type [
-        lookup [open port]
-        connect [write port to-binary "hello"]
-        read [
-            print ["    " to-string port/data]
-            ++ msg-count
-            either msg-count < 10 [
-                write port to-binary reform ["ok" msg-count]
-            ][
-                close port
-                return true
+    print "Connecting to port 8080..."
+    
+    msg-count: 0
+    
+    client: open tcp://localhost:8080
+    
+    client/awake: func [event /local port] [
+        print ["=== Client event:" event/type]
+        port: event/port
+        switch event/type [
+            lookup [open port]
+            connect [write port to-binary "hello"]
+            read [
+                print ["    " to-string port/data]
+                ++ msg-count
+                either msg-count < 10 [
+                    write port to-binary reform ["ok" msg-count]
+                ][
+                    close port
+                    return true
+                ]
             ]
+            wrote [read event/port]
         ]
-        wrote [read event/port]
+        false
     ]
-    false
-]
-
-wait [client 30]
-close client
-print "Done"
-halt
+    
+    wait [client 30]
+    close client
+    print "Done"
+    halt
 </pre>
 
 == Notes ==
@@ -96,82 +96,82 @@ halt
 Here's what you will see. First, run the server, then run the client.
 
 <pre>
-Serving port 8080...
-*** Server event: accept
-=== Creating sub-port
-=== Subport event: wrote
-=== Subport event: read
-     hello
-=== Subport event: wrote
-=== Subport event: read
-     ok 1
-=== Subport event: wrote
-=== Subport event: read
-     ok 2
-=== Subport event: wrote
-=== Subport event: read
-     ok 3
-=== Subport event: wrote
-=== Subport event: read
-     ok 4
-=== Subport event: wrote
-=== Subport event: read
-     ok 5
-=== Subport event: wrote
-=== Subport event: read
-     ok 6
-=== Subport event: wrote
-=== Subport event: read
-     ok 7
-=== Subport event: wrote
-=== Subport event: read
-     ok 8
-=== Subport event: wrote
-=== Subport event: read
-     ok 9
-=== Subport event: wrote
-=== Subport event: close
-Done serving
+    Serving port 8080...
+    *** Server event: accept
+    === Creating sub-port
+    === Subport event: wrote
+    === Subport event: read
+         hello
+    === Subport event: wrote
+    === Subport event: read
+         ok 1
+    === Subport event: wrote
+    === Subport event: read
+         ok 2
+    === Subport event: wrote
+    === Subport event: read
+         ok 3
+    === Subport event: wrote
+    === Subport event: read
+         ok 4
+    === Subport event: wrote
+    === Subport event: read
+         ok 5
+    === Subport event: wrote
+    === Subport event: read
+         ok 6
+    === Subport event: wrote
+    === Subport event: read
+         ok 7
+    === Subport event: wrote
+    === Subport event: read
+         ok 8
+    === Subport event: wrote
+    === Subport event: read
+         ok 9
+    === Subport event: wrote
+    === Subport event: close
+    Done serving
 </pre>
 
 The client will show:
 
 <pre>
-Connecting to port 8080...
-=== Client event: lookup
-=== Client event: connect
-=== Client event: wrote
-=== Client event: read
-     connected
-got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-=== Client event: wrote
-=== Client event: read
-     got it!
-Done
+    Connecting to port 8080...
+    === Client event: lookup
+    === Client event: connect
+    === Client event: wrote
+    === Client event: read
+         connected
+    got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    === Client event: wrote
+    === Client event: read
+         got it!
+    Done
 </pre>
 
 == Cookbook References ==

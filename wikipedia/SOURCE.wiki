@@ -3,25 +3,25 @@ To get the source code for a mezzanine-level or user-defined function, you can u
 For example:
 
 <pre>
-source probe
+    source probe
 </pre>
 
 will display
 
 <pre>
-probe: make function! [[
-    {Debug print a molded value and returns that same value.}
-    value [any-type!]
-][
-    print mold :value
-    :value
-]]
+    probe: make function! [[
+        {Debug print a molded value and returns that same value.}
+        value [any-type!]
+    ][
+        print mold :value
+        :value
+    ]]
 </pre>
 
 Another example, to see the source for the SOURCE function:
 
 <pre>
-source source
+    source source
 </pre>
 
 displays:

@@ -8,21 +8,22 @@ DELECT is implemented as a native function because an unordered parse can be com
 
 The basic function form of DELECT is:
 
-<pre>USAGE:
-    DELECT dialect input output
-
-DESCRIPTION:
-    Parses a common form of dialects. Returns updated input block.
-    DELECT is a native value.
-
-ARGUMENTS:
-    dialect -- Describes the words and datatypes of the dialect (Type: object!)
-    input -- Input stream to parse (Type: block!)
-    output -- Resulting values, ordered as defined (Type: block!)
-
-REFINEMENTS:
-    /in -- Search for var words in specific objects (contexts)
-    where -- Block of objects to search (non objects ignored) (block!)
+<pre>
+    USAGE:
+        DELECT dialect input output
+    
+    DESCRIPTION:
+        Parses a common form of dialects. Returns updated input block.
+        DELECT is a native value.
+    
+    ARGUMENTS:
+        dialect -- Describes the words and datatypes of the dialect (Type: object!)
+        input -- Input stream to parse (Type: block!)
+        output -- Resulting values, ordered as defined (Type: block!)
+    
+    REFINEMENTS:
+        /in -- Search for var words in specific objects (contexts)
+        where -- Block of objects to search (non objects ignored) (block!)
 </pre>
 
 ===Input Block===
@@ -59,32 +60,32 @@ If there are multiple contexts in the block, each is scanned until the word is f
 Here is an example of using DELECT to handle a very simple dialect.
 
 <pre>
-dialect: context [
-    default: [tuple!]
-    single: [string!]
-    double: [integer! string!]
-]
-
-inp: [1.2.3 single "test" double "test" 123]
-out: make block! 4  ; (any initial size works)
-
-while [inp: delect dialect inp out] [
-  ?? out
-  ?? inp
-]
+    dialect: context [
+        default: [tuple!]
+        single: [string!]
+        double: [integer! string!]
+    ]
+    
+    inp: [1.2.3 single "test" double "test" 123]
+    out: make block! 4  ; (any initial size works)
+    
+    while [inp: delect dialect inp out] [
+      ?? out
+      ?? inp
+    ]
 </pre>
 
 The results will be:
 
 <pre>
-out: [default 1.2.3]
-inp: [single "test" double "test" 123]
-
-out: [single "test"]
-inp: [double "test" 123]
-
-out: [double 123 "test"]
-inp: []
+    out: [default 1.2.3]
+    inp: [single "test" double "test" 123]
+    
+    out: [single "test"]
+    inp: [double "test" 123]
+    
+    out: [double 123 "test"]
+    inp: []
 </pre>
 
 Of course, this is a very trivial case, but it gives you the idea.
@@ -93,22 +94,23 @@ Of course, this is a very trivial case, but it gives you the idea.
 
 A DELECT dialect is defined as an object. Here is an example that shows various cases:
 
-<pre>dil: context [
-	default: [pair! binary!]
-	empty: []
-	single: [integer!]
-	double: [integer! string!]
-	multi: [* pair!]
-	multa: [tuple! * pair!]
-	types: [series!]
-	types2: reduce [series! block!]
-	word: [word!]
-	refine: [integer! ref pair!]
-	refine2: [integer! ref pair! integer! str string!]
-	keyword: none
-	ref: none
-	str: none
-]
+<pre>
+    dil: context [
+    	default: [pair! binary!]
+    	empty: []
+    	single: [integer!]
+    	double: [integer! string!]
+    	multi: [* pair!]
+    	multa: [tuple! * pair!]
+    	types: [series!]
+    	types2: reduce [series! block!]
+    	word: [word!]
+    	refine: [integer! ref pair!]
+    	refine2: [integer! ref pair! integer! str string!]
+    	keyword: none
+    	ref: none
+    	str: none
+    ]
 </pre>
 
 The words of the object define the keywords of the grammar. Words defined as blocks are commands. Words set to NONE are special keywords that can be used as flag words inside of commands).
@@ -222,10 +224,10 @@ Each default value is identified by the default word and each value is returned 
 Be sure to watch out for this potential problem:
 
 <pre>
-dialect: context [
-    default: [string!]
-    cmd: [string!]
-]
+    dialect: context [
+        default: [string!]
+        cmd: [string!]
+    ]
 </pre>
 
 This is a valid dialect, but if you input [cmd "test"] the result will always be to cmd, never to default. However, [cmd "test" "this"] will work fine.

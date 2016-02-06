@@ -3,10 +3,10 @@ This example will open an [[R3 GUI]] window with a title message and a close but
 ==Script==
 
 <pre>
-view [
-    title "Hello World"
-    button "Close" close
-]
+    view [
+        title "Hello World"
+        button "Close" close
+    ]
 </pre>
 
 ==Screenshot==

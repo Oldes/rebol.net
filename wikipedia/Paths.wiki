@@ -22,12 +22,12 @@ In Rebol, a path is formed from root value and a list of refinements. Each refin
 Here are a few example paths:
 
 <pre>
-names/12
-image/100x20
-account/balance
-source/images/globe.jpg
-USA/CA/Ukiah/size
-parse/all
+    names/12
+    image/100x20
+    account/balance
+    source/images/globe.jpg
+    USA/CA/Ukiah/size
+    parse/all
 </pre>
 
 So, there's nothing unusual about that. The slashes separate each refinement.
@@ -37,10 +37,10 @@ So, there's nothing unusual about that. The slashes separate each refinement.
 Although a path is normally written as shown above, there are some special formats that can be useful. Here is a list:
 
 <pre>
-a/b/c : - natural path - evaluates the value of the path
-a/b/c: : - set path - sets the value
-:a/b/c : - get path - get value, but do not evaluate it
-'a/b/c : - literal path - refer to the path itself
+    a/b/c : - natural path - evaluates the value of the path
+    a/b/c: : - set path - sets the value
+    :a/b/c : - get path - get value, but do not evaluate it
+    'a/b/c : - literal path - refer to the path itself
 </pre>
 
 These formats are identical to those used by variables, as described in chapter NN of the Rebol User Guide.
@@ -52,17 +52,17 @@ As shown above, refinements can be a variety of datatypes. They can be integers,
 It is important to realize that the type of refinement can make a difference on how a path is interpreted. For example, you can write:
 
 <pre>
-; If you have:
-nums: [a 10 b 20 c 30]
-; And:
-n: 4
-
-; You can write:
-nums/4
-nums/b
-nums/:n
-nums/(n)
-nums/(6 - 2)
+    ; If you have:
+    nums: [a 10 b 20 c 30]
+    ; And:
+    n: 4
+    
+    ; You can write:
+    nums/4
+    nums/b
+    nums/:n
+    nums/(n)
+    nums/(6 - 2)
 </pre>
 
 All of those return the same value, 20.
