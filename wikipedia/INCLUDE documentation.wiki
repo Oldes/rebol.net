@@ -241,63 +241,63 @@ The UPDATE-DIRECTIVES function obtained an invalid directive specification in th
 
 A call equivalent to '''prebol''' processing <code>%somefile.r</code> and storing the result of the preprocessing to <code>%outfile.r</code> would look like:
 
-<pre>include/link %somefile.r %outfile.r</pre>
+    include/link %somefile.r %outfile.r
 
 To change the '''include-ctx/path''':
 
-<pre>append include-ctx/path url-or-directory</pre>
+    append include-ctx/path url-or-directory
 
 The '''include''' call corresponding to the <code>#include-check</code> directive is <code>include/check</code>, which preprocesses and runs the script only if it hasn't done so before:
 
-<pre>include/check %somefile.r</pre>
+    include/check %somefile.r
 
 The distinction between preprocessing directives and "normal" '''include''' usage is best described on simple examples:
 
 The first example uses '''include''', but not the preprocessing directives:
 
-<pre>Rebol [
-    File: %script-builder.r
-]
+    Rebol [
+        File: %script-builder.r
+    ]
 
-; create a new "standard" script from the script base
-verbose: false
-; use a clean LOG
-clear include-ctx/log
-include/link %script-base.r %standard-script.r
+    ; create a new "standard" script from the script base
+    verbose: false
+    ; use a clean LOG
+    clear include-ctx/log
+    include/link %script-base.r %standard-script.r
 
-; now create a verbose version
-verbose: true
-clear include-ctx/log
-include/link %script-base.r %verbose-script.r</pre>
+    ; now create a verbose version
+    verbose: true
+    clear include-ctx/log
+    include/link %script-base.r %verbose-script.r
 
 To create the two versions of the script containing everything they need to run it is sufficient to do:
  
 
-<pre>include %script-builder.r</pre>
+    include %script-builder.r
 
 , which takes care of creating both script versions.
 
 The <code>%script-base.r</code> file can look e.g. as follows:
 
-<pre>Rebol [
-    File: %script-base.r
-]
+    Rebol [
+        File: %script-base.r
+    ]
 
-#either [verbose] [debug: :print] [debug: none]
-#include-check %part1.r
-#include-check %part2.r
-...</pre>
+    #either [verbose] [debug: :print] [debug: none]
+    #include-check %part1.r
+    #include-check %part2.r
+    ...
 
 ===Context encapsulation===
 
 It is possible to encapsulate contexts as follows:
 
-<pre>Rebol [
-    Title: "my script"
-]
-	
-make object! [#include %your-script.r]
-make module! [[module spec goes here] [#include %his-script.r]]</pre>
+    Rebol [
+        Title: "my script"
+    ]
+    	
+    make object! [#include %your-script.r]
+    make module! [[module spec goes here] [#include %his-script.r]]
 
 ==User-defined directives==
 
@@ -343,7 +343,7 @@ The #print directive is meant as the debug-print directive. It uses (potentially
 
 Usage:
 
-<pre>#print argument</pre>
+    #print argument
 
 
 If the '''''debug''''' flag (global) is defined (set) when the #print directive is being processed the directive is turned into a '''print''' call; otherwise it is left out from the code.
@@ -351,27 +351,27 @@ If the '''''debug''''' flag (global) is defined (set) when the #print directive 
 ===The definition of the #print directive===
 
 
-<pre>Rebol [
-    Title: "Debug-print"
-    File: %debug-print.r
-    Author: "Ladislav Mecir"
-    Date: 21-Oct-2011/15:31:41+2:00
-    Purpose: {Defines the #print directive}
-    Notes: {
-        uses the debug flag (global)
-            if the debug flag is set, #print becomes print
-            otherwise, #print and its argument are left out
-    }
-]
+    Rebol [
+        Title: "Debug-print"
+        File: %debug-print.r
+        Author: "Ladislav Mecir"
+        Date: 21-Oct-2011/15:31:41+2:00
+        Purpose: {Defines the #print directive}
+        Notes: {
+            uses the debug flag (global)
+                if the debug flag is set, #print becomes print
+                otherwise, #print and its argument are left out
+        }
+    ]
 
-include-ctx/update-directives [
-    #print set value1 skip (
-        if value? 'debug [
-            append linked 'print
-            append/only linked get/any 'value1
-        ]
-    )
-]</pre>
+    include-ctx/update-directives [
+        #print set value1 skip (
+            if value? 'debug [
+                append linked 'print
+                append/only linked get/any 'value1
+            ]
+        )
+    ]
 
 ==How to's==
 
@@ -381,7 +381,7 @@ To be compatible with '''do''' '''include''' changes the working directory to th
 
 For example if we define:
 
-<pre>include-ctx/path: reduce [%. clean-path %.]</pre>
+    include-ctx/path: reduce [%. clean-path %.]
 
 at the first sight it seems that the two elements in the above '''include-ctx/path''' are equivalent, but that is not true. The first one is a relative path always referring to the current working directory while the second one refers to the directory that was current when the '''include-ctx/path''' was defined.
 
@@ -389,40 +389,40 @@ at the first sight it seems that the two elements in the above '''include-ctx/pa
 
 This directive evaluates an expression and includes its result 2 into the script:
 
-<pre>#do [1 + 1]</pre>
+    #do [1 + 1]
 
 while this one evaluates the expression as well including nothing:
 
-<pre>#do [1 + 1 []]</pre>
+    #do [1 + 1 []]
 
 ===How to write code detecting whether it has been preprocessed===
 
 When a script is running you may need to find out whether it has been preprocessed or not. Here is how:
 
-<pre>print either (#do [false]) ["this code wasn't preprocessed"]["this code was preprocessed"]</pre>
+    print either (#do [false]) ["this code wasn't preprocessed"]["this code was preprocessed"]
 
 ===How to write a part of a script that you don't want to be preprocessed===
 
 Sometimes you want a part of the script to remain untouched by the preprocessor. This is a way how:
 
-<pre>#do [[
-    ; this part will not be preprocessed
-    prin "part1: "
+    #do [[
+        ; this part will not be preprocessed
+        prin "part1: "
+        print either (#do [false]) ["not preprocessed"] ["preprocessed"]
+    ]]
+    	
+    ; this part will be preprocessed
+    prin "part2: "
     print either (#do [false]) ["not preprocessed"] ["preprocessed"]
-]]
-	
-; this part will be preprocessed
-prin "part2: "
-print either (#do [false]) ["not preprocessed"] ["preprocessed"]</pre>
 
 ===How to write a block you don't want to be preprocessed===
 
 Using the above trick we can do it as follows:
 
-<pre>#do [[[
-    print mold #include
-]]]
-</pre>
+    #do [[[
+        print mold #include
+    ]]]
+    
 
 ===How to write code compatible with both '''do''' and '''include'''===
 
@@ -430,19 +430,19 @@ The <code>%include.r</code> script may serve as an example of a script containin
 
 Combining the tricks from the previous sections: 
 
-<pre>do if (#do [false]) [func [a b] [do first b]] #do [[
-    ; here we can put any code with preprocessor directives
-    ; without worrying whether the user ran the script using DO or INCLUDE:
-    print mold #include
-    ; etc.
-]]</pre>
+    do if (#do [false]) [func [a b] [do first b]] #do [[
+        ; here we can put any code with preprocessor directives
+        ; without worrying whether the user ran the script using DO or INCLUDE:
+        print mold #include
+        ; etc.
+    ]]
 
 Another alternative - this time it is a block that remains unprocessed no matter whether the script is processed by '''do''' or '''include''':
 
-<pre>do either (#do [false])[func [a b] [b/1/1]] [func [a] [:a]] #do [[[
-    ; here I can put any code with or without preprocessor directives
-    print mold #include
-]]]</pre>
+    do either (#do [false])[func [a b] [b/1/1]] [func [a] [:a]] #do [[[
+        ; here I can put any code with or without preprocessor directives
+        print mold #include
+    ]]]
 
 ===How to create a Windows Explorer association for '''include'''===
 
@@ -452,22 +452,22 @@ To create a Windows Explorer association so that you can right-click on a <code>
 *Create a script file including any script
 :This is an example file (use your own directory paths):
 
-<pre>Rebol [
-	Title: "Incl.r3"
-	File: %incl.r3
-	Author: "Ladislav Mecir"
-	Date: 30-Sep-2011/10:23:03+2:00
-	Purpose: {Includes the first argument file, works with R3}
-]
+    Rebol [
+    	Title: "Incl.r3"
+    	File: %incl.r3
+    	Author: "Ladislav Mecir"
+    	Date: 30-Sep-2011/10:23:03+2:00
+    	Purpose: {Includes the first argument file, works with R3}
+    ]
 
-; define the INCLUDE function
-do %include.r
+    ; define the INCLUDE function
+    do %include.r
 
-;---- R3 GUI
-include %/d/ladislav/saphirion/trunk/r3-gui/loader/loader.r3
+    ;---- R3 GUI
+    include %/d/ladislav/saphirion/trunk/r3-gui/loader/loader.r3
 
-; include the argument script
-include to-rebol-file system/script/args</pre>
+    ; include the argument script
+    include to-rebol-file system/script/args
 
 *Add a new association for <code>.r</code> files. (Actually, you can add more associations. For example, I have one called <code>r2</code> to evaluate the script using '''include''' and Rebol 2 interpreter and one called <code>r3</code> to evaluate the script using '''include''' and the Rebol 3 interpreter.)
 
@@ -475,7 +475,7 @@ include to-rebol-file system/script/args</pre>
 
 Run the Windows Explorer and click on <code>Tools/Options</code> in menu. Next click on the <code>File Types</code> tab and find the <code>.r</code> file type associations. Click on the <code>Advanced</code> button and add a new action. Call the new action <code>r3</code> and the application associated with the new action may be e.g.:
 
-<pre>"D:\Rebol\r3.exe" d:\rebol\incl.r3 "%1"</pre>
+    "D:\Rebol\r3.exe" d:\rebol\incl.r3 "%1"
 
 (Adjust your directory appropriately). Next you can decide whether to make the <code>r3</code> action default. If you make it default you can just double-click (or left-click if you set your Explorer for one click as I did) on a <code>.r</code> file to include it. Otherwise you can right-click the file in Windows Explorer and pick the <code>r3</code> action from the quick menu.
 

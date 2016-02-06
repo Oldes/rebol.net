@@ -45,16 +45,15 @@ Setup your editor to run view.exe for your script (to save you time).
 
 Start with:
 
-<pre>
-Rebol []
+    Rebol []
 
-do %load-gui.r
+    do %load-gui.r
 
-view [
-    title "It works!"
-    button "Ok" quit
-]
-</pre>
+    view [
+        title "It works!"
+        button "Ok" quit
+    ]
+    
 
 You can go from there.
 

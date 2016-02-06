@@ -8,7 +8,7 @@ The code in this article was tested in Rebol/View 2.7.6.3.1. It is possible that
 
 A reader who wants to check all the examples can run this code: 
 
-<pre>do http://www.rebol.org/download-a-script.r?script-name=contexts.r</pre>
+    do http://www.rebol.org/download-a-script.r?script-name=contexts.r
 
 , which defines all functions from this article.
 
@@ -265,21 +265,21 @@ Observation (MAKE, TO and unbound words): All words contained in a result block 
 
 Illustration:
 
-<pre>bind? first make block! "unbound" ; == none
-bind? first first first make block! "[[unbound-too]]" ; == none</pre>
+    bind? first make block! "unbound" ; == none
+    bind? first first first make block! "[[unbound-too]]" ; == none
 
 ==Local contexts==
 Definition (Local words/local variables): The words that are neither unbound nor global we call local words (local variables):
 
-<pre>local?: func [
-    {find out, if a WORD is local}
-    word [any-word!]
-] [
-    not any [
-        none? bind? :word
-        global? :word
+    local?: func [
+        {find out, if a WORD is local}
+        word [any-word!]
+    ] [
+        not any [
+            none? bind? :word
+            global? :word
+        ]
     ]
-]</pre>
 
 Definition (Local context): A context is called local context if its words are local words.
 
@@ -627,73 +627,73 @@ The answer is positive and the function able to do this is defined below.
 
 First of all a function that can extract all local words of a function from its SPEC:
 
-<pre>locals?: func [
-    {Get all locals from a spec block.}
-    spec [block!]
-    /args {get only arguments}
-    /local locals item item-rule
-] [
-    locals: make block! 16
-    item-rule: either args [[
-	refinement! to end (item-rule: [end skip]) |
-	set item any-word! (insert tail locals to word! :item) | skip
-    ]] [[
-	set item any-word! (insert tail locals to word! :item) | skip
-    ]]
-    parse spec [any item-rule]
-    locals
-]
-
-set-words: func [
-    {Get all set-words from a block}
-    block [block!]
-    /deep {also search in subblocks/parens}
-    /local elem words rule here
-] [
-    words: make block! length? block
-    rule: either deep [[
-        any [
-            set elem set-word! (
-                insert tail words to word! :elem
-            ) | here: [block! | paren!] :here into rule | skip
-        ]
-    ]] [[
-        any [
-            set elem set-word! (
-                insert tail words to word! :elem
-            ) | skip
-        ]
-    ]]
-    parse block rule
-    words
-]
-
-funcs: func [
-    {Define a function with auto local and static variables.}
-    [throw]
-    spec [block!] {Help string (opt) followed by arg words with opt type and string}
-    init [block!] {Set-words become static variables, shallow scan}
-    body [block!] {Set-words become local variables, deep scan}
-    /local svars lvars
-] [
-    ; Preserve the original Spec, Init and Body
-    spec: copy spec
-    init: copy/deep init
-    body: copy/deep body
-    ; Collect static and local variables
-    svars: set-words init
-    lvars: set-words/deep body
-    unless empty? svars [
-        ; create the static context and bind Init and Body to it
-        use svars reduce [reduce [init body]]
+    locals?: func [
+        {Get all locals from a spec block.}
+        spec [block!]
+        /args {get only arguments}
+        /local locals item item-rule
+    ] [
+        locals: make block! 16
+        item-rule: either args [[
+    	refinement! to end (item-rule: [end skip]) |
+    	set item any-word! (insert tail locals to word! :item) | skip
+        ]] [[
+    	set item any-word! (insert tail locals to word! :item) | skip
+        ]]
+        parse spec [any item-rule]
+        locals
     ]
-    unless empty? lvars: exclude exclude lvars locals? spec svars [
-        ; declare local variables
-        insert any [find spec /local insert tail spec /local] lvars
+
+    set-words: func [
+        {Get all set-words from a block}
+        block [block!]
+        /deep {also search in subblocks/parens}
+        /local elem words rule here
+    ] [
+        words: make block! length? block
+        rule: either deep [[
+            any [
+                set elem set-word! (
+                    insert tail words to word! :elem
+                ) | here: [block! | paren!] :here into rule | skip
+            ]
+        ]] [[
+            any [
+                set elem set-word! (
+                    insert tail words to word! :elem
+                ) | skip
+            ]
+        ]]
+        parse block rule
+        words
     ]
-    do init
-    make function! spec body
-]</pre>
+
+    funcs: func [
+        {Define a function with auto local and static variables.}
+        [throw]
+        spec [block!] {Help string (opt) followed by arg words with opt type and string}
+        init [block!] {Set-words become static variables, shallow scan}
+        body [block!] {Set-words become local variables, deep scan}
+        /local svars lvars
+    ] [
+        ; Preserve the original Spec, Init and Body
+        spec: copy spec
+        init: copy/deep init
+        body: copy/deep body
+        ; Collect static and local variables
+        svars: set-words init
+        lvars: set-words/deep body
+        unless empty? svars [
+            ; create the static context and bind Init and Body to it
+            use svars reduce [reduce [init body]]
+        ]
+        unless empty? lvars: exclude exclude lvars locals? spec svars [
+            ; declare local variables
+            insert any [find spec /local insert tail spec /local] lvars
+        ]
+        do init
+        make function! spec body
+    ]
 
 ==Model of Rebol functions==
 Our model of Rebol functions will be a Rebol object FUNCTION!-MODEL having the appropriate attributes. The totally necessary attributes of Rebol functions are SPEC and BODY.

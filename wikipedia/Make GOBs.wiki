@@ -187,7 +187,6 @@ For example:
 
 To create an icon consisting of an image with a text name under it:
 
-<pre>
     icon: make image! 32x32
     icon-text: "Icon name"
 
@@ -202,7 +201,7 @@ To create an icon consisting of an image with a text name under it:
         top 36
         text [anti-alias on center icon-text]
     ]
-</pre>
+    
 
 Let's look at each gob separately.
 
@@ -239,7 +238,6 @@ Both width and height are recomputed during resize, so if the width changes, the
 
 The next example creates an icon with some effects to highlight the selection:
 
-<pre>
     selected-icon: make-gobs [
         center 0
         top 4
@@ -264,7 +262,7 @@ The next example creates an icon with some effects to highlight the selection:
         before 1
         draw [pen blue fill-pen 0.0.255.200 box 0x0 bottom-right/0x0 5]
     ]
-</pre>
+    
 
 Note in the first gob, note the parens. These values are computed only once (when the spec is first processed by DELECT). Those results will remain static for subsequent resize calls. Above, we use parens to set the WIDTH and HEIGHT.
 

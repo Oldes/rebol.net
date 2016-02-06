@@ -2,14 +2,13 @@ Here is a very simple text file browser.
 
 ==Script==
 
-<pre>
-files: read %*.r
+    files: read %*.r
 
-view/across [
-    text-list files do [set-face ca read-string pick files value]
-    ca: code-area
-]
-</pre>
+    view/across [
+        text-list files do [set-face ca read-string pick files value]
+        ca: code-area
+    ]
+    
 
 ==Screenshot==
 

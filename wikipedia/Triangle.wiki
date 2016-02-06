@@ -48,10 +48,9 @@ The TRIANGLE command provides a shortcut for a triangular polygon with optional 
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 <p>Simple triangle:</p>
 
-<pre>
-   fill-pen red
-   triangle 50x1
-</pre>
+    fill-pen red
+    triangle 50x1
+    
 
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-1.png|150px]]
@@ -60,14 +59,13 @@ The TRIANGLE command provides a shortcut for a triangular polygon with optional 
 A group of triangles. This should make it easy to see where each triangle is:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 
-<pre>
-   pen off
-   triangle 50x150 150x50 150x150 red green blue
-   triangle 150x50 250x150 150x150 green yellow blue
-   triangle 250x150 150x350 150x150 yellow orange blue
-   triangle 150x350 50x150 150x150 orange red blue
-   translate 200x-15
-</pre>
+    pen off
+    triangle 50x150 150x50 150x150 red green blue
+    triangle 150x50 250x150 150x150 green yellow blue
+    triangle 250x150 150x350 150x150 yellow orange blue
+    triangle 150x350 50x150 150x150 orange red blue
+    translate 200x-15
+    
 
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-2b.png|No Description]]
@@ -77,19 +75,18 @@ A group of triangles. This should make it easy to see where each triangle is:
 The same triangle group but slightly rotated illustrating the dilation parameter:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 
-<pre>
-   pen off
-   rotate 5
-   triangle 50x150 150x50 150x150 red green blue
-   triangle 150x50 250x150 150x150 green yellow blue
-   triangle 250x150 150x350 150x150 yellow orange blue
-   triangle 150x350 50x150 150x150 orange red blue
-   translate 200x-15
-   triangle 50x150 150x50 150x150 red green blue 0.33
-   triangle 150x50 250x150 150x150 green yellow blue 0.33
-   triangle 250x150 150x350 150x150 yellow orange blue 0.33
-   triangle 150x350 50x150 150x150 orange red blue 0.33
-</pre>
+    pen off
+    rotate 5
+    triangle 50x150 150x50 150x150 red green blue
+    triangle 150x50 250x150 150x150 green yellow blue
+    triangle 250x150 150x350 150x150 yellow orange blue
+    triangle 150x350 50x150 150x150 orange red blue
+    translate 200x-15
+    triangle 50x150 150x50 150x150 red green blue 0.33
+    triangle 150x50 250x150 150x150 green yellow blue 0.33
+    triangle 250x150 150x350 150x150 yellow orange blue 0.33
+    triangle 150x350 50x150 150x150 orange red blue 0.33
+    
 
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-3b.png|TRIANGLE example 3]]
@@ -98,13 +95,12 @@ The same triangle group but slightly rotated illustrating the dilation parameter
 This gives you a much more subtle blending in the middle:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 
-<pre>
-   pen off
-   triangle 50x150  150x50  150x150 red    green  gray
-   triangle 150x50  250x150 150x150 green  yellow gray
-   triangle 250x150 150x350 150x150 yellow orange gray
-   triangle 150x350 50x150  150x150 orange red    gray
-</pre>
+    pen off
+    triangle 50x150  150x50  150x150 red    green  gray
+    triangle 150x50  250x150 150x150 green  yellow gray
+    triangle 250x150 150x350 150x150 yellow orange gray
+    triangle 150x350 50x150  150x150 orange red    gray
+    
 
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-4b.png|TRIANGLE example 4]]
@@ -114,13 +110,12 @@ This gives you a much more subtle blending in the middle:
 And this shows simple highlighting/shading:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 
-<pre>
-   pen off
-   triangle 50x150  150x50  150x150 water sky   sky
-   triangle 150x50  250x150 150x150 water coal  sky
-   triangle 250x150 150x350 150x150 coal  coal  sky
-   triangle 150x350 50x150  150x150 coal  water sky
-</pre>
+    pen off
+    triangle 50x150  150x50  150x150 water sky   sky
+    triangle 150x50  250x150 150x150 water coal  sky
+    triangle 250x150 150x350 150x150 coal  coal  sky
+    triangle 150x350 50x150  150x150 coal  water sky
+    
 
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-5b.png|TRIANGLE example 5]]

@@ -61,7 +61,6 @@ General usage has been kept very simple -- to be on par (or better) with what ot
 
 Here is an example that shows the most common usage patterns:
 
-<pre>
     d: make map! 1000
 
     d/test: 10
@@ -74,7 +73,7 @@ Here is an example that shows the most common usage patterns:
     d/test: 20
     print d/test
     20
-</pre>
+    
 
 The above example shows that you can directly create new map keys and values.
 

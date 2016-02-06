@@ -265,31 +265,31 @@ The Substitute dialect is meant as a data format representing constructed string
 
 ====Examples====
 
-<pre>; the #"%" character is considered "ordinary character" if not followed by a digit
-substitute ["%"] ; == "%" 
-substitute ["%-1"] ; == "%-1"
-substitute ["%."] ; == "%."
+    ; the #"%" character is considered "ordinary character" if not followed by a digit
+    substitute ["%"] ; == "%" 
+    substitute ["%-1"] ; == "%-1"
+    substitute ["%."] ; == "%."
 
- ; the "%1" is taken as a reference to the first argument string
-substitute ["%1" "x"] ; == "x"
+     ; the "%1" is taken as a reference to the first argument string
+    substitute ["%1" "x"] ; == "x"
 
-; the argument string is substituted "as is", not processed further
-substitute ["%1" "%1"] ; == "%1"
+    ; the argument string is substituted "as is", not processed further
+    substitute ["%1" "%1"] ; == "%1"
 
-; "%0" is a reference to the (unprocessed) template string
-substitute ["%0"] ; == "%0"
-substitute ["a%0"] ; == "aa%0"
+    ; "%0" is a reference to the (unprocessed) template string
+    substitute ["%0"] ; == "%0"
+    substitute ["a%0"] ; == "aa%0"
 
-; the arguments have to be strings
-substitute ["%1" 12] ; triggers an error</pre>
+    ; the arguments have to be strings
+    substitute ["%1" 12] ; triggers an error
 
 A more typical example would be something like (generated using REDUCE):
 
-<pre>reduce [{
-    Das File '%1' kann nicht geloescht werden.
-    Stellen Sie sicher, dass Sie ueber ausreichende Zugriffsrechte
-    (schreiben und loeschen) auf Ihrem System verfuegen.
-} to-string tmp]</pre>
+    reduce [{
+        Das File '%1' kann nicht geloescht werden.
+        Stellen Sie sicher, dass Sie ueber ausreichende Zugriffsrechte
+        (schreiben und loeschen) auf Ihrem System verfuegen.
+    } to-string tmp]
 
 ====Terminology====
 
