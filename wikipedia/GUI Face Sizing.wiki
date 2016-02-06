@@ -98,7 +98,8 @@ Here are two test cases:
 
 Case 1:
 
-<pre>view [
+<pre>
+view [
     title "Example"
     area
     button "Submit"
@@ -109,7 +110,8 @@ A good result would be for the area to be full width and full height (less title
 
 Case 2:
 
-<pre>view [
+<pre>
+view [
     title "Example"
     area
     group [

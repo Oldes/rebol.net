@@ -7,7 +7,9 @@ Paths work as they did before in R2, but in R3 the internal implementation is to
 
 An example is a file path. It lets you refer to a specific file by providing a list of directories and the file's name:
 
-    documents/office/contract.txt
+<pre>
+documents/office/contract.txt
+</pre>
 
 Each slash ''refines'' the description of where the file is located. You can think of the names as selectors or as refinements.
 
@@ -20,6 +22,7 @@ If the concept of paths seems difficult to understand, perhaps just think of the
 In Rebol, a path is formed from root value and a list of refinements. Each refinement provides more specific information about how to select a value, starting from the root. Each refinement is separated by a slash (/) - a method that is identical to how URL's are written on the Internet.
 
 Here are a few example paths:
+
 <pre>
 names/12
 image/100x20

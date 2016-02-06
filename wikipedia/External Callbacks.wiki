@@ -6,7 +6,6 @@ Callbacks have been released in A103. See [http://www.rebol.com/r3/docs/concepts
 
 Comments here.
 
-
 ==Callback Directions==
 
 '''WARNING: The documentation below is older and obsolete.'''

@@ -28,7 +28,9 @@ Also, I describe the main reason for /options in [[Specifying Larger Options]].
 
 '''A:''' Simply this: I did not want user to confuse the usage. It would appear as:
 
- view/options window [options: [...]]
+<pre>
+view/options window [options: [...]]
+</pre>
 
 So, that seemed redundant.
 
@@ -82,11 +84,15 @@ Well, there ''are going to be times'' when a user needs to read the documentatio
 
 Yes, we've tried to build it so simple things are simple. You ''can'' write:
 
-  view [text "Hello World"]
+<pre>
+view [text "Hello World"]
+</pre>
 
 and that will display! Also, simple changes to that are simple:
 
-  view/options [text "Hello World"] [color: gold]
+<pre>
+view/options [text "Hello World"] [color: gold]
+</pre>
 
 In my book, that's quite clean and easy. But still, there are times when you must read the docs.
 

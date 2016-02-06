@@ -19,7 +19,6 @@ Insert table here which describes the relationships between:
 *READ - WRITE
 *TO-LOCAL-FILE - TO-Rebol-FILE
 
-
 I realize there might be 100s of combinations, but I hope also we can make a clear table of combinations that work well together.
 
 ==Cookbook References==

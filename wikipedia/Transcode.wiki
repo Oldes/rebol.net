@@ -22,12 +22,16 @@ ARGUMENTS:
 
 For example:
 
- >> transcode "1 2 3"
- == [1 " 2 3"]
+<pre>
+>> transcode "1 2 3"
+== [1 " 2 3"]
+</pre>
 
 Notice that TRANSCODE returns a block of the form:
 
- [value rest-of-source]
+<pre>
+[value rest-of-source]
+</pre>
 
 Where value is the translated value, and rest-of source is where to continue translation for the next value.
 
@@ -35,14 +39,16 @@ Also note that TRANSCODE does not throw syntax errors, it will return them in th
 
 For example:
 
- >> probe transcode "1/2 print now"
- [make error! [
-        code: 200
-        type: 'Syntax
-        id: 'invalid
-        arg1: "date"
-        arg2: "1/2"
-        arg3: none
-        near: "(line 1) print 1/2 print now"
-        where: [transcode]
-    ] "/2 print now"]
+<pre>
+>> probe transcode "1/2 print now"
+[make error! [
+       code: 200
+       type: 'Syntax
+       id: 'invalid
+       arg1: "date"
+       arg2: "1/2"
+       arg3: none
+       near: "(line 1) print 1/2 print now"
+       where: [transcode]
+   ] "/2 print now"]
+</pre>

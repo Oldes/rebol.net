@@ -4,7 +4,9 @@ There is no input argument. A return value is not necessary.
 
 ===Examples===
 
- on-clear: [
-   clear face/facets/text-edit
-   show-later face
- ]
+<pre>
+on-clear: [
+  clear face/facets/text-edit
+  show-later face
+]
+</pre>

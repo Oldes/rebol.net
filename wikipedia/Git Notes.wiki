@@ -25,13 +25,17 @@ Download the latest hostkit sources as .tgz or .zip (does not need Git at all; a
 
 Clone ("check out") the host-kit repository:
 
-  $ git clone git://github.com/rebolsource/r3-hostkit.git
+<pre>
+$ git clone git://github.com/rebolsource/r3-hostkit.git
+</pre>
 
 == Access the repository via Subversion ==
 
 As a fallback, you can use Subversion to access Github repositories:
 
-  $ svn co https://svn.github.com/rebolsource/r3-hostkit
+<pre>
+$ svn co https://svn.github.com/rebolsource/r3-hostkit
+</pre>
 
 
 
@@ -62,9 +66,13 @@ Use the official installers: http://code.google.com/p/git-osx-installer/download
 
 Either use the <tt>git</tt> package:
 
-  pkg_add -r git
+<pre>
+pkg_add -r git
+</pre>
 
 Or use the <tt>devel/git</tt> port:
 
-  cd /usr/src/ports/devel/git
-  make install
+<pre>
+cd /usr/src/ports/devel/git
+make install
+</pre>

@@ -20,7 +20,6 @@ Rebol installation is quite easy but we suggest you to read the following docume
 
 http://www.rebol.com/docs/setup.html
 
-
 Getting started with Linux is slightly different see: [[Setting up in Linux]] .
 
 ==Examples==

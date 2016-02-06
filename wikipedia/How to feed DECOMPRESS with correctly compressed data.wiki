@@ -6,12 +6,14 @@ If you are feeding it data from an external compressor, write something about th
 
 It looks that Rebol can decompress any ZLIB data. It just requires to append known length of uncompressed data in binary little-endian representation. 
 
-  zlib-decompress: func [
-      zlibData [binary!]
-      length [integer!] "known uncompressed zlib data length"
-  ][
-      decompress head insert tail zlibData third make struct! [value [integer!]] reduce [length]
-  ]
+<pre>
+zlib-decompress: func [
+    zlibData [binary!]
+    length [integer!] "known uncompressed zlib data length"
+][
+    decompress head insert tail zlibData third make struct! [value [integer!]] reduce [length]
+]
+</pre>
 
 ==Cookbook References==
 

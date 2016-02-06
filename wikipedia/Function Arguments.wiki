@@ -5,7 +5,9 @@ This page specifies how function arguments are defined.
 
 When defining a function, its ''formal arguments'' are specified by a block of the form:
 
- [arg [datatypes] "comment" ...]
+<pre>
+[arg [datatypes] "comment" ...]
+</pre>
 
 The ''arg'' is a word that provides the name of the argument. It can be one of several word possibilities, as listed below.
 
@@ -36,15 +38,19 @@ For the :word case above, the actual argument does not matter. The next value in
 
 Note that both 'word and :word will accept unset! values only if those are specified as valid datatypes. For example:
 
- sample: func [:arg [any-type!]] [probe :arg]
- sample 10
- 10
- do [sample]
- unset!
+<pre>
+sample: func [:arg [any-type!]] [probe :arg]
+sample 10
+10
+do [sample]
+unset!
+</pre>
 
 Or, you can explicitly specify that unset! is allowed as a value:
 
- sample: func [:arg [integer! unset!]] [probe :arg]
+<pre>
+sample: func [:arg [integer! unset!]] [probe :arg]
+</pre>
 
 To help show how it works, here are examples of arg as a 'word. These are all true expressions.
 

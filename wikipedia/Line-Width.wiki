@@ -21,58 +21,62 @@ Sets the line width.
 <br>'''Notes and Examples'''
 
 Default dynamic line width example:
-<code><pre>
-		line-width 3
-		pen yellow
-		
-		reset-matrix
-		scale 1.5 1.5
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
 
-		reset-matrix		
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+<pre>
+line-width 3
+pen yellow
 
-		reset-matrix
-		scale .5 .5
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+reset-matrix
+scale 1.5 1.5
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
 
-		reset-matrix
-		scale .2 .2
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
-</pre></code>
+reset-matrix		
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+
+reset-matrix
+scale .5 .5
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+
+reset-matrix
+scale .2 .2
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+</pre>
+
 [[images/LINE-WIDTH-1.png|LINE-WIDTH example 1]]
 
 <br>
 
 Fixed line width example:
 
-<code><pre>
-		line-width 3 fixed
-		pen yellow
-		
-		reset-matrix
-		scale 1.5 1.5
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
 
-		reset-matrix		
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+<pre>
+line-width 3 fixed
+pen yellow
 
-		reset-matrix
-		scale .5 .5
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+reset-matrix
+scale 1.5 1.5
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
 
-		reset-matrix
-		scale .2 .2
-		translate 100x100
-		polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
-</pre></code>
+reset-matrix		
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+
+reset-matrix
+scale .5 .5
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+
+reset-matrix
+scale .2 .2
+translate 100x100
+polygon 50x5 62x40 95x40 68x60 80x95 50x74 20x95 32x60 5x40 38x40
+</pre>
+
 [[images/LINE-WIDTH-2.png|LINE-WIDTH example 2]]
 
 <br>

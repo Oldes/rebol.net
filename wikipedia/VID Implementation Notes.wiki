@@ -8,25 +8,27 @@ Currently various non-organized notes.
 
 == FACE object ==
 
-    gob: ; reference to the main gob used to render the face.
-    feel: ; object containing the feel functions
-          ; they handle events (from user and from app)
-          ; they produce events (eg. lower level event can produce higher level one)
-          ; they should never change the gobs directly
-    look: ; object containing the look functions
-          ; they handle the gobs that render the face
-       none
-    style: 'face ; not sure if useful
-    action: none ; action function - receives higher level events
-                 ; maybe it should be a block of functions?
-                 ; or we can have lower level listeners block and action
-                 ; only gets higher level events that are not consumed by listeners
-    parent: none ; container face (?)
-    pane: [ ] ; contained faces
-    size: stretch: shrink: 0x0
-    spec: none ; spec object (style arguments)
-    attached: [ ] ; list of attached faces - faces that receive action events from this face
-    ; other style specific fields
+<pre>
+gob: ; reference to the main gob used to render the face.
+feel: ; object containing the feel functions
+      ; they handle events (from user and from app)
+      ; they produce events (eg. lower level event can produce higher level one)
+      ; they should never change the gobs directly
+look: ; object containing the look functions
+      ; they handle the gobs that render the face
+   none
+style: 'face ; not sure if useful
+action: none ; action function - receives higher level events
+             ; maybe it should be a block of functions?
+             ; or we can have lower level listeners block and action
+             ; only gets higher level events that are not consumed by listeners
+parent: none ; container face (?)
+pane: [ ] ; contained faces
+size: stretch: shrink: 0x0
+spec: none ; spec object (style arguments)
+attached: [ ] ; list of attached faces - faces that receive action events from this face
+; other style specific fields
+</pre>
 
 == FEEL object ==
 
@@ -34,66 +36,70 @@ Currently various non-organized notes.
 * change face state, then call look functions to update rendering
 * functions will most likely get block of events instead of just a single event. more on this soon.
 
-    ; from user
-    on-click: func [face event offset] [
-        ; click events
-        ; event/type one of: up down alt-up alt-down aux-up aux-down (?)
-        ; offset within main gob? or should we pass gob and offset?
-    ]
-    ; on-double-click ??
-    on-move: func [face event offset] [
-        ; move events
-        ; mouse is being moved over one of the face gobs
-        ; i think it should probably get it too if mouse was inside and is moved outside
-    ]
-    ; from app
-    on-init: func [face specs] [
-        ; initialize face state based on VID specs
-    ]
-    on-update: func [face new-specs] [
-        ; update face data
-        ; new-specs is like on-init specs
-        ; eg change face text or state etc.
-    ]
-    ; from other ui elements
-    on-action: func [face event] [
-        ; event is a block
-        ; [word! ...] event/1 is the type of event
-        ; common types: [hit] [value <x>] [scroll <offset>]
-        ; [scroll-change <offset> <area-size> <visible-size>]
-    ]
+<pre>
+; from user
+on-click: func [face event offset] [
+    ; click events
+    ; event/type one of: up down alt-up alt-down aux-up aux-down (?)
+    ; offset within main gob? or should we pass gob and offset?
+]
+; on-double-click ??
+on-move: func [face event offset] [
+    ; move events
+    ; mouse is being moved over one of the face gobs
+    ; i think it should probably get it too if mouse was inside and is moved outside
+]
+; from app
+on-init: func [face specs] [
+    ; initialize face state based on VID specs
+]
+on-update: func [face new-specs] [
+    ; update face data
+    ; new-specs is like on-init specs
+    ; eg change face text or state etc.
+]
+; from other ui elements
+on-action: func [face event] [
+    ; event is a block
+    ; [word! ...] event/1 is the type of event
+    ; common types: [hit] [value <x>] [scroll <offset>]
+    ; [scroll-change <offset> <area-size> <visible-size>]
+]
+</pre>
 
 == LOOK object ==
 
 Render face or update face rendering based on face data/state, or events from other faces
 
-    ; from app
-    on-init: func [face specs] [
-        ; initialize (render gobs for the first time)
-        ; size usually unknown at this time, will get resize later
-        ; must set face/size, face/shrink and face/stretch appropriately
-    ]
-    ; from feel or apps
-    on-update: func [face new-specs] [
-        ; face state changed, or new specs (new-specs can be none)
-        ; may call on-child-resize on parent if size, shrink or stretch changed
-        ; parent will call on-resize if necessary
-    ]
-    on-resize: func [face size] [
-        ; face size changed
-        ; should try to be as fast as possible
-    ]
-    ; from other UI code
-    on-scroll: func [face offset] [
-        ; scroll by offset
-        ; eg scroll event from a scroller
-    ]
-    on-child-resize: func [face min-size max-size] [
-        ; for container styles
-        ; one of the contained faces' size,shrink,stretch changed (after an update - eg new label text)
-        ; may send same event to parent
-    ]
-    ; etc - need to think about this. maybe just one function instead of many.
+<pre>
+; from app
+on-init: func [face specs] [
+    ; initialize (render gobs for the first time)
+    ; size usually unknown at this time, will get resize later
+    ; must set face/size, face/shrink and face/stretch appropriately
+]
+; from feel or apps
+on-update: func [face new-specs] [
+    ; face state changed, or new specs (new-specs can be none)
+    ; may call on-child-resize on parent if size, shrink or stretch changed
+    ; parent will call on-resize if necessary
+]
+on-resize: func [face size] [
+    ; face size changed
+    ; should try to be as fast as possible
+]
+; from other UI code
+on-scroll: func [face offset] [
+    ; scroll by offset
+    ; eg scroll event from a scroller
+]
+on-child-resize: func [face min-size max-size] [
+    ; for container styles
+    ; one of the contained faces' size,shrink,stretch changed (after an update - eg new label text)
+    ; may send same event to parent
+]
+; etc - need to think about this. maybe just one function instead of many.
+</pre>
 
 == Attaching faces ==
 
@@ -143,7 +149,9 @@ One possible way to efficiently parse the VID dialect is to use the DELECT funct
 
 The general method would be to specify the commands, styles, and keywords to allow DELECT to recognize them and validate their argument values. However, currently DELECT can only handle a single context, so that '''must be expanded to allow multiple contexts'''. This allows us to keep the commands, master styles, and local styles as separate blocks and eliminate a lot of garbage during the the parse.
 
-    delect/multi dialect [commands master-styles local-styles ...]
+<pre>
+delect/multi dialect [commands master-styles local-styles ...]
+</pre>
 
 === Argument Spec and Map ===
 
@@ -262,23 +270,25 @@ I can never give a perfect answer, because I find the perfect answer during the 
 
 So, after some chat on AltME, a possible solution is (also answers previous question):
 
-    text-style/spec: [
-        text: string!
-        color: tuple!
-        color-back: tuple!
-        text-rich: block!
-        action: block!
-        ; ...
-    ]
-    delect-object: context [
-        ; ...
-        text: get text-style/spec
-        ; ...
-    ]
+<pre>
+text-style/spec: [
+    text: string!
+    color: tuple!
+    color-back: tuple!
+    text-rich: block!
+    action: block!
     ; ...
-    ; result from DELECT
-    set style/spec next delect-block
+]
+delect-object: context [
     ; ...
+    text: get text-style/spec
+    ; ...
+]
+; ...
+; result from DELECT
+set style/spec next delect-block
+; ...
+</pre>
 
 -[[User:Gabriele|Gabriele]] 01:36, 10 July 2007 (EDT)
 
@@ -286,26 +296,28 @@ So, after some chat on AltME, a possible solution is (also answers previous ques
 
 This is an interesting model used by TeX when doing justification. Applied to faces, it would be like this: a face has a "normal" size, that is considered the "best" size for that face. Then, it has an amount of "shrinkability" - how much smaller than that it can get. If size is 100 and shrink is 10, then it can go as low as 90, but not lower. Then, it has an amount of "stretchability" - how fast it can grow in size; the difference with the shrinkability is that stretchability is not limited: if size is 100 and stretch is 10, it can still go to 120. Faces with higher stretch grow faster than faces with lower stretch. TeX also introduce "infinite" stretchability, that is the ability of a face to take over all the space so that the other faces do not stretch at all. TeX has actually four levels of infinity, so that a higher level infinity takes over all the space of lower level infinities. At the same level they share the space. The computation for the resizing would be as follows:
 
-    ; assume face/size, face/shrink, and face/stretch
-    ; assume a sum-of function that is basically a foreach that does a sum,
-    ; just to avoid cluttering the example
-    ; let's pretend we are working on one axis only (which is mostly true in practice)
-    container/size: sum-of face container/pane [face/size]
-    container/shrink: sum-of face container/pane [face/shrink]
-    container/stretch: sum-of face container/pane [face/stretch]
-    ; note, they don't need to be recomputed at each resize unless they change (update event)
-    either container/size > available-size [
-        ; must shrink
-        ratio: available-size - container/size / container/shrink
-        ; ratio should never be < -1. we assume available-size has been constrained already
-        ; by the container's shrinkability
-        foreach face container/pane [face/actual-size: face/shrink * ratio + face/size]
-    ] [
-        ; must stretch
-        ratio: available-size - container/size / container/stretch
-        ; ratio can be > 1
-        foreach face container/pane [face/actual-size: face/stretch * ratio + face/size]
-    ]
+<pre>
+; assume face/size, face/shrink, and face/stretch
+; assume a sum-of function that is basically a foreach that does a sum,
+; just to avoid cluttering the example
+; let's pretend we are working on one axis only (which is mostly true in practice)
+container/size: sum-of face container/pane [face/size]
+container/shrink: sum-of face container/pane [face/shrink]
+container/stretch: sum-of face container/pane [face/stretch]
+; note, they don't need to be recomputed at each resize unless they change (update event)
+either container/size > available-size [
+    ; must shrink
+    ratio: available-size - container/size / container/shrink
+    ; ratio should never be < -1. we assume available-size has been constrained already
+    ; by the container's shrinkability
+    foreach face container/pane [face/actual-size: face/shrink * ratio + face/size]
+] [
+    ; must stretch
+    ratio: available-size - container/size / container/stretch
+    ; ratio can be > 1
+    foreach face container/pane [face/actual-size: face/stretch * ratio + face/size]
+]
+</pre>
 
 I will make an example of how to handle infinity levels if you are interested (it gets a bit more complicated, but not much). [[User:Gabriele|Gabriele]] 03:35, 29 June 2007 (EDT)
 

@@ -10,7 +10,9 @@ No return value is necessary.
 
 Make the background color 'yello when the face is in focus. Make it 'white, when the face is unfocused.
 
- on-focus: [
-   face/facets/back-color: pick reduce [yello white] arg
-   show-later face
- ]
+<pre>
+on-focus: [
+  face/facets/back-color: pick reduce [yello white] arg
+  show-later face
+]
+</pre>

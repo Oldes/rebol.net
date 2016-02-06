@@ -169,7 +169,6 @@ Here is a list of useful Rebol articles.
 
 '''Advanced topics'''
 
-
 {| class="wikitable"
 ! Article
 ! Category

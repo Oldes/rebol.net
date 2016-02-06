@@ -31,6 +31,8 @@ There is no need to define actors that are not needed.  New actors can be create
 
 Actor functions are called using the DO-STYLE function. For example:
 
-  do-style face 'on-click true
+<pre>
+do-style face 'on-click true
+</pre>
 
 The action is ignored if the face has no on-click actor.

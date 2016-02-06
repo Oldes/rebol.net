@@ -12,7 +12,6 @@ Examples may be found by running '''Demo''' at the R3 console, then "Run Test"
 
 
 
-
 ----
 {{Template:Scripting_with_VID_TOC}}
 [[Category:GUI]]

@@ -47,24 +47,28 @@ The TRIANGLE command provides a shortcut for a triangular polygon with optional 
 <br>'''Notes and Examples'''
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
 <p>Simple triangle:</p>
+
 <pre>
-   fill-pen red
-   triangle 50x1
+fill-pen red
+triangle 50x1
 </pre>
+
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-1.png|150px]]
 </TD></TR></TABLE>
 ----
 A group of triangles. This should make it easy to see where each triangle is:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
+
 <pre>
-   pen off
-   triangle 50x150 150x50 150x150 red green blue
-   triangle 150x50 250x150 150x150 green yellow blue
-   triangle 250x150 150x350 150x150 yellow orange blue
-   triangle 150x350 50x150 150x150 orange red blue
-   translate 200x-15
+pen off
+triangle 50x150 150x50 150x150 red green blue
+triangle 150x50 250x150 150x150 green yellow blue
+triangle 250x150 150x350 150x150 yellow orange blue
+triangle 150x350 50x150 150x150 orange red blue
+translate 200x-15
 </pre>
+
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-2b.png|No Description]]
 </TD></TR></TABLE>
@@ -72,32 +76,36 @@ A group of triangles. This should make it easy to see where each triangle is:
 
 The same triangle group but slightly rotated illustrating the dilation parameter:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
+
 <pre>
-   pen off
-   rotate 5
-   triangle 50x150 150x50 150x150 red green blue
-   triangle 150x50 250x150 150x150 green yellow blue
-   triangle 250x150 150x350 150x150 yellow orange blue
-   triangle 150x350 50x150 150x150 orange red blue
-   translate 200x-15
-   triangle 50x150 150x50 150x150 red green blue 0.33
-   triangle 150x50 250x150 150x150 green yellow blue 0.33
-   triangle 250x150 150x350 150x150 yellow orange blue 0.33
-   triangle 150x350 50x150 150x150 orange red blue 0.33
+pen off
+rotate 5
+triangle 50x150 150x50 150x150 red green blue
+triangle 150x50 250x150 150x150 green yellow blue
+triangle 250x150 150x350 150x150 yellow orange blue
+triangle 150x350 50x150 150x150 orange red blue
+translate 200x-15
+triangle 50x150 150x50 150x150 red green blue 0.33
+triangle 150x50 250x150 150x150 green yellow blue 0.33
+triangle 250x150 150x350 150x150 yellow orange blue 0.33
+triangle 150x350 50x150 150x150 orange red blue 0.33
 </pre>
+
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-3b.png|TRIANGLE example 3]]
 </TD></TR></TABLE>
 ----
 This gives you a much more subtle blending in the middle:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
+
 <pre>
-   pen off
-   triangle 50x150  150x50  150x150 red    green  gray
-   triangle 150x50  250x150 150x150 green  yellow gray
-   triangle 250x150 150x350 150x150 yellow orange gray
-   triangle 150x350 50x150  150x150 orange red    gray
+pen off
+triangle 50x150  150x50  150x150 red    green  gray
+triangle 150x50  250x150 150x150 green  yellow gray
+triangle 250x150 150x350 150x150 yellow orange gray
+triangle 150x350 50x150  150x150 orange red    gray
 </pre>
+
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-4b.png|TRIANGLE example 4]]
 </TD></TR></TABLE>
@@ -105,17 +113,18 @@ This gives you a much more subtle blending in the middle:
 
 And this shows simple highlighting/shading:
 <TABLE WIDTH=100% CELLPADDING=10 CELLSPACING=10><TR><TD WIDTH=50% VALIGN=TOP>
+
 <pre>
-   pen off
-   triangle 50x150  150x50  150x150 water sky   sky
-   triangle 150x50  250x150 150x150 water coal  sky
-   triangle 250x150 150x350 150x150 coal  coal  sky
-   triangle 150x350 50x150  150x150 coal  water sky
+pen off
+triangle 50x150  150x50  150x150 water sky   sky
+triangle 150x50  250x150 150x150 water coal  sky
+triangle 250x150 150x350 150x150 coal  coal  sky
+triangle 150x350 50x150  150x150 coal  water sky
 </pre>
+
 </TD><TD WIDTH=50% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/TRIANGLE-5b.png|TRIANGLE example 5]]
 </TD></TR></TABLE>
-
 
 
 ----
@@ -133,9 +142,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -154,7 +161,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -167,9 +173,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

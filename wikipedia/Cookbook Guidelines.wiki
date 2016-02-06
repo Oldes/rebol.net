@@ -12,16 +12,19 @@ While not totally necessary, cookbooks should start with the <nowiki>{{Cookbook}
 *category should be Tip, Code, Networking, Data Processing etcetera.  Defaults to '''Code'''.
 
 ===Example 1===
-<nowiki>
+
+<pre>
 {{Cookbook|title=Handling Binary Data|level=3|category=Code}}
-</nowiki>
+</pre>
 
 Would produce
 {{Cookbook|title=Handling Binary Data|level=3|category=Code}}
 
 ===Example 2===
-<nowiki>
+
+<pre>
 {{Cookbook|title=Client Server|author=Luke Lakeswimmer|level=2|category=Networking}}
-</nowiki>
+</pre>
+
 produces
 {{Cookbook|title=Client Server|author=Luke Lakeswimmer|level=2|category=Networking}}

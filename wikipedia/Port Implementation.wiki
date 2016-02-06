@@ -11,15 +11,17 @@ For example, when you open a file, the system creates a port from the file schem
 
 The standard port object has been substantially reduced in size and complexity from Rebol 2. The new object is defined by system/standard as:
 
-    port: context [
-        spec:       ; published specification of the port
-        scheme:     ; scheme object used for this port
-        actor:      ; port action handler (script driven)
-        awake:      ; port awake function (event driven)
-        state:      ; internal state values (private)
-        data:       ; data buffer (usually binary or block)
-            none
-    ]
+<pre>
+port: context [
+    spec:       ; published specification of the port
+    scheme:     ; scheme object used for this port
+    actor:      ; port action handler (script driven)
+    awake:      ; port awake function (event driven)
+    state:      ; internal state values (private)
+    data:       ; data buffer (usually binary or block)
+        none
+]
+</pre>
 
 Where:
 

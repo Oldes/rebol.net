@@ -2,19 +2,27 @@
 
 '''Turn On Bold, Italic, Underline & Color Styles'''
 
-   <code>'''bold''' "This text is bold"</code>
-   <code>'''italic''' "This text is italic"</code>
-   <code>'''underline''' "This text is underlined"</code>
-   <code>'''255.0.0''' "This text is red"</code>
+<pre>
+<code>'''bold''' "This text is bold"</code>
+<code>'''italic''' "This text is italic"</code>
+<code>'''underline''' "This text is underlined"</code>
+<code>'''255.0.0''' "This text is red"</code>
+</pre>
 
 '''Turn Off Or Drop Styles'''
 
 '''Off''' turns off one text style.
-    <code>bold "This text is bold" bold '''off''' "This text is normal" </code>
+
+<pre>
+<code>bold "This text is bold" bold '''off''' "This text is normal" </code>
+</pre>
 
 More text styles can be removed with '''Drop''' and an integer argument.
 
-    <code>bold "This text is bold" italic " and italic." '''drop 2''' "This text is normal"</code>
+<pre>
+<code>bold "This text is bold" italic " and italic." '''drop 2''' "This text is normal"</code>
+</pre>
+
 Without the integer argument, only one style is dropped.
 
 == Setting Fonts & Font Attributes ==
@@ -29,22 +37,27 @@ Without the integer argument, only one style is dropped.
 
 This is standard font object in system/standard/font:
 
-<code><pre>
+
 SYSTEM/STANDARD/FONT is an object of value:
-   name            string!   "arial"
-   style           none!     none
-   size            integer!  12
-   color           tuple!    0.0.0
-   offset          pair!     2x2
-   space           pair!     0x0
-   align           word!     center
-   valign          word!     center
-   shadow          none!     none
-</pre></code>
+
+<pre>
+name            string!   "arial"
+style           none!     none
+size            integer!  12
+color           tuple!    0.0.0
+offset          pair!     2x2
+space           pair!     0x0
+align           word!     center
+valign          word!     center
+shadow          none!     none
+</pre>
+
 
 Note, that you don't have to create new font if you want to just change size or color of the text:
 
-    view [text [red "this is default size red text^/" size 20 blue "and this is blue big text"]]
+<pre>
+view [text [red "this is default size red text^/" size 20 blue "and this is blue big text"]]
+</pre>
 
 == Setting Paragraph Attributes ==
 
@@ -68,28 +81,27 @@ You can set position of text using 'scroll command
 
 ''(NOTE: This position is a pixel offset - not a text character offset)''
 
-
 '''IMPORTANT:''' The 'scroll command must be before the first line of actual text in the rich-text dialect block.
 
 For example the following is valid:
 
-<code><pre>
+
 para my-para
 font big-font
 scroll 50x50
 "Hello World" newline
 "Welcome to RichText"
-</pre></code>
+
 
 This is invalid (and scroll will be ignored):
 
-<code><pre>
+
 para my-para
 font big-font
 "Hello World" newline
 scroll 50x50
 "Welcome to RichText"
-</pre></code>
+
 
 == Notes ==
 
@@ -97,12 +109,12 @@ scroll 50x50
 
 'anti-alias may also be used to specify aliasing of text.
 
-<code><pre>
+
 scroll 50x20
 font big-font
 anti-alias
 "Hello World"
-</pre></code>
+
 
 'anti-alias may be placed anywhere within the block and affects the entire block.
 

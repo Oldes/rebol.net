@@ -17,7 +17,6 @@ __NOTOC__
 *[[GUI Notes]]
 
 
-
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=30%>
 <font size=1>

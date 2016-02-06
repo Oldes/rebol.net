@@ -13,7 +13,6 @@ of the text-list may not be as they once were - but older scripts may largely ru
 [http://www.rebol.org/view-script.r?script=request-list-enhanced.r Enhanced Text-List] Search List - Library Script 
 <BR>
 
-
 ; Lists
 [http://re-bol.com/rebol.html#section-9.14 Data Grids]
 <BR>

@@ -6,12 +6,16 @@ The input argument should not be needed when using GET-FACE, but it can be allow
 
 Simply return the internal value of the face:
 
- on-get: [
-   face/state/value
- ]
+<pre>
+on-get: [
+  face/state/value
+]
+</pre>
 
 Returns the color value from a face that stores a color:
 
- on-get: [
-    face/facets/colors
- ]
+<pre>
+on-get: [
+   face/facets/colors
+]
+</pre>

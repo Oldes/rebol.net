@@ -49,15 +49,21 @@ general syntax for VID has been good.
 
 The syntax in pseudo PARSE format is:
 
-    ANY [ var: [ command | style ] ]
+<pre>
+ANY [ var: [ command | style ] ]
+</pre>
 
 where command is:
 
-    command-word ANY args
+<pre>
+command-word ANY args
+</pre>
 
 and style is:
 
-    style-name ANY [ attribute | keyword-option ]
+<pre>
+style-name ANY [ attribute | keyword-option ]
+</pre>
 
 ===Command-Word===
 
@@ -76,7 +82,9 @@ A attribute is a datatype that specifies a modification to a style.
 
 In this example:
 
-    text "This is a line"
+<pre>
+text "This is a line"
+</pre>
 
 the quoted string is an attribute of the type STRING!, and the TEXT style
 understands its meaning.
@@ -85,11 +93,15 @@ This form is similar to that of functions, so it is quite natural for users. Whe
 
 You are free to write:
 
-    text "This is a line" bold
+<pre>
+text "This is a line" bold
+</pre>
 
 or
 
-    text bold "This is a line"
+<pre>
+text bold "This is a line"
+</pre>
 
 The datatypes allowed for attributes are:
 
@@ -115,9 +127,9 @@ An option is a special keyword followed by a specification block.
 For example:
 
 <pre>
-    image effect [colorize blue]
+image effect [colorize blue]
 
-    text-list data list-values
+text-list data list-values
 </pre>
 
 EFFECT and DATA are the option keywords, followed by their data.
@@ -127,7 +139,9 @@ EFFECT and DATA are the option keywords, followed by their data.
 Users can put set-words in front of commands and styles to use
 within their code to refer later.
 
-    n-list: text-list data names
+<pre>
+n-list: text-list data names
+</pre>
 
 In R3, variables will be bound into the context of the layout. This is
 method is similar to an object definition and helps users prevent leaky
@@ -137,7 +151,9 @@ layouts where their internal variables change global values.
 
 In R2 VID allowed arbitrary in-line expressions like:
 
-    image i-size + 50x100
+<pre>
+image i-size + 50x100
+</pre>
 
 Advanced users may like this format, but for most beginners who are just
 learning to parse VID, it may make the dialect overly complicated.
@@ -145,7 +161,9 @@ learning to parse VID, it may make the dialect overly complicated.
 An alternative is to require parens for such expressions, similar to
 the COMPOSE function:
 
-    image (i-size + 50x100)
+<pre>
+image (i-size + 50x100)
+</pre>
 
 We can certainly should discuss this matter soon.
 
@@ -161,7 +179,9 @@ discussed in other documents.
 
 Another choice would be to move general setup commands like SIZE into a special OPTIONS block.
 
-    options [size: 500x500 origin: 10x10]
+<pre>
+options [size: 500x500 origin: 10x10]
+</pre>
 
 This has the advantage of removing keywords from the dialect, which is
 normally a good thing.
@@ -233,13 +253,17 @@ Of course, more styles can be added later, including advanced composite styles.
 
 Note that any list can be made modal with DROP keyword. For example, a text drop list is:
 
-	text-list drop data [...]
+<pre>
+text-list drop data [...]
+</pre>
 
 ==Hot Styles==
 
 Most of the above styles can be made hot (react on an action) by specifying an action block.
 
-    text "Click Me" [click-me]
+<pre>
+text "Click Me" [click-me]
+</pre>
 
 In this case, the text is allowed to change its appearance to indicate that it is hot.
 
@@ -252,18 +276,22 @@ explanation.
 
 A panel is a collection of styles. It allows you to create a sub-layout within a layout, and then to use the panel as a container.
 
-    panel [
-        label "Name" field
-        label "Email" field
-        button "Submit"
-    ]
+<pre>
+panel [
+    label "Name" field
+    label "Email" field
+    button "Submit"
+]
+</pre>
 
 If you provide a name, by default, you will get a border box with title (like HTML fieldset). You can also specify a scroll bar to easily create a scrolling pane of styles.
 
-    panel "Properties" scroll [
-        button "Faster"
-        ...
-    ]
+<pre>
+panel "Properties" scroll [
+    button "Faster"
+    ...
+]
+</pre>
 
 See below for tab panels.
 
@@ -275,12 +303,14 @@ the faces within it.
 
 For example:
 
-    group [
-        radio "Stereo"
-        radio "Mono"
-        radio "Surround"
-        radio "Muted"
-    ]
+<pre>
+group [
+    radio "Stereo"
+    radio "Mono"
+    radio "Surround"
+    radio "Muted"
+]
+</pre>
 
 will layout the radio buttons, but also make them mutually exclusive
 relative to each other.
@@ -288,11 +318,13 @@ relative to each other.
 Groups can also be used to specify automatic return for repeating
 patterns:
 
-    i-form: group 2 [
-        label "Name:" field
-        label "Email:" field
-        label "Age:" field
-    ]
+<pre>
+i-form: group 2 [
+    label "Name:" field
+    label "Email:" field
+    label "Age:" field
+]
+</pre>
 
 Groups also provide another implied features. The values of faces
 can be kept together.
@@ -300,9 +332,11 @@ can be kept together.
 For example, in the above group, all of the values of the fields
 can be obtained or set by referring to the i-form variable:
 
-    i-data: get-face i-form
+<pre>
+i-data: get-face i-form
 
-    set-face i-form i-data
+set-face i-form i-data
+</pre>
 
 Here, the i-date contains only the field values, not the label values.
 This is an internal attribute of the FIELD style that specifies that its
@@ -313,18 +347,20 @@ values can be "groupable".
 A tab panel is created by grouping a set of panels. You use the group
 style with a set of panels. For example:
 
-    group tabbed [
-        panel "Properties" [
-            button "Faster"
-            ...
-        ]
-        panel "Networking" [
-            ...
-        ]
-        panel "Sound" [
-            ...
-        ]
+<pre>
+group tabbed [
+    panel "Properties" [
+        button "Faster"
+        ...
     ]
+    panel "Networking" [
+        ...
+    ]
+    panel "Sound" [
+        ...
+    ]
+]
+</pre>
 
 ==Context Layers==
 
