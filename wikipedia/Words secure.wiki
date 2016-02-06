@@ -9,9 +9,11 @@ The argument to the SECURE function can be a word or a block. If you provide a w
 For example, if you write:
 
 
+
 secure ask
 
 the user will be prompted on all file and network accesses. But, if you provide a block as the argument:
+
 
 
 secure [
@@ -41,6 +43,7 @@ QUIT - denies read and/or write access and quits the script when restricted acce
 For example, to allow all network access, but to quit on any file access:
 
 
+
 secure [
 
 <pre>
@@ -63,6 +66,7 @@ ALL - controls all access.
 The pairs are processed in the order they appear, with later pairs modifying the effect of earlier pairs. This permits setting one type of access without explicitly setting all others. For example:
 
 
+
 secure [
 
 <pre>
@@ -79,6 +83,7 @@ file [
 The above sets the security level to ask for all operations except for reading (which is allowed).
 
 This technique can also be used for individual files and directories. For example:
+
 
 
 secure [
@@ -99,6 +104,7 @@ If no security access level is specified for either network or file access, it d
 The SECURE function returns the prior security settings before the new settings were made. This is a block with the global network and file settings followed by file or directory settings. The word QUERY can also be used to obtain the current security settings without modifying them:
 
 
+
 probe secure query
 
 Using QUERY, you can modify the current security level by querying the current settings, modifying them, then using the secure function to set the new values.
@@ -108,12 +114,16 @@ Note that lowering the security level produces a change security settings reques
 When running Rebol, the -s argument can be provided on the command line to specify an initial security of:
 
 
+
 secure allow
 
 The +s argument will specify:
 
 
+
 secure quit
+
+You can also use the --secure argument to specify any other default security level on Rebol startup.
 
 You can also use the --secure argument to specify any other default security level on Rebol startup.
 

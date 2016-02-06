@@ -1332,6 +1332,10 @@ At the current parse position, a single expression of Rebol code will be evaluat
 
 The single result of the expression is then matched by the argument rule as if the value were contained in a nested block and the rule used as the argument of INTO. If the expression result is of a block type it will be treated as if it is nested, not inline. Any rule that expects to match more than one value will fail, as there will only be one value to be matched. The SKIP rule will match any value, including #[none], but not unset values. The NONE rule will match either #[none] or unset values. An empty rule block will only match unset values (Question: Should the NONE rule also behave this way? Decision for Carl - he knows the internals).
 
+<pre>
+
+</pre>
+
 DO will fail if:
 *There is no expression to be executed.
 *The expression is executed correctly but the rule doesn't match.

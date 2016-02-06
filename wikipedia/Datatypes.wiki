@@ -423,6 +423,7 @@ integer! decimal! percent! money! char! pair! tuple! time!
 == 2147483647x2147483647
 </pre>
 
+
 ====tuple!====
 
 {|border="1" cellpadding="5" cellspacing="0"
@@ -453,6 +454,7 @@ integer! decimal! percent! money! char! pair! tuple! time!
 >> max-time: (to time! to integer! #{7FFF FFFF}) + 0.999999999
 == 596523:14:07.999999999
 </pre>
+
 
 ===date!===
 
@@ -530,6 +532,10 @@ Note: if you want to make image transparent use:
 img/alpha: 255
 </pre>
 
+<pre>
+img/alpha: 255
+</pre>
+
 (using change and other series manipulations on alpha channel will not work!)
 
 To draw into image you can use something like:
@@ -546,6 +552,7 @@ img: make image! reduce [4x1 as-binary "Hello world!"]
 probe as-string img/rgb ;== "Hello world!"
 view layout [image img 200x80]
 </pre>
+
 
 [[images/Hello-world-encoded-as-an-image.png|No Description]]
 

@@ -90,7 +90,19 @@ my-gob: make gob! [
 ]
 </pre>
 
+my-gob: make gob! [
+    size: 100x100 
+    offset: 0x0 
+    custom: [sphere [0 0 0] 30.0 blue]
+]
+</pre>
+
 =Changes required in current Rebol version (A107) to make it work=
+
+<pre>
+Note: This is in a constent state of flux and for now is only intended as an example
+      of what to expect, eventually.
+</pre>
 
 <pre>
 Note: This is in a constent state of flux and for now is only intended as an example
@@ -260,6 +272,10 @@ we tell The renderer Where to render, but it does not actually integrate within 
 *Rendering can be done in HW using off-screen rendering, on relatively old gfx cards (within 5-7 years old) 
 *we *can* draw under and over other gobs, as well as support alpha blending as normal in view.
 *this allows people to integrate custom graphic algorithms using VERY little C code to plug into view.
+
+<pre>
+
+</pre>
 
 =====Cons:=====
 *Its going to be *very* slow on large displays anyways because we have to use CPU blitting at the end.

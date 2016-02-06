@@ -20,6 +20,10 @@ ROUND is a function value.
 catch
 </pre>
 
+<pre>
+catch
+</pre>
+
 ==== Description ==== 
 
 "Rounding is meant to loose precision in a controlled way." -- Volker Nitsch
@@ -27,6 +31,7 @@ catch
 ROUND is a very flexible rounding function. With the various refinements and the scale option, you can easily round in various ways. Most of the refinements are mutually exclusive--that is, you should use only one of them--the /TO refinement is an obvious exception; it can be combined with any other refinement.
 
 By default, ROUND returns the nearest integer, with halves rounded up (away from zero).
+
 
 
 probe round 1.4999
@@ -40,14 +45,17 @@ If the result of the rounding operation is a number! with no decimal component, 
 The /TO refinment controls the "precision" of the rounding. That is, the result will be a multiple of the SCALE parameter. In order to round to a given number of decimal places, you don't pass in the number of decimal places, but rather the "level of precision" they represent. For example, to round to two decimal places, often used for money values, you would do this:
 
 
+
 probe round/to $1.333 .01
 
 To round to the nearest 1/8, often used for interest rates, you would do this:
 
 
+
 probe round/to 1.333 .125
 
 To round to the nearst 1K increment (e.g. 1024 bytes):
+
 
 
 probe round/to 123'456 1024
@@ -57,11 +65,13 @@ If the /TO refinement is used, and SCALE is a time! or money! value, the result 
 The /EVEN refinement is designed to reduce bias when rounding large groups of values. It is sometimes called Banker's rounding, or statistical rounding. For cases where the final digit of a number is 5 (e.g. 1.5 or 15), the previous digit will be rounded to an even result (2, 4, etc.).
 
 
+
 repeat i 10 [val: i + .5 print [val round/even val]]
 
 repeat i 10 [val: i * 10 + 5 print [val round/even/to val 10]]
 
 The /DOWN refinement rounds toward zero, ignoring discarded digits. It is often called "truncate".
+
 
 
 probe round/down 1.999
@@ -75,6 +85,7 @@ probe round/down/to 1999 500
 The /HALF-DOWN refinement causes halves to round toward zero; by default they are rounded up.
 
 
+
 probe round/half-down 1.5
 
 probe round/half-down -1.5
@@ -86,11 +97,13 @@ probe round/half-down -1.50000000001
 The /HALF-CEILING refinement causes halves to round in a positive direction; by default they are rounded up (away from zero). This works like the default behavior for positive values, but is not the same for negative values.
 
 
+
 probe round -1.5
 
 probe round/half-ceiling -1.5
 
 /FLOOR causes numbers with any decimal component to be rounded in a negative direction. It works like /DOWN for positive numbers, but not for negative numbers.
+
 
 
 round/floor 1.999
@@ -102,6 +115,7 @@ round/floor -1.00000000001
 /CEILING is the reverse of /FLOOR; numbers with any decimal component are rounded in a positive direction.
 
 
+
 round/ceiling 1.01
 
 round/ceiling 1.0000000001
@@ -111,6 +125,7 @@ round/ceiling -1.999
 If you are rounding extremely large numbers (e.g. 562'949'953'421'314), or using very high precision decimal values (e.g. 13 or more decimal places), you may run up against Rebol's native limits for values and its internal rounding rules. The ROUND function is a mezzanine and has no control over that behavior.
 
 Sometimes, it might appear that ROUND is doing something strange, so before submitting a bug to RAMBO, think about what you're actually asking it to do. For example, look at the results from this piece of code:
+
 
 
 repeat i 10 [

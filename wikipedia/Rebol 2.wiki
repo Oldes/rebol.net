@@ -49,6 +49,12 @@ __NOTOC__
 
 <!-- END CONTENTS BOX -->
 
+<pre>
+|}
+</pre>
+
+<!-- END CONTENTS BOX -->
+
 ==What is Rebol==
 
 Rebol is a data exchange language and a programming language, but if you are here you probably already know this.<BR>

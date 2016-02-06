@@ -38,6 +38,9 @@ Selecting the ".rebol" folder, and then the "view" folder will reveal the user.r
 
 == Adjusting Fonts ==
 
+<pre>
+
+</pre>
 
 Reprinted here is an article from the Rebol.org library, written by brianwisti
 

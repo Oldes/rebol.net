@@ -156,11 +156,7 @@ Here is an implementation using PERL5 enhanced regular expression:
 
 <pre>
 while ($test =~ /\([^\(*.)]+\)/) {
-
-
-$test=~ s/\([^\(*.)]+\)//g;
-
-
+    $test=~ s/\([^\(*.)]+\)//g;
 }
 </pre>
 
@@ -194,13 +190,9 @@ S → ε
 
 <pre>
 expression2: [
-
-
-"(" expression2 ")" expression2
-| "[" expression2 "]" expression2
-| none
-
-
+    "(" expression2 ")" expression2
+    | "[" expression2 "]" expression2
+    | none
 ]
 </pre>
 
@@ -239,27 +231,19 @@ PARSE rules may look as follows:
 
 <pre>
 repeated-group?: [
-
-
-; is the input non-empty?
-here: skip :here
-(group-length: (length? :here) / 2)
-copy group group-length skip
-group
-| ; did not succeed, skip two characters and try again
-2 skip repeated-group?
-
-
+    ; is the input non-empty?
+    here: skip :here
+    (group-length: (length? :here) / 2)
+    copy group group-length skip
+    group
+    | ; did not succeed, skip two characters and try again
+    2 skip repeated-group?
 ]
 
 rules: [
-
-
-; skip an odd character, if any
-opt [skip here: any [2 skip] end :here]
-repeated-group?
-
-
+    ; skip an odd character, if any
+    opt [skip here: any [2 skip] end :here]
+    repeated-group?
 ]
 </pre>
 

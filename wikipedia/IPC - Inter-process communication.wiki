@@ -22,6 +22,7 @@ Jabber uses an email format for Jabber IDs. The resource-id identifies specific 
 user@domain.com/resource-id
 </pre>
 
+
 What kind of "processes" are we talking about as endpoints? Is it about communication between R3 tasks (within a single process), about multiple R3 processes on the same machine, R3 processes across a LAN? WAN? Heterogenous processes?
 
 ==Messages==

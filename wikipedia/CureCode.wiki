@@ -99,6 +99,7 @@ Returns a list of tickets ID matching the selected filter. Optional parameters c
 *<tt>8</tt> : By Submitter
 *<tt>9</tt> : Completed
 
+
 <pre>
 >> load http://curecode.org/rebol3/api.rsp?type=list&filter=2
 == [ok [
@@ -126,6 +127,10 @@ Returns a list of tickets ID matching the selected filter. Optional parameters c
 >> load http://curecode.org/rebol3/api.rsp?type=list&filter=2&mode=count
 == [ok 492]
 
+<pre>
+>> load http://curecode.org/rebol3/api.rsp?type=list&filter=2&mode=count
+== [ok 492]
+
 >> load http://curecode.org/rebol3/api.rsp?type=list&filter=2&mode=brief
 == [ok [
       [507 1 "Bug" "minor" "submitted" 12-Apr-2009/1:08:18 "test" 1 5 "normal"]
@@ -141,6 +146,7 @@ Returns a list of tickets ID matching the selected filter. Optional parameters c
 
 <blockquote>
 <span style="color:green">'''<tt><part></tt>'''</span> parameter is a ''pair!'' value defining a sub-list. First value indicates the lower bound (>=1) and the second one the upper bound value.
+
 
 <pre>
 >> load http://curecode.org/rebol3/api.rsp?type=list&filter=2&range=2x5
@@ -171,6 +177,7 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 
 <blockquote>
 <span style="color:green">'''<tt><ticket-id></tt>'''</span> is a unique ''integer!'' value referencing the ticket on the server. You can get it typically from a ticket list query (see above).
+
 
 <pre>
 >> load http://curecode.org/rebol3/api.rsp?type=ticket&id=507
@@ -210,6 +217,7 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *<tt>comments</tt> : provides all the comments attached to the requested ticket.
 *<tt>history</tt> : provides the whole history of the requested ticket.
 *<tt>all</tt> : combines the two other options (comments+history).
+
 
 <pre>
 >> load http://curecode.org/rebol3/api.rsp?type=ticket&id=507&show=all
@@ -253,6 +261,10 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: RSS feeds added for notifications of projects & tickets changes.
 *FEAT: Added short URLs for tickets direct referencing.
 
+<pre>
+
+</pre>
+
 *FIX: Double line breaks in PRE tags in comments removed.
 *FIX: Stats bar graphs were never displaying per-project stats.
 *FIX: Double escaping of HTML entities in description and comments removed.
@@ -264,12 +276,20 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: Category selector added in tickets list detailed view
 *FEAT: Empty attached file section not shown anymore in tickets read-only view.
 
+<pre>
+
+</pre>
+
 *FIX: When clicked, attached files will now show up in browser's window by default.
 *FIX: When attaching file in a new ticket, the returned attached filename was 'none'.
 
 '''CureCode 0.9.10 - 17/01/2009''' :
 
 *FEAT: Ticket's attached files management added.
+
+<pre>
+
+</pre>
 
 *FIX: Default query parameters corruption for anonymous users fixed.
 *FIX: Issue #1371 regarding policy for ticket deletion by owner.
@@ -285,9 +305,17 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: Prefered filters and project can now be user-defined.
 *FEAT: Categories order can now be set by admin.
 
+<pre>
+
+</pre>
+
 *FIX:  Stats charts are now correct.
 *FIX:  Default filter in anonymous mode works now correctly.
 *FIX:  Switched from HTML quirk mode to correct doctype.
+
+<pre>
+
+</pre>
 
 *LOOK: Fixed borders issues in CSS (except for IE8)
 
@@ -298,9 +326,17 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: "Main" page now populated with statistics.
 *FEAT: New Preset filter: "My Reports" (default when logged)
 
+<pre>
+
+</pre>
+
 *FIX:  "By Submitter" filter now working correctly.
 *FIX:  Redirection issues with Chrome fixed.
 *FIX:  In Preset mode, columns sorting links removed.
+
+<pre>
+
+</pre>
 
 *LOOK: Textarea edit fields now enlarged to maximum width.
 
@@ -322,7 +358,15 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: Admin can now change user's role.
 *FEAT: Admin can now force validation of a new user's account.
 
+<pre>
+
+</pre>
+
 *FIX:	Tickets list loading twice on first visit issue fixed.
+
+<pre>
+
+</pre>
 
 *LOOK: Input fields and buttons border width reduced to 1 pixel.
 
@@ -339,9 +383,17 @@ Returns ticket detailed informations. Optional parameters can be specified to ge
 *FEAT: Back and forward navigation now possible from inside a ticket.
 *FEAT: Ticket's ID in descriptions and comments now displayed as links.
 
+<pre>
+
+</pre>
+
 *FIX:  Parsing URL in description/comments section will now stop on #"<".
 *FIX:  CSS fixed for tables border rendering on non-IE browser.
 *FIX:  Case-only changes in ticket's title are now possible.
+
+<pre>
+
+</pre>
 
 *LOOK: Minor positionning enhancements of login block in home page.
 *LOOK: "Description" and "Code example" sections default height reduced.

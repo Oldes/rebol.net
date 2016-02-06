@@ -10,4 +10,8 @@ See [[Wiki Recommendations]]
 If you have a DocBase account, you also have a [[Special:Mypage | User page]].  Along with this User page is a [[Special:Mypage/Sandbox | Sandbox]] that is intended for experimenting with wikitext.  The Sandbox is a great place to try out wikitext features without worry.  
 {{hilight|If you are not logged in, the above links will not work.  They use the mediawiki feature of '''Special:Mypage''' and '''Special:Mypage/Sandbox'''}}
 
+<pre>
+
+</pre>
+
 [[Category: Issues]]

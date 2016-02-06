@@ -280,18 +280,10 @@ In R3 syntax:
 
 <pre>
 quote: func [
-
-
-"Returns the value thrown at it without evaluation"
-:value [any-type!]
-
-
+    "Returns the value thrown at it without evaluation"
+    :value [any-type!]
 ] [
-
-
-:value
-
-
+    :value
 ]
 </pre>
 
@@ -299,18 +291,10 @@ In R2 syntax:
 
 <pre>
 quote: func [
-
-
-"Returns the value thrown at it without evaluation"
-:value [any-type!]
-
-
+    "Returns the value thrown at it without evaluation"
+    :value [any-type!]
 ] [
-
-
-get/any 'value
-
-
+    get/any 'value
 ]
 </pre>
 

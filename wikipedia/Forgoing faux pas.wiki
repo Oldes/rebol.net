@@ -6,6 +6,10 @@ If something tripped you up, please <span class="plainlinks">[http://rebol.net/w
 
 See &bull; [[Handy Idioms]] &bull; for some nice and positive Rebol tips and tricks.
 
+<pre>
+
+</pre>
+
 ==none==
 
 Rebol is a value-centric language. This can lead to some little confusion with certain values and certain types. '''none''' is one of those special cases.

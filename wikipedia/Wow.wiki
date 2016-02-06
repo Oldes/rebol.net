@@ -14,6 +14,10 @@
 
 = 10 Reasons to look at Rebol again =
 
+<pre>
+
+</pre>
+
 ;Openness
 :Rebol Technologies (RT) have opened Rebol more than ever before. Although the very core of Rebol, the language, is still closed, RT have opened up everything else around it, so you can help improve them. All subsystems, mezzanines, documentation. Everything.
 ;Powerful device and resolution independent GUI

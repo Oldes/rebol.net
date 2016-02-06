@@ -28,9 +28,16 @@ Changes to the original script include:
 
 5.  The earth image used instead is from NASA, a USA government image.
 
+<pre>
+
+</pre>
 
 
 The script for the illustrated viewtop will be presented here in the near future.  
+
+<pre>
+********************************************************************************************
+</pre>
 
 <pre>
 ********************************************************************************************

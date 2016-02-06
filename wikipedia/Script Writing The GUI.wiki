@@ -62,6 +62,12 @@ Just to provide a simple starting point, here's a GUI that consists of two butto
 
 [[images/Gui-basics-buttons.jpg|No Description]]
 
+<pre>
+<TD WIDTH=50%>
+</pre>
+
+[[images/Gui-basics-buttons.jpg|No Description]]
+
 Rebol [ ]
 :load-gui
 :view [
