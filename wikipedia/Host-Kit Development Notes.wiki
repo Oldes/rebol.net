@@ -18,11 +18,13 @@ This change can be accomplished by padding the host-lib with reserved function s
 
 *Adds '''[[External Callbacks]]'''.
 *Added to reb-ext-lib.h for use in C++ includes (from RMA:Robert):
- #ifdef __cplusplus
- #define extern "C" RXIEXT __declspec(dllexport)
- #else
- #define RXIEXT __declspec(dllexport)
- #endif //__cplusplus
+<pre>
+#ifdef __cplusplus
+#define extern "C" RXIEXT __declspec(dllexport)
+#else
+#define RXIEXT __declspec(dllexport)
+#endif //__cplusplus
+</pre>
 *Adds decoder codec for markup conversion (HTML, XML, etc.) to blocks. Use: <tt>decode 'markup binary</tt>
 *Fix for pair set path decimal (bad conversion: <tt>a: 0x0 a/x: 1.0</tt>).
 *Internal changes to graphics series storage method. Makes storage more efficient. Should not affect extensions code that uses proper API functions. Also, if we want to allow various alpha controls for images overall, this needs to be defined.

@@ -10,22 +10,24 @@ Do not confuse this with '''[[The Face Object Field - Actors - on-scroll-event|o
 
 Scroll a text area face:
 
- on-scroll: [ ; arg: scroller
-   gob: sub-gob? face
-   
-   ; subtract view area size from total text size:
-   size: negate max 0x0 gob/size - face/gob/size
-   
-   ; multiply by scroll amount:
-   offset: size * arg/state/value
-   
-   ; change only the axis
-   axis: face-axis? arg
-   xy: gob/offset
-   xy/:axis: offset/:axis
-   gob/offset: xy
-   
-   show-later face
-   
-   true ; we got it
- ]
+<pre>
+on-scroll: [ ; arg: scroller
+  gob: sub-gob? face
+  
+  ; subtract view area size from total text size:
+  size: negate max 0x0 gob/size - face/gob/size
+  
+  ; multiply by scroll amount:
+  offset: size * arg/state/value
+  
+  ; change only the axis
+  axis: face-axis? arg
+  xy: gob/offset
+  xy/:axis: offset/:axis
+  gob/offset: xy
+  
+  show-later face
+  
+  true ; we got it
+]
+</pre>

@@ -7,7 +7,9 @@ Paths work as they did before in R2, but in R3 the internal implementation is to
 
 An example is a file path. It lets you refer to a specific file by providing a list of directories and the file's name:
 
-    documents/office/contract.txt
+<pre>
+documents/office/contract.txt
+</pre>
 
 Each slash ''refines'' the description of where the file is located. You can think of the names as selectors or as refinements.
 

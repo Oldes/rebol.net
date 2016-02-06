@@ -2,7 +2,6 @@
 
 '''Return To [[Draw]] Contents'''
 
-
 Specifies a clipping region; drawing will only occur inside the region.
 
 {| cellspacing="1" cellpadding="4" border="0" style="background: black; color: black"
@@ -25,42 +24,46 @@ Specifies a clipping region; drawing will only occur inside the region.
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    line-width 2
-    pen yellow
-    fill-pen blue
-    clip 10x10 70x90
-    box 20x20 200x200
+<pre>
+line-width 2
+pen yellow
+fill-pen blue
+clip 10x10 70x90
+box 20x20 200x200
+</pre>
 </TD>
 <TD align=center valign=MIDDLE>[[images/CLIP-1b.png|No Description]]<BR>
 The box would go to 200x200, but we <b><tt>clip</tt></b> it.</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    pen yellow
-    fill-pen red
-    clip 50x50 125x200
-    circle 50x50 100
+<pre>
+pen yellow
+fill-pen red
+clip 50x50 125x200
+circle 50x50 100
+</pre>
 </TD>
 <TD align=center valign=MIDDLE>[[images/CLIP-2b.png|No Description]] <BR>
 Clipping other shapes can produce interesting effects.</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    pen yellow
-    fill-pen red
-    clip 50x50 125x200
-    circle 50x50 100
-    pen green
-    fill-pen blue
-    clip off
-    circle 125x75 50
+<pre>
+pen yellow
+fill-pen red
+clip 50x50 125x200
+circle 50x50 100
+pen green
+fill-pen blue
+clip off
+circle 125x75 50
+</pre>
 </TD>
 <TD align=center valign=MIDDLE>[[images/CLIP-3b.png|No Description]] <br>
 To turn clipping off, use <b><tt>off</tt></b> as the argument to <b><tt>clip</tt></b>.</TD>
 </TR>
 </TABLE>
-
-
 
 
 
@@ -79,9 +82,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -100,7 +101,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -113,9 +113,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

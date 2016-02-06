@@ -74,7 +74,6 @@
 [http://www.rebol.org/view-script.r?script=animresize.r Zoom Animation] Script By Maxim Olivier-Adlhoch
 <BR>
 
-
 ----
 ;User Interface Events
 [http://www.rebol.com/docs/view-face-events.html All About Graphics System Events And How They Are Processed] 
@@ -118,7 +117,6 @@
 [http://re-bol.com/rebol.html#section-9.13 Menus]
 <BR>
 
-
 [[Text-Lists| Text-Lists]] The Text-List & List
 <BR>
 [[Buttons | Buttons]]
@@ -138,7 +136,6 @@
 [http://www.rebol.com/docs/view-face-funcs.html#section-9 View Function]
 <BR>
 [http://www.rebol.com/docs/quick-start.html Resize - Digital Clock Example] <BR>
-
 
 <BR>
 ----

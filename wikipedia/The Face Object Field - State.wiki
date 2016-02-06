@@ -9,8 +9,10 @@ These fields are used to state information, not attributes or properties. See [[
 </TD><TD VALIGN=TOP>
 Example of scrollbar state:
 
-  value: 0%	; scroller offset
-  delta: 10%	; "page size" increment
+<pre>
+value: 0%	; scroller offset
+delta: 10%	; "page size" increment
+</pre>
 
 The state object is normally quite small and gets expanded as necessary for specific styles that require extra fields.
 </TD></TR></TABLE>

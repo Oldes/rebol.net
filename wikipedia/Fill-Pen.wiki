@@ -19,9 +19,7 @@ Sets the color or image pattern for area filling. The '''fill-pen''' color will 
 | bgcolor="white" | 
 |}
 
-
 '''Notes and Examples'''
-
 
 Simple Color Fill
 <TABLE CELLPADDING=1O CELLSPACING=1O WIDTH=100%><TR><TD WIDTH=60% VALIGN=TOP>
@@ -35,9 +33,7 @@ box 100x100 300x300
 [[images/FILL-PEN-1b.png|FILL-PEN example 1]]
 </TD></TR></TABLE>
 
-
 ----
-
 
 Image Pattern Fill
 <TABLE CELLPADDING=1O CELLSPACING=1O WIDTH=100%><TR><TD WIDTH=60% VALIGN=TOP>
@@ -51,9 +47,7 @@ box 100x100 300x300
 [[images/FILL-PEN-2b.png|FILL-PEN example 2]]
 </TD></TR></TABLE>
 
-
 ----
-
 
 
 Switching the '''fill-pen''' states
@@ -71,7 +65,6 @@ box 50x50 350x350
 </TD><TD WIDTH=40% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/FILL-PEN-3b.png|FILL-PEN example 3]]
 </TD></TR></TABLE>
-
 
 
 
@@ -123,7 +116,6 @@ Pages
 *[[Translate]]
 *[[Triangle]]
 *[[Grad-Pen]]</font></TD>
-
 
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=15%>
 Pages

@@ -10,8 +10,10 @@ Each time an I/O operation occurs, such as reading from a network device, a prec
 
 To help illustrate the overall concept, consider this code:
 
-    port: open tcp://10.10.10.1
-    wait port
+<pre>
+port: open tcp://10.10.10.1
+wait port
+</pre>
 
 It opens a TCP port to the specified host. Most users don't need to know more than that. The port gets opened and WAIT returns.
 
@@ -41,11 +43,13 @@ The GUI port also supports these special event fields. Note that not all these f
 
 The WAIT function can wait on events from one port, multiple ports, or a timer. These are all valid examples:
 
-   wait port
-   wait [port1 port2]
-   wait 10   ; seconds
-   wait 1:00 ; one hour
-   wait [port1 port2 10]
+<pre>
+wait port
+wait [port1 port2]
+wait 10   ; seconds
+wait 1:00 ; one hour
+wait [port1 port2 10]
+</pre>
 
 The WAIT function will return a block of ports that have satisfied their WAIT conditions, or NONE in the case of timeout.
 
@@ -59,15 +63,17 @@ Note that when you call WAIT, you allow all events to process, not just the ones
 
 In the steps outlined below, keep in mind that a [[ports|port]] has the structure:
 
-    port: context [
-        spec:       ; published specification of the port
-        scheme:     ; scheme object used for this port
-        actor:      ; port action handler (script driven)
-        awake:      ; port awake function (event driven)
-        state:      ; internal state values (private)
-        data:       ; data buffer (usually binary or block)
-            none
-    ]
+<pre>
+port: context [
+    spec:       ; published specification of the port
+    scheme:     ; scheme object used for this port
+    actor:      ; port action handler (script driven)
+    awake:      ; port awake function (event driven)
+    state:      ; internal state values (private)
+    data:       ; data buffer (usually binary or block)
+        none
+]
+</pre>
 
 It is the ACTOR and AWAKE functions that are primarily relevant in the description below. The ACTOR is called to handle program requests to a port (downward acting). The AWAKE is called to handle events returning from the external device (upward acting).
 
@@ -192,7 +198,9 @@ Therefore, it is our intent to be sure that the above mechanism works for recurs
 
 You may be wondering how events such as mouse movement get processed for a graphical user interface. It is the line above:
 
-        if wake-up port event [
+<pre>
+if wake-up port event [
+</pre>
 
 that makes those events happen.
 

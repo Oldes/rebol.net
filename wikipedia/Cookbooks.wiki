@@ -11,14 +11,12 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Displaying a sound waveform
 *FFT analyzer
 
-
 ===Console Cookbook===
 
 *Using a serial console on headless R3 host.
 *Write console output to disk
 *Knowing the user.r file
 *Getting Raw Keyboard Characters in the Console
-
 
 ===Data Processing Cookbook===
 <TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=50%>
@@ -41,7 +39,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *[[How to feed DECOMPRESS with correctly compressed data]]
 </TD></TR></TABLE>
 
-
 ===Dates and Times Cookbook===
 <TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=50%>
 *Time and Date Stamps
@@ -53,7 +50,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Unix Date Format Converter
 </TD></TR></TABLE>
 
-
 ===Debugging Cookbook===
 
 *Use TRACE properly
@@ -62,24 +58,20 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Simple Unit Test Tool
 *Stepping through a script
 
-
 ===Documentation Cookbook===
 
 *[[About Cookbooks]]
 *[[Typographical Conventions]]
 
-
 ===Embedded Cookbook===
 
 *Restricting memory usage in your scripts
-
 
 ===Error Handling Cookbook===
 
 *Trapping Errors
 *Create Errors
 *Create user friendly error requesters
-
 
 ===File Management Cookbook===
 <TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=50%>
@@ -163,7 +155,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Creating a First Person View
 
 
-
 ===Security Cookbook===
 
 *Strong Authentication Method
@@ -194,7 +185,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Sending a Message to a Task
 
 
-
 ===Rebol Internals Cookbook===
 
 *[[Decimals-64|64-bit Decimals]]
@@ -207,7 +197,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *Exploring the SYSTEM object
 *Creating a new datatype
 *[[R2 vs. R3 Contexts]]
-
 
 
 ===Numbers and Math Cookbook===
@@ -224,7 +213,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 *[[Porting Recipe|Porting R3 to another OS]]
 *Making a device driver
 *The Rebol boot process
-
 
 
 ===Windows Cookbook===
@@ -265,7 +253,6 @@ List of potential Rebol 3 Cookbooks. Most are taken from the R2 cookbook [http:/
 
 *[[FAQ on Design of View]]
 *[[Rebol/Services FAQ]]
-
 
 
 ===RT Developer Cookbook===

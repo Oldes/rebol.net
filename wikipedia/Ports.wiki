@@ -108,8 +108,10 @@ Many other types of schemes can exist, and they are often built on top of lower 
 
 Here is an example. In this line:
 
-    port: open tcp://www.rebol.net
-    data: read http://www.rebol.com
+<pre>
+port: open tcp://www.rebol.net
+data: read http://www.rebol.com
+</pre>
 
 the first scheme is TCP; the second is HTTP. (Note that this is consistent with the definition of a URL.)
 
@@ -145,17 +147,21 @@ There are two basic methods to use a port: '''implicit''' and '''explicit'''.
 
 When you write code such as:
 
-    write %index.html read http://www.rebol.net
+<pre>
+write %index.html read http://www.rebol.net
+</pre>
 
 you are using '''implicit''' ports. This is a shortcut notation to keep simple code simple. You are only using a single port action, such as '''read''' or '''write''' and all the other details are hidden behind those functions.
 
 However, if you write code such as:
 
-    file: open %data.dat
-    write file data1
-    write file data2
-    ...
-    close file
+<pre>
+file: open %data.dat
+write file data1
+write file data2
+...
+close file
+</pre>
 
 then you are using '''explicit''' ports. Here you specify each action separately. You '''open''' the port, then '''read''' and '''write''' to the port, and then '''close''' the port. Each action must be specified.
 
@@ -165,28 +171,34 @@ Implicit ports are the fast and easy way to perform various I/O actions in Rebol
 
 A few examples are:
 
-    data: read %todo.dat
-    write %plans.r data
-    query %docs.txt
-    page: read http://www.rebol.net
-    result: write http://rebol.net/cgi/act.r data
-    data: read ftp://www.rebol.net/projects.dat
-    host: read dns://www.rebol.net
+<pre>
+data: read %todo.dat
+write %plans.r data
+query %docs.txt
+page: read http://www.rebol.net
+result: write http://rebol.net/cgi/act.r data
+data: read ftp://www.rebol.net/projects.dat
+host: read dns://www.rebol.net
+</pre>
 
 This type of usage depends on the type of port (the scheme). The example above uses the file, http, ftp, and dns schemes. Those schemes have been designed to support implicit actions.
 
 Notice that for local files, the file datatype is used to indicate usage of the file scheme. The line:
 
-    data: read file://todo.dat
+<pre>
+data: read file://todo.dat
+</pre>
 
 is equally valid. Think of the file datatype as an abbreviation for that. Both methods use the same file scheme to perform the I/O.
 
 Other schemes do not support implicit usage. For example:
 
-    >> data: read tcp://www.rebol.com
-    ** Access error: Port is not open: tcp://www.rebol.com
-    ** Where: read
-    ** Near: read tcp://www.rebol.com
+<pre>
+>> data: read tcp://www.rebol.com
+** Access error: Port is not open: tcp://www.rebol.com
+** Where: read
+** Near: read tcp://www.rebol.com
+</pre>
 
 This error occurs because TCP does not support an implicit '''read''' action. That's because TCP is a lower level scheme that requires a higher level protocol in order to be useful.
 
@@ -195,11 +207,13 @@ This error occurs because TCP does not support an implicit '''read''' action. Th
 Explicit ports give you full control over each I/O action. 
 For example, let's say you want to read a large file in small 20000 byte chunks. You might use these steps:
 
-    file: open %bigdata.dat
-    while [not zero? data: read/part file 20000] [
-        process data
-    ]
-    close file
+<pre>
+file: open %bigdata.dat
+while [not zero? data: read/part file 20000] [
+    process data
+]
+close file
+</pre>
 
 This common method will be familiar to most programmers. The file is opened, reads are done, and the file is closed. Each action is done separately.
 
@@ -209,12 +223,13 @@ Explicit I/O is also used when you need strict control over each action. This is
 
 For example, let's say you need to read data from three different parts of a large file. In that case you would use read to seek to each part of the file to do the read:
 
-    file: open %bigdata.dat
-    da-head: read/part file 4000
-    da-body: read/seek/part file 12000 10000
-    da-tail: read/seek/part file 56000 4000
-    close file
-
+<pre>
+file: open %bigdata.dat
+da-head: read/part file 4000
+da-body: read/seek/part file 12000 10000
+da-tail: read/seek/part file 56000 4000
+close file
+</pre>
 
 
 == Port Details ==
@@ -247,32 +262,40 @@ All ports are made from a ''spec'' -- a specification of the port's attributes. 
 
 All of these can be used as port specs:
 
-    %file.txt  ; a file name
-    tcp://www.rebol.com ; a URL
-    [scheme: 'tcp host: "www.rebol.net"] ; a block
-    'tcp  ; just the port's scheme name
-    object ; an object that specifies the port
-    port ; a existing port
+<pre>
+%file.txt  ; a file name
+tcp://www.rebol.com ; a URL
+[scheme: 'tcp host: "www.rebol.net"] ; a block
+'tcp  ; just the port's scheme name
+object ; an object that specifies the port
+port ; a existing port
+</pre>
 
 There are a couple ways to make a port, depending on your required level of control.
 
 One method is to use the '''make''' action, as you would for any datatype. The general form is:
 
-    port: make port! spec
+<pre>
+port: make port! spec
+</pre>
 
 Where '''port!''' is the port datatype itself, and spec is the specification as described above.
 
 Here are some examples:
 
-    port1: make port! %file.txt
-    port2: make port! tcp://www.rebol.net
-    port3: make port! [scheme: 'tcp host: "www.rebol.net"]
+<pre>
+port1: make port! %file.txt
+port2: make port! tcp://www.rebol.net
+port3: make port! [scheme: 'tcp host: "www.rebol.net"]
+</pre>
 
 These examples will create a port object and initialize its various fields.
 
 One of the most common methods to create a port is with the '''open''' function. Unlike '''make''' the '''open''' function does not require a port! datatype. It knows that it is being provided with a spec. For example:
 
-    port: open tcp://www.rebol.net
+<pre>
+port: open tcp://www.rebol.net
+</pre>
 
 will create a new port and also perform initializations associated with the '''open''' action.
 
@@ -363,31 +386,37 @@ In general, port actions can generate errors in the same way as other Rebol func
 
 For example, if you want to handle an error during an '''open''' action, you can wrap the code with an error handling function such as '''try''':
 
-    if error? err: try [port: open spec] [
-        handle-error err
-    ]
+<pre>
+if error? err: try [port: open spec] [
+    handle-error err
+]
+</pre>
 
 A shorthand method is to use '''attempt''':
 
-    either port: attempt [open spec] [
-        perform-io...
-    ][
-        print ["Cannot open" spec]
-    ]
+<pre>
+either port: attempt [open spec] [
+    perform-io...
+][
+    print ["Cannot open" spec]
+]
+</pre>
 
 So, you can wrap each separate port action in an error handler, or you can wrap all of your port actions together in a single error handler:
 
-    err: try [
-        file: open %bigdata.dat
-        da-head: read/part file 4000
-        da-body: read/seek/part file 12000 10000
-        da-tail: read/seek/part file 56000 4000
-    ]
-    close file
+<pre>
+err: try [
+    file: open %bigdata.dat
+    da-head: read/part file 4000
+    da-body: read/seek/part file 12000 10000
+    da-tail: read/seek/part file 56000 4000
+]
+close file
 
-    if error? err [
-        print ["Port error:" form err]
-    ]
+if error? err [
+    print ["Port error:" form err]
+]
+</pre>
 
 For asynchronous port operation, error handling can be a bit more complicated. ''(And more work is needed here.)''
 

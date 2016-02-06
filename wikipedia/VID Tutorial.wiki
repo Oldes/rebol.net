@@ -21,7 +21,9 @@ We will describe each of these below.
 
 Ok, try it out. Run Rebol 3, and at the prompt, enter this line:
 
- view [button "Click Here" [unview none]]
+<pre>
+view [button "Click Here" [unview none]]
+</pre>
 
 This will open a window and display a single button. When you click on the button the window will close.
 
@@ -41,7 +43,9 @@ To help you learn the rules of layout, we will keep things simple by using only 
 
 Start with this line:
 
- view [button "First"]
+<pre>
+view [button "First"]
+</pre>
 
 It will open a window with a single button. Notice that the button has a default width here. We will talk about that more later.
 
@@ -60,7 +64,6 @@ You will see a vertical layout of the buttons:
 
 [[images/Vid-tutorial-buttons1.png|center]]
 
-
 If instead you want horizontal buttons, you use ''group'' such as this:
 
 <pre>
@@ -78,9 +81,7 @@ It will display:
 
 [[images/Vid-tutorial-buttons2.png|center]]
 
-
 Here, '''group''' is a special type of style that creates a panel in which the buttons are placed.
-
 
 You can also use groups to organize your layout into columns. Here we request two columns of buttons:
 
@@ -98,7 +99,6 @@ view [
 It looks like &rarr;
 
 [[images/Vid-tutorial-buttons3.png|center]]
-
 
 This column-alignment feature is very useful for creating forms and many other page layouts.
 
@@ -226,17 +226,18 @@ Above, the words like '''h1''' and '''text''' are style names. Here's what the a
 *'''image''' - a bitmap image
 *'''draw''' - a scalar vector graphic
 
-
 ===Style Variations===
 
 In addition to the above styles, you can create an endless number of variations on how they look and act.
 
 For example, to change the color of a button, just specify it. In the example below, the second button will be gold in color:
 
- view [
-     button "Normal"
-     button gold "Special"
- ]
+<pre>
+view [
+    button "Normal"
+    button gold "Special"
+]
+</pre>
 
 It looks like this:
 
@@ -244,8 +245,10 @@ It looks like this:
 
 For text, you can write:
 
-    text "Hot text" [browse <nowiki>http://www.rebol.com</nowiki>]
-    text ["This text is " bold red "bold red!"]
+<pre>
+text "Hot text" [browse <nowiki>http://www.rebol.com</nowiki>]
+text ["This text is " bold red "bold red!"]
+</pre>
 
 The second line of text is an example of rich-text, where you can control precisely how text looks.
 
@@ -255,29 +258,29 @@ The result is:
 
 To get even greater control over a style, you can specify precise ''options''. Here's an example:
 
-    button "Button" options [rounding: 10]
-    toggle "Toggle" options [rounding: 10]
-    button "Button" options [material: 'sand]
-    toggle "Toggle" options [material: 'sand led-colors: [red green]]
-    
-    field "Field" options [
-        rounding: 0
-        back-colors: [200.10.10 255.40.40]
-        align: 'right
-        font: make fonts/normal [
-            name: "Verdana"
-            style: 'bold
-            color: yellow
-        ]
+<pre>
+button "Button" options [rounding: 10]
+toggle "Toggle" options [rounding: 10]
+button "Button" options [material: 'sand]
+toggle "Toggle" options [material: 'sand led-colors: [red green]]
+
+field "Field" options [
+    rounding: 0
+    back-colors: [200.10.10 255.40.40]
+    align: 'right
+    font: make fonts/normal [
+        name: "Verdana"
+        style: 'bold
+        color: yellow
     ]
-    
+]
+</pre>
 
 Here, the ''options'' block tells VID how to modify the style.
 
 It will look like this:
 
 [[images/Vid-tutorial-style-variations3.png|center]]
-
 
 ===Drawings===
 
@@ -340,18 +343,15 @@ The blank is followed by a new group. As you recall from above, a group that spe
 
 Covers: actions, get-face
 
-
 ==Updating a Display==
 
 Covers: show, set-face
-
 
 ==Commands==
 
 Commands are special words used to control your GUI. Unlike styles, commands are not displayed, but they may have an effect on the display.
 
 do, attach, tight
-
 
 ==Tweaking a Layout==
 
@@ -360,7 +360,6 @@ Using fillers for spacing.
 ==Useful Functions==
 
 Other VID functions.
-
 
 ==Figuring out Errors==
 

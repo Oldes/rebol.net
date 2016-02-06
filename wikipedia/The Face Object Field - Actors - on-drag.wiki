@@ -10,8 +10,10 @@ When a drag object exists, the '''[[The Face Object Field - Actors - on-move|on-
 
 Slider updates value constantly during drag and performs its face action:
 
- on-drag: [
-   do-style face 'on-offset arg/delta + arg/base
-   draw-face face
-   do-face face
- ]
+<pre>
+on-drag: [
+  do-style face 'on-offset arg/delta + arg/base
+  draw-face face
+  do-face face
+]
+</pre>

@@ -29,70 +29,72 @@ These modes are implemented in the COPY API with two refinements:
 Here is a table of types copied by default on COPY/deep and MAKE object!:
 
 <TABLE BORDER="1" CELLPADDING="4" CELLSPACING="0">
-	<TR>
-		<TD BGCOLOR="#99CCFF"><B>Datatype</B></TD>
-		<TD BGCOLOR="#99CCFF"><B>COPY and MAKE</B></TD>
-	</TR>
-	<TR>
-		<TD><B>strings</B></TD>
-		<TD>yes</TD>
-	</TR>
-	<TR>
-		<TD><B>binary</B></TD>
-		<TD>yes</TD>
-	</TR>
-	<TR>
-		<TD><B>bitsets</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>vectors</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>images</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>gobs</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>blocks</B></TD>
-		<TD>yes</TD>
-	</TR>
-	<TR>
-		<TD><B>parens</B></TD>
-		<TD>yes</TD>
-	</TR>
-	<TR>
-		<TD><B>paths</B></TD>
-		<TD>yes</TD>
-	</TR>
-	<TR>
-		<TD><B>maps</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>functions</B></TD>
-		<TD>make object! only</TD>
-	</TR>
-	<TR>
-		<TD><B>closures</B></TD>
-		<TD>make object! only</TD>
-	</TR>
-	<TR>
-		<TD><B>objects</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>errors</B></TD>
-		<TD>no</TD>
-	</TR>
-	<TR>
-		<TD><B>ports</B></TD>
-		<TD>no</TD>
-	</TR>
+<pre>
+<TR>
+	<TD BGCOLOR="#99CCFF"><B>Datatype</B></TD>
+	<TD BGCOLOR="#99CCFF"><B>COPY and MAKE</B></TD>
+</TR>
+<TR>
+	<TD><B>strings</B></TD>
+	<TD>yes</TD>
+</TR>
+<TR>
+	<TD><B>binary</B></TD>
+	<TD>yes</TD>
+</TR>
+<TR>
+	<TD><B>bitsets</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>vectors</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>images</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>gobs</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>blocks</B></TD>
+	<TD>yes</TD>
+</TR>
+<TR>
+	<TD><B>parens</B></TD>
+	<TD>yes</TD>
+</TR>
+<TR>
+	<TD><B>paths</B></TD>
+	<TD>yes</TD>
+</TR>
+<TR>
+	<TD><B>maps</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>functions</B></TD>
+	<TD>make object! only</TD>
+</TR>
+<TR>
+	<TD><B>closures</B></TD>
+	<TD>make object! only</TD>
+</TR>
+<TR>
+	<TD><B>objects</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>errors</B></TD>
+	<TD>no</TD>
+</TR>
+<TR>
+	<TD><B>ports</B></TD>
+	<TD>no</TD>
+</TR>
+</pre>
 </TABLE>
 
 ==Internal copy operations==

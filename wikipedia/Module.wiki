@@ -97,13 +97,17 @@ Sometimes the word "loaded" is used for this action. In Rebol, this term is a mi
 
 If the above example were stored in a file called stock-trade.r, then the module is normally imported with a line such as:
 
-    import %stock-trade.r
+<pre>
+import %stock-trade.r
+</pre>
 
 This will load the module from the current directory, initialize it, and make its export words available to the current program (the current context).
 
 An alternate way to import the module is:
 
-    import 'stock-trade
+<pre>
+import 'stock-trade
+</pre>
 
 The module will be loaded in the same way as above, but the IMPORT function will search for the module in a predefined set of directories, including web sites. Normally, the current directory will be searched first, so the stock-trade.r script will be found there.
 
@@ -115,8 +119,10 @@ When a module is imported by name (by word), by default it is shared. If IMPORT 
 
 For example:
 
-   import 'stock-trade
-   import 'stock-trade
+<pre>
+import 'stock-trade
+import 'stock-trade
+</pre>
 
 only loads the module once.  The second call will return a pointer to the same module, and it will also re-export the modules variables to the current context (see below).
 
@@ -126,13 +132,17 @@ Q: ''Should that also be supported for modules imported by file or url?''
 
 At times, your code may require that a specific version of a module be used. This can be done with the IMPORT/version refinement.  For example:
 
-   import/version 'stock-trade 1.2.0
+<pre>
+import/version 'stock-trade 1.2.0
+</pre>
 
 This specifies that ''at least'' version 1.2.0 is required. In addition, the search mechanism within IMPORT will select the newest version if multiple choices exist.
 
 If you want to further qualify the version number, you can provide a block that uses a micro-dialect to specify the version:
 
-   import/version 'stock-trade [1.2.0 - 3.0.0]
+<pre>
+import/version 'stock-trade [1.2.0 - 3.0.0]
+</pre>
 
 ''Further improvements on is mechanism may be desired.''
 
@@ -142,15 +152,21 @@ The IMPORT function provides a way to import specific words rather than all of t
 
 To load the module and import only its 'buy function:
 
-   import 'stock-trade/buy
+<pre>
+import 'stock-trade/buy
+</pre>
 
 You can also load multiple modules and specific functions:
 
-   import [stock-trade/buy stock-ticker/watch stock-ticker/alert]
+<pre>
+import [stock-trade/buy stock-ticker/watch stock-ticker/alert]
+</pre>
 
 If the module has already been loaded, you must use the get form of the path to indicate reference to variable:
 
-   import [:mod/buy stock-ticker/watch stock-ticker/alert]
+<pre>
+import [:mod/buy stock-ticker/watch stock-ticker/alert]
+</pre>
 
 Any number of modules and their words can be imported in this manner.
 
@@ -170,11 +186,13 @@ In addition, the use of the system/words object as a method of access to word de
 
 There are two ways to reference a value of a module, as illustrated by this example:
 
-  mod: import 'stock-trade
+<pre>
+mod: import 'stock-trade
 
-  buy 'msft $10
+buy 'msft $10
 
-  mod/buy 'msft $10
+mod/buy 'msft $10
+</pre>
 
 The first is an implicit reference. The word 'buy has meaning in your local context. This is part of the purpose of the IMPORT function.
 
@@ -190,7 +208,9 @@ The LOAD function (and also DO because it uses LOAD) contains an implied binding
 
 In other words, if you write:
 
-   data: load "print 10"
+<pre>
+data: load "print 10"
+</pre>
 
 The PRINT word will have a useful default binding. It comes from the '''current context'''.
 
@@ -210,11 +230,15 @@ This means that a module need not export any values, but those values can still 
 
 For example, in the code above, if 'buy and 'sell were not in the export block, you could not do:
 
-    sell 'msft $10
+<pre>
+sell 'msft $10
+</pre>
 
 but you could still do this:
 
-    mod/sell 'msft $10
+<pre>
+mod/sell 'msft $10
+</pre>
 
 In other words, explicit references to the values of a module are still valid.
 
@@ -279,13 +303,17 @@ If only specific exports are desired, you can request the specific words by usin
 
 You can MAKE a module in the same way you make any other datatype. The general form is:
 
-  mod: make module! [spec body]
+<pre>
+mod: make module! [spec body]
+</pre>
 
 The 'mod is a reference to the module object itself, and it can be used to refer to the fields of the module, to obtain its spec object, to call its functions, or to import all of its exports within the current context.
 
 This function is rarely used. Instead, a helper function is provided, similar to FUNC:
 
-  mod: module spec body
+<pre>
+mod: module spec body
+</pre>
 
 The module file example above could be written as:
 
@@ -325,13 +353,17 @@ When you DO a module, you both LOAD and MAKE it, but its exports are not automat
 
 For example, if you:
 
-    mod: do %stock-trade.r
+<pre>
+mod: do %stock-trade.r
+</pre>
 
 The stock-trade file will be loaded and made into a module. The module reference is returned as a result and can be used to refer to the fields of the module or to pass to IMPORT to import its exports into the current context:
 
-    mod/sell 'msft $10
+<pre>
+mod/sell 'msft $10
 
-    import mod
+import mod
+</pre>
 
 Also note that unlike IMPORT, DO does not search for the module in memory, on disk, or on the web.
 

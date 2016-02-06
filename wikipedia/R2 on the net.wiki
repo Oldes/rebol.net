@@ -2,7 +2,6 @@ __NOTOC__
 
 Rebol has many resources on the net and in different languages. Start here to find your preferred place of discussion.
 
-
 ==AltMe==
 
 AltMe is a decentralized messaging and collaboration program completely written in Rebol.
@@ -11,7 +10,6 @@ Ask for an account to be created for you by posting to the Rebol Mailing list (s
 A weblog of the public discussions in the Rebol3 (discussions include Rebol 2) world can be found at http://www.rebol.net/altweb/rebol3/
 
 ==Rebol 2 Forums and Mailing Lists==
-
 
 
 {| class="wikitable"
@@ -45,7 +43,6 @@ To subscribe to the mailing list, send and e-mail to ''rebol-request@rebol.com''
 
 ===Rebol 2 Blogs===
 
-
 {| class="wikitable"
 ! Name
 ! Description
@@ -57,7 +54,6 @@ To subscribe to the mailing list, send and e-mail to ''rebol-request@rebol.com''
 ==Rebol EZines==
 
 ==Various Rebol Sites==
-
 
 {| class="wikitable"
 ! Site

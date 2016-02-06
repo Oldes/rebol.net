@@ -14,8 +14,10 @@ It is invoked just after the '''[[The Face Object Field - Actors - on-move|on-mo
 
 Standard on-over actor:
 
- on-over: [
-   face/state/mode: pick [over up] face/state/over not not arg
-   draw-face
-   none
- ]
+<pre>
+on-over: [
+  face/state/mode: pick [over up] face/state/over not not arg
+  draw-face
+  none
+]
+</pre>

@@ -6,7 +6,6 @@ This page explains how we want to manage testing R3.
 
 '''Testing a language is difficult.''' If you were to enumerate the total number of tests required to fully test R3, it would likely be over one hundred thousand, if not more.
 
-
 So what does that really mean? Well, time has taught us these important lessons:
 
 #No one person is going to write all the tests.
@@ -15,13 +14,11 @@ So what does that really mean? Well, time has taught us these important lessons:
 #New testers must be able to understand the prior tests.
 #It should be easy to understand how to contribute new tests.
 
-
 That has lead us to where we are today. We know from experience:
 
 #There must be a '''standard system''' of managing tests.
 #All tests must abide by a '''standard format'''.
 #All tests should be '''clean, simple, specific, and self-contained'''.
-
 
 Also, we know that we want the test system to be:
 

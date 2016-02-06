@@ -6,7 +6,9 @@
 
 From [http://en.wikipedia.org/wiki/Beta_version#Beta Wikipedia]:
 
- Beta level software generally includes all features, but may also include known issues and bugs of a less serious variety.
+<pre>
+Beta level software generally includes all features, but may also include known issues and bugs of a less serious variety.
+</pre>
 
 As we can see, by definition, beta software should basically contain all [http://rebol.com/r3/docs/project.html planned] features. Yet I can bet, for example tasking is not going to make it for a beta. Don't ask me why, this is just my analytical guess at current situation. 
 
@@ -20,8 +22,10 @@ The whole world is preaching open source mantra. They preach so loudly, that eve
 
 Taken from the [http://rebol.com/r3/docs/project.html Project plan] description:
 
- "Also, this list is only for R3 core operation and does not include community-based projects such as graphics, GUI, protocols, documentation,
-  and other features that can be developed externally, depending on the needs of the community."
+<pre>
+"Also, this list is only for R3 core operation and does not include community-based projects such as graphics, GUI, protocols, documentation,
+ and other features that can be developed externally, depending on the needs of the community."
+</pre>
 
 Rebol Technologies is the product owner. And as such, RT should assure, those things get delivered, but this is not happening.
 
@@ -67,7 +71,9 @@ I think that R3, as a language, is in more mature state than R2. The language - 
 
 So why do I worry about the feature set of the beta? Why is not Rebol community using R3 yet? Does placing a "This is a beta" sticker make the product or situation any better? I think - not ...
 
- '''If we want developers to move to R3, we have to at least provide them with R2 level features! So where do we stand?'''
+<pre>
+'''If we want developers to move to R3, we have to at least provide them with R2 level features! So where do we stand?'''
+</pre>
 
 == Networking protocols (schemes) ==
 

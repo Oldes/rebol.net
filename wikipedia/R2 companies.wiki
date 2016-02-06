@@ -5,7 +5,6 @@ Feel free to add yourself into these lists if you are a company or a developer w
 
 Please note this is not a full list as it is maintained under a volunteer basis. 
 
-
 {| class="wikitable"
 ! Company and homepage
 ! Project

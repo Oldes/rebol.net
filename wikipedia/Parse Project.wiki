@@ -45,11 +45,17 @@ Rebol is designed as a practical language. It has been notoriously difficult to 
 The PARSE dialect is an enhanced member of the family of Top-down parsing languages (TDPL family) including the [http://en.wikipedia.org/wiki/Top-down_parsing_language Top-down parsing language (TDPL)], the [http://en.wikipedia.org/wiki/Top-down_parsing_language#Generalized_TDPL Generalized top-down parsing language (GTDPL)] and the [http://en.wikipedia.org/wiki/Parsing_expression_grammar Parsing expression grammar (PEG)] and uses the same "ordered choice" parsing method as the other members of the family.
 
 The prioritization of the ordered choice (a.k.a. "alternative", but the "ordered choice" name is more appropriate since the order of rules matters) causes that the second choice in the
-  ["a" | "ab"]
+<pre>
+["a" | "ab"]
+</pre>
 rule never succeeds since the first one takes precedence. This causes the greediness of repetition operators, e.g.:
-  repeated-rule: [any rule]
+<pre>
+repeated-rule: [any rule]
+</pre>
 has a recursive definition:
-  repeated-rule: [rule repeated-rule | none]
+<pre>
+repeated-rule: [rule repeated-rule | none]
+</pre>
 , which is greedy since the first choice always takes precedence when possible.
 
 There is one formal difference between PARSE and the other members of the TDPL family: All other TDPL family members succeed when the start rule succeeds. As opposed to that, for PARSE to succeed the RULES rule (which is the PARSE counterpart of TDPL family start rule) has to succeed and the final PARSE position has to be the end of the input. This property is essential. It's part of the basic purpose of PARSE, and has been for years. If you are only concerned about a section of the data and are using the return value of the PARSE function, you can put [to end] on the end of your start (RULES) rule.
@@ -148,26 +154,36 @@ Importance: Makes the Parse dialect more expressive, the /CASE refinement is "ex
 
 Syntax:
 
-    case rule
-    no-case rule
+<pre>
+case rule
+no-case rule
+</pre>
 
 Using this syntax The CASE and NO-CASE keywords influence matching sensitivity in the given RULE. Both keywords take one argument, which may be a matching rule.
 
 Example:
 
-    parse input [case "my string"]
+<pre>
+parse input [case "my string"]
+</pre>
 
 should be equivalent to current
 
-    parse/case input ["my string"]
+<pre>
+parse/case input ["my string"]
+</pre>
 
 On the other hand, a rule such as
 
-    parse input [case "my string" no-case "another string"]
+<pre>
+parse input [case "my string" no-case "another string"]
+</pre>
 
 is not easily expressible in the current PARSE dialect. The last example looks like being equivalent to
 
-    parse input [case "my string" "another string"]
+<pre>
+parse input [case "my string" "another string"]
+</pre>
 
 since the default mode in the RULE should be the NO-CASE state, because the /CASE refinement was not used.
 
@@ -192,27 +208,33 @@ An OF statement could be used as the rule argument to COPY, SET or [[#RETURN|RET
 
 Example:
 
-  of [integer! string! word!]
+<pre>
+of [integer! string! word!]
+</pre>
 
 This accepts none or one of the specified datatypes in the input stream. Example matches would be:
 
-  1
-  "str"
-  word
-  1 "str"
-  "str" 1
-  1 "str" word
-  "str" 1 word
-  word 1 "str"
-  ...
+<pre>
+1
+"str"
+word
+1 "str"
+"str" 1
+1 "str" word
+"str" 1 word
+word 1 "str"
+...
+</pre>
 
 The output result of OF would be the a block with the captured values in the order specified.
 
 So:
 
-  1 --> [1 none none]
-  1 "str" --> [1 "str" none]
-  word 1 "str" -> [1 "str" word]
+<pre>
+1 --> [1 none none]
+1 "str" --> [1 "str" none]
+word 1 "str" -> [1 "str" word]
+</pre>
 
 Alternate syntax proposal by Steeve Luc:
 *OF [type or OPT type ...]
@@ -236,37 +258,49 @@ Importance: The PARSE dialect uses a range of terminal tokens, and those cannot 
 
 Examples:
 
-  quote 1
+<pre>
+quote 1
+</pre>
 
 matches a value 1 in the input stream, not a count of 1.
 
 To further show the reasoning, consider:
 
-  2 quote 1
+<pre>
+2 quote 1
+</pre>
 
 which would match 2 values of 1 in the input stream.
 
 This can also be applied to words:
 
-  quote abc
+<pre>
+quote abc
+</pre>
 
 matches the word abc in the input stream.
 
-  quote 'abc
-  quote abc:
-  quote :abc
+<pre>
+quote 'abc
+quote abc:
+quote :abc
+</pre>
 
 will match 'abc, abc:, and :abc respectively.
 
 You can also match full literal structures, which will be compared as if with the Rebol EQUAL? function. For example,
 
-  quote [a b c]
+<pre>
+quote [a b c]
+</pre>
 
 will match a nested block! with only the words a, b and c in it, in that order.
 
 The great value of QUOTE is that a rule can directly match input tokens without evaluating a paren block (a production). Previously, you would have to write rules like this to do literal matching:
 
-  set w set-word! (if w = to-set-word 'abc [...])
+<pre>
+set w set-word! (if w = to-set-word 'abc [...])
+</pre>
 
 Issues: In theory, this is a high-precedence (full strength) matching rule. This means that it is absolutely literal, so there would be no constructive forms (of any kind). That may be too limiting and may present an argument for providing a constructive sister of QUOTE.
 
@@ -279,7 +313,9 @@ Purpose: For block parsing, escapes values from the PARSE dialect. Semi-construc
 Importance: 
 *The PARSE dialect uses a range of terminal tokens, and those cannot be used as direct matches during block parsing. For example, if you write the numeral 1, it is considered a count parameter to the command that follows. A solution is to provide a general escape mechanism for matching literal tokens.
 *The great value of LIT is that a rule can directly match input tokens without evaluating a paren block (a production). Previously, you would have to write rules like this to do literal matching:
-  set w set-word! (if w = to-set-word 'abc [...])
+<pre>
+set w set-word! (if w = to-set-word 'abc [...])
+</pre>
 *This variant is more flexible than the non-constructive one, which may require an enhancement later.
 
 Syntax:
@@ -292,41 +328,69 @@ The '''LIT block''' syntax can be used to match a sequence of values. A counterp
 
 Examples:
 *To match a [1 2] sequence:
-  parse [1 2] [lit [1 2]]
+<pre>
+parse [1 2] [lit [1 2]]
+</pre>
 *To match a subblock:
-  parse <nowiki>[[1]] [lit [[1]]]</nowiki>
+<pre>
+parse <nowiki>[[1]] [lit [[1]]]</nowiki>
+</pre>
 *To match a paren:
-  parse [(1)] [lit [(1)]]
+<pre>
+parse [(1)] [lit [(1)]]
+</pre>
 
 The '''LIT paren''' syntax is constructive. It evaluates the paren. The result is used for matching. If it is a block, then the LIT block case above applies, otherwise the LIT other case applies.
 
 Examples:
 *To match 2:
-  parse [2] [lit (1 + 1)]
+<pre>
+parse [2] [lit (1 + 1)]
+</pre>
 *To match a [1 2] sequence:
-  parse [1 2] [lit (reduce [1 + 0 1 + 1])]
+<pre>
+parse [1 2] [lit (reduce [1 + 0 1 + 1])]
+</pre>
 *To match a paren:
-  parse [(1)] [lit (lit (1))]
+<pre>
+parse [(1)] [lit (lit (1))]
+</pre>
 
 The '''LIT other''' syntax is for other cases. Non-constructive.
 
 Examples:
 *To match a value 1:
-  lit 1
+<pre>
+lit 1
+</pre>
 *To match two values of 1:
-  2 lit 1
+<pre>
+2 lit 1
+</pre>
 *To match a word:
-  lit abc
+<pre>
+lit abc
+</pre>
 *To match a lit-word:
-  lit 'abc
+<pre>
+lit 'abc
+</pre>
 *To match a set-word:
-  lit abc:
+<pre>
+lit abc:
+</pre>
 *To match a get-word:
-  lit :abc
+<pre>
+lit :abc
+</pre>
 *To match a path:
-  lit a/b/c
+<pre>
+lit a/b/c
+</pre>
 *To match a lit-path:
-  lit 'a/b/c
+<pre>
+lit 'a/b/c
+</pre>
 
 ===NOT===
 
@@ -339,15 +403,23 @@ Importance:
 *By not consuming input this would be a direct inversion of the rule.
 *Works as a look-ahead operation. PARSE, as a member of the TDPL family already has unlimited look-ahead capability. This operation allows even an inexperienced user to make use of it.
 *Replaces the tricky idiom (which proves, that the capability is already present in PARSE):
-  [rule (cont: [end skip]) | (cont: none)] cont
+<pre>
+[rule (cont: [end skip]) | (cont: none)] cont
+</pre>
 
 Explanation: Together with the AND operation this will make the Parse dialect directly compatible with the Parsing expression grammar. The behavior of this NOT operator is consistent with the other proposed basic operations of the TDPL family PARSE doesn't directly support yet:
 *Is consistent with the AND operation:
-  [AND rule] = [NOT NOT rule]
+<pre>
+[AND rule] = [NOT NOT rule]
+</pre>
 *Is consistent with the EITHER operation:
-  [NOT rule] = [EITHER rule FAIL NONE]
+<pre>
+[NOT rule] = [EITHER rule FAIL NONE]
+</pre>
 *Is consistent with itself:
-  [NOT NOT NOT rule] = [NOT rule]
+<pre>
+[NOT NOT NOT rule] = [NOT rule]
+</pre>
 
 Syntax:
 *NOT rule
@@ -355,11 +427,15 @@ Syntax:
 Examples:
 *To match one character distinct from SPACE-CHAR the following rule would work:
 
-  not space-char skip
+<pre>
+not space-char skip
+</pre>
 
 *Can invert even the END rule:
 
-  not end
+<pre>
+not end
+</pre>
 
 Notes: Regardless of the underlying series changes performed by the argument rule this NOT operation will be consistent with PARSE's other backtracking operations.
 
@@ -379,7 +455,9 @@ Syntax:
 *AND rule
 
 Notes: The recursion-safe idiom known to do the same is:
-  [rule (cont: none) | (cont: [end skip])] [end skip] | cont
+<pre>
+[rule (cont: none) | (cont: [end skip])] [end skip] | cont
+</pre>
 
 The name AT has been suggested as an alternative to the originally proposed AND name, but AND was finally chosen.
 
@@ -387,23 +465,29 @@ Examples:
 
 *Combine with the original INTO to check that the type of the value is a block!:
 
-  and block! into rule
+<pre>
+and block! into rule
+</pre>
 
 *Combine with modifying operations:
 
-  and insert "a" "a"
+<pre>
+and insert "a" "a"
+</pre>
 
 AND in this case resets the parse position, but not the effect of the [[#INSERT|INSERT]]. This technique can be used to implement modify-then-verify or iterative processes.
 
 *(Advanced) Match an n #"a" n #"b" n #"c" string for any n >= 1 (a PEG taken from the Wikipedia, an example of a non-context-free grammar, which cannot be parsed by an LL parser):
 
-  nanb: [#"a" opt nanb #"b"] ; the same number n >= 1 of #"a"s and #"b"s
-  nbnc: [#"b" opt nbnc #"c"] ; the same number n >= 1 of #"b"s and #"c"s
-  nanbnc: [
-      and [nanb #"c"] ; look-ahead test of the same number of #"a"s and #"b"s followed by a #"c"
-      some #"a" ; skip all #"a"s
-      nbnc
-  ]
+<pre>
+nanb: [#"a" opt nanb #"b"] ; the same number n >= 1 of #"a"s and #"b"s
+nbnc: [#"b" opt nbnc #"c"] ; the same number n >= 1 of #"b"s and #"c"s
+nanbnc: [
+    and [nanb #"c"] ; look-ahead test of the same number of #"a"s and #"b"s followed by a #"c"
+    some #"a" ; skip all #"a"s
+    nbnc
+]
+</pre>
 
 Explanation of the example:
 *The nanb rule makes sure that there are as many b's as there are a's, recursively (you can't do that with regular expressions).
@@ -429,27 +513,39 @@ Importance:
 
 Note: the proposed 
 
-    stay rule
+<pre>
+stay rule
+</pre>
 
 is just a shortcut for
 
-    and [opt rule]
+<pre>
+and [opt rule]
+</pre>
 
 or
 
-    opt [and rule]
+<pre>
+opt [and rule]
+</pre>
 
 or
 
-    rule fail | none
+<pre>
+rule fail | none
+</pre>
 
 or
 
-    opt [rule fail]
+<pre>
+opt [rule fail]
+</pre>
 
 or
 
-    not [rule fail]
+<pre>
+not [rule fail]
+</pre>
 
 ===EITHER===
 
@@ -462,9 +558,13 @@ Importance:
 *Together with [[#FAIL|FAIL]] it allows direct usage of the GTDPL in PARSE.
 *Dynamic rules tend to be a tricky process to write and debug, not to mention the potential binding issues if they aren't done just right. The more language patterns we can recognize without dynamic rules, the better.
 *Replaces the idiom:
-  [rule1 (cont: rule2) | (cont: rule3)] cont
+<pre>
+[rule1 (cont: rule2) | (cont: rule3)] cont
+</pre>
 *This rule is not as important as the other proposed rules in this group ([[#FAIL|FAIL]], [[#NOT|NOT]], [[#AND|AND]]). Using the [[#NOT|NOT]] operator it can be replaced by a simple idiom:
-  [rule1 rule2 | not rule1 rule3]	 
+<pre>
+[rule1 rule2 | not rule1 rule3]
+</pre>
 
 Syntax:	 
 *EITHER rule1 rule2 rule3	 
@@ -473,7 +573,9 @@ Examples:
 
 Parse to the #"a" delimiter, to the #"b" delimiter, or to the end of the input, whichever comes first:
 
-  any [either [#"a" | #"b"] [end skip] skip]
+<pre>
+any [either [#"a" | #"b"] [end skip] skip]
+</pre>
 
 Editor's Note: The simpler but otherwise equivalent [[#THEN|THEN]] proposal below was accepted instead.
 
@@ -488,7 +590,9 @@ Importance:
 *Together with [[#FAIL|FAIL]] it allows direct usage of the GTDPL in PARSE.
 *Dynamic rules tend to be a tricky process to write and debug, not to mention the potential binding issues if they aren't done just right. The more language patterns we can recognize without dynamic rules, the better.
 *Replaces the idiom:
-  [rule1 (cont: rule2) | (cont: rule3)] cont
+<pre>
+[rule1 (cont: rule2) | (cont: rule3)] cont
+</pre>
 
 Syntax:
 *THEN rule2 | rule3
@@ -499,7 +603,9 @@ Examples:
 
 Parse to the #"a" delimiter, to the #"b" delimiter, or to the end of the input, whichever comes first:
 
-  any [[#"a" | #"b"] then [end skip] | skip]
+<pre>
+any [[#"a" | #"b"] then [end skip] | skip]
+</pre>
 
 Note: The word => has been suggested instead of THEN for this operation, but would require a Rebol syntax exception.
 
@@ -514,7 +620,9 @@ Purpose: Deliberately cause the rule to fail and backtrack to the next alternati
 Importance:
 *This is helpful when you want more fine-grained control over your parse rules.
 *It would make the 
-  end skip
+<pre>
+end skip
+</pre>
 idiom used by advanced PARSE programmers available to regular programmers.
 *Compatible with the TDPL - allows direct usage of the TDPL in Parse.
 
@@ -523,7 +631,9 @@ Syntax:
 
 For a non-useful example matching the string "ab":
 
-  ["a" (print "a") fail | "ab"]
+<pre>
+["a" (print "a") fail | "ab"]
+</pre>
 
 ===TO and THRU multiple===
 
@@ -547,7 +657,9 @@ Rules would likely be composed of only simple tokens or bitsets rather than full
 
 Example:
 
-  copy chars to [cr | lf | end]
+<pre>
+copy chars to [cr | lf | end]
+</pre>
 
 TO or THRU fail if there is no point in the subsequent data where their argument rule can succeed. 
 
@@ -570,11 +682,17 @@ With [[#NOT|NOT]] (Editor's Note: Peta's suggestion and my favorite), TO NOT and
 Editor's Note: With the same rules that would cause TO NOT to fail, the greediness of ANY will cause it to go into an endless loop, a common error in PARSE usage. That would be a good argument for a non-greedy or at least safe equivalent.
 
 However, TO NOT RULE isn't generally equivalent to ANY RULE, e.g.:
- to [not "ab"]
+<pre>
+to [not "ab"]
+</pre>
 isn't equivalent to
- any "ab"
+<pre>
+any "ab"
+</pre>
 , since e.g.
- parse "ababab" [a position: (print ["success" index? position])]
+<pre>
+parse "ababab" [a position: (print ["success" index? position])]
+</pre>
 :the A: [TO [NOT "ab"]] rule would succeed reaching index 2 in the given string, while A: [ANY "ab"] would advance to the tail of the input.
 
 TO [NOT RULE | END] is equivalent to ANY [AND RULE SKIP].
@@ -604,11 +722,15 @@ Purpose: Iterate rule while it matches, but eliminate endless loops.
 
 Note: the
 
-    any rule
+<pre>
+any rule
+</pre>
 
 expression is equivalent to:
 
-    while [and [rule a:] b: if (greater? index? a index? b) :a]
+<pre>
+while [and [rule a:] b: if (greater? index? a index? b) :a]
+</pre>
 
 ===SOME operator===
 
@@ -620,11 +742,15 @@ Purpose: Iterate rule while it matches, but eliminate endless loops.
 
 Note: the
 
-    some rule
+<pre>
+some rule
+</pre>
 
 expression is equivalent to
 
-    and [rule a:] b: opt [if (greater? index? a index? b) :a any rule]
+<pre>
+and [rule a:] b: opt [if (greater? index? a index? b) :a any rule]
+</pre>
 
 ===UNTIL operator===
 
@@ -645,15 +771,21 @@ Examples:
 
 *a rule advancing past the "abc" substring on success
 
-  until "abc" ["a" | "b" | "c"]
+<pre>
+until "abc" ["a" | "b" | "c"]
+</pre>
 
 *a rule advancing to the start of the "abc" substring on success
 
-  until [and "abc"] ["a" | "b" | "c"]
+<pre>
+until [and "abc"] ["a" | "b" | "c"]
+</pre>
 
 '''Note:''' In recent releases, UNTIL can be implemented using WHILE:
 
-  while [b accept | c | reject]
+<pre>
+while [b accept | c | reject]
+</pre>
 
 ===ACCEPT keyword===
 
@@ -695,27 +827,35 @@ Examples:
 
 *Removing a series of values.
 
-  a: "12abc34"
-  parse a [some [to alpha change [some alpha] none]]
-  a = "1234"
+<pre>
+a: "12abc34"
+parse a [some [to alpha change [some alpha] none]]
+a = "1234"
+</pre>
 
 *Changing a series of values to another value.
 
-  a: "12abc34"
-  parse a [some [to alpha change [some alpha] "zzzz"]]
-  a = "12zzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha change [some alpha] "zzzz"]]
+a = "12zzzz34"
+</pre>
 
 *Inserting a value after a pattern.
 
-  a: "12abc34"
-  parse a [some [to alpha some alpha change none "zzzz"]]
-  a = "12abczzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha some alpha change none "zzzz"]]
+a = "12abczzzz34"
+</pre>
 
 *Changing a series of values to a calculated block.
 
-  a: [1 2 a b c 3 4]
-  parse a [some [to word! change only [some word!] (array/initial 4 'z)]]
-  a = [1 2 [z z z z] 3 4]
+<pre>
+a: [1 2 a b c 3 4]
+parse a [some [to word! change only [some word!] (array/initial 4 'z)]]
+a = [1 2 [z z z z] 3 4]
+</pre>
 
 Note: All modification operations are irreversible, and so will not be undone on backtracking. As noted in the theory section above, it may not be easy to backtrack to a "reasonable" position, but backtracking issues can be controlled with careful use.
 
@@ -746,33 +886,43 @@ Examples:
 
 *Removing a series of values from a string.
 
-  a: "12abc34"
-  parse a [some [to alpha b: some alpha change b ""]]
-  a = "1234"
+<pre>
+a: "12abc34"
+parse a [some [to alpha b: some alpha change b ""]]
+a = "1234"
+</pre>
 
 *Changing a series of values to another value.
 
-  a: "12abc34"
-  parse a [some [to alpha b: some alpha change b "zzzz"]]
-  a = "12zzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha b: some alpha change b "zzzz"]]
+a = "12zzzz34"
+</pre>
 
 *Inserting a value after a pattern using a series position.
 
-  a: "12abc34"
-  parse a [some [to alpha some alpha b: change b "zzzz"]]
-  a = "12abczzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha some alpha b: change b "zzzz"]]
+a = "12abczzzz34"
+</pre>
 
 *Inserting a value after a pattern using an integer offset.
 
-  a: "12abc34"
-  parse a [some [to alpha some alpha change 0 "zzzz"]]
-  a = "12abczzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha some alpha change 0 "zzzz"]]
+a = "12abczzzz34"
+</pre>
 
 *Changing a series of values to a calculated block.
 
-  a: [1 2 a b c 3 4]
-  parse a [some [to word! b: some word! change only b (array/initial 4 'z)]]
-  a = [1 2 [z z z z] 3 4]
+<pre>
+a: [1 2 a b c 3 4]
+parse a [some [to word! b: some word! change only b (array/initial 4 'z)]]
+a = [1 2 [z z z z] 3 4]
+</pre>
 
 Note: All modification operations are irreversible, and so will not be undone on backtracking. As noted in the theory section above, it may not be easy to backtrack to a "reasonable" position, but backtracking issues can be controlled with careful use.
 
@@ -789,9 +939,11 @@ Syntax:
 
 Example:
 
-  a: "12abc34"
-  parse a [some [to alpha remove [some alpha]]]
-  a = "1234"
+<pre>
+a: "12abc34"
+parse a [some [to alpha remove [some alpha]]]
+a = "1234"
+</pre>
 
 Note: See [[#CHANGE_1|CHANGE 1]] for behavior.
 
@@ -808,9 +960,11 @@ Syntax:
 
 Example:
 
-  a: "12abc34"
-  parse a [some [to alpha b: some alpha remove b]]
-  a = "1234"
+<pre>
+a: "12abc34"
+parse a [some [to alpha b: some alpha remove b]]
+a = "1234"
+</pre>
 
 Note: See [[#CHANGE_2|CHANGE 2]] for behavior.
 
@@ -832,15 +986,19 @@ Examples:
 
 *Inserting a value after a pattern.
 
-  a: "12abc34"
-  parse a [some [to alpha some alpha insert "zzzz"]]
-  a = "12abczzzz34"
+<pre>
+a: "12abc34"
+parse a [some [to alpha some alpha insert "zzzz"]]
+a = "12abczzzz34"
+</pre>
 
 *Changing a series of values to a calculated block.
 
-  a: [1 2 a b c 3 4]
-  parse a [some [to word! some word! insert only (array/initial 4 'z)]]
-  a = [1 2 a b c [z z z z] 3 4]
+<pre>
+a: [1 2 a b c 3 4]
+parse a [some [to word! some word! insert only (array/initial 4 'z)]]
+a = [1 2 a b c [z z z z] 3 4]
+</pre>
 
 Note: See CHANGE for behavior.
 
@@ -859,23 +1017,25 @@ Examples:
 
 *Recursive length printing.
 
-  rule: [
-      use [a b] [
-          "b" (print 1) |
-          a: "a" rule "a" b: (print subtract index? b index? a)
-      ]
-  ]
+<pre>
+rule: [
+    use [a b] [
+        "b" (print 1) |
+        a: "a" rule "a" b: (print subtract index? b index? a)
+    ]
+]
 
-  parse "aba" rule
-  ; Prints
-  1
-  3
+parse "aba" rule
+; Prints
+1
+3
 
-  parse "aabaa" rule
-  ; Prints
-  1
-  3
-  5
+parse "aabaa" rule
+; Prints
+1
+3
+5
+</pre>
 
 The [http://www.rebol.org/view-script.r?script=use-rule.r USE-RULE function] defined in the script library implements this as the default variant, but it has also a /NO-REBIND variant, which does not rebind the given rules block, i.e. takes care of doing the binding just once.
 
@@ -908,11 +1068,15 @@ Examples:
 
 *Odd numbers only.
 
-  [set x integer! if (odd? x)]
+<pre>
+[set x integer! if (odd? x)]
+</pre>
 
 *Word not defined yet.
 
-  ['define set x word! if (not find words x)]
+<pre>
+['define set x word! if (not find words x)]
+</pre>
 
 ===REVERSE===
 
@@ -924,7 +1088,9 @@ Importance: Some patterns are easier to match by advancing forward, then reversi
 
 Example: 
 
-  to lf reverse [remove cr]
+<pre>
+to lf reverse [remove cr]
+</pre>
 
 This would advance to the LF char, then look back one for CR and remove it if found.
 
@@ -981,17 +1147,21 @@ Notes: This function would be called from within parens, and would work just lik
 
 Example:
 
-  >> parse "a" [alpha (break/return 1)]
-  == 1
-  >> parse "1" [alpha (break/return 1)]
-  == false
+<pre>
+>> parse "a" [alpha (break/return 1)]
+== 1
+>> parse "1" [alpha (break/return 1)]
+== false
+</pre>
 
 Note: There is a question of whether this change could introduce an unnecessary inconsistency. The goal of the proposal can be easily achieved by putting the parse call into a function body, a loop, or a catch control function, e.g. like this:
 
-  >> loop 1 [parse "a" [alpha (break/return 1)]]
-  == 1
-  >> loop 1 [parse "1" [alpha (break/return 1)]]
-  == false
+<pre>
+>> loop 1 [parse "a" [alpha (break/return 1)]]
+== 1
+>> loop 1 [parse "1" [alpha (break/return 1)]]
+== false
+</pre>
 
 ===RETURN===
 
@@ -1013,10 +1183,12 @@ Examples:
 
 *Return the first tag in a string.
 
-  >> parse "abc<hello>def" [to "<" return thru ">"]
-  == "<hello>"
-  >> parse "abcdef" [to "<" return thru ">"]
-  == false
+<pre>
+>> parse "abc<hello>def" [to "<" return thru ">"]
+== "<hello>"
+>> parse "abcdef" [to "<" return thru ">"]
+== false
+</pre>
 
 ===INTO type===
 
@@ -1066,7 +1238,9 @@ Notes:
 
 Examples:
 *Parsing a string in a block.
-  parse [1 "abc" 2] [integer! and string! into [some alpha] integer!]
+<pre>
+parse [1 "abc" 2] [integer! and string! into [some alpha] integer!]
+</pre>
 
 ===Set PARSE position to another series===	 
 Suggested by: Peta
@@ -1098,7 +1272,7 @@ Syntax:
 At the current parse position, a single expression of Rebol code will be evaluated, using the algorithm of the Rebol DO/next function. The parse position is then changed to the position after the expression, as would be returned by DO/next. No binding is performed by the DO operation, but it does not restrict any binding explicitly done by the expression.
 
 The single result of the expression is then matched by the argument rule as if the value were contained in a nested block and the rule used as the argument of INTO. If the expression result is of a block type it will be treated as if it is nested, not inline. Any rule that expects to match more than one value will fail, as there will only be one value to be matched. The SKIP rule will match any value, including #[none], but not unset values. The NONE rule will match either #[none] or unset values. An empty rule block will only match unset values (Question: Should the NONE rule also behave this way? Decision for Carl - he knows the internals).
- 
+
 DO will fail if:
 *There is no expression to be executed.
 *The expression is executed correctly but the rule doesn't match.
@@ -1111,32 +1285,42 @@ Notes: Gabriele's original proposal expresses the concern that failure of a DO o
 
 Examples (adapted from Gabriele's REP):
 
-  parse [1 + 1] [set result do integer!]
+<pre>
+parse [1 + 1] [set result do integer!]
+</pre>
 
 Should evaluate the expression "1 + 1" and set the word 'RESULT to the resulting value (2). The PARSE cursor should be advanced after the expression (i.e. to the tail of the block, in this case).
 
-  circle-rule: [
-      'circle 
-          set center do pair!
-          set radius do number! (radius: to-integer radius + 0.5)
-  ]
+<pre>
+circle-rule: [
+    'circle 
+        set center do pair!
+        set radius do number! (radius: to-integer radius + 0.5)
+]
 
-  parse [circle as-pair x y d / 2] circle-rule
+parse [circle as-pair x y d / 2] circle-rule
+</pre>
 
 Should evaluate "as-pair x y" and set 'center to the result, then should evaluate "d / 2" and set 'radius to the result, etc.
 
-  parse [circle 10 20] circle-rule
+<pre>
+parse [circle 10 20] circle-rule
+</pre>
 
 This would fail if DO fails as proposed, but if DO generates errors this would raise an ERROR! like:
 
-  ** Parse Error: Expecting pair!, not 10
-  ** Near: 10 20
+<pre>
+** Parse Error: Expecting pair!, not 10
+** Near: 10 20
+</pre>
 
 (i.e. with the NEAR field reporting the position of the PARSE cursor before the evaluation).
 
-    parse [circle 5x5 7 / 0] circle-rule
-    ** Math Error: Attempt to divide by zero
-    ** Near: 7 / 0
+<pre>
+parse [circle 5x5 7 / 0] circle-rule
+** Math Error: Attempt to divide by zero
+** Near: 7 / 0
+</pre>
 
 ===LIMIT===
 
@@ -1148,12 +1332,16 @@ Importance: Performance for some cases. Useful in cases where a TO or THRU targe
 
 Syntax:
 
-  limit integer! | series!
+<pre>
+limit integer! | series!
+</pre>
 
 Examples:
 
-  limit 1000 to newline
-  limit here thru "test"
+<pre>
+limit 1000 to newline
+limit here thru "test"
+</pre>
 
 Discussion:
 
@@ -1205,75 +1393,79 @@ Here are some examples of the use of multiple proposals to show how they work to
 
 *Make directory tree in place (advanced). This uses [[#USE|USE]], [[#AND|AND]], [[#CHANGE_2|CHANGE 2]], [[#INTO|INTO]], and [[#REVERSE|REVERSE rule]].
 
-  use [r d res] [
-      parse res: read d: %./ r: [
-          use [ds f] [
-              any [
-                  (ds: d)
-                  and [
-                      set f into [to end reverse "/"] (
-                          d: join d f
-                          f: read d
-                      )
-                      change only -1 f
-                  ] into r
-                  (d: ds)
-                  | skip
-              ]
-          ]
-      ]
-      res
-  ]
+<pre>
+use [r d res] [
+    parse res: read d: %./ r: [
+        use [ds f] [
+            any [
+                (ds: d)
+                and [
+                    set f into [to end reverse "/"] (
+                        d: join d f
+                        f: read d
+                    )
+                    change only -1 f
+                ] into r
+                (d: ds)
+                | skip
+            ]
+        ]
+    ]
+    res
+]
+</pre>
 
 *Explained:
 
-  use [r d res] [ ; External words from standard USE statement
-  
-      ; r is the rule, d is the directory, res is the block returned by reading d.
-      parse res: read d: %./ r: [
-          
-          use [ds f] [ ; These words override any outer words.
-              
-              any [
-                  
-              ; Check for directory filename.
-                  (ds: d) ; This maintains a recursive directory stack.
-                  
-                  and [ ; Make the change in look-ahead.
-                      
-                      ; Set f to the filename if it is a directory else fail.
-                      ; You don't need to check for a file! - that's all READ returns.
-                      set f into [to end reverse "/"] ; string parsing
-                      
-                      ; f is a directory filename, so process it.
-                      (
-                          d: join d f ; Add the directory name to the current path.
-                          f: read d   ; Read the directory into a block.
-                      )
-                      ; f is now a block of file! values.
-                      
-                      ; The position has advanced, so we are currently after the directory name.
-                      ; Change the previous value (the directory name) to the block, nested.
-                      change only -1 f
-                  
-                  ] ; Back in the same position as before the AT.
-                  
-                  ; We only get this far if the last rule succeeded and changed the value
-                  ; to a block, so we don't have to check for a block! type value.
-                  
-                  ; Now recurse into the new block.
-                  into r
-                  
-                  (d: ds) ; Pop the directory stack.
-              
-              ; Otherwise backtrack and skip.
-                  | skip
-              
-              ] ; end any
-          
-          ] ; end use
-      
-      ] ; end parse
-      
-      res ; This is the expanded directory block.
-  ]
+<pre>
+use [r d res] [ ; External words from standard USE statement
+
+    ; r is the rule, d is the directory, res is the block returned by reading d.
+    parse res: read d: %./ r: [
+        
+        use [ds f] [ ; These words override any outer words.
+            
+            any [
+                
+            ; Check for directory filename.
+                (ds: d) ; This maintains a recursive directory stack.
+                
+                and [ ; Make the change in look-ahead.
+                    
+                    ; Set f to the filename if it is a directory else fail.
+                    ; You don't need to check for a file! - that's all READ returns.
+                    set f into [to end reverse "/"] ; string parsing
+                    
+                    ; f is a directory filename, so process it.
+                    (
+                        d: join d f ; Add the directory name to the current path.
+                        f: read d   ; Read the directory into a block.
+                    )
+                    ; f is now a block of file! values.
+                    
+                    ; The position has advanced, so we are currently after the directory name.
+                    ; Change the previous value (the directory name) to the block, nested.
+                    change only -1 f
+                
+                ] ; Back in the same position as before the AT.
+                
+                ; We only get this far if the last rule succeeded and changed the value
+                ; to a block, so we don't have to check for a block! type value.
+                
+                ; Now recurse into the new block.
+                into r
+                
+                (d: ds) ; Pop the directory stack.
+            
+            ; Otherwise backtrack and skip.
+                | skip
+            
+            ] ; end any
+        
+        ] ; end use
+    
+    ] ; end parse
+    
+    res ; This is the expanded directory block.
+]
+</pre>

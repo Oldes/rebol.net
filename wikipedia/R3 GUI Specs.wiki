@@ -647,36 +647,42 @@ This is suitable for labelling fields for forms. Labels don't have TAB.
 
 Example:
 
-  name-panel: group 2 [
-    label "ID"
-    id: field record [skip]
-    label "Name"
-    name: field record []
-    label "Address"
-    address: field record [data]
-    label "Post Code"
-    postcode: field record [data]
-    label "Comment"
-    comment: area record [data]
-  ] record [name-table]
+<pre>
+name-panel: group 2 [
+  label "ID"
+  id: field record [skip]
+  label "Name"
+  name: field record []
+  label "Address"
+  address: field record [data]
+  label "Post Code"
+  postcode: field record [data]
+  label "Comment"
+  comment: area record [data]
+] record [name-table]
+</pre>
 
 Minimal example uses only RECORD in outer panel. Fields inside would use that information:
 
-  name-panel: group 2 [
-    name: field
-    address: field
-    post-code: field
-    city: field
-    comment: field
-  ] record [name-table]
+<pre>
+name-panel: group 2 [
+  name: field
+  address: field
+  post-code: field
+  city: field
+  comment: field
+] record [name-table]
+</pre>
 
 Scoping example:
 ﻿
-  data-panel: group 1 [
-    value1: field record [table1] ; would use value 1 in table 1
-    value2: field record [table2] ; would use value 2 in table 2
-    value3: field                 ; would use value 3 in table 3 and would skip on emit
-  ] record [table3 skip]
+<pre>
+data-panel: group 1 [
+  value1: field record [table1] ; would use value 1 in table 1
+  value2: field record [table2] ; would use value 2 in table 2
+  value3: field                 ; would use value 3 in table 3 and would skip on emit
+] record [table3 skip]
+</pre>
 
 # Persistence logic links to database.
 ## Prototype for SQLite:

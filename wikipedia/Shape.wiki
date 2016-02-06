@@ -16,7 +16,6 @@ Draws shapes using the SHAPE sub-dialect
 <br>'''Notes and Examples'''
 <p>For examples of specific SHAPE commands see <u>[[shape|HERE]]</u></p>
 
-
 == ARC== 
 
 Draws an elliptical arc from the current point.
@@ -59,36 +58,42 @@ Draws an elliptical arc from the current point.
 | bgcolor="white" | '''large'''
 |}
 </TD><TD WIDTH=25% VALIGN=MIDDLE>
-   pen yellow
-   line-width 3
-   shape [
-      move 100x200
-      arc 300x200 120 50 0
-   ]
+<pre>
+pen yellow
+line-width 3
+shape [
+   move 100x200
+   arc 300x200 120 50 0
+]
+</pre>
 </TD><TD WIDTH=30% VALIGN=MIDDLE ALIGN=CENTER>
 [[images/SARC-1.png|200px]]
 </TD></TR></TABLE>
 
 <p>Set SWEEP to draw arcs in a "positive-angle" direction:</p>
 <code><pre>
-	pen yellow
-	line-width 3
-	shape [
-		move 100x200
-		arc 300x200 120 50 0 sweep
-	]
+<pre>
+pen yellow
+line-width 3
+shape [
+	move 100x200
+	arc 300x200 120 50 0 sweep
+]
+</pre>
 </pre></code>
 [[images/SARC-2.png|200px]]
 
 <br>
 <p>Set LARGE for arc sweeps greater than 180°:</p>
 <code><pre>
-	pen yellow
-	line-width 3
-	shape [
-		move 100x200
-		arc 300x200 120 50 0 sweep large
-	]
+<pre>
+pen yellow
+line-width 3
+shape [
+	move 100x200
+	arc 300x200 120 50 0 sweep large
+]
+</pre>
 </pre></code>
 [[images/SARC-3.png|ARC example 3]]
 
@@ -96,43 +101,47 @@ Draws an elliptical arc from the current point.
 
 <p>More complex usage of '''arc''':</p>
 <code><pre>
-	pen yellow
-	line-width 3
-	shape [
-		move 0x399
-		line 42x357
-		arc 84x315 25 20 -45 sweep
-		line 126x273
-		arc  168x231 25 40 -45 sweep
-		line 210x189 
-		arc  252x147 25 60 -45 sweep
-		line 294x105 
-		arc  336x63 25 80 -45 sweep
-		line 399x0
-		move 0x0 
-	]
+<pre>
+pen yellow
+line-width 3
+shape [
+	move 0x399
+	line 42x357
+	arc 84x315 25 20 -45 sweep
+	line 126x273
+	arc  168x231 25 40 -45 sweep
+	line 210x189 
+	arc  252x147 25 60 -45 sweep
+	line 294x105 
+	arc  336x63 25 80 -45 sweep
+	line 399x0
+	move 0x0 
+]
+</pre>
 </pre></code>
 [[images/SARC-4.png|ARC example 4]]
 
 <br>
 <p>Same complex example but with relative positioning commands:</p>
 <code><pre>
-	pen red
-	line-width 3
-	translate 0x399
-	shape [
-		move 0x0
-		'line 42x-42 
-		'arc 42x-42 25 20 -45 sweep
-		'line 42x-42 
-		'arc 42x-42 25 40 -45 sweep
-		'line 42x-42 
-		'arc 42x-42 25 60 -45 sweep
-		'line 42x-42 
-		'arc 42x-42 25 80 -45 sweep
-		'line 63x-63
-		move 0x0
-	]
+<pre>
+pen red
+line-width 3
+translate 0x399
+shape [
+	move 0x0
+	'line 42x-42 
+	'arc 42x-42 25 20 -45 sweep
+	'line 42x-42 
+	'arc 42x-42 25 40 -45 sweep
+	'line 42x-42 
+	'arc 42x-42 25 60 -45 sweep
+	'line 42x-42 
+	'arc 42x-42 25 80 -45 sweep
+	'line 63x-63
+	move 0x0
+]
+</pre>
 </pre></code>
 [[images/SARC-5.png|ARC example 5]]
 
@@ -149,34 +158,38 @@ This command has no arguments.
 
 <p>This is without CLOSE commands:</p>
 <code><pre>
-	line-width 3
-	pen yellow
-	shape [
-		move 100x100
-		hline 50
-		arc 100x50 50 50 0 large
-		move 75x75 vline 25 arc 25x75 50 50 0
-		move 0x160
-		line 200x160 200x0 0x0
-	]
+<pre>
+line-width 3
+pen yellow
+shape [
+	move 100x100
+	hline 50
+	arc 100x50 50 50 0 large
+	move 75x75 vline 25 arc 25x75 50 50 0
+	move 0x160
+	line 200x160 200x0 0x0
+]
+</pre>
 </pre></code>
 [[images/CLOSE-1.png|CLOSE example 1]]
 
 <br>	
 <p>And here with CLOSE commands:</p>
 <code><pre>	
-	line-width 3
-	pen yellow
-	shape [
-		move 100x100
-		hline 50
-		arc 100x50 50 50 0 large
-		close
-		move 75x75 vline 25 arc 25x75 50 50 0
-		close
-		move 0x160
-		line 200x160 200x0 0x0
-	]
+<pre>
+line-width 3
+pen yellow
+shape [
+	move 100x100
+	hline 50
+	arc 100x50 50 50 0 large
+	close
+	move 75x75 vline 25 arc 25x75 50 50 0
+	close
+	move 0x160
+	line 200x160 200x0 0x0
+]
+</pre>
 </pre></code>
 [[images/CLOSE-2.png|CLOSE example 2]]
 
@@ -221,28 +234,32 @@ the first control point is the current point.)"</p>
 
 <p>Simple example:</p>
 <code><pre>
-	line-width 3
-	pen yellow
-	shape [
-		move 100x50
-		vline 150
-		curv 300x150 300x50
-		move 0x0
-	]
+<pre>
+line-width 3
+pen yellow
+shape [
+	move 100x50
+	vline 150
+	curv 300x150 300x50
+	move 0x0
+]
+</pre>
 </pre></code>
 [[images/CURV-1.png|CURV example 1]]
 
 <br>	
 <p>Same example but with relative positioning commands:</p>
 <code><pre>	
-	line-width 3
-	pen red
-	shape [
-		'move 100x50
-		'vline 100
-		'curv 200x0 200x-100
-		move 0x0
-	]
+<pre>
+line-width 3
+pen red
+shape [
+	'move 100x50
+	'vline 100
+	'curv 200x0 200x-100
+	move 0x0
+]
+</pre>
 </pre></code>
 [[images/CURV-2.png|CURV example 2]]
 
@@ -288,25 +305,29 @@ Draws a cubic Bézier curve.
 and two control points.</p>
 
 <code><pre>
-	line-width 3
-	pen yellow
-	shape [
-		move 100x50
-		curve 100x150 300x150 300x50
-		move 0x0
-	]
+<pre>
+line-width 3
+pen yellow
+shape [
+	move 100x50
+	curve 100x150 300x150 300x50
+	move 0x0
+]
+</pre>
 </pre></code>
 [[images/SCURVE-1.png|CURVE example 1]]
 
 <br>	
 <p>Same example but with relative positioning commands:</p>
 <code><pre>	
-	line-width 3
-	pen red
-	shape [
-		move 100x50 'curve 0x100 200x100 200x0
-		move 0x0
-	]
+<pre>
+line-width 3
+pen red
+shape [
+	move 100x50 'curve 0x100 200x100 200x0
+	move 0x0
+]
+</pre>
 </pre></code>
 [[images/SCURVE-2.png|CURVE example 2]]
 
@@ -333,12 +354,14 @@ Draws a horizontal line from the current point.
 pen yellow
 line-width 4
 shape [
-    move 100x100
-	hline 300
-    move 100x150
-	hline 250
-    move 100x200
-	hline 200
+<pre>
+move 100x100
+hline 300
+move 100x150
+hline 250
+move 100x200
+hline 200
+</pre>
 ]
 </pre></code>
 [[images/HLINE-1.png|HLINE example 1]]
@@ -349,18 +372,19 @@ shape [
 pen red
 line-width 4
 shape [
-    move 100x100
-	'hline 200
-    'move -200x50
-	'hline 150
-    'move -150x50
-	'hline 100
+<pre>
+move 100x100
+'hline 200
+'move -200x50
+'hline 150
+'move -150x50
+'hline 100
+</pre>
 ]
 </pre></code>
 [[images/HLINE-2.png|HLINE example 2]]
 
 <br>
-
 
 == LINE== 
 
@@ -403,9 +427,11 @@ Draws a line from the current point through the given points,	the last of which 
 pen yellow
 line-width 4
 shape [
-	move 50x50
-	line 300x120 50x120 300x50
-	move 0x0
+<pre>
+move 50x50
+line 300x120 50x120 300x50
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/SLINE-1.png|LINE example 1]]
@@ -416,9 +442,11 @@ shape [
 pen red
 line-width 4
 shape [
-	move 50x50
-	move 50x50 'line 250x70 -250x0 250x-70
-	move 0x0
+<pre>
+move 50x50
+move 50x50 'line 250x70 -250x0 250x-70
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/SLINE-2.png|LINE example 2]]
@@ -452,14 +480,18 @@ from being drawn as a closed polygon.</p>
 line-width 4
 pen red
 shape [
-    move 100x100
-    line 20x20 150x50
-    move 0x0
+<pre>
+move 100x100
+line 20x20 150x50
+move 0x0
+</pre>
 ]
 pen blue
 shape [
-    move 100x200
-    line 20x120 150x150
+<pre>
+move 100x200
+line 20x120 150x150
+</pre>
 ]
 </pre></code>
 [[images/MOVE-1.png|MOVE example 1]]
@@ -470,22 +502,25 @@ shape [
 line-width 4
 pen red
 shape [
-    move 100x100
-    line 20x20 150x50
-    move 0x0
+<pre>
+move 100x100
+line 20x20 150x50
+move 0x0
+</pre>
 ]
 pen blue
 shape [
-    move 100x100
-    'move 0x100
-    'line -80x-80 130x30
-    'move 0x0
+<pre>
+move 100x100
+'move 0x100
+'line -80x-80 130x30
+'move 0x0
+</pre>
 ]
 </pre></code>
 [[images/MOVE-2.png|MOVE example 2]]
 
 <br>
-
 
 == QCURV== 
 
@@ -511,10 +546,12 @@ Smooth '''QCURVE''' command shortcut.
 pen yellow
 line-width 4
 shape [
-	move 0x150
-	qcurve 100x250 200x150
-	qcurv 400x150
-	move 0x0
+<pre>
+move 0x150
+qcurve 100x250 200x150
+qcurv 400x150
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/QCURV-1.png|QCURV example 1]]
@@ -525,10 +562,12 @@ shape [
 pen red
 line-width 4
 shape [
-	move 0x150
-	'qcurve 100x100 200x0
-	'qcurv 200x0
-	move 0x0
+<pre>
+move 0x150
+'qcurve 100x100 200x0
+'qcurv 200x0
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/QCURV-2.png|QCURV example 2]]
@@ -574,9 +613,11 @@ point, and one control point.</p>
 pen yellow
 line-width 4
 shape [
-	move 100x50
-	qcurve 200x150 300x50
-	move 0x0
+<pre>
+move 100x50
+qcurve 200x150 300x50
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/QCURVE-1.png|QCURVE example 1]]
@@ -587,9 +628,11 @@ shape [
 pen red
 line-width 4
 shape [
-	move 100x50
-	'qcurve 100x100 200x0
-	move 0x0
+<pre>
+move 100x50
+'qcurve 100x100 200x0
+move 0x0
+</pre>
 ]
 </pre></code>
 [[images/QCURVE-2.png|QCURVE example 2]]
@@ -617,9 +660,11 @@ Draws a vertical line from the current point.
 pen yellow
 line-width 4
 shape [
-    move 100x100  vline 300
-    move 150x100  vline 250
-    move 200x100  vline 200
+<pre>
+move 100x100  vline 300
+move 150x100  vline 250
+move 200x100  vline 200
+</pre>
 ]
 </pre></code>
 [[images/VLINE-1.png|VLINE example 1]]
@@ -630,15 +675,16 @@ shape [
 pen red
 line-width 4
 shape [
-    move 100x100   'vline 200
-    'move 50x-200  'vline 150
-    'move 50x-150  'vline 100
+<pre>
+move 100x100   'vline 200
+'move 50x-200  'vline 150
+'move 50x-150  'vline 100
+</pre>
 ]
 </pre></code>
 [[images/VLINE-2.png|VLINE example 2]]
 
 <br>
-
 
 
 ----
@@ -656,9 +702,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -677,7 +721,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -690,9 +733,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

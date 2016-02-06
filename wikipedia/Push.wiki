@@ -23,12 +23,14 @@ pen red
 transform 200x200 30 1 1 0x0
 box 100x100 300x300
 push [
-    reset-matrix
-    pen green
-    box 100x100 300x300
-    transform 200x200 60 1 1 0x0
-    pen blue
-    box 100x100 300x300
+<pre>
+reset-matrix
+pen green
+box 100x100 300x300
+transform 200x200 60 1 1 0x0
+pen blue
+box 100x100 300x300
+</pre>
 ]
 box 180x180 220x220
 pen white

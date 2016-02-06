@@ -2,7 +2,6 @@
 
 It would be nice to have a matrix or priority ranking, so we can see what our targets are, and how important each is.
 
-
 See also: [[Marketing_Strategy_Websites]]
 
 ==What is the intended use?==
@@ -14,7 +13,6 @@ While the above link goes to "The Target Market", there is really no target mark
 ==Who is the audience?==
 
 A key question is who we are advocating Rebol to. In order to appeal to an audience, Rebol has to have something to offer. It may be a feature of the language itself, something to do with its licensing or promise of future support, the ability to integrate with another tool or system, or the community surrounding it.
-
 
 ==What do we need in order to advocate Rebol?==
 
@@ -74,7 +72,6 @@ list of URLs where Rebol should not be listed for one reason or another (because
 
 ===Government===
 
-
 ===Commercial application developers===
 
 ====Windows====
@@ -82,7 +79,6 @@ list of URLs where Rebol should not be listed for one reason or another (because
 ====OS X====
 
 ====Linux====
-
 
 ===Programmers coming from other languages===
 
@@ -96,11 +92,13 @@ list of URLs where Rebol should not be listed for one reason or another (because
 
 Lispers talk a lot about building their own languages, which is what Rebol is all about too. Would it make sense to do a Rebol-in-Rebol example, like lisp-in-lisp is sometimes done? Or show them how to make Rebol look like Lisp?
 
-    defun: func ['word 'args [paren!] 'body [paren!]] [
-        set word func to block! args to block! body
-    ]
+<pre>
+defun: func ['word 'args [paren!] 'body [paren!]] [
+    set word func to block! args to block! body
+]
 
-    defun dbl (n) (n * 2)
+defun dbl (n) (n * 2)
+</pre>
 
 ====Logo, Forth, other "specialized" languages====
 
@@ -120,7 +118,6 @@ Lispers talk a lot about building their own languages, which is what Rebol is al
 
 ====Web developers (CGI, HTML, CSS, JS, XML, JSON)====
 
-
 ===Other groups===
 
 ====*nix geeks and admins====
@@ -131,7 +128,6 @@ Lispers talk a lot about building their own languages, which is what Rebol is al
 We should build an exhaustive list of high and low-level questions (with answers, of course) regarding the language which will server to better identify what is different about Rebol and many of its different and fundamental idioms.
 
 Some of these might simply be useful as a historic reference to pointy decisions which had to be taken that might seem odd to newcomers to the language or even as a reminder to experts.
-
 
 ===The language itself===
 
@@ -144,25 +140,19 @@ Q: What are the main features of Rebol?
 *Simplicity in creating GUIs
 *Parsing
 
-
 Q: What other languages inspired Rebol?
-
 
 Q: is Rebol an Object Oriented language?
 
-
 Q: Is Rebol a Functional Language?
 
-
 Q: why doesn't Rebol use parentheses on function calls?
-
 
 Q: Why does Rebol have so many Datatypes?
 
 ===The platform===
 Q: Does Rebol have an official IDE (Integrated Development Environment)?
 No, though it is easily integrated into any modern text Editor which provides most the essential requirements of an IDE like syntax highlighting, script execution, word completion, etc.  Some commercial and open source editors even have a Rebol setup built-in.
-
 
 Q: Does Rebol require me to learn a large framework in order to leverage it full potential?
 
@@ -171,10 +161,8 @@ A: No, though it has a lot of built-in data manipulation functions which are as 
 Rebol/View, the GUI engine, is understandably more structured, but is easy to use without any prior programming skills.
 
 
-
 ===Odds & Ends===
 Q: How Old is Rebol?
-
 
 Q: Who is the lead designer/architect of the language?
 

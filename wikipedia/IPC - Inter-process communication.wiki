@@ -2,7 +2,6 @@
 
 It would be nice to have a matrix or priority ranking, so we can see what our targets are, and how important each is.
 
-
 ==To daemon or not to daemon==
 
 This is the first question. Not because we need to answer it first, but because we need to keep it in mind when answering the other questions. For example, the format of endpoints may be different if they are only for local use versus net use.
@@ -10,7 +9,6 @@ This is the first question. Not because we need to answer it first, but because 
 Should we use a daemon, so there is only one model for IPC on a single machine as well as across the net? Can we still do everything we would want to do on a single machine without a daemon? What problems or challenges does a daemon pose? Can the implementation be such that if the endpoints are local, it can use something like a memory mapped file, and only require the daemon if remote endpoints are used?
 
 See also: [[IPC - Inter-process communication#Threading|Threading]]
-
 
 ==Endpoints==
 
@@ -20,20 +18,21 @@ Can, and should they be standard URLs, with the scheme defining the protocol?
 
 Jabber uses an email format for Jabber IDs. The resource-id identifies specific objects that are associated with a user, such as devices or locations.
 
-    user@domain.com/resource-id
-
+<pre>
+user@domain.com/resource-id
+</pre>
 
 What kind of "processes" are we talking about as endpoints? Is it about communication between R3 tasks (within a single process), about multiple R3 processes on the same machine, R3 processes across a LAN? WAN? Heterogenous processes?
-
 
 ==Messages==
 
 What do messages look like? Can it be any simpler than this?
 
-    [opt header  body]
+<pre>
+[opt header  body]
+</pre>
 
 For interop purposes, how do you map from native Rebol format to JSON, XML, or other formats?
-
 
 ==Interface/API==
 
@@ -46,7 +45,6 @@ What kind of messages do we have?
 **error
 
 Should it work basically like HTTP? RestMS?
-
 
 ==Threading==
 
@@ -64,18 +62,15 @@ Disadvantages:
 *Depending on chosen model and/or target platform, it might be suboptimal performance-wise.
 *Not all IPC models might support this both conceptually and/or programatically.
 
-
 ==Implementation==
 Should this be coded right into the host-kit as a default part of Rebol or as an extension?
 
 If an extension model is used, should it be included by default in the host or loaded at run-time?
 
-
 ==Interop==
 
 *What other systems and mechanisms might we want to interoperate with? 
 *What is the model for translation to and from other formats?
-
 
 ==Other things to consider==
 
@@ -90,7 +85,6 @@ If an extension model is used, should it be included by default in the host or l
 *Monitoring
 *DHT
 *Routing
-
 
 ==References and other models==
 

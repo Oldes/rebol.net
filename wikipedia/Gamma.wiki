@@ -17,7 +17,6 @@ Sets the gamma correction value. Useful for antialiased graphics.
 <p>See also: http://www.poynton.com/notes/Timo/index.html</p>
 
 
-
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=15%>
 Pages
@@ -66,7 +65,6 @@ Pages
 *[[Translate]]
 *[[Triangle]]
 *[[Grad-Pen]]</font></TD>
-
 
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=15%>
 Pages

@@ -13,8 +13,10 @@ The benefit of a vector is the memory it saves. For example, if you need to inde
 
 There are two general formats for making a new vector:
 
-    v1: make vector! 100000
-    v1: make vector! [decimal! 32 100000]
+<pre>
+v1: make vector! 100000
+v1: make vector! [decimal! 32 100000]
+</pre>
 
 The first is a simple shortcut that makes a vector of the default type: 32 bit signed integer of one dimension.
 
@@ -22,11 +24,15 @@ The second format can be used to create a variety of vectors, depending on your 
 
 The general syntax is
 
-    make vector! [sign type bits size]
+<pre>
+make vector! [sign type bits size]
+</pre>
 
 or:
 
-    make vector! [sign type bits [size1 size2 size3 ...]] ; not yet supported
+<pre>
+make vector! [sign type bits [size1 size2 size3 ...]] ; not yet supported
+</pre>
 
 where:
 
@@ -45,23 +51,33 @@ Decimal values can be 32 or 64 bits.
 
 Vector of 1000 signed 16 bit integers:
 
-    make vector! [16 1000]
+<pre>
+make vector! [16 1000]
+</pre>
 
 Vector of 500 signed 64 bit decimals:
 
-    make vector! [decimal! 64 500]
+<pre>
+make vector! [decimal! 64 500]
+</pre>
 
 Vector of 2000 unsigned 32 bit integers:
 
-    make vector! [+ 32 2000]
+<pre>
+make vector! [+ 32 2000]
+</pre>
 
 Vector of 10000 unsigned 8 bit integers:
 
-    make vector! [+ 8 2000]
+<pre>
+make vector! [+ 8 2000]
+</pre>
 
 Two dimensional vector of signed 64 bit integers:
 
-    make vector! [64 [200 1000]]  ; Note: not in current alpha release.
+<pre>
+make vector! [64 [200 1000]]  ; Note: not in current alpha release.
+</pre>
 
 ==Access to Vector Elements==
 
@@ -71,25 +87,33 @@ Just like other series you can access elements of a vector with a path.
 
 So as a simple example, to set and print the first element:
 
-    v: make vector! 100
-    v/0: 1234567
-    print v/0
+<pre>
+v: make vector! 100
+v/0: 1234567
+print v/0
+</pre>
 
 Or, as a 16 bit integer value, it's mostly the same:
 
-    v: make vector! [16 100]
-    v/0: 1234
-    print v/0
+<pre>
+v: make vector! [16 100]
+v/0: 1234
+print v/0
+</pre>
 
 Or, as a 32 bit decimal value:
 
-    v: make vector! [decimal! 32 100]
-    v/0: 123.45
-    print v/0
+<pre>
+v: make vector! [decimal! 32 100]
+v/0: 123.45
+print v/0
+</pre>
 
 ''Note the rounding error that come from the internal floating point math, so be sure to keep that in mind.''
 
 You can also use PICK and POKE functions:
 
-    poke v 9 100
-    print pick v 9
+<pre>
+poke v 9 100
+print pick v 9
+</pre>

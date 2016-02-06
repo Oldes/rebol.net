@@ -29,7 +29,6 @@
 *'''[[How to do things the new Rebol 3 way]] '''
 
 
-
 ----
 
 {{Template:Getting_Started_TOC}}

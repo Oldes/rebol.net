@@ -109,27 +109,33 @@ image logo.gif 100x100 254.254.254 border
 <p>An image used as pattern fill in REPEAT mode. The first two integers are offset of the pattern the next two defines virtual pattern width and height.</p>
 <p>(In this case the logo.gif image has size 100x24 pixels so given the specified virtual pattern width and height it will be rendered in 6 rows and 5 columns.)</p>
 <code><pre>
-	line-width 3
-	pen yellow
-	image logo.gif 100x100 300x300 border repeat 0 0 500 144
+<pre>
+line-width 3
+pen yellow
+image logo.gif 100x100 300x300 border repeat 0 0 500 144
+</pre>
 </pre></code>
 [[images/IMAGE-6.png|IMAGE example 6]]
 
 <br>
 <p>The same pattern fill but with shifted offset.</p>
 <code><pre>
-	line-width 3
-	pen yellow
-	image logo.gif 100x100 300x300 border repeat 50 12 500 144
+<pre>
+line-width 3
+pen yellow
+image logo.gif 100x100 300x300 border repeat 50 12 500 144
+</pre>
 </pre></code>
 [[images/IMAGE-7.png|IMAGE example 7]]
 
 <br>
 <p>The same pattern fill but in REFLECT mode.</p>
 <code><pre>
-	line-width 3
-	pen yellow
-	image logo.gif 100x100 300x300 border reflect 0 0 500 144
+<pre>
+line-width 3
+pen yellow
+image logo.gif 100x100 300x300 border reflect 0 0 500 144
+</pre>
 </pre></code>
 [[images/IMAGE-8.png|IMAGE example 8]]
 

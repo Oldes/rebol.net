@@ -88,7 +88,9 @@
 |- 
 | [[Words modulo|modulo]] 
 | Wrapper for MOD that handles errors like REMAINDER. Negligible
-		values (compared to A and B) are rounded to zero. 
+<pre>
+values (compared to A and B) are rounded to zero.
+</pre>
 |- 
 | [[Words multiply|multiply]] 
 | Returns the first value multiplied by the second. 

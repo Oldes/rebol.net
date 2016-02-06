@@ -5,12 +5,9 @@ SKIP is an action value.
 : '''series''' -- (Type: series port)
 : '''offset''' -- Can be positive, negative, or zero. (Type: number logic pair)
 
-
 ==== Description ==== 
 
-
 For example, SKIP series 1 is the same as NEXT. If skip attempts to move beyond the head or tail it will be stopped at the head or tail.
-
 
 <code><pre>
 str: "Rebol"
@@ -20,25 +17,19 @@ blk: [11 22 33 44 55]
 print skip blk 3
 </pre></code>
 
-
 ==== Categories ==== 
-
 
 [[Categories series|series]] � Operations on series, including blocks and strings.<br>
 [[Categories string|string]] � Operations for string series.<br>
 
-
 ==== See also ==== 
-
 
 [[Words at|at]] � Returns the series at the specified index.<br>
 [[Words index?|index?]] � Returns the index number of the current position in the series.<br>
 [[Words next|next]] � Returns the series at its next position.<br>
 [[Words back|back]] � Returns the series at its previous position.<br>
 
-
 ==== Comments ==== 
-
 
 <blockquote>
 {|

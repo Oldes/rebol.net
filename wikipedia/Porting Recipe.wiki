@@ -317,43 +317,57 @@ Ways to call make:
 
 Builds R3.
 
- make build
+<pre>
+make build
+</pre>
 
 ===rebuild===
 
 Creates necessary Rebol script(s) and builds R3.
 
- make rebuild
+<pre>
+make rebuild
+</pre>
 
 ===clean===
 
 Removes object files and rebuild.
 
- make clean
+<pre>
+make clean
+</pre>
 
 ===prep===
 
 Prepare building process by creating necessary Rebol script(s).
 
- make prep
+<pre>
+make prep
+</pre>
 
 ===make===
 
 Creates the makefile and perform a clean build.
 
- make make
+<pre>
+make make
+</pre>
 
 ===all===
 
 Cleans object files directory, copies dll and builds R3.
 
- make all
+<pre>
+make all
+</pre>
 
 ===getlib===
 
 Copies dll.
 
- make getlib
+<pre>
+make getlib
+</pre>
 
 ==Cookbook References==
 

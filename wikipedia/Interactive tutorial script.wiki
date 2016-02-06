@@ -28,7 +28,9 @@ The window above with the blinking cursor is a Rebol prompt. Type a line of Rebo
 
 Let's start with something cool: <tt>pick ["apple" "banana" "orange"] 2</tt>
 
- == "banana"
+<pre>
+== "banana"
+</pre>
 
 = The Series Concept =
 
@@ -40,7 +42,9 @@ Every Rebol operation has a fixed idea about how many arguments they take. We sa
 
 Try this: <tt>third ["apple" "banana" "orange"]</tt>
 
- == "orange"
+<pre>
+== "orange"
+</pre>
 
 = ...ah, Shorthand! =
 
@@ -54,7 +58,9 @@ The more "human" style is not as common in programming languages as the "explici
 
 Try this: <tt>pick third ["apple" "banana" "orange"] 2</tt>
 
- == #"r" 
+<pre>
+== #"r"
+</pre>
 
 = A Processing Pipeline =
 
@@ -66,7 +72,9 @@ Notice the interesting fact that pick can choose letters out of strings as easil
 
 Can you guess the output of <tt>third pick ["apple" "banana" "orange"] 2</tt> ?
 
- == #"n"
+<pre>
+== #"n"
+</pre>
 
 = A Niftier Notation for {Strings} =
 
@@ -76,7 +84,9 @@ Having a different character to start a string from what ends a string is very u
 
 Give this a try: <tt>print {It's "rad" to use {braces}...}</tt>
 
- It's "rad" to use {braces}...
+<pre>
+It's "rad" to use {braces}...
+</pre>
 
 = Word Word Word, Word is the ''Word'' =
 
@@ -86,7 +96,9 @@ An even more surprising notion is that you'll often find yourself not using deli
 
 So far you've seen the words <tt>pick</tt>, <tt>first</tt>, and <tt>third</tt>.  They acted like functions, but now let's see them do a new trick.  Try: <tt>pick [first pick third] 2</tt>
 
- == pick
+<pre>
+== pick
+</pre>
 
 = The Use/Mention Distinction =
 
@@ -96,9 +108,11 @@ But what if you want to execute a block as Rebol code?  That's where the <tt>do<
 
 What happens when you try it on the block above? <tt>do [first pick third]</tt>
 
- ** Script error: third is missing its value argument
- ** Where: do
- ** Near: do [pick first third]
+<pre>
+** Script error: third is missing its value argument
+** Where: do
+** Near: do [pick first third]
+</pre>
 
 = Context Is Key =
 
@@ -108,7 +122,9 @@ This might excite you.  This might frighten you.  Or if you know LISP, it might 
 
 For the tip of the iceberg, try <tt>parse "aaa" [3 "a" end]</tt>
 
- == true
+<pre>
+== true
+</pre>
 
 = The Parse Dialect =
 
@@ -120,7 +136,9 @@ Our rules in this case were [3 "a" end].  Though Rebol's <tt>do</tt> doesn't rea
 
 Now let's meet another Rebol concept: <tt>compose [print (reverse "lobeR")]</tt>
 
- == [print "Rebol"]
+<pre>
+== [print "Rebol"]
+</pre>
 
 = Dialects Leverage the Interpreter =
 
@@ -130,7 +148,9 @@ Though not as "wild" as <tt>parse</tt>, it does show that not every dialect need
 
 But now that you've seen creative uses of integers in a dialect and parentheses used for something other than precedence, it's time for the dark side.  Brace yourself: <tt>1 + 2 * 3</tt>
 
- == 9
+<pre>
+== 9
+</pre>
 
 = No Operator Precedence = 
 
@@ -140,8 +160,10 @@ So if you want precedence in the <i>DO dialect</i>, you'll need to use parenthes
 
 Try this: <tt>print "one" "two" 1 + 2</tt>
 
- one
- == 3
+<pre>
+one
+== 3
+</pre>
 
 = If It's Not In Brackets, It Runs =
 
@@ -151,7 +173,9 @@ When it was finished with that, the interpreter found "two"... a string which ev
 
 Now that you know, try this: <tt>if (1 > 2) [print "bad"] [print "good"]</tt>
 
- == [print "good"]
+<pre>
+== [print "good"]
+</pre>
 
 =If Never takes an "Else" Block! =
 
@@ -161,7 +185,9 @@ Here the <tt>if</tt> clause consumed the expression and the first block, and did
 
 To get what the author of that probably intended, try: <tt>either (1 > 2) [print "bad"] [print "good"]</tt>
 
- "good"
+<pre>
+"good"
+</pre>
 
 = A Language Without Keywords =
 

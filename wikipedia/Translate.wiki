@@ -44,7 +44,6 @@ translate 50x50 fill-pen yellow box 100x100 300x300
 <br>
 <p>See also: http://www.w3.org/TR/SVG/coords.html#EstablishingANewUserSpace</p>
 
-
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 Pages
@@ -60,9 +59,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -81,7 +78,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -94,9 +90,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

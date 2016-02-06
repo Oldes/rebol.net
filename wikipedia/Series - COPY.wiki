@@ -9,14 +9,11 @@ COPY is an action value.
 :: '''range''' -- (Type: number series port pair)
 : '''/deep''' -- Also copies series values within the block. 
 
-
 ==== Description ==== 
-
 
 Be sure to use COPY on any string or block literal values in your code if you expect to modify them.
 
 For series, the /PART refinement will copy a given number of values (specified as either a count or as an ending series position).
-
 
 <code><pre>
 str: copy "with all things considered"
@@ -29,16 +26,12 @@ insert next strings "time"
 print strings
 </pre></code>
 
-
 ==== Categories ==== 
-
 
 [[Categories series|series]] � Operations on series, including blocks and strings.<br>
 [[Categories string|string]] � Operations for string series.<br>
 
-
 ==== See also ==== 
-
 
 [[Words change|change]] � Changes a value in a series and returns the series after the change.<br>
 [[Words clear|clear]] � Removes all values from the current index to the tail. Returns at tail.<br>
@@ -46,9 +39,7 @@ print strings
 [[Words make|make]] � Constructs and returns a new value.<br>
 [[Words remove|remove]] � Removes value(s) from a series and returns after the remove.<br>
 
-
 ==== Comments ==== 
-
 
 <blockquote>
 {|

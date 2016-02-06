@@ -34,9 +34,11 @@ This is a consideration in general to think about in terms of Rebol's image.  It
 
 Other languages have taken a strong stand on not being capitalized and seeming like an "acronym name".  For instance, the main [http://www.cs.auckland.ac.nz/references/ruby/doc_bundle/FAQ/FAQ.html FAQ] that ships with Ruby even says:
 
- Officially, the language is called ``Ruby''. On most systems, it is invoked using the command ``ruby''. It's OK to use ruby instead of Ruby.
- Please don't use RUBY as the language name.
- Originally, or historically, it was called ``ruby''.
+<pre>
+Officially, the language is called ``Ruby''. On most systems, it is invoked using the command ``ruby''. It's OK to use ruby instead of Ruby.
+Please don't use RUBY as the language name.
+Originally, or historically, it was called ``ruby''.
+</pre>
 
 Note that Ruby was never an acronym, while Rebol always has been, so that position makes sense for Ruby. The '''only''' reason that acronym-style language names seem archaic now is that most of the popular programming languages that have been created recently have names (like Java, Python, Ruby or Perl) rather than acronyms (like PHP) or random characters (like C#). Fork's proposal is that the acronym Rebol be changed to the name Rebol.
 

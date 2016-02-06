@@ -18,42 +18,46 @@ Sets a coordinate system skewed from the original by the given number of degrees
 the left.</p>
 <p>Note: Currently the skewing transformation has effect on the line width in case '''fixed''' is not specified</p> 
 <code><pre>
-	line-width 1 fixed
-	pen white
+<pre>
+line-width 1 fixed
+pen white
 
-	fill-pen blue
-	box 120x20 220x120
-	
-	skew 15
-	fill-pen red
-	box 120x125 220x225
+fill-pen blue
+box 120x20 220x120
 
-	reset-matrix
+skew 15
+fill-pen red
+box 120x125 220x225
 
-	skew -15
-	fill-pen yellow
-	box 120x230 220x330
+reset-matrix
+
+skew -15
+fill-pen yellow
+box 120x230 220x330
+</pre>
 </pre></code>
 [[images/SKEW-1.png|SKEW example 1]]
 
 <br>
 <p>Another way to reset the skew is to use the PUSH command:</p>
 <code><pre>
-	line-width 1 fixed
-	pen white
+<pre>
+line-width 1 fixed
+pen white
 
-	fill-pen blue
-	box 120x20 220x120
+fill-pen blue
+box 120x20 220x120
 
-	push [	
-		skew 15
-		fill-pen red
-		box 120x125 220x225
-	]
+push [	
+	skew 15
+	fill-pen red
+	box 120x125 220x225
+]
 
-	skew -15
-	fill-pen yellow
-	box 120x230 220x330
+skew -15
+fill-pen yellow
+box 120x230 220x330
+</pre>
 </pre></code>
 [[images/SKEW-2.png|SKEW example 2]]
 

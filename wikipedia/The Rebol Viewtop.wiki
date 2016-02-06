@@ -12,7 +12,6 @@ This first viewtop skin illustrated below is an incomplete work, a bad hack at b
 
 [[images/Screen.png|No Description]]
 
-
 This viewtop includes major services like the Cheyenne web server and the Altme messaging application. 
 
 From the top bar one may currently set preferences, change to the console mode, and open the editor.  A provision for the Cheyenne web server and Altme have also been made but as yet are not functional.  Both Cheyenne and Altme can be opened from the list of scripts and applications in the main body of the layout.
@@ -29,12 +28,12 @@ Changes to the original script include:
 
 5.  The earth image used instead is from NASA, a USA government image.
 
- 
 
 
 The script for the illustrated viewtop will be presented here in the near future.  
- ********************************************************************************************
-
+<pre>
+********************************************************************************************
+</pre>
 
 
 The version of Rebol that includes GUI libraries has been historically called "Rebol/View".  Included in the distribution is a function called <tt>viewtop</tt>, which starts a simple browser application that lets you run sample Rebol programs from some trusted network locations.

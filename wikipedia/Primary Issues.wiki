@@ -12,16 +12,20 @@ Post your comments in the discussion section of this page.
 
 We need a complete definition of args specs soon, including their side effects and ranges. The full meaning of this line should be defined:
 
-    a-func: func [arg1 'arg1 :arg1 arg1:]
+<pre>
+a-func: func [arg1 'arg1 :arg1 arg1:]
+</pre>
 
 Definition includes what happens in cases such as: no arg (end of input case), no word (non-word value given), or non value (word has no context).
 
 In addition, there are combinations, such as if I use the function above in these ways:
 
-    a-func :w :w :w
-    a-func 'w 'w 'w
-    a-func (x) (x) (x)
-    a-func p/w p/w p/w
+<pre>
+a-func :w :w :w
+a-func 'w 'w 'w
+a-func (x) (x) (x)
+a-func p/w p/w p/w
+</pre>
 
 And there are no doubt other cases.
 

@@ -23,5 +23,4 @@
 **[[Datatype string conversion table]] - draft
 **[[Datatype conversion matrix]] - draft
 
-
 '''[[Typesets]], Sets Of Datatypes'''

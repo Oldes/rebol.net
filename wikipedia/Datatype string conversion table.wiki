@@ -107,31 +107,41 @@
 <tr> 
 <th> error! </th> 
 <td> ** User error: ""
- </td> 
+<pre>
+</td>
+</pre>
 <td> ** User error: ""
- </td> 
+<pre>
+</td>
+</pre>
 <td> make error! [
-    code: 800
-    type: 'User
-    id: 'message
-    arg1: ""
-    arg2: none
-    arg3: none
-    near: none
-    where: none
+<pre>
+code: 800
+type: 'User
+id: 'message
+arg1: ""
+arg2: none
+arg3: none
+near: none
+where: none
+</pre>
 ] </td> 
 <td> #[error! [
-    code: 800
-    type: User
-    id: message
-    arg1: ""
-    arg2: #[none]
-    arg3: #[none]
-    near: #[none]
-    where: #[none]
+<pre>
+code: 800
+type: User
+id: message
+arg1: ""
+arg2: #[none]
+arg3: #[none]
+near: #[none]
+where: #[none]
+</pre>
 ]] </td> 
 <td> ** User error: ""
- </td> 
+<pre>
+</td>
+</pre>
 </tr> 
 <tr> 
 <th> event! </th> 
@@ -298,19 +308,29 @@
 <tr> 
 <th> object! </th> 
 <td> a: none
-    b: none </td> 
+<pre>
+b: none </td>
+</pre>
 <td>a: none
-    b: none </td> 
+<pre>
+b: none </td>
+</pre>
 <td> make object! [
-    a: none
-    b: none
+<pre>
+a: none
+b: none
+</pre>
 ] </td> 
 <td> #[object! [
-    a: none
-    b: none
+<pre>
+a: none
+b: none
+</pre>
 ]] </td> 
 <td> a: none
-    b: none </td> 
+<pre>
+b: none </td>
+</pre>
 </tr> 
 <tr> 
 <th> op! </th> 

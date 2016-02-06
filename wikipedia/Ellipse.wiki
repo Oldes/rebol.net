@@ -32,7 +32,6 @@ ellipse 175x250 200x100
 
 <br>
 
-
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 Pages
@@ -48,9 +47,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -69,7 +66,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -82,9 +78,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
