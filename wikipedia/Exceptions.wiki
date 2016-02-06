@@ -301,7 +301,8 @@ catch: func [
     ; create a new function to have a new definitional RETURN available
     ; use the new definitional RETURN as THROW in the BODY
     do func [] [do foreach throw reduce [:return] reduce [body]]
-]</pre>	
+]
+</pre>	
 
 Notice, how the definitional '''return''' of the new function defined in '''catch''' is used as definitional '''throw''' in the body.
 
@@ -324,7 +325,8 @@ Disadvantages (mostly to all uses of '''throw/'''name at the moment):
 
 Here's an unspoofable '''quit/'''now replacement implemented using dynamic '''throw/'''name with [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] and [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744] fixed:
 
-<pre>use [name] [ ; Local 'name makes it unspoofable
+<pre>
+use [name] [ ; Local 'name makes it unspoofable
     quit-now: func [retcode] [throw/name retcode 'name]
     catch-quit-now: func [body [block! file! url!]] [quit/return catch/name [return do body] 'name]
 ]

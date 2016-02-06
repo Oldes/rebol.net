@@ -524,7 +524,8 @@ catch: func [
     ; create a new function to have a new definitional RETURN available
     ; use the new definitional RETURN as THROW in the BODY
     do does [let 'throw :return body]
-]</pre>	
+]
+</pre>	
 
 Notice, how the definitional return of the anonymous function is used as definitional throw.
 
@@ -536,7 +537,8 @@ This is not as perfect as the above definitional mezzanine '''catch'''/'''throw'
 
 This version binds the given BLOCK just once, not at the start of every loop:
 
-<pre>c-aware: func [
+<pre>
+c-aware: func [
     {make a block definitional mezzanine CONTINUE-aware}
     block [block!]
     /local do-block do-block-body
@@ -781,7 +783,8 @@ catch: func [
     ; create a new function to have a new definitional RETURN available
     ; use the new definitional RETURN as THROW in the BODY
     do does [let 'throw :return body]
-]</pre>	
+]
+</pre>	
 
 Notice, how the definitional return of the anonymous function is used as definitional throw.
 
@@ -793,7 +796,8 @@ This is not as perfect as the above definitional mezzanine '''catch'''/'''throw'
 
 This version binds the given BLOCK just once, not at the start of every loop:
 
-<pre>c-aware: func [
+<pre>
+c-aware: func [
     {make a block definitional mezzanine CONTINUE-aware}
     block [block!]
     return:

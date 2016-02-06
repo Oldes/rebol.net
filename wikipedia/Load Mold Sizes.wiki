@@ -89,7 +89,7 @@ Here is a tested example that computes the LM sizes for an application that cons
 The results are:
 
 <pre>
-    LM: 48.3
-    LMF: 32.1
-    LMFC: 11.0
+LM: 48.3
+LMF: 32.1
+LMFC: 11.0
 </pre>

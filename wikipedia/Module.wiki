@@ -247,12 +247,12 @@ In general, modules do not allow mixing of contexts. For example, if you use the
 For example:
 
 <pre>
-   x: 10
+x: 10
 
-   mod: module [] [show: does [print x]]
+mod: module [] [show: does [print x]]
 
-   mod/show
-   ** Script error: x has no value
+mod/show
+** Script error: x has no value
 </pre>
 
 This default behavior is intentional to prevent accidental usage of variables and values that are not within the scope of the module. This is a feature, not a bug.
