@@ -10,7 +10,7 @@ The most common function type is '''function!''', and they are created with code
 add2: func [a b] [a + b]
 </pre>
 
-These functions are efficient and work well for most code. But note, the variables (`a` and `b`) of the function are valid only within the body of the function. If you try to use those variables outside of the function, the results may be problematic.
+These functions are efficient and work well for most code. But note, the variables (A and B) of the function are valid only within the body of the function. If you try to use those variables outside of the function, the results may be problematic.
 
 For example, this case returns a block that contains the variables. If after the function returns, you try to access (in this case DO) the variables, you get into trouble:
 
