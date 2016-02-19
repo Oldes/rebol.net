@@ -8,22 +8,22 @@ This article:
 
 ==Mathematical model of Rebol series==
 
-'''Definition:''' we say that a mathematical function <code>S</code> is a ''Rebol series'' if:
+'''Definition:''' we say that a mathematical object <code>S</code> is a ''Rebol series'' if:
 
 <pre>
-S datatype
+datatype S
 </pre>
 
 is one of the series! datatypes
 
 <pre>
-S displacement
+displacement S
 </pre>
 
 is an integer value
 
 <pre>
-S payload
+payload S
 </pre>
 
 is a payload.
@@ -33,7 +33,7 @@ Series! datatypes are: string!, binary!, block!, ...
 '''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>
 
 <pre>
-D t size
+size D t
 </pre>
 
 is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>
