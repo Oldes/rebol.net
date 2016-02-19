@@ -309,7 +309,7 @@ mold/all s ; == "#[block! [a] 2]"
 
 * As discussed below, this provision is not usable for past-tail series meaning that for past-tail series a different (incompatible and therefore inconsistent with this) provision should take place.
 
-* As noted above this provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
+* As noted above, this provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
 
 ======Usability limitations======
 
