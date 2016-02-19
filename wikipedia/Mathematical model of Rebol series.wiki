@@ -30,16 +30,22 @@ is a payload.
 
 Series! datatypes are: string!, binary!, block!, ...
 
-'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>
+'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code> the value
+
+<pre>
+D t
+</pre>
+
+is a state of the payload at the time <code>t</code>. In addition to that, every payload state has a size, i.e.,
 
 <pre>
 size D t
 </pre>
 
-is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>
+is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>, and it is a function assigning a Rebol value to every integer index <code>i</code>, i.e.,
 
 <pre>
-D t i
+do D t i
 </pre>
 
 is a Rebol value.
