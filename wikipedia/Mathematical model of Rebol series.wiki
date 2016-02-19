@@ -60,7 +60,7 @@ The <code>at-head?</code> function is a function accepting a Rebol series <code>
 (at-head? S) = #[true]
 </pre>
 
-, if <code>(S displacement) = 0</code>
+, if <code>(displacement S) = 0</code>
 
 <pre>
 (at-head? S) = #[false]
