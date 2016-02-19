@@ -125,13 +125,13 @@ The <code>at-tail?</code> function is a function accepting a Rebol series <code>
 (at-tail? S) = #[true]
 </pre>
 
-, if <code>(displacement S) = (do payload S t size)</code>
+, if <code>(displacement S) = (size do payload S t)</code>
 
 <pre>
 (at-tail? S) = #[false]
 </pre>
 
-, if <code>(displacement S) <> (do payload S t size)</code>
+, if <code>(displacement S) <> (size do payload S t)</code>
 
 This function does not exist in the current interpreter. It can be defined as a mezzanine:
 
