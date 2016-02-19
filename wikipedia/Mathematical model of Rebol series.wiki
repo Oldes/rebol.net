@@ -152,7 +152,7 @@ The <code>tail</code> function is a function accepting a Rebol series <code>S</c
 
 <pre>
 (datatype T)     = (datatype S)
-(displacement T) = (do payload S t size)
+(displacement T) = (size do payload S t)
 (payload T)      = (payload S)
 </pre>
 
@@ -166,13 +166,13 @@ The <code>past-tail?</code> function is a function accepting a Rebol series <cod
 (past-tail? S) = #[true]
 </pre>
 
-, if <code>(displacement S) > (do payload S t size)</code>
+, if <code>(displacement S) > (size do payload S t)</code>
 
 <pre>
 (past-tail? S) = #[false]
 </pre>
 
-, if <code>(displacement S) <= (do payload S t size)</code>
+, if <code>(displacement S) <= (size do payload S t)</code>
 
 This function does not exist in the current interpreter, while the interpreter can construct such series as this example demonstrates:
 
@@ -201,7 +201,7 @@ The <code>in-bounds?</code> function is a function accepting a Rebol series <cod
 (in-bounds? S) = #[true]
 </pre>
 
-, if <code>((displacement S) >= 0) and ((displacement S) <= (do payload S t size))</code>
+, if <code>((displacement S) >= 0) and ((displacement S) <= (size do payload S t))</code>
 
 <pre>
 (in-bounds? S) = #[false]
@@ -262,7 +262,7 @@ constrain: func [
 The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series.
 
 <pre>
-(length-of S) = (max 0 (do payload S t size) - (max 0 displacement S))
+(length-of S) = (max 0 (size do payload S t) - (max 0 displacement S))
 </pre>
 
 The <code>length?</code> function in the <code>rebol/version == 2.7.8.3.1</code> interpreter does not work like that as this test demonstrates:
@@ -544,7 +544,7 @@ head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [
 The <code>curr</code> function is a function accepting a Rebol series <code>S</code> and returning the Rebol value at its current position.
 
 <pre>
-(curr S) = (do S payload t S displacement)
+(curr S) = (do payload S t displacement S)
 </pre>
 
 , if <code>in-bounds? S</code>
