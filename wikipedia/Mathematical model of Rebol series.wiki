@@ -66,7 +66,7 @@ The <code>at-head?</code> function is a function accepting a Rebol series <code>
 (at-head? S) = #[false]
 </pre>
 
-, if <code>(S displacement) <> 0</code>
+, if <code>(displacement S) <> 0</code>
 
 Tests suggest that this model matches the <code>head?</code> function defined in the <code>rebol/version == 2.7.8.3.1</code> interpreter. The <code>at-head?</code> name has been chosen just for compatibility with the function naming convention in the subsequent cases.
 
