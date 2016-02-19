@@ -92,13 +92,13 @@ The <code>pre-head?</code> function is a function accepting a Rebol series <code
 (pre-head? S) = #[true]
 </pre>
 
-, if <code>S displacement</code> is negative
+, if <code>displacement S</code> is negative
 
 <pre>
 (pre-head? S) = #[false]
 </pre>
 
-, if <code>S displacement</code> is nonnegative
+, if <code>displacement S</code> is nonnegative
 
 This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct such series, as this example demonstrates:
 
@@ -125,13 +125,13 @@ The <code>at-tail?</code> function is a function accepting a Rebol series <code>
 (at-tail? S) = #[true]
 </pre>
 
-, if <code>(S displacement) = (do S payload t size)</code>
+, if <code>(displacement S) = (do payload S t size)</code>
 
 <pre>
 (at-tail? S) = #[false]
 </pre>
 
-, if <code>(S displacement) <> (do S payload t size)</code>
+, if <code>(displacement S) <> (do payload S t size)</code>
 
 This function does not exist in the current interpreter. It can be defined as a mezzanine:
 
@@ -151,9 +151,9 @@ The <code>tail</code> function is a function accepting a Rebol series <code>S</c
 <code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
 
 <pre>
-(T datatype)     = (S datatype)
-(T displacement) = (do S payload t size)
-(T payload)      = (S payload)
+(datatype T)     = (datatype S)
+(displacement T) = (do payload S t size)
+(payload T)      = (payload S)
 </pre>
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
@@ -166,13 +166,13 @@ The <code>past-tail?</code> function is a function accepting a Rebol series <cod
 (past-tail? S) = #[true]
 </pre>
 
-, if <code>(S displacement) > (do S payload t size)</code>
+, if <code>(displacement S) > (do payload S t size)</code>
 
 <pre>
 (past-tail? S) = #[false]
 </pre>
 
-, if <code>(S displacement) <= (do S payload t size)</code>
+, if <code>(displacement S) <= (do payload S t size)</code>
 
 This function does not exist in the current interpreter, while the interpreter can construct such series as this example demonstrates:
 
@@ -201,7 +201,7 @@ The <code>in-bounds?</code> function is a function accepting a Rebol series <cod
 (in-bounds? S) = #[true]
 </pre>
 
-, if <code>((S displacement) >= 0) and ((S displacement) <= (do S payload t size))</code>
+, if <code>((displacement S) >= 0) and ((displacement S) <= (do payload S t size))</code>
 
 <pre>
 (in-bounds? S) = #[false]
@@ -262,7 +262,7 @@ constrain: func [
 The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series.
 
 <pre>
-(length-of S) = (max 0 (do S payload t size) - (max 0 S displacement))
+(length-of S) = (max 0 (do payload S t size) - (max 0 displacement S))
 </pre>
 
 The <code>length?</code> function in the <code>rebol/version == 2.7.8.3.1</code> interpreter does not work like that as this test demonstrates:
@@ -375,7 +375,7 @@ This includes:
 "Returns TRUE if a series is at its tail."
 </pre>
 
-However, the the actual behaviour is:
+However, the actual behaviour is:
 
 <pre>
 s: skip  [a b c d] 3
