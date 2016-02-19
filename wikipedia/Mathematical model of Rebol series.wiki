@@ -422,7 +422,7 @@ Just the incorrect behaviour of the <code>index?</code> function has been correc
 * Stop calling past-tail series "Illegal series" (this is the easiest part of the proposal).
 * Define the simple functions described above (quite easy as well).
 * Amend the <code>load</code> function to yield the specified result when handling the "#[block! [a] 4]" source string.
-* Amend the <code>mold</code> function to not trigger an error when handling past-tail series. An expression like <code>mold #[block! [a] 4]</code> can yield "[a]".
+* Amend the <code>mold</code> function to not trigger an error when handling past-tail series.
 * Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
 * Define new <code>next-any</code> function going to the next position even when it is a past-tail position.
 * Define the <code>skip-any</code> function so that it goes to the specified position even if it is a past-tail position.
