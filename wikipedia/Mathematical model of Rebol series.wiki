@@ -444,13 +444,9 @@ Before discussing indexing, let's take a "philosophical detour"
 
 ====Does 0 "exist"?====
 
-Some opponents of 0 state: "0 does not even exist, it should not be allowed as an index, then"
+Some opponents of using 0 as an index state: "0 does not even exist, it should not be allowed as an index, then"
 
-It is fair to admit that the question whether 0 "exists" may indeed be resolved by stating that it actually does not "exist". However, that does not mean the opponents of 0 could start to celebrate. The situation is the same as with the number 1, e.g. Does 1 "exist"? Not "much", we cannot find it in the real world any easier than we can find 0. Note that many Greek mathematicians did not consider 1 to be "a number", so to them 2 was "the smallest number" (they used the term "multitude" and it is easy to see why they considered inappropriate to call 1 "multitude").
-
-It suffices to say that 1 is not something that "exists" in the common sense of the word, it is just an abstract notion invented by clever people to point to the common property of a hand containing one apple, a letter consisting of one page, a room in which one man is sitting, a net containing just one fish, a purse containing just one coin, etc.
-
-In a similar sense 0 is an abstract notion pointing to the common property of a hand containing no apple, an empty envelope, a room in which nobody is sitting, a net containing no fish, an empty purse, etc.
+Agreed, it is a matter of definition whether 0 is considered an integer or not. Moreover, no definition can be considered "wrong", exactly because it is a definition, not a proposition. Nevertheless, some definitions turn out to be more useful than others, and that is what we can observe here after a close inspection.
 
 ====Does Rebol have 1-based indexing?====
 
