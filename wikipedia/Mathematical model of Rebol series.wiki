@@ -195,7 +195,7 @@ past-tail?: func [
 
 ===The <code>in-bounds?</code> function===
 
-The <code>in-bounds?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determinig whether the position of the series is in bounds, i.e., neither pre-head nor past-tail.
+The <code>in-bounds?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the position of the series is in bounds, i.e., neither pre-head nor past-tail.
 
 <pre>
 (in-bounds? S) = #[true]
