@@ -77,9 +77,9 @@ The <code>head</code> function is a function accepting a Rebol series <code>S</c
 <code>T</code> is a Rebol series having the same datatype as <code>S</code>, displacement 0 and the same payload as <code>S</code>, i.e.,
 
 <pre>
-(T datatype)     = (S datatype)
-(T displacement) = 0
-(T payload)      = (S payload)
+(datatype T)     = (datatype S)
+(displacement T) = 0
+(payload T)      = (payload S)
 </pre>
 
 Tests suggest that this model of the <code>head</code> function is implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
