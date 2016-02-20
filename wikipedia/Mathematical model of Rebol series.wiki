@@ -41,13 +41,13 @@ is a payload state at the time <code>t</code>. This means that payloads depend o
 '''Definition:''' we say that a mathematical function D(t) is a payload state if
 
 <pre>
-D(t)(size)
+D(t)('size)
 </pre>
 
 is a nonnegative 32-bit signed integer value, i.e., if
 
 <pre>
-0 <= D(t)(size) <= 2147483647
+0 <= D(t)('size) <= 2147483647
 </pre>
 
 and for every integer value <code>i</code> such that <code>0 <= i < D(t)('size)</code>, <code>D(t)(i)</code> is a Rebol value.
