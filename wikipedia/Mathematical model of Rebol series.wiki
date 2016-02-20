@@ -8,120 +8,126 @@ This article:
 
 ==Mathematical model of Rebol series==
 
-'''Definition:''' we say that a mathematical object <code>S</code> is a ''Rebol series'' if:
+'''Definition:''' we say that a mathematical function <code>S</code> is a ''Rebol series'' if:
 
 <pre>
-datatype S
+S('datatype)
 </pre>
 
-is one of the series! datatypes
+is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
 
 <pre>
-displacement S
+S('displacement)
 </pre>
 
-is an integer value
+is a 32-bit signed integer, i.e., an integer value such that -2147483648 <= displacement <= 2147483647, and
 
 <pre>
-payload S
+S('payload)
 </pre>
 
 is a payload.
 
-Series! datatypes are: string!, binary!, block!, ...
-
-'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code> the value
+'''Definition:''' we say that mathematical function <code>D</code> is a series ''payload'' if for every executionTime <code>t</code> the value
 
 <pre>
-D t
+D(t)
 </pre>
 
-is a state of the payload at the time <code>t</code>. In addition to that, every payload state has a size, i.e.,
+is a payload state at the time <code>t</code>. This means that payloads depend on execution time, i.e., they change in time.
+
+'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
+
+'''Definition''' we say that a mathematical function D(t) is a payload state if
 
 <pre>
-size D t
+D(t)(size)
 </pre>
 
-is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>, and it is a function assigning a Rebol value to every integer index <code>i</code>, i.e.,
+is a nonnegative 32-bit signed integer value, i.e., if
 
 <pre>
-do D t i
+0 <= D(t)(size) <= 2147483647
 </pre>
 
-is a Rebol value.
+and for every integer value <code>i</code> such that <code>0 <= i < D(t)('size)</code>, <code>D(t)(i)</code> is a Rebol value.
 
-Note that <code>N = 0</code> is allowed, in which case the payload size is 0 and the payload is empty. Note also that payloads depend on execution time, i.e., they can change in time.
+Note that <code>D(t)('size) = 0</code> is allowed, in which case the payload is empty.
 
 ==Some simple functions==
 
 The goal of this section is to define some simple functions to establish basic terminology necessary to discuss the current state of the interpreter.
 
-'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
+===The <code>head</code> function===
+
+The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head series.
+
+We define that a series <code>T</code> is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e., 
+
+<pre>
+T('displacement) = 0
+T('datatype)     = S('datatype)
+T('payload)      = S('payload)
+</pre>
+
+Tests suggest that this model of the <code>head</code> function is equivalent to the function implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
 
 ===The <code>at-head?</code> function===
 
-The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its head.
+The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head.
 
 <pre>
-(at-head? S) = #[true]
+at-head?(S) = #[true]
 </pre>
 
-, if <code>(displacement S) = 0</code>
+, if <code>S('displacement) = 0</code>
 
 <pre>
-(at-head? S) = #[false]
+at-head?(S) = #[false]
 </pre>
 
-, if <code>(displacement S) <> 0</code>
+, if <code>S('displacement) <> 0</code>
 
-Tests suggest that this model matches the <code>head?</code> function defined in the <code>rebol/version == 2.7.8.3.1</code> interpreter. The <code>at-head?</code> name has been chosen just for compatibility with the function naming convention in the subsequent cases.
+Comparing the <code>at-head?</code> function to the <code>head?</code> function, we find out that for <code>rebol/version == 2.7.8.3.1</code>:
 
-===The <code>head</code> function===
-
-The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head series <code>T</code>.
-
-<code>T</code> is a Rebol series having the same datatype as <code>S</code>, displacement 0 and the same payload as <code>S</code>, i.e.,
+* the <code>head?</code> function is time-dependent
 
 <pre>
-(datatype T)     = (datatype S)
-(displacement T) = 0
-(payload T)      = (payload S)
+a: [1 2]
+b: skip a 2
+head? b ; == false
+clear a
+same? b head b ; == false
+head? b ; == true
+insert a [1 2]
+head? b ; == false
 </pre>
 
-Tests suggest that this model of the <code>head</code> function is implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
+If we take the <code>head</code> as the definition of the head, the <code>head?</code> function is incorrect, and should be replaced by our <code>at-head?</code> function, which, as we can easily find out, is time-independent.
 
 ===The <code>pre-head?</code> function===
 
 The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position.
 
 <pre>
-(pre-head? S) = #[true]
+pre-head?(S) = #[true]
 </pre>
 
 , if <code>displacement S</code> is negative
 
 <pre>
-(pre-head? S) = #[false]
+pre-head?(S) = #[false]
 </pre>
 
 , if <code>displacement S</code> is nonnegative
 
-This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct such series, as this example demonstrates:
+This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct pre-head series, as this example demonstrates:
 
 <pre>
 index? #[block! [a] -2] ; == -2
 </pre>
 
-This function can be defined as a mezzanine in the <code>rebol/version == 2.7.8.3.1</code> interpreter; for example:
-
-<pre>
-pre-head?: func [
-    "Returns TRUE if SERIES is at a pre-head position"
-    series [series!]
-] [
-    0 >= index? :series
-]
-</pre>
+Note that this function is defined as time-independent. It can be defined as a mezzanine in the <code>rebol/version == 2.7.8.3.1</code> interpreter.
 
 ===The <code>at-tail?</code> function===
 
