@@ -115,13 +115,33 @@ pre-head?(S) = #[false]
 
 , if <code>S('displacement)</code> is nonnegative
 
+Note that the <code>pre-head?</code> function is time-independent.
+
 This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct pre-head series, as this example demonstrates:
 
 <pre>
 index? #[block! [a] -2] ; == -2
 </pre>
 
-Note that the <code>pre-head?</code> function is time-independent.
+It is possible to suppress the creation of pre-head series in Rebol. The reasons why pre-head series should be allowed are:
+
+* some users (including myself) prefer to have pre-head series available
+* the availability of pre-head series makes the language slightly more flexible
+* perhaps surprisingly, the availability of pre-head series can be used to make the index arithmetic and the implementation simpler
+
+===The <code>tail</code> function===
+
+The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail series <code>T</code>.
+
+<code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
+
+<pre>
+(datatype T)     = (datatype S)
+(displacement T) = (size do payload S t)
+(payload T)      = (payload S)
+</pre>
+
+Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
 ===The <code>at-tail?</code> function===
 
@@ -149,20 +169,6 @@ at-tail?: func [
     same? :series tail :series
 ]
 </pre>
-
-===The <code>tail</code> function===
-
-The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail series <code>T</code>.
-
-<code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
-
-<pre>
-(datatype T)     = (datatype S)
-(displacement T) = (size do payload S t)
-(payload T)      = (payload S)
-</pre>
-
-Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
 ===The <code>past-tail?</code> function===
 
