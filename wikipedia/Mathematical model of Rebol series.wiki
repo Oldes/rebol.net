@@ -95,7 +95,9 @@ insert a [1 2]
 head? b ; == false
 </pre>
 
-If we take the <code>head</code> as the definition of the head, the <code>head?</code> function is incorrect, and should be replaced by our <code>at-head?</code> function, which, as we can easily find out, is time-independent.
+If we take the <code>head</code> as the definition of the head, the <code>head?</code> function is incorrect. It should work like our <code>at-head?</code> function instead.
+
+Note also that the <code>at-head?</code> function is time-independent.
 
 ===The <code>pre-head?</code> function===
 
