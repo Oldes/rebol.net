@@ -52,7 +52,7 @@ The goal of this section is to define some simple functions to establish basic t
 
 ===The <code>head</code> function===
 
-The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head series.
+The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head.
 
 We define that a series <code>T</code> is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e., 
 
