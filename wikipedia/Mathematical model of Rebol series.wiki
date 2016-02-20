@@ -121,7 +121,7 @@ This function is not available in the interpreter, even though the <code>rebol/v
 index? #[block! [a] -2] ; == -2
 </pre>
 
-Note that the <code>pre-head?</code> function is defined as time-independent.
+Note that the <code>pre-head?</code> function is time-independent.
 
 ===The <code>at-tail?</code> function===
 
