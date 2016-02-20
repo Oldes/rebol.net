@@ -107,13 +107,13 @@ The <code>pre-head?</code> function is a function accepting a Rebol series <code
 pre-head?(S) = #[true]
 </pre>
 
-, if <code>displacement S</code> is negative
+, if <code>S('displacement)</code> is negative
 
 <pre>
 pre-head?(S) = #[false]
 </pre>
 
-, if <code>displacement S</code> is nonnegative
+, if <code>S('displacement)</code> is nonnegative
 
 This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct pre-head series, as this example demonstrates:
 
@@ -121,7 +121,7 @@ This function is not available in the interpreter, even though the <code>rebol/v
 index? #[block! [a] -2] ; == -2
 </pre>
 
-Note that this function is defined as time-independent. It can be defined as a mezzanine in the <code>rebol/version == 2.7.8.3.1</code> interpreter.
+Note that the <code>pre-head?</code> function is defined as time-independent.
 
 ===The <code>at-tail?</code> function===
 
