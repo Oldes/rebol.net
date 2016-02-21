@@ -201,40 +201,42 @@ empty? #[block! [] -1] ; == false
 
 , while the <code>is-empty?</code> function would yield <code>true</code>.
 
-===The <code>past-tail?</code> function===
+==The <code>past-tail?</code> function==
 
 The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position.
 
 <pre>
-(past-tail? S) = #[true]
+past-tail?(S) = #[true]
 </pre>
 
-, if <code>(displacement S) > (size do payload S t)</code>
+, if <code>S('displacement) > S('payload)(t,'size)</code>
 
 <pre>
-(past-tail? S) = #[false]
+past-tail?(S) = #[false]
 </pre>
 
-, if <code>(displacement S) <= (size do payload S t)</code>
+, if <code>S('displacement) <= S('payload)(t,'size)</code>
 
-This function does not exist in the current interpreter, while the interpreter can construct such series as this example demonstrates:
+==Should past-tail series be allowed?==
+
+The reasons why past-head series should be allowed are:
+
+* Unlike pre-head series, for series with time-independent displacement, past-tail series cannot be suppressed.
+
+* The <code>rebol/version == 2.7.8.3.1</code> interpreter constructs past-tail series:
 
 <pre>
-s: tail [a]
-clear head s
-same? s tail s ; == false
+a: tail [1]
+clear head a
+mold/all a ; == "#[block! [] 2]"
 </pre>
 
-This function can be defined as a mezzanine:
+* some users want to have past-tail series
 
-<pre>
-past-tail?: func [
-    "Returns TRUE if SERIES is at a past-tail position"
-    series [series!]
-] [
-    and~ tail? :series not same? :series tail :series
-]
-</pre>
+* the availability of past-tail series makes the language more flexible
+
+* perhaps surprisingly, the availability of past-tail series can make index arithmetic and the implementation simpler
+
 
 ===The <code>in-bounds?</code> function===
 
