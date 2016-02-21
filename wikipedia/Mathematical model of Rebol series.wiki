@@ -97,7 +97,7 @@ insert a [1 2]
 head? b ; == false
 </pre>
 
-* If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. It should work like our <code>at-head?</code> function instead.
+* If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
 ===The <code>pre-head?</code> function===
 
@@ -117,17 +117,21 @@ pre-head?(S) = #[false]
 
 Note that the <code>pre-head?</code> function is time-independent.
 
-This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct pre-head series, as this example demonstrates:
+===Should pre-head series be allowed?===
+
+It is possible to suppress the creation of pre-head series. The reasons why pre-head series should be allowed are:
+
+* The <code>rebol/version == 2.7.8.3.1</code> interpreter constructs pre-head series:
 
 <pre>
 index? #[block! [a] -2] ; == -2
 </pre>
 
-It is possible to suppress the creation of pre-head series in Rebol. The reasons why pre-head series should be allowed are:
-
 * some users (including myself) prefer to have pre-head series available
+
 * the availability of pre-head series makes the language slightly more flexible
-* perhaps surprisingly, the availability of pre-head series can be used to make the index arithmetic and the implementation simpler
+
+* perhaps surprisingly, the availability of pre-head series can make index arithmetic and the implementation simpler
 
 ===The <code>tail</code> function===
 
