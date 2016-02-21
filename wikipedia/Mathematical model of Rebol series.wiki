@@ -141,14 +141,14 @@ index? #[block! [a] -2] ; == -2
 
 ===The <code>tail</code> function===
 
-The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail series <code>T</code>.
+The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail <code>T</code>.
 
 <code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
 
 <pre>
-(datatype T)     = (datatype S)
-(displacement T) = (size do payload S t)
-(payload T)      = (payload S)
+T('datatype)     = S('datatype)
+T('displacement) = S('payload)(t,'size)
+T('payload)      = S('payload)
 </pre>
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
@@ -158,16 +158,16 @@ Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8
 The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail.
 
 <pre>
-(at-tail? S) = #[true]
+at-tail?(S) = #[true]
 </pre>
 
-, if <code>(displacement S) = (size do payload S t)</code>
+, if <code>S('displacement) = S('payload)(t,'size)</code>
 
 <pre>
-(at-tail? S) = #[false]
+at-tail?(S) = #[false]
 </pre>
 
-, if <code>(displacement S) <> (size do payload S t)</code>
+, if <code>S('displacement) <> S('payload)(t,'size)</code>
 
 This function does not exist in the current interpreter. It can be defined as a mezzanine:
 
