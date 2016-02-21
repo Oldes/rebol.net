@@ -179,7 +179,27 @@ tail? b ; == true
 
 ==The <code>is-empty?</code> function==
 
-The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value 
+The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value determining whether the given series is empty.
+
+<pre>
+is-empty?(S) = #[true]
+</pre>
+
+, if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>, and
+
+<pre>
+is-empty?(S) = #[false]
+</pre>
+
+, if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>
+
+Comparing the <code>is-empty?</code> function and the <code>empty?</code> function in <code>rebol/version == 2.7.8.3.1</code> we find out that
+
+<pre>
+empty? #[block! [] -1] ; == false
+</pre>
+
+, while the <code>is-empty?</code> function would yield <code>true</code>.
 
 ===The <code>past-tail?</code> function===
 
