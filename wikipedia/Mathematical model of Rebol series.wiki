@@ -52,11 +52,7 @@ Note that <code>D(t,'size) = 0</code> is allowed, in which case we say that the 
 
 '''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
 
-==Some simple functions==
-
-The goal of this section is to define some simple functions to establish basic terminology necessary to discuss the current state of the interpreter.
-
-===The <code>head</code> function===
+==The <code>head</code> function==
 
 The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head.
 
@@ -70,7 +66,7 @@ T('payload)      = S('payload)
 
 Tests suggest that this model of the <code>head</code> function is equivalent to the function implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
 
-===The <code>at-head?</code> function===
+==The <code>at-head?</code> function==
 
 The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head.
 
@@ -105,7 +101,7 @@ head? b ; == false
 
 * If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
-===The <code>pre-head?</code> function===
+==The <code>pre-head?</code> function==
 
 The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position.
 
@@ -123,7 +119,7 @@ pre-head?(S) = #[false]
 
 Note that the <code>pre-head?</code> function is time-independent.
 
-===Should pre-head series be allowed?===
+==Should pre-head series be allowed?==
 
 It is possible to suppress the creation of pre-head series. The reasons why pre-head series should be allowed are:
 
@@ -139,7 +135,7 @@ index? #[block! [a] -2] ; == -2
 
 * perhaps surprisingly, the availability of pre-head series can make index arithmetic and the implementation simpler
 
-===The <code>tail</code> function===
+==The <code>tail</code> function==
 
 The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail <code>T</code>.
 
@@ -153,7 +149,7 @@ T('payload)      = S('payload)
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
-===The <code>at-tail?</code> function===
+==The <code>at-tail?</code> function==
 
 The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail.
 
@@ -180,6 +176,10 @@ clear a
 same? b tail b ; == false
 tail? b ; == true
 </pre>
+
+==The <code>is-empty?</code> function==
+
+The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value 
 
 ===The <code>past-tail?</code> function===
 
