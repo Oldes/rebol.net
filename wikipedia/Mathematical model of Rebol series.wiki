@@ -169,15 +169,16 @@ at-tail?(S) = #[false]
 
 , if <code>S('displacement) <> S('payload)(t,'size)</code>
 
-This function does not exist in the current interpreter. It can be defined as a mezzanine:
+Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for <code>rebol/version == 2.7.8.3.1</code>:
+
+* If we take the <code>tail</code> function as the definition of the tail, the <code>tail?</code> function is incorrect. To be correct, it should work like the <code>at-tail?</code> function:
 
 <pre>
-at-tail?: func [
-    "Returns TRUE if SERIES is exactly at its tail position."
-    series [series!]
-] [
-    same? :series tail :series
-]
+a: [1 2 3]
+b: skip a 2
+clear a
+same? b tail b ; == false
+tail? b ; == true
 </pre>
 
 ===The <code>past-tail?</code> function===
