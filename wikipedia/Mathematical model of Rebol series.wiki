@@ -40,7 +40,13 @@ is a nonnegative 32-bit signed integer value, i.e., if
 0 <= D(t,'size) <= 2147483647
 </pre>
 
-and for every integer value <code>i</code> such that <code>0 <= i < D(t,'size)</code>, <code>D(t,i)</code> is a Rebol value.
+and for every integer value <code>i</code> such that <code>0 <= i < D(t,'size)</code>,
+
+<pre>
+D(t,i)
+</pre>
+
+is a Rebol value.
 
 Note that <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
