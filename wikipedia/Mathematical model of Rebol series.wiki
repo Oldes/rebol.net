@@ -80,6 +80,8 @@ at-head?(S) = #[false]
 
 , if <code>S('displacement) <> 0</code>
 
+Note that the <code>at-head?</code> function is time-independent.
+
 Comparing the <code>at-head?</code> function to the <code>head?</code> function, we find out that for <code>rebol/version == 2.7.8.3.1</code>:
 
 * the <code>head?</code> function is time-dependent
@@ -96,8 +98,6 @@ head? b ; == false
 </pre>
 
 If we take the <code>head</code> as the definition of the head, the <code>head?</code> function is incorrect. It should work like our <code>at-head?</code> function instead.
-
-Note also that the <code>at-head?</code> function is time-independent.
 
 ===The <code>pre-head?</code> function===
 
