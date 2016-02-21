@@ -129,9 +129,9 @@ It is possible to suppress the creation of pre-head series. The reasons why pre-
 index? #[block! [a] -2] ; == -2
 </pre>
 
-* some users (including myself) prefer to have pre-head series available
+* some users want to have pre-head series
 
-* the availability of pre-head series makes the language slightly more flexible
+* the availability of pre-head series makes the language more flexible
 
 * perhaps surprisingly, the availability of pre-head series can make index arithmetic and the implementation simpler
 
