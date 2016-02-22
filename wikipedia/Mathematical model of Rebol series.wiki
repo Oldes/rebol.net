@@ -223,7 +223,7 @@ length? #[block! [] -2] ; == 3
 
 Problems:
 
-* When discussed (if discussed at all), pre-head series are called "illegal series". That is inconsistent with the fact that such series can be created:
+* When discussed (if discussed at all), pre-head series are called "illegal series". That is inconsistent with the fact that such series can be created in <code>rebol/version == 2.7.8.3.1</code>:
 
 <pre>
 index? #[block! [a] -2] ; == -2
@@ -231,9 +231,9 @@ index? #[block! [a] -2] ; == -2
 
 * Pre-head series are treated obscurely, as "Series that must not be mentioned in the documentation".
 
-* Simple functions and reflectors for handling and detecting pre-head series are missing in the interpreter.
+* Simple reflectors detecting pre-head series are missing in the interpreter.
 
-* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report, unless we want the interpreter to crash.
+* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
 
 * The <code>pick</code> function uses the approach characterized by many as the most useful, and allows picking at pre-head positions without triggering an error.
 
@@ -241,7 +241,7 @@ index? #[block! [a] -2] ; == -2
 
 Possible amendments:
 
-There are two different methods trying to handle the inconsistencies:
+There are two different methods trying to handle the pre-head series:
 
 * Amend the interpreter to not produce pre-head series at all - this approach has been tried in <code>rebol/version == 2.100.111.3.1</code>.
 
@@ -249,13 +249,11 @@ There are two different methods trying to handle the inconsistencies:
 
 ====Disadvantages of the approach used in <code>rebol/version == 2.100.111.3.1</code>====
 
-Problems:
-
 * The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
 
 * Due to the fact that it is impossible to suppress past-tail positions, this approach is not usable for past-tail series, meaning that this approach cannot be consistent with the approach used to handle past-tail series.
 
-* This provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
+* This approach is incompatible and inconsistent with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is useful and convenient.
 
 * some users want to use pre-head series:
 
@@ -287,7 +285,7 @@ Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</
 This includes:
 
 * Mention pre-head series in the documentation (a definition suffices, in my opinion).
-* Stop calling pre-head series "Illegal series" (this is the "easiest to implement" part of the proposal).
+* Stop calling pre-head series "illegal series" (this is the "easiest to implement" part of the proposal).
 * Define the simple functions described above (quite easy as well).
 * Amend the <code>mold</code> function to not trigger an error. An expression like <code>mold #[block! [a] -2]</code> can yield "[a]".
 * Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
@@ -298,11 +296,12 @@ This includes:
 
 * consistence
 * comfortable indexing (see below)
+* flexibility
+* usefulness
 
-===Past-tail series===
+==Past-tail series==
 
 '''Definition:''' ''Past-tail'' series are series having <code>displacement</code> greater than the payload size.
-
 
 ==Should past-tail series be allowed?==
 
