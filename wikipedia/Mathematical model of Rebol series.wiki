@@ -28,7 +28,7 @@ S('payload)
 
 is a payload.
 
-'''Note:''' in the model, the displacement is a 32-bit signed integer, since in current interpreter versions, indices are implemented using 32-bit integers. In addition to that, Rebol has only signed integers, which makes it problematic to use unsigned integers for displacements.
+'''Note:''' in the model, the displacement is a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
 '''Definition:''' we say that mathematical function <code>D</code> is a series ''payload'' if for every executionTime <code>t</code> the value
 
