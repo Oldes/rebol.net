@@ -221,9 +221,7 @@ length? #[block! [] -2] ; == 3
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
 
-===Consistency===
-
-In the <code>rebol/version == 2.7.8.3.1</code> interpreter these inconsistencies can be found:
+Problems:
 
 * When discussed (if discussed at all), pre-head series are called "Illegal series". That is inconsistent with the fact that such series can be created:
 
@@ -241,7 +239,7 @@ index? #[block! [a] -2] ; == -2
 
 * Inconsistently with <code>pick</code> and <code>load</code>, the <code>back</code>, <code>skip</code> and <code>at</code> functions refuse to go to pre-head positions.
 
-===Possible amendments===
+Possible amendments:
 
 There are two different methods trying to handle the inconsistencies:
 
@@ -251,7 +249,7 @@ There are two different methods trying to handle the inconsistencies:
 
 ====Disadvantages of the approach used in <code>rebol/version == 2.100.111.3.1</code>====
 
-Inconsistencies:
+Problems:
 
 * The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
 
@@ -259,9 +257,7 @@ Inconsistencies:
 
 * This provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
 
-Usability:
-
-* some users want to use pre-head series
+* some users want to use pre-head series:
 
 '''Example:''' Let's assume that a user wants to use a series of values [d e] indexed by numbers in the [3..4] range. To be able to do it using the <code>rebol/version == 2.100.111.3.1</code> interpreter the user needs to define:
 
@@ -286,7 +282,7 @@ pick my-series 4 ; == e
 
 Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</code> we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the same effect, i.e., the <code>rebol/version == 2.7.8.3.1</code> solution is more flexible.
 
-=====The alternative is to handle pre-head series consistently=====
+====Consistent handling of pre-head series====
 
 This includes:
 
