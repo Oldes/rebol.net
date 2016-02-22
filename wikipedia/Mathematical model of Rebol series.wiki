@@ -119,22 +119,6 @@ pre-head?(S) = #[false]
 
 Note that the <code>pre-head?</code> function is time-independent.
 
-==Should pre-head series be allowed?==
-
-It is possible to suppress the creation of pre-head series. The reasons why pre-head series should be allowed are:
-
-* The <code>rebol/version == 2.7.8.3.1</code> interpreter constructs pre-head series:
-
-<pre>
-index? #[block! [a] -2] ; == -2
-</pre>
-
-* some users want to have pre-head series
-
-* the availability of pre-head series makes the language more flexible
-
-* perhaps surprisingly, the availability of pre-head series can make index arithmetic and the implementation simpler
-
 ==The <code>tail</code> function==
 
 The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail <code>T</code>.
@@ -251,47 +235,51 @@ length? #[block! [] -2] ; == 3
 
 , while the <code>length-of</code> function yields 0 in such case.
 
-==Discussion of the current interpreter state==
+==Pre-head series==
 
-===Pre-head series===
+'''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
 
-'''Definition:''' ''Pre-head series'' are series displaced backwards from their head, i.e., series having a negative <code>displacement</code>.
-
-====Inconsistencies====
+===Consistency===
 
 In the <code>rebol/version == 2.7.8.3.1</code> interpreter these inconsistencies can be found:
 
-* When discussed (if discussed at all), pre-head series are called "Illegal series". That is inconsistent. If it is a bug for such a series to exist, a consistent interpreter shall not produce it.
-* Pre-head series are treated obscurely, as "Series that must not be mentioned in the documentation".
-* Simple functions and reflectors (like the ones defined above) for handling and detecting pre-head series are missing in the interpreter.
-* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
-* The <code>pick</code> function acknowledges pre-head positions allowing picking at such positions without triggering an error.
-* The <code>back</code>, <code>skip</code> and <code>at</code> functions refuse to go to pre-head positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
-
-====Possible amendments====
-
-There are two different methods trying to handle the inconsistencies
-
-=====Amend the interpreter to not produce pre-head series at all=====
-
-The <code>rebol/version == 2.100.111.3.1</code> interpreter has been amended so that it does not produce pre-head series now. However, this leads to
-
-======Inconsistencies======
+* When discussed (if discussed at all), pre-head series are called "Illegal series". That is inconsistent with the fact that such series can be created:
 
 <pre>
-s: load "#[block! [a] -3]"
-mold/all s ; == "#[block! [a] 2]"
+index? #[block! [a] -2] ; == -2
 </pre>
 
-* The inconsistency is that if it is "illegal" for the interpreter to create the <code>#[block! [a] -3]</code> block, why does the <code>load</code> function accept the source string as "legal" and produce a result that is incompatible with the specification instead of triggering an error?
+* Pre-head series are treated obscurely, as "Series that must not be mentioned in the documentation".
 
-* As discussed below, this provision is not usable for past-tail series meaning that for past-tail series a different (incompatible and therefore inconsistent with this) provision should take place.
+* Simple functions and reflectors for handling and detecting pre-head series are missing in the interpreter.
 
-* As noted above, this provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
+* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
 
-======Usability limitations======
+* The <code>pick</code> function uses the approach characterized by many as the most useful, and allows picking at pre-head positions without triggering an error.
 
-This provision is less comfortable than the alternative proposed below.
+* The <code>back</code>, <code>skip</code> and <code>at</code> functions ignore pre-head positions, refusing to go to them.
+
+===Possible amendments===
+
+There are two different methods trying to handle the inconsistencies:
+
+* Amend the interpreter to not produce pre-head series at all - this approach has been tried in <code>rebol/version == 2.100.111.3.1</code>.
+
+* Handle pre-head series consistently.
+
+====Disadvantages of the approach used in <code>rebol/version == 2.100.111.3.1</code>====
+
+Inconsistencies:
+
+* The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
+
+* This provision is not usable for past-tail series meaning that for past-tail series a different (incompatible and therefore inconsistent with this) provision has to take place.
+
+* This provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
+
+Usability:
+
+* some users want to use pre-head series
 
 '''Example:''' Let's assume that a user wants to use a series of values [d e] indexed by numbers in the [3..4] range. To be able to do it using the <code>rebol/version == 2.100.111.3.1</code> interpreter the user needs to define:
 
@@ -314,15 +302,7 @@ pick my-series 3 ; == d
 pick my-series 4 ; == e
 </pre>
 
-Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</code> we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the same effect, i.e., the <code>rebol/version == 2.7.8.3.1</code> solution is faster and more memory efficient.
-
-In addition to that, the <code>length?</code> function yields:
-
-<pre>
-length? my-series ; == 4
-</pre>
-
-, which does not look desirable. The <code>length-of</code> function defined above would yield a more natural result 2 if used for the <code>rebol/version == 2.7.8.3.1</code> case.
+Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</code> we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the same effect, i.e., the <code>rebol/version == 2.7.8.3.1</code> solution is more flexible.
 
 =====The alternative is to handle pre-head series consistently=====
 
