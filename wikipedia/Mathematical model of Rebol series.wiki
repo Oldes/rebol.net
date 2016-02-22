@@ -255,7 +255,7 @@ Inconsistencies:
 
 * The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
 
-* This provision is not usable for past-tail series meaning that for past-tail series a different (incompatible and therefore inconsistent with this) provision has to take place.
+* Due to the fact that it is impossible to suppress past-tail positions, this approach is not usable for past-tail series, meaning that this approach cannot be consistent with the approach used to handle past-tail series.
 
 * This provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
 
