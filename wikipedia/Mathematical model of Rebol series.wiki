@@ -223,7 +223,7 @@ length? #[block! [] -2] ; == 3
 
 Problems:
 
-* When discussed (if discussed at all), pre-head series are called "Illegal series". That is inconsistent with the fact that such series can be created:
+* When discussed (if discussed at all), pre-head series are called "illegal series". That is inconsistent with the fact that such series can be created:
 
 <pre>
 index? #[block! [a] -2] ; == -2
