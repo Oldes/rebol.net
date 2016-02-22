@@ -219,11 +219,9 @@ past-tail?(S) = #[false]
 
 ==Should past-tail series be allowed?==
 
-The reasons why past-head series should be allowed are:
+The reasons why past-tail series should be allowed are:
 
-* Unlike pre-head series, for series with time-independent displacement, past-tail series cannot be suppressed.
-
-* The <code>rebol/version == 2.7.8.3.1</code> interpreter constructs past-tail series:
+* Unlike pre-head series, past-tail series cannot be suppressed (since series have time-independent displacement and "shrinkable" payload). Therefore, the <code>rebol/version == 2.7.8.3.1</code> interpreter constructs past-tail series:
 
 <pre>
 a: tail [1]
