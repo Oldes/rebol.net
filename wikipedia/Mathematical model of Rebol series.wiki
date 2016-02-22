@@ -201,24 +201,6 @@ past-tail?(S) = #[false]
 
 , if <code>S('displacement) <= S('payload)(t,'size)</code>
 
-==Should past-tail series be allowed?==
-
-The reasons why past-tail series should be allowed are:
-
-* Unlike pre-head series, past-tail series cannot be suppressed (since series have time-independent displacement and "shrinkable" payload). Therefore, the <code>rebol/version == 2.7.8.3.1</code> interpreter constructs past-tail series:
-
-<pre>
-a: tail [1]
-clear head a
-mold/all a ; == "#[block! [] 2]"
-</pre>
-
-* some users want to have past-tail series
-
-* the availability of past-tail series makes the language more flexible
-
-* perhaps surprisingly, the availability of past-tail series can make index arithmetic and the implementation simpler
-
 ==The <code>length-of</code> function==
 
 The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series. It can be defined as follows:
@@ -324,6 +306,25 @@ This includes:
 ===Past-tail series===
 
 '''Definition:''' ''Past-tail'' series are series having <code>displacement</code> greater than the payload size.
+
+
+==Should past-tail series be allowed?==
+
+The reasons why past-tail series should be allowed are:
+
+* Unlike pre-head series, past-tail series cannot be suppressed (since series have time-independent displacement and "shrinkable" payload). Therefore, the <code>rebol/version == 2.7.8.3.1</code> interpreter constructs past-tail series:
+
+<pre>
+a: tail [1]
+clear head a
+mold/all a ; == "#[block! [] 2]"
+</pre>
+
+* some users want to have past-tail series
+
+* the availability of past-tail series makes the language more flexible
+
+* perhaps surprisingly, the availability of past-tail series can make index arithmetic and the implementation simpler
 
 ====Inconsistencies====
 
