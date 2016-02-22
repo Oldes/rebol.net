@@ -311,8 +311,6 @@ lar(x,2**32) = remainder(x,2**32) - 2**32
 
 , if <code>remainder(x,2**32) > 2147483647</code>.
 
-
-
 ==Pre-head series==
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
@@ -343,7 +341,7 @@ There are two different methods trying to handle the pre-head series:
 
 * Handle pre-head series consistently.
 
-====Disadvantages of the approach used in <code>rebol/version == 2.100.111.3.1</code>====
+====Pre-head handling used in <code>rebol/version == 2.100.111.3.1</code>====
 
 * The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
 
