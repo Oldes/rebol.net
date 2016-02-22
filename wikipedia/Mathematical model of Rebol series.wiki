@@ -235,77 +235,12 @@ mold/all a ; == "#[block! [] 2]"
 
 * perhaps surprisingly, the availability of past-tail series can make index arithmetic and the implementation simpler
 
+==The <code>length-of</code> function==
 
-===The <code>in-bounds?</code> function===
-
-The <code>in-bounds?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the position of the series is in bounds, i.e., neither pre-head nor past-tail.
-
-<pre>
-(in-bounds? S) = #[true]
-</pre>
-
-, if <code>((displacement S) >= 0) and ((displacement S) <= (size do payload S t))</code>
+The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series. It can be defined as follows:
 
 <pre>
-(in-bounds? S) = #[false]
-</pre>
-
-otherwise.
-
-This function is not defined in the current interpreter, but it can be defined as a mezzanine:
-
-<pre>
-in-bounds?: func [
-    "Returns TRUE if SERIES is neither pre-head nor past-tail."
-    series [series!]
-] [
-    not any [pre-head? :series past-tail? :series]
-]
-</pre>
-
-===The <code>constrain</code> function===
-
-The <code>constrain</code> function is a function accepting a Rebol series <code>S</code> and returning a Rebol series <code>T</code> with a position constrained to range bounded by series head and tail positions.
-
-<pre>
-T = head S
-</pre>
-
-, if <code>pre-head? S</code>
-
-<pre>
-T = S
-</pre>
-
-, unless <code>(pre-head? S) or (past-tail? S)</code>
-
-<pre>
-T = tail S
-</pre>
-
-otherwise.
-
-This function can be defined as a mezzanine:
-
-<pre>
-constrain: func [
-    "Returns SERIES constrained to the range bounded by the SERIES head and tail positions"
-    series [series!]
-] [
-    case [
-        pre-head? :series [head :series]
-        past-tail? :series [tail :series]
-        'else [:series]
-    ]
-]
-</pre>
-
-===The <code>length-of</code> function===
-
-The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series.
-
-<pre>
-(length-of S) = (max 0 (size do payload S t) - (max 0 displacement S))
+length-of(S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
 </pre>
 
 The <code>length?</code> function in the <code>rebol/version == 2.7.8.3.1</code> interpreter does not work like that as this test demonstrates:
@@ -314,7 +249,7 @@ The <code>length?</code> function in the <code>rebol/version == 2.7.8.3.1</code>
 length? #[block! [] -2] ; == 3
 </pre>
 
-, while the <code>length-of</code> function would yield 0.
+, while the <code>length-of</code> function yields 0 in such case.
 
 ==Discussion of the current interpreter state==
 
