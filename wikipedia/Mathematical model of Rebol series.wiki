@@ -283,7 +283,7 @@ use [max-int-32 min-int-32] [
 			either max-int-32 + b < a [
 				; a - b > max-int-32, subtract 2 ** 32
 				a + min-int-32 - b + min-int-32
-			] [a + b]
+			] [a - b]
 		]
 	]
 ]
