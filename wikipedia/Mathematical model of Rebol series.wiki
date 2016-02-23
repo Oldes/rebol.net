@@ -309,19 +309,16 @@ Sometimes it is useful to know the offset between two series. If the displacemen
 offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 </pre>
 
-, where
+The main difference between the <code>offset-of</code> function and the available <code>offset?</code> function is that there are series for which the <code>offset?</code> function does not work:
 
 <pre>
-lar(x,2**32) = remainder(x,2**32)
+>> offset? tail a a
+** Math Error: Math or number overflow
+** Where: offset?
+** Near: subtract index? series2 index? series1
+>> rebol/version
+== 2.7.8.3.1
 </pre>
-
-, if <code>remainder(x,2**32) <= 2147483647</code>, and
-
-<pre>
-lar(x,2**32) = remainder(x,2**32) - 2**32
-</pre>
-
-, if <code>remainder(x,2**32) > 2147483647</code>.
 
 ==Pre-head series==
 
