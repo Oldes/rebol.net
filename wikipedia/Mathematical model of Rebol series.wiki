@@ -467,7 +467,7 @@ mold/all load "#[block! [a] 4]" ; == "#[block![a]2]"
 * Simple functions and reflectors defined above designed for handling and detecting past-tail series are missing in the interpreter.
 * The <code>mold</code> function is not able to handle past-tail series triggering an error (<code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
 * The <code>pick</code> function acknowledges past-tail positions allowing picking at such positions without triggering an error.
-* The <code>mext</code>, <code>skip</code> and <code>at</code> functions refuse to go to past-tail positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
+* The <code>next</code>, <code>skip</code> and <code>at</code> functions refuse to go to past-tail positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
 
 ====Possible amendments====
 
