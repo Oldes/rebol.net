@@ -385,10 +385,10 @@ Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</
 
 This includes:
 
-* Mention pre-head series in the documentation (a definition suffices, in my opinion).
+* Mention pre-head series in the documentation (a definition suffices).
 * Stop calling pre-head series "illegal series" (this is the "easiest to implement" part of the proposal).
 * Define the simple functions described above (quite easy as well).
-* Amend the <code>mold</code> function to not trigger an error. An expression like <code>mold #[block! [a] -2]</code> can yield "[a]".
+* Amend the <code>mold</code> function to not trigger an error. For example, an expression like <code>mold #[block! [a] -2]</code> can yield "[a]".
 * Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
 * Define new <code>back-any</code> function going to the previous position even when it is a pre-head position.
 * Define new <code>skip-any</code> function going to the specified position even if it is a pre-head position.
