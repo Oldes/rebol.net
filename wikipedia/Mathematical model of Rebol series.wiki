@@ -289,6 +289,18 @@ use [max-int-32 min-int-32] [
 ]
 </pre>
 
+Note: These functions assume that signed integers are implemented as two's complement.
+
+Advantages:
+
+* both functions accept any pair of 32-bit signed integers and always yield a 32-bit signed integer as a result
+
+* for every pair of 32-bit signed integers <code>a, b</code> holds that
+
+<pre>
+a = add-wrap b subtract-wrap a b
+</pre>
+
 ==The <code>offset-of</code> function==
 
 Sometimes it is useful to know the offset between two series. If the displacements of the series are signed 32-bit numbers, it is possible to calculate the offset as a signed 32-bit number too, using the formula:
