@@ -12,9 +12,9 @@ This article:
 
 * <code>S('datatype)</code> is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
 
-* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= displacement <= 2147483647</code>, and
+* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= displacement <= 2147483647</code>,
 
-* <code>S('payload)</code> is a payload.
+* and <code>S('payload)</code> is a payload.
 
 '''Note:''' in the model, the displacement is a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
