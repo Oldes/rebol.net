@@ -101,6 +101,8 @@ The <code>tail</code> function is a function accepting a Rebol series <code>S</c
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
+Note that as opposed to the <code>head</code> function, the <code>tail</code> function is time-dependent.
+
 ==Finding out whether a series is at its tail==
 
 The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail:
