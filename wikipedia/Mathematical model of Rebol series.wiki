@@ -10,23 +10,11 @@ This article:
 
 '''Definition:''' we say that a mathematical function <code>S</code> is a ''Rebol series'' if:
 
-<pre>
-S('datatype)
-</pre>
+* <code>S('datatype)</code> is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
 
-is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
+* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= displacement <= 2147483647</code>, and
 
-<pre>
-S('displacement)
-</pre>
-
-is a 32-bit signed integer, i.e., an integer value such that -2147483648 <= displacement <= 2147483647, and
-
-<pre>
-S('payload)
-</pre>
-
-is a payload.
+* <code>S('payload)</code> is a payload.
 
 '''Note:''' in the model, the displacement is a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
@@ -42,13 +30,21 @@ is a nonnegative 32-bit signed integer value, i.e., if
 0 <= D(t,'size) <= 2147483647
 </pre>
 
-and for every integer value <code>i</code> such that <code>0 <= i < D(t,'size)</code>,
+and for every 32-bit signed integer <code>i</code> holds:
+
+such that <code>0 <= i < D(t,'size)</code>,
+
+<pre>
+D(t,i) = #[none]
+</pre>
+
+, if <code>i < 0</code>,
 
 <pre>
 D(t,i)
 </pre>
 
-is a Rebol value.
+is a Rebol value <code>0 <= i < D(t,'size)</code>,
 
 '''Note:'''
 
