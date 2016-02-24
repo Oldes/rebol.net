@@ -515,5 +515,5 @@ head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [
 '''Summary:'''
 
 * The "skip indexing" uses the simplest index arithmetic, allowing the solution to be the simplest one.
-* The index arithmetic used in <code>rebol/version == 2.100.111.3.1</code> is simple as well, but not as simple as the optimal indexing.
-* The non-arithmetic indexing used in <code>rebol/version == 2.7.8.3.1</code> does not support any simple solution and it provokes errors even when experienced users are writing code.
+* The index arithmetic used in Rebol 2.100.111.3.1 is simple as well, but not as simple as the optimal indexing.
+* The non-arithmetic indexing used in Rebol 2.7.8.3.1 does not support any simple solution and it provokes errors even when experienced users are writing code.
