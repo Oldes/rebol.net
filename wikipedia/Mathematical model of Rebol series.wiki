@@ -12,7 +12,7 @@ This article:
 
 * <code>S('datatype)</code> is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
 
-* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= displacement <= 2147483647</code>,
+* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= S('displacement) <= 2147483647</code>,
 
 * and <code>S('payload)</code> is a payload.
 
