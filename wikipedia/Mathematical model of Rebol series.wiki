@@ -312,6 +312,7 @@ offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 The main difference between the <code>offset-of</code> function and the standard <code>offset?</code> function is that there are series for which the <code>offset?</code> function does not work:
 
 <pre>
+>> a: #[block! [1 2] -2147483646] none
 >> offset? tail a a
 ** Math Error: Math or number overflow
 ** Where: offset?
