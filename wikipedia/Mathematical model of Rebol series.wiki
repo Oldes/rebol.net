@@ -241,7 +241,7 @@ Advantages:
 a = add-wrap b subtract-wrap a b
 </pre>
 
-==The <code>offset-of</code> function==
+==Finding the offset between two series==
 
 Sometimes it is useful to know the offset between two series. If the displacements of the series are signed 32-bit numbers, it is possible to calculate the offset as a signed 32-bit number too, using the formula:
 
