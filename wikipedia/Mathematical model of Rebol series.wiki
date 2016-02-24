@@ -289,7 +289,7 @@ There are two different methods trying to handle the pre-head series:
 
 * Handle pre-head series consistently.
 
-====Pre-head handling used in <code>rebol/version == 2.100.111.3.1</code>====
+====Pre-head handling used in rebol/version == 2.100.111.3.1====
 
 * The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
 
