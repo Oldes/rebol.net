@@ -89,17 +89,15 @@ The <code>pre-head?</code> function is a function accepting a Rebol series <code
 
 Note that the <code>pre-head?</code> function is time-independent.
 
-==The <code>tail</code> function==
+==The tail of a series==
 
-The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail <code>T</code>.
+The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail, i.e., a series having the same datatype and payload as the original series, and a displacement equal to the size of the payload of the original series:
 
-<code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
+* <code>tail(S)('datatype) = S('datatype)</code>,
 
-<pre>
-T('datatype)     = S('datatype)
-T('displacement) = S('payload)(t,'size)
-T('payload)      = S('payload)
-</pre>
+* <code>tail(S)('payload) = S('payload)</code>,
+
+* and <code>tail(S)('displacement) = S('payload)(t,'size)</code>.
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
