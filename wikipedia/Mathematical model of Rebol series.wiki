@@ -20,7 +20,7 @@ This article:
 
 ==Payload==
 
-'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>:
+'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every execution time <code>t</code>:
 
 * the value <code>D(t,'size)</code> is a nonnegative 32-bit signed integer value, i.e., <code>0 <= D(t,'size) <= 2147483647</code>,
 
