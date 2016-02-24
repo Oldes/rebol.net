@@ -259,6 +259,18 @@ The main difference between the <code>offset-of</code> function and the standard
 ** Near: subtract index? series2 index? series1
 </pre>
 
+==Index arithmetic==
+
+Given a series <code>S<code> and and index <code>i</code>, the task is to define a <code>payload-index</code> function such that the <code>i</code>-th position in <code>S<code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
+
+The function can be used to define the <code>pickz</code> and <code>pokez</code> functions. However, this is not the only use of such a function. I think that it would be useful for other indexing purposes.
+
+In my opinion, the simplest definition is:
+
+<pre>
+payload-index(S,i) = add-wrap(i,S('displacement))
+</pre>
+
 ==Pre-head series==
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
