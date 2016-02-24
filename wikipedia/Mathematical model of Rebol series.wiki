@@ -36,39 +36,29 @@ This article:
 
 * <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
-* for the same reasons as above it only makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are used.
+* for the same reasons as above it only makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
 
 '''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
 
-==The <code>head</code> function==
+==The head of a series==
 
 The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head.
 
-We define that a series <code>T</code> is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e., 
+We define that a series <code>T</code> is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e., if:
 
-<pre>
-T('displacement) = 0
-T('datatype)     = S('datatype)
-T('payload)      = S('payload)
-</pre>
+* <code>T('displacement) = 0</code>
+* <code>T('datatype)     = S('datatype)</code>
+* <code>T('payload)      = S('payload)</code>
 
 Tests suggest that this model of the <code>head</code> function is equivalent to the function implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
 
-==The <code>at-head?</code> function==
+==Finding out whether a series is at its head==
 
-The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head.
+The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head, i.e.,
 
-<pre>
-at-head?(S) = #[true]
-</pre>
+* <code>at-head?(S) = #[true]</code> if <code>S('displacement) = 0</code>,
 
-, if <code>S('displacement) = 0</code>
-
-<pre>
-at-head?(S) = #[false]
-</pre>
-
-, if <code>S('displacement) <> 0</code>
+* and <code>at-head?(S) = #[false]</code> if <code>S('displacement) <> 0</code>.
 
 Note that the <code>at-head?</code> function is time-independent.
 
@@ -89,21 +79,13 @@ head? b ; == false
 
 * If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
-==The <code>pre-head?</code> function==
+==Finding out whether a series is at a pre-head? position==
 
-The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position.
+The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position, i.e.
 
-<pre>
-pre-head?(S) = #[true]
-</pre>
+* <code>pre-head?(S) = #[true]</code> if <code>S('displacement)</code> is negative,
 
-, if <code>S('displacement)</code> is negative
-
-<pre>
-pre-head?(S) = #[false]
-</pre>
-
-, if <code>S('displacement)</code> is nonnegative
+* and <code>pre-head?(S) = #[false]</code> if <code>S('displacement)</code> is nonnegative.
 
 Note that the <code>pre-head?</code> function is time-independent.
 
