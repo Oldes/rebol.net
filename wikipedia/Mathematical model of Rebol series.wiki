@@ -249,7 +249,7 @@ Sometimes it is useful to know the offset between two series. If the displacemen
 offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 </pre>
 
-The main difference between the <code>offset-of</code> function and the standard <code>offset?</code> function is that there are series for which the <code>offset?</code> function does not work:
+The main difference between the <code>offset-of</code> function and the standard <code>offset?</code> function is that there are series for which the <code>offset?</code> function does not work due to overflow:
 
 <pre>
 >> a: #[block! [1 2] -2147483646] none
