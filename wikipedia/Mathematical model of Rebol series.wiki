@@ -18,39 +18,25 @@ This article:
 
 '''Note:''' in the model, the series displacement is defined as a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
-'''Definition:''' we say that mathematical function <code>D</code> is a series ''payload'' if for every executionTime <code>t</code> the value
+==Payload==
 
-<pre>
-D(t,'size)
-</pre>
+'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>:
 
-is a nonnegative 32-bit signed integer value, i.e., if
+* the value <code>D(t,'size)</code> is a nonnegative 32-bit signed integer value, i.e., <code>0 <= D(t,'size) <= 2147483647</code>,
 
-<pre>
-0 <= D(t,'size) <= 2147483647
-</pre>
+* and for every 32-bit signed integer <code>i</code> holds:
 
-and for every 32-bit signed integer <code>i</code> holds:
+** <code>D(t,i) = #[none]</code> if <code>i < 0</code>,
 
-such that <code>0 <= i < D(t,'size)</code>,
+** <code>D(t,i)</code> is a Rebol value if <code>0 <= i < D(t,'size)</code>,
 
-<pre>
-D(t,i) = #[none]
-</pre>
-
-, if <code>i < 0</code>,
-
-<pre>
-D(t,i)
-</pre>
-
-is a Rebol value <code>0 <= i < D(t,'size)</code>,
+** and <code>D(t,i) = #[none]</code> if <code>D(t,'size) <= i</code>
 
 '''Note:'''
 
 * <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
-* for the same reasons as above, it only makes sense to use 32-bit signed integers for payload size, but since negative sizes do not make sense, only nonnegative numbers are used.
+* for the same reasons as above it only makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are used.
 
 '''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
 
