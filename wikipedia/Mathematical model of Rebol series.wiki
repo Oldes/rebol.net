@@ -16,7 +16,7 @@ This article:
 
 * and <code>S('payload)</code> is a payload.
 
-'''Note:''' in the model, the displacement is a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
+'''Note:''' in the model, the series displacement is defined as a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
 '''Definition:''' we say that mathematical function <code>D</code> is a series ''payload'' if for every executionTime <code>t</code> the value
 
