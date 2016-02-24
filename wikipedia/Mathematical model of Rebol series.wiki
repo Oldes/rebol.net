@@ -79,7 +79,7 @@ head? b ; == false
 
 * If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
-==Finding out whether a series is at a pre-head? position==
+==Finding out whether a series is at a pre-head position==
 
 The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position, i.e.
 
@@ -101,21 +101,13 @@ The <code>tail</code> function is a function accepting a Rebol series <code>S</c
 
 Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
 
-==The <code>at-tail?</code> function==
+==Finding out whether a series is at its tail==
 
-The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail.
+The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail:
 
-<pre>
-at-tail?(S) = #[true]
-</pre>
+* <code>at-tail?(S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
 
-, if <code>S('displacement) = S('payload)(t,'size)</code>
-
-<pre>
-at-tail?(S) = #[false]
-</pre>
-
-, if <code>S('displacement) <> S('payload)(t,'size)</code>
+* and <code>at-tail?(S) = #[false]</code> if <code>S('displacement) <> S('payload)(t,'size)</code>.
 
 Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for <code>rebol/version == 2.7.8.3.1</code>:
 
@@ -129,21 +121,13 @@ same? b tail b ; == false
 tail? b ; == true
 </pre>
 
-==The <code>is-empty?</code> function==
+==Finding out whether a series is empty==
 
-The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value determining whether the given series is empty.
+The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value determining whether the given series is empty:
 
-<pre>
-is-empty?(S) = #[true]
-</pre>
+* <code>is-empty?(S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
 
-, if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>, and
-
-<pre>
-is-empty?(S) = #[false]
-</pre>
-
-, if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>
+* and <code>is-empty?(S) = #[false]</pre> if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>.
 
 Comparing the <code>is-empty?</code> function and the <code>empty?</code> function in <code>rebol/version == 2.7.8.3.1</code> we find out that
 
@@ -153,25 +137,17 @@ empty? #[block! [] -1] ; == false
 
 , while the <code>is-empty?</code> function would yield <code>true</code>.
 
-==The <code>past-tail?</code> function==
+==Finding out whether a series is at a past-tail position==
 
-The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position.
+The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position:
 
-<pre>
-past-tail?(S) = #[true]
-</pre>
+* <code>past-tail?(S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
-, if <code>S('displacement) > S('payload)(t,'size)</code>
+* and <code>past-tail?(S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
 
-<pre>
-past-tail?(S) = #[false]
-</pre>
+==Determining the length of a series==
 
-, if <code>S('displacement) <= S('payload)(t,'size)</code>
-
-==The <code>length-of</code> function==
-
-The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series. It can be defined as follows:
+The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series, i.e.,
 
 <pre>
 length-of(S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
