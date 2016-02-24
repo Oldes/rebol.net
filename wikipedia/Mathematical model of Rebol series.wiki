@@ -271,6 +271,14 @@ In my opinion, the simplest definition is:
 payload-index(S,i) = add-wrap(S('displacement),i)
 </pre>
 
+==Picking values==
+
+A simple <code>pickz</code> function:
+
+<pre>
+pickz(S,i) = S('payload)(t,payload-index(S,i))
+</pre>
+
 ==Pre-head series==
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
