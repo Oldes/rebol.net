@@ -131,6 +131,14 @@ same? b tail b ; == false
 tail? b ; == true
 </pre>
 
+===Finding out whether a series is at a past-tail position===
+
+The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position:
+
+* <code>past-tail?(S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
+
+* and <code>past-tail?(S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
+
 ===Finding out whether a series is empty===
 
 The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value determining whether the given series is empty:
@@ -146,14 +154,6 @@ empty? #[block! [] -1] ; == false
 </pre>
 
 , while the <code>is-empty?</code> function would yield <code>true</code>.
-
-===Finding out whether a series is at a past-tail position===
-
-The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position:
-
-* <code>past-tail?(S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
-
-* and <code>past-tail?(S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
 
 ===Determining the length of a series===
 
