@@ -52,11 +52,11 @@ This article:
 
 The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head.
 
-We define that a series <code>T</code> is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e., if:
+We define that a series is a head of the series <code>S</code>, if it has a displacement 0 and the same datatype and payload as <code>S</code>, i.e.:
 
-* <code>T('displacement) = 0</code>
-* <code>T('datatype)     = S('datatype)</code>
-* <code>T('payload)      = S('payload)</code>
+* <code>head(S)('displacement) = 0</code>
+* <code>head(S)('datatype) = S('datatype)</code>
+* <code>head(S)('payload) = S('payload)</code>
 
 Tests suggest that this model of the <code>head</code> function is equivalent to the function implemented in, e.g., Rebol 2.7.8 interpreter.
 
