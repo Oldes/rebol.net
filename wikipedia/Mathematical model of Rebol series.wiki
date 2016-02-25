@@ -1,5 +1,13 @@
 ==Introduction==
 
+Rebol series (e.g. strings and blocks) incorporate:
+
+* fast index access
+
+* methods for traversing and skipping
+
+* built-in bounds checking
+
 This article:
 
 * defines a mathematical model of Rebol series
