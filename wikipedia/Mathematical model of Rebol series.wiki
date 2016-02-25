@@ -296,7 +296,7 @@ pick my-series 3 ; == d
 pick my-series 4 ; == e
 </pre>
 
-In <code>rebol/version == 2.7.8</code> the following works:
+In Rebol 2.7.8 the following works:
 
 <pre>
 index? my-series: #[block! [d e] -1] ; == -1
