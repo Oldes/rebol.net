@@ -195,9 +195,9 @@ and <code>subtract-wrap(a,b) = LAR(a - b,2 ** 32)</code>.
 
 Advantages:
 
-* both functions accept any pair of 32-bit signed integers and always yield a 32-bit signed integer as a result
+* both functions accept any pair of 32-bit signed integers and yield a 32-bit signed integer as a result
 
-* for every pair of 32-bit signed integers <code>a, b</code> holds that
+* for every pair of 32-bit signed integers <code>a,b</code> holds that
 
 <pre>
 a = add-wrap b subtract-wrap a b
