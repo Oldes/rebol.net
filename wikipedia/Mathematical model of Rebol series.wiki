@@ -170,16 +170,6 @@ Sometimes it is useful to know the offset between two series. If the displacemen
 offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 </pre>
 
-The main difference between the <code>offset-of</code> function and the standard <code>offset?</code> function is that there are series for which the <code>offset?</code> function does not work due to overflow (Rebol 2.7.8):
-
-<pre>
->> a: #[block! [1 2] -2147483646] none
->> offset? tail a a
-** Math Error: Math or number overflow
-** Where: offset?
-** Near: subtract index? series2 index? series1
-</pre>
-
 ====Determining the payload index====
 
 Given a series <code>S</code> and and index <code>i</code>, the task is to define a <code>payload-index</code> function such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
@@ -326,172 +316,19 @@ length? #[block! [] -2] ; == 3
 
 , while the <code>length-of</code> model function yields 0 in such case.
 
+===What is the offset between two series?===
 
-
-
-
-
-
-
-
-
-
-
-'''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
-
-Problems:
-
-* When discussed (if discussed at all), pre-head series are called "illegal series". That is inconsistent with the fact that such series can be created in Rebol 2.7.8:
+The main difference between the <code>offset-of</code> model function and the standard <code>offset?</code> function in Rebol 2.7.8 is that there are series for which the <code>offset?</code> function does not work due to overflow:
 
 <pre>
-index? #[block! [a] -2] ; == -2
+>> a: #[block! [1 2] -2147483646] none
+>> offset? tail a a
+** Math Error: Math or number overflow
+** Where: offset?
+** Near: subtract index? series2 index? series1
 </pre>
 
-* Pre-head series are treated obscurely, as "Series that must not be mentioned in the documentation".
-
-* Simple reflectors detecting pre-head series are missing in the interpreter.
-
-* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
-
-* The <code>pick</code> function uses the approach characterized by many as the most useful, and allows picking at pre-head positions without triggering an error.
-
-* Inconsistently with <code>pick</code> and <code>load</code>, the <code>back</code>, <code>skip</code> and <code>at</code> functions refuse to go to pre-head positions.
-
-Possible amendments:
-
-There are two different methods trying to handle the pre-head series:
-
-* Amend the interpreter to not produce pre-head series at all - this approach has been tried in Rebol 2.100.111.
-
-* Handle pre-head series consistently.
-
-====Pre-head handling used in Rebol 2.100.111====
-
-* The <code>load</code> function accepts the code <code>#[block! [a] -3]</code> as "legal" and produces a result that is incompatible with the specification instead of triggering an error.
-
-* Due to the fact that it is impossible to suppress past-tail positions, this approach is not usable for past-tail series, meaning that this approach is and has to be inconsistent with the approach used to handle past-tail series.
-
-* This approach is incompatible and inconsistent with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the <code>pick</code> function, but there is a broad agreement between Rebol users that the current behaviour of the function is useful and convenient.
-
-* some users want to use pre-head series:
-
-'''Example:''' Let's assume that a user wants to use a series of values <code>[d e]</code> indexed by numbers in the <code>[3..4]</code> range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
-
-<pre>
-my-series: [#[none] #[none] d e]
-</pre>
-
-Now:
-
-<pre>
-pick my-series 3 ; == d
-pick my-series 4 ; == e
-</pre>
-
-In <code>rebol/version == 2.7.8</code> the following works:
-
-<pre>
-index? my-series: #[block! [d e] -1] ; == -1
-pick my-series 3 ; == d
-pick my-series 4 ; == e
-</pre>
-
-Comparing the two alternatives we see that in Rebol 2.7.8 we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the same effect. Thus, the Rebol 2.7.8 approach is more flexible.
-
-====Consistent handling of pre-head series====
-
-This includes:
-
-* Mention pre-head series in the documentation (a definition suffices).
-* Stop calling pre-head series "illegal series" (this is the "easiest to implement" part of the proposal).
-* Define the simple functions described above (quite easy as well).
-* Amend the <code>mold</code> function to not trigger an error. For example, an expression like <code>mold #[block! [a] -2]</code> can yield <code>"[a]"</code>.
-* Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
-* Define new <code>back-any</code> function going to the previous position even when it is a pre-head position.
-* Define new <code>skip-any</code> function going to the specified position even if it is a pre-head position.
-
-'''Advantages:'''
-
-* consistence
-* comfortable indexing (see below)
-* flexibility
-* usefulness
-
-==Past-tail series==
-
-'''Definition:''' ''Past-tail'' series are series having <code>displacement</code> greater than the payload size.
-
-Unlike pre-head series, past-tail series cannot be suppressed (since series have time-independent displacement and "shrinkable" payload).
-
-====Inconsistencies====
-
-'''Example:''' In Rebol 2.7.8 interpreter the help string of the <code>tail?</code> function states:
-
-<pre>
-"Returns TRUE if a series is at its tail."
-</pre>
-
-However, the actual behaviour is:
-
-<pre>
-s: skip  [a b c d] 3
-clear skip s -2
-same? s tail s ; == false
-tail? s ; == true
-</pre>
-
-, which, in my opinion, contradicts the help string. In the Rebol 2.100.111 interpreter the help string of the <code>tail?</code> function has been corrected, but the 'tail' and 'tail?' function names alone (when not reading their help strings) still look misleading. Also, we obtain:
-
-<pre>
-index? s ; == 2
-</pre>
-
-, while
-
-<pre>
-mold/all s ; == "#[block![a]4]"
-</pre>
-
-, which shows the correct result.
-
-'''Example:'''
-
-<pre>
-mold/all load "#[block! [a] 4]" ; == "#[block![a]2]"
-</pre>
-
-* The inconsistency is that if it is "illegal" for the interpreter to create the <code>#[block! [a] 4]</code> block, why does the <code>load</code> function accept the string as "legal" and produce a result that is incompatible with the specification instead of triggering an error? This is strange knowing that the interpreter does (and cannot stop, in fact) produce the <code>#[block! [a] 4]</code> series as demonstrated above.
-* In Rebol 2.7.8 interpreter the <code>index?</code> function pretends that the past-tail positions it encounters aren't past-tail. This just impairs the reflexivity of the language, because the user can obtain correct informations using other means as demonstrated.
-* The <code>tail?</code> function yields <code>#[true]</code> for past-tail, which looks misleading even if the help string of the function is amended (some users may not read help strings).
-* Past-tail series are treated as "Series that must not be mentioned in the documentation".
-* When discussed (if discussed at all), past-tail series are called "Illegal series". That is inconsistent. If it is a bug for such a value to exist, a consistent interpreter shall not produce it.
-* Simple functions and reflectors defined above designed for handling and detecting past-tail series are missing in the interpreter.
-* The <code>mold</code> function is not able to handle past-tail series triggering an error (<code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
-* The <code>pick</code> function acknowledges past-tail positions allowing picking at such positions without triggering an error.
-* The <code>next</code>, <code>skip</code> and <code>at</code> functions refuse to go to past-tail positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
-
-====Possible amendments====
-
-Just the incorrect behaviour of the <code>index?</code> function has been corrected in Rebol 2.100.111 interpreter. Due to the fact that series payloads can be cleared, any series with positive displacement can become past-tail. The interpreter cannot detect which series become past-tail when a payload is cleared, because that would make the <code>remove</code> and <code>clear</code> operations slower and more complicated than acceptable. Thus, it is not possible to amend the interpreter to not produce past-tail series at all. Therefore, the only serious alternative is to handle past-tail series consistently, which includes:
-
-* Mention past-tail series in the documentation (a definition suffices, in my opinion).
-* Stop calling past-tail series "Illegal series" (this is the easiest part of the proposal).
-* Define the simple functions described above (quite easy as well).
-* Amend the <code>load</code> function to yield the specified result when handling the <code>#[block! [a] 4]</code> source string.
-* Amend the <code>mold</code> function to not trigger an error when handling past-tail series.
-* Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
-* Define new <code>next-any</code> function going to the next position even when it is a past-tail position.
-* Define the <code>skip-any</code> function so that it goes to the specified position even if it is a past-tail position.
-
-'''Advantages:'''
-
-* consistence
-
-* some users want to have past-tail series
-
-* the availability of past-tail series makes the language more flexible
-
-* perhaps surprisingly, the availability of past-tail series can make index arithmetic and the implementation simpler
+The problem does not occur in Rebol 2.101.0.
 
 ===Indexing===
 
