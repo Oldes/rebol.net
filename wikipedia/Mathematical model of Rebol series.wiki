@@ -177,7 +177,7 @@ length? #[block! [] -2] ; == 3
 
 For integer <code>a</code> and nonzero integer <code>b</code> we define
 
-<code>r = LAR(a,b)</code> (<code>r</code> is the Least Absolute Remainder of <code>a</code> divided by <code>b</code>) if
+<code>r = LAR(a,b)</code> (read: "<code>r</code> is the Least Absolute Remainder of <code>a</code> divided by <code>b</code>") if
 
 * <code>a - r</code> is divisible by <code>b</code>,
 
