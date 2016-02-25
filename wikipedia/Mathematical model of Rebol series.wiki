@@ -257,9 +257,41 @@ The mathematical model uses this value. Using the interpreter, there is no direc
 
 * Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which signals that if there is a displacement, it must be a signed integer.
 
-* Suppose that in Rebol 2.7.8 there indeed is a native 32-bit signed displacement which is examined by the <code>index?</code> function, usually returning it increased by 1. Since the smallest signed integer in two's complement is -2147483648, it is logical to expect -2147483647 to be the smallest index value obtainable as a result of the <code>index?</code> function. And, indeed, in Rebol 2.7.8 <code>index? #[block! [1] -2147483647] ; == -2147483647</code>, while <code>index? #[block! [1] -2147483648] ; == 2</code>, which signals that there is some kind of arithmetic overflow present in the latter case.
+* Suppose that in Rebol 2.7.8 there indeed is a native 32-bit signed displacement which is examined by the <code>index?</code> function, usually returning it increased by 1. Since the smallest signed integer in two's complement is -2147483648, it is logical to expect -2147483647 to be the smallest index value obtainable as a result of the <code>index?</code> function. And, indeed, in Rebol 2.7.8 <code>index? #[block! [1] -2147483647] ; == -2147483647</code>, while <code>index? #[block! [1] -2147483648] ; == 2</code>, which signals that there is some kind of arithmetic overflow present in the latter case. While the overflow looks handled, the specific result does not look correct.
 
-* The past-tail series can not only be created, but, in accordance with our mathematical model, their creation cannot be suppressed (Series have time-independent displacement and time-dependent payload, which can shrink.) This does not hold just for the mathematical model, but it also turns out to be true both in Rebol 2.7.8 and in Rebol 2.101.0.
+* The past-tail series can not only be created, but, in accordance with the mathematical model, their creation cannot be suppressed (Series have time-independent displacement and time-dependent payload, which can shrink.) This does not hold just for the mathematical model, but it also turns out to be true both in Rebol 2.7.8 and in Rebol 2.101.0:
+
+<pre>
+a: [1 2]
+b: skip a 2
+mold/all b ; == #[block! [1 2] 3]
+clear a
+mold/all b ; == #[block! [] 3]
+</pre>
+
+* , there are obvious inconsistencies, however:
+
+** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error:
+
+<pre>
+error? try [mold b] ; == true
+</pre>
+
+** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>index?</code> function truncates past-tail indices to tail indices, which is another inconsistent behaviour, since there always is a way how to determine the correct (untruncated) value.
+
+** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>load</code> function truncates past-tail indices to tail indices, which is inconsistent with the behaviour of the <code>mold</code> function. Example:
+
+<pre>
+mold/all load "#[block! [] 3]" ; == "[]"
+</pre>
+
+* In Rebol 2.101.0, the <code>load</code> function always truncates negative indices in construction syntax to tail. Example:
+
+<pre>
+mold/all #[block! [1] -1] ; == "#[block! [1] 2]"
+</pre>
+
+* The fact that Rebol 2.101.0 always truncates negative indices to tail suggests that Rebol 2.101.0 considers them to be greater than "normal" positive 32-bit numbers. This signals that Rebol 2.101.0 handles the values as unsigned "under the hood". This, on one hand, signals that the assumption in the mathematical model that the displacement is a signed integer may not be valid, but, on the other hand, it also signals that the design of Rebol 2.101.0 is, in this sense, inconsistent with the usage of signed numbers in series functions as mentioned above, and also, that the handling of pre-head series (Pre-head series cannot exist when the displacement is unsigned), is inconsistent with the handling of past-tail series (Past-tail series cannot be suppressed as mentioned above.)
 
 ==Pre-head series==
 
