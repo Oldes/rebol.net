@@ -271,25 +271,13 @@ mold/all b ; == #[block! [] 3]
 
 * , there are obvious inconsistencies, however:
 
-** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error:
-
-<pre>
-error? try [mold b] ; == true
-</pre>
+** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error: <code>error? try [mold b] ; == true</code>
 
 ** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>index?</code> function truncates past-tail indices to tail indices, which is another inconsistent behaviour, since there always is a way how to determine the correct (untruncated) value.
 
-** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>load</code> function truncates past-tail indices to tail indices, which is inconsistent with the behaviour of the <code>mold</code> function. Example:
+** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>load</code> function truncates past-tail indices to tail indices, which is inconsistent with the behaviour of the <code>mold</code> function. Example: <code>mold/all load "#[block! [] 3]" ; == "[]"</code>
 
-<pre>
-mold/all load "#[block! [] 3]" ; == "[]"
-</pre>
-
-* In Rebol 2.101.0, the <code>load</code> function always truncates negative indices in construction syntax to tail. Example:
-
-<pre>
-mold/all #[block! [1] -1] ; == "#[block! [1] 2]"
-</pre>
+* In Rebol 2.101.0, the <code>load</code> function always truncates negative indices in construction syntax to tail. Example: <code>mold/all #[block! [1] -1] ; == "#[block! [1] 2]"</code>
 
 * The fact that Rebol 2.101.0 always truncates negative indices to tail suggests that Rebol 2.101.0 considers them to be greater than "normal" positive 32-bit numbers. This signals that Rebol 2.101.0 handles the values as unsigned "under the hood". This, on one hand, signals that the assumption in the mathematical model that the displacement is a signed integer may not be valid, but, on the other hand, it also signals that the design of Rebol 2.101.0 is, in this sense, inconsistent with the usage of signed numbers in series functions such as <code>pick</code>, which accepts pre-head indices returning <code>#[none]</code> as the corresponding element, and also, that the handling of pre-head series (Pre-head series cannot exist when the displacement is unsigned), is inconsistent with the handling of past-tail series (Past-tail series cannot be suppressed as mentioned above.)
 
