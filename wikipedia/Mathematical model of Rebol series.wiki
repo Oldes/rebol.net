@@ -281,7 +281,7 @@ mold/all b ; == #[block! [] 3]
 
 ====Pre-head and past-tail displacements====
 
-As already discussed, at least past-tail positions cannot be suppressed, and it is always possible to detect whether the given series is a past-tail series or not. For consistency, (not just between pre-head and past-tail handling, but also with functions using any signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail series, but also the existence of pre-head series. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing as in the following case:
+As already discussed, at least past-tail positions cannot be suppressed, and it is always possible to detect whether the given series is a past-tail series or not. For consistency, (not just between pre-head and past-tail handling, but also with functions using any signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail series, but also the existence of pre-head positions. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing as in the following case:
 
 Assume that a user wants to use a series of values <code>[d e]</code> indexed by numbers in the <code>[3..4]</code> range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
 
@@ -304,7 +304,7 @@ pick my-series 3 ; == d
 pick my-series 4 ; == e
 </pre>
 
-Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series turns out to be more flexible as well.
+Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series turns out to be more flexible.
 
 ==Head series==
 
