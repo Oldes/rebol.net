@@ -329,7 +329,7 @@ There are two different methods trying to handle the pre-head series:
 
 * some users want to use pre-head series:
 
-'''Example:''' Let's assume that a user wants to use a series of values [d e] indexed by numbers in the [3..4] range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
+'''Example:''' Let's assume that a user wants to use a series of values <code>[d e]</code> indexed by numbers in the <code>[3..4]</code> range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
 
 <pre>
 my-series: [#[none] #[none] d e]
