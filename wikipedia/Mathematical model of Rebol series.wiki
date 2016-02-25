@@ -116,14 +116,6 @@ The <code>is-empty?</code> function should take a series as an argument and yiel
 
 * and <code>is-empty?(S) = #[false]</pre> if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>.
 
-Comparing the <code>is-empty?</code> function and the <code>empty?</code> function in Rebol 2.7.8 we find out that
-
-<pre>
-empty? #[block! [] -1] ; == false
-</pre>
-
-, while the <code>is-empty?</code> function would yield <code>true</code>.
-
 ===Determining the length of a series===
 
 The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series, i.e.,
@@ -279,11 +271,11 @@ Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series,
 
 ===Head series===
 
-Tests suggest that the model of the <code>head</code> function is equivalent to the function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
+Tests suggest that the the <code>head</code> model function is equivalent to the <code>head</code> function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
 
 ===Is a series a head?===
 
-Comparing the above <code>at-head?</code> function to the <code>head?</code> function, we find out that:
+Comparing the <code>at-head?</code> model function to the <code>head?</code> function, we find out that:
 
 * In Rebol 2.7.8, the <code>head?</code> function is time-dependent
 
@@ -300,15 +292,15 @@ head? b ; == false
 
 * If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function in Rebol 2.7.8 is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
-* In Rebol 2.101.0 the <code>head?</code> function appears to be correct.
+* In Rebol 2.101.0 the <code>head?</code> function appears to be equivalent to the <code>at-head?</code> model function.
 
 ===Tail series===
 
-Tests suggest that the model of the <code>tail</code> function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
+Tests suggest that the <code>tail</code> model function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
 
 ===Is a series a tail?===
 
-Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for Rebol 2.7.8 as well as for Rebol 2.101.0:
+Comparing the <code>at-tail?</code> model function to the <code>tail?</code> function, we find out that for Rebol 2.7.8 as well as for Rebol 2.101.0:
 
 * If we take the <code>tail</code> function as the definition of the tail, the <code>tail?</code> function is incorrect. To be correct, it should work like the <code>at-tail?</code> model function. Problem example:
 
@@ -320,8 +312,17 @@ same? b tail b ; == false
 tail? b ; == true
 </pre>
 
+===Is a series empty?===
 
+Comparing the <code>is-empty?</code> model function and the <code>empty?</code> function in Rebol 2.7.8 we find out that
 
+<pre>
+empty? #[block! [] -1] ; == false
+</pre>
+
+, while the <code>is-empty?</code> model function would yield <code>true</code>.
+
+In Rebol 2.101.0 the <code>empty?</code> appears to be equivalent to the <code>is-empty?</code> model function.
 
 
 
