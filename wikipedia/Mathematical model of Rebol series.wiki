@@ -177,7 +177,7 @@ length? #[block! [] -2] ; == 3
 
 For integer <code>a</code> and nonzero integer <code>b</code> we define
 
-<code>LAR(a,b) = r</code> (the Least Absolute Remainder of <code>a</code> divided by <code>b</code> is <code>r</code>) if
+<code>r = LAR(a,b)</code> (<code>r</code> is the Least Absolute Remainder of <code>a</code> divided by <code>b</code>) if
 
 * <code>a - r</code> is divisible by <code>b</code>,
 
@@ -192,72 +192,6 @@ For integer <code>a,b</code> we define
 <code>add-wrap(a,b) = LAR(a + b,2 ** 32)</code>,
 
 and <code>subtract-wrap(a,b) = LAR(a - b,2 ** 32)</code>.
-
-In Rebol 2.7.8, <code>add-wrap</code> and <code>subtract-wrap</code> can be implemented as follows:
-
-<pre>
-Rebol [
-	Title: "add-wrap"
-	File: %add-wrap.r
-	Author: "Ladislav Mecir"
-	Purpose: "Addition with wrapping for Rebol 2.7.8"
-	Note: "Assuming two's complement signed integers"
-]
-
-use [max-int-32 min-int-32] [
-	max-int-32: 2147483647
-	min-int-32: -2147483648
-	add-wrap: func [
-		{Add two values with wrapping (no overflow) and return the result}
-		a [integer!]
-		b [integer!]
-	] [
-		either a >= 0 [
-			either max-int-32 - a < b [
-				; a + b > max-int-32, subtract 2 ** 32
-				a + min-int-32 + b + min-int-32
-			] [a + b]
-		] [
-			; a < 0
-			either min-int-32 - a > b [
-				; a + b < min-int-32, add 2 ** 32
-				a - min-int-32 + b - min-int-32
-			] [a + b]
-		]
-	]
-]
-
-Rebol [
-	Title: "subtract-wrap"
-	File: %subtract-wrap.r
-	Author: "Ladislav Mecir"
-	Purpose: "Subtraction with wrapping for Rebol 2.7.8"
-	Note: "Assuming two's complement signed integers"
-]
-
-use [max-int-32 min-int-32] [
-	max-int-32: 2147483647
-	min-int-32: -2147483648
-	subtract-wrap: func [
-		{Subtract B from A with wrapping (no overflow) and return the result}
-		a [integer!]
-		b [integer!]
-	] [
-		either b > 0 [
-			either min-int-32 + b > a [
-				; a - b < min-int-32, add 2 ** 32
-				a - min-int-32 - b - min-int-32
-			] [a - b]
-		] [
-			; b <= 0
-			either max-int-32 + b < a [
-				; a - b > max-int-32, subtract 2 ** 32
-				a + min-int-32 - b + min-int-32
-			] [a - b]
-		]
-	]
-]
-</pre>
 
 Advantages:
 
