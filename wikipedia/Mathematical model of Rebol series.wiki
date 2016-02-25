@@ -207,7 +207,7 @@ Notes:
 
 * The limitation to two's complement representation of signed integers is not that bad, e.g., the gcc does not offer any other representation of signed integers.
 
-* The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that two's complement is the only representation capable of representing all least absolute remainders of <code>2 ** 32</code>. 
+* The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that the two's complement is the only representation capable of representing all least absolute remainders of <code>2 ** 32</code>, i.e., it is the only representation for which the <code>LAR</code> function and the wrapping addition and subtraction always yield a representable 32-bit integer.
 
 ====Finding the offset between two series====
 
