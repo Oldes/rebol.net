@@ -58,6 +58,8 @@ We define that a series is a head of the series <code>S</code>, if it has a disp
 * <code>head(S)('datatype) = S('datatype)</code>
 * <code>head(S)('payload) = S('payload)</code>
 
+Note that the <code>head</code> head function is time-independent.
+
 ===Finding out whether a series is at its head===
 
 The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head, i.e.,
@@ -87,8 +89,6 @@ The <code>tail</code> function is a function accepting a Rebol series <code>S</c
 * <code>tail(S)('payload) = S('payload)</code>,
 
 * and <code>tail(S)('displacement) = S('payload)(t,'size)</code>.
-
-Tests suggest that this model is implemented in the Rebol 2.7.8 interpreter as the <code>tail</code> function.
 
 Note that as opposed to the <code>head</code> function, the <code>tail</code> function is time-dependent.
 
@@ -313,6 +313,27 @@ head? b ; == false
 * If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function in Rebol 2.7.8 is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
 * In Rebol 2.101.0 the <code>head?</code> function appears to be correct.
+
+===Tail series===
+
+Tests suggest that the model of the <code>tail</code> function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
 
