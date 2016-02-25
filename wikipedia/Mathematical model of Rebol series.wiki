@@ -304,7 +304,7 @@ pick my-series 3 ; == d
 pick my-series 4 ; == e
 </pre>
 
-Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series is also more flexible.
+Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series turns out to be more flexible as well.
 
 ==Head series==
 
