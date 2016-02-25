@@ -307,6 +307,12 @@ A simple <code>pickz</code> function:
 pickz(S,i) = S('payload)(t,payload-index(S,i))
 </pre>
 
+==Implementations==
+
+===Displacement===
+
+
+
 ==Pre-head series==
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
