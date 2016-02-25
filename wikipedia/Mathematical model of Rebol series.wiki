@@ -251,7 +251,7 @@ pickz(S,i) = S('payload)(t,payload-index(S,i))
 
 ===Displacement===
 
-The mathematical model uses this value. Using the interpreter, there is no direct way to verify this value exists. However, there are numerous indirect hints pointing to its existence:
+The mathematical model uses a displacement, although there is no direct method to examine its value. However, there are numerous indirect informations we can use:
 
 * Rebol interpreters are implemented in C, i.e., C is the native code of the interpreter, which signals that there may indeed be a native 32-bit integer used as the displacement.
 
