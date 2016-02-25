@@ -265,7 +265,7 @@ Given a series <code>S</code> and and index <code>i</code>, the task is to defin
 
 The function can be used to define the <code>pickz</code> function. However, this is not the only use of such a function. It would be useful for other indexing purposes as well.
 
-In my opinion, the simplest definition is:
+In my opinion, the simplest and most useful definition is:
 
 <pre>
 payload-index(S,i) = add-wrap(S('displacement),i)
