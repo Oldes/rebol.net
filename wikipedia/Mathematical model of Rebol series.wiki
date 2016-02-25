@@ -193,7 +193,7 @@ For integer <code>a,b</code> we define
 
 and <code>subtract-wrap(a,b) = LAR(a - b,2 ** 32)</code>.
 
-These functions implement signed arithmetic with wrapping (without overflow) in Rebol 2.7.8:
+In Rebol 2.7.8, <code>add-wrap</code> and <code>subtract-wrap</code> can be implemented as follows:
 
 <pre>
 Rebol [
