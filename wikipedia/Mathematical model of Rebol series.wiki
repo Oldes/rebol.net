@@ -68,23 +68,6 @@ The <code>at-head?</code> function is a function accepting a Rebol series <code>
 
 Note that the <code>at-head?</code> function is time-independent.
 
-Comparing the <code>at-head?</code> function to the <code>head?</code> function, we find out that for Rebol 2.7.8:
-
-* the <code>head?</code> function is time-dependent
-
-<pre>
-a: [1 2]
-b: skip a 2
-head? b ; == false
-clear a
-same? b head b ; == false
-head? b ; == true
-insert a [1 2]
-head? b ; == false
-</pre>
-
-* If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function is incorrect. To be correct, it should work like the <code>at-head?</code> function.
-
 ===Finding out whether a series is at a pre-head position===
 
 The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position, i.e.
@@ -306,11 +289,30 @@ pick my-series 4 ; == e
 
 Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series turns out to be more flexible.
 
-==Head series==
+===Head series===
 
 Tests suggest that the model of the <code>head</code> function is equivalent to the function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
 
+===Is a series a head?===
 
+Comparing the above <code>at-head?</code> function to the <code>head?</code> function, we find out that:
+
+* In Rebol 2.7.8, the <code>head?</code> function is time-dependent
+
+<pre>
+a: [1 2]
+b: skip a 2
+head? b ; == false
+clear a
+same? b head b ; == false
+head? b ; == true
+insert a [1 2]
+head? b ; == false
+</pre>
+
+* If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function in Rebol 2.7.8 is incorrect. To be correct, it should work like the <code>at-head?</code> function.
+
+* In Rebol 2.101.0 the <code>head?</code> function appears to be correct.
 
 '''Definition:''' ''Pre-head series'' are series having a negative <code>displacement</code>.
 
