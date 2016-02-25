@@ -250,7 +250,7 @@ mold/all b ; == #[block! [] 3]
 
 * The fact that Rebol 2.101.0 always truncates negative indices to tail suggests that Rebol 2.101.0 considers them to be greater than "normal" positive 32-bit numbers. This signals that Rebol 2.101.0 handles the values as unsigned "under the hood". This, on one hand, signals that the assumption in the mathematical model that the displacement is a signed integer is not valid for Rebol 2.101.0, but, on the other hand, it also signals that the design of Rebol 2.101.0 is, in this sense, inconsistent with the usage of signed numbers in series functions such as <code>pick</code>, which accepts pre-head indices returning <code>#[none]</code> as the corresponding element, and also, that the handling of pre-head series (Pre-head series cannot exist when the displacement is unsigned), is inconsistent with the handling of past-tail series (As opposed to pre-head series, past-tail series cannot be suppressed as mentioned above.)
 
-====Pre-head and past-tail displacements====
+====Pre-head and past-tail positions====
 
 As already discussed, at least past-tail positions cannot be suppressed, and it is always possible to detect whether the given series is a past-tail series or not. For consistency, (not just between pre-head and past-tail handling, but also with functions using any signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail series, but also the existence of pre-head positions. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing as in the following case:
 
