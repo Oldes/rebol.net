@@ -1,6 +1,6 @@
 ==Introduction==
 
-Rebol series (e.g. strings and blocks) incorporate:
+Rebol series like strings and blocks incorporate:
 
 * fast index access
 
