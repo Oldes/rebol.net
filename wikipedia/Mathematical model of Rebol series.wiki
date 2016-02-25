@@ -193,7 +193,7 @@ For integer <code>a,b</code> we define
 
 and <code>subtract-wrap(a,b) = LAR(a - b,2 ** 32)</code>.
 
-Advantages:
+Advantages if the two's complement representation is used:
 
 * both functions accept any pair of 32-bit signed integers and yield a 32-bit signed integer as a result
 
@@ -202,6 +202,8 @@ Advantages:
 <pre>
 a = add-wrap b subtract-wrap a b
 </pre>
+
+Note: The limitation to two's complement representation of signed integers is not that bad, e.g., the gcc does not offer any other representation of signed integers.
 
 ====Finding the offset between two series====
 
