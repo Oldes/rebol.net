@@ -306,7 +306,7 @@ head? b ; == false
 
 Tests suggest that the model of the <code>tail</code> function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
 
-===Is a series at its tail?===
+===Is a series a tail?===
 
 Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for Rebol 2.7.8 as well as for Rebol 2.101.0:
 
