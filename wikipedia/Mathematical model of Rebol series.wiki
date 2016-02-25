@@ -124,14 +124,6 @@ The <code>length-of</code> function is a function accepting a Rebol series <code
 length-of(S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
 </pre>
 
-The <code>length?</code> function in the Rebol 2.7.8 interpreter does not work like that as this test demonstrates:
-
-<pre>
-length? #[block! [] -2] ; == 3
-</pre>
-
-, while the <code>length-of</code> function yields 0 in such case.
-
 ===Index arithmetic===
 
 ====Least Absolute Remainder====
@@ -324,6 +316,16 @@ empty? #[block! [] -1] ; == false
 
 In Rebol 2.101.0 the <code>empty?</code> appears to be equivalent to the <code>is-empty?</code> model function.
 
+===How long a series is?===
+
+
+The <code>length?</code> function in the Rebol 2.7.8 interpreter does not work like the <code>length-of</code> model function as this test demonstrates:
+
+<pre>
+length? #[block! [] -2] ; == 3
+</pre>
+
+, while the <code>length-of</code> model function yields 0 in such case.
 
 
 
