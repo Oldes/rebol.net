@@ -100,18 +100,6 @@ The <code>at-tail?</code> function is a function accepting a Rebol series <code>
 
 * and <code>at-tail?(S) = #[false]</code> if <code>S('displacement) <> S('payload)(t,'size)</code>.
 
-Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for Rebol 2.7.8:
-
-* If we take the <code>tail</code> function as the definition of the tail, the <code>tail?</code> function is incorrect. To be correct, it should work like the <code>at-tail?</code> function:
-
-<pre>
-a: [1 2 3]
-b: skip a 2
-clear a
-same? b tail b ; == false
-tail? b ; == true
-</pre>
-
 ===Finding out whether a series is at a past-tail position===
 
 The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position:
@@ -190,7 +178,7 @@ Notes:
 
 * The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that the two's complement is the only representation capable of representing all least absolute remainders of <code>2 ** 32</code>, i.e., it is the only representation for which the <code>LAR</code> function and the wrapping addition and subtraction always yield a representable 32-bit integer.
 
-====Finding the offset between two series====
+====Determining the offset between two series====
 
 Sometimes it is useful to know the offset between two series. If the displacements of the series are signed 32-bit numbers, it is possible to calculate the offset as a signed 32-bit number too, using the formula:
 
@@ -318,7 +306,19 @@ head? b ; == false
 
 Tests suggest that the model of the <code>tail</code> function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
 
+===Is a series at its tail?===
 
+Comparing the <code>at-tail?</code> function to the <code>tail?</code> function, we find out that for Rebol 2.7.8 as well as for Rebol 2.101.0:
+
+* If we take the <code>tail</code> function as the definition of the tail, the <code>tail?</code> function is incorrect. To be correct, it should work like the <code>at-tail?</code> model function. Problem example:
+
+<pre>
+a: [1 2 3]
+b: skip a 2
+clear a
+same? b tail b ; == false
+tail? b ; == true
+</pre>
 
 
 
