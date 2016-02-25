@@ -163,7 +163,9 @@ length? #[block! [] -2] ; == 3
 
 , while the <code>length-of</code> function yields 0 in such case.
 
-==32-bit signed integer arithmetic with wrapping==
+==Index arithmetic==
+
+===32-bit signed arithmetic with wrapping==
 
 In Rebol 2.7.8, integers are 32-bit signed values. These functions implement signed arithmetic with wrapping (without overflow):
 
@@ -172,8 +174,8 @@ Rebol [
 	Title: "add-wrap"
 	File: %add-wrap.r
 	Author: "Ladislav Mecir"
-	Purpose: "Addition with wrapping"
-	Needs: 2.7.8
+	Purpose: "Addition with wrapping for Rebol 2.7.8"
+	Note: "Assuming two's complement signed integers"
 ]
 
 use [max-int-32 min-int-32] [
@@ -203,8 +205,8 @@ Rebol [
 	Title: "subtract-wrap"
 	File: %subtract-wrap.r
 	Author: "Ladislav Mecir"
-	Purpose: "Subtraction with wrapping"
-	Needs: 2.7.8
+	Purpose: "Subtraction with wrapping for Rebol 2.7.8"
+	Note: "Assuming two's complement signed integers"
 ]
 
 use [max-int-32 min-int-32] [
@@ -231,8 +233,6 @@ use [max-int-32 min-int-32] [
 ]
 </pre>
 
-Note: These functions assume that signed integers are implemented as two's complement.
-
 Advantages:
 
 * both functions accept any pair of 32-bit signed integers and always yield a 32-bit signed integer as a result
@@ -243,7 +243,7 @@ Advantages:
 a = add-wrap b subtract-wrap a b
 </pre>
 
-==Finding the offset between two series==
+===Finding the offset between two series===
 
 Sometimes it is useful to know the offset between two series. If the displacements of the series are signed 32-bit numbers, it is possible to calculate the offset as a signed 32-bit number too, using the formula:
 
@@ -261,7 +261,7 @@ The main difference between the <code>offset-of</code> function and the standard
 ** Near: subtract index? series2 index? series1
 </pre>
 
-==Index arithmetic==
+===Determining the payload index===
 
 Given a series <code>S</code> and and index <code>i</code>, the task is to define a <code>payload-index</code> function such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
 
