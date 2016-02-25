@@ -165,7 +165,7 @@ length? #[block! [] -2] ; == 3
 
 ==Index arithmetic==
 
-===32-bit signed arithmetic with wrapping==
+===32-bit signed arithmetic with wrapping===
 
 In Rebol 2.7.8, integers are 32-bit signed values. These functions implement signed arithmetic with wrapping (without overflow):
 
