@@ -110,7 +110,7 @@ The <code>past-tail?</code> function is a function accepting a Rebol series. It 
 
 ===Finding out whether a series is empty===
 
-The <code>is-empty?</code> function should take a series as an argument and yield a logic! type value determining whether the given series is empty:
+The <code>is-empty?</code> function is a function accepting a Rebol series. It yields a logic! type value determining whether the given series is empty:
 
 * <code>is-empty?(S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
 
@@ -118,7 +118,7 @@ The <code>is-empty?</code> function should take a series as an argument and yiel
 
 ===Determining the length of a series===
 
-The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series, i.e.,
+The <code>length-of</code> function is a function accepting a Rebol series. It returns a nonnegative integer determining the length of the given series:
 
 <pre>
 length-of(S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
