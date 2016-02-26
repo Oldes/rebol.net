@@ -212,7 +212,7 @@ clear a
 mold/all b ; == #[block! [] 3]
 </pre>
 
-* , there are obvious inconsistencies, however:
+* , the handling of past-tail series has several inconsistencies, however:
 
 ** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error: <code>error? try [mold b] ; == true</code>
 
