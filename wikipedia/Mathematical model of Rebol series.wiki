@@ -194,11 +194,13 @@ pickz(S,i) = S('payload)(t,payload-index(S,i))
 
 ===Displacement===
 
-The mathematical model uses a displacement, although there is no direct method to examine its value. However, there are numerous indirect informations we can use:
+In Rebol, there is no direct method to examine the displacement. However, there are numerous indirect informations we can use:
 
-* Rebol interpreters are implemented in C, i.e., C is the native code of the interpreter, which signals that there may indeed be a native 32-bit integer used as the displacement.
+* Rebol interpreters are implemented in C, i.e., C is the native code of the interpreter.
 
-* Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which signals that if there is a displacement, it must be a signed integer.
+* It is known that for indexing purposes Rebol uses signed 32-bit integers as many indexing functions in Rebol suggest.
+
+* Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which suggests that the displacement, should be a signed integer.
 
 * Suppose that in Rebol 2.7.8 there indeed is a native 32-bit signed displacement which is examined by the <code>index?</code> function, usually returning it increased by 1. Since the smallest signed integer in two's complement is -2147483648, it is logical to expect -2147483647 to be the smallest index value obtainable as a result of the <code>index?</code> function. And, indeed, in Rebol 2.7.8 <code>index? #[block! [1] -2147483647] ; == -2147483647</code>, while <code>index? #[block! [1] -2147483648] ; == 2</code>, which signals that there is some kind of arithmetic overflow present in the latter case.
 
@@ -212,7 +214,7 @@ clear a
 mold/all b ; == #[block! [] 3]
 </pre>
 
-* , the handling of past-tail series has several inconsistencies, however:
+* Handling of past-tail series has several inconsistencies:
 
 ** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error: <code>error? try [mold b] ; == true</code>
 
@@ -222,7 +224,7 @@ mold/all b ; == #[block! [] 3]
 
 * In Rebol 2.101.0, the <code>load</code> function always truncates negative indices in construction syntax to tail. Example: <code>mold/all #[block! [1] -1] ; == "#[block! [1] 2]"</code>
 
-* The fact that Rebol 2.101.0 always truncates negative indices to tail suggests that Rebol 2.101.0 considers them to be greater than "normal" positive 32-bit numbers. This signals that Rebol 2.101.0 handles the values as unsigned "under the hood". This, on one hand, signals that the assumption in the mathematical model that the displacement is a signed integer is not valid for Rebol 2.101.0, but, on the other hand, it also signals that the design of Rebol 2.101.0 is, in this sense, inconsistent with the usage of signed numbers in series functions such as <code>pick</code>, which accepts pre-head indices returning <code>#[none]</code> as the corresponding element, and also, that the handling of pre-head series (Pre-head series cannot exist when the displacement is unsigned), is inconsistent with the handling of past-tail series (As opposed to pre-head series, past-tail series cannot be suppressed as mentioned above.)
+* The fact that Rebol 2.101.0 always truncates negative indices in construction syntax to tail suggests that Rebol 2.101.0 considers them to be greater than positive 32-bit numbers (positive indices are not always truncated to tail). This would happen if Rebol 2.101.0 handled the negative indices as unsigned "under the hood". On one hand, this suggests that the assumption in the mathematical model that the displacement is a signed integer is not valid for Rebol 2.101.0. Due to unsigned displacement, pre-head positions were suppressed in Rebol 2.101.0. On the other hand, this makes the design of Rebol 2.101.0 inconsistent with the usage of signed numbers both in the construction syntax, in addition to being inconsistent with the usage of negative indices in series functions such as <code>pick</code>. This is also inconsistent with the handling of past-tail series (As opposed to pre-head positions, past-tail positions cannot be suppressed in this way.)
 
 ====Pre-head and past-tail positions====
 
