@@ -102,7 +102,7 @@ The <code>at-tail?</code> function is a function accepting a Rebol series. It re
 
 ===Finding out whether a series is at a past-tail position===
 
-The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position:
+The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position:
 
 * <code>past-tail?(S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
