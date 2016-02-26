@@ -62,7 +62,7 @@ Note that the <code>head</code> head function is time-independent.
 
 ===Finding out whether a series is at its head===
 
-The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the given series is its own head, i.e.,
+The <code>at-head?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is its own head:
 
 * <code>at-head?(S) = #[true]</code> if <code>S('displacement) = 0</code>,
 
