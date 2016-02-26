@@ -334,13 +334,11 @@ The overflow does not occur in Rebol 2.101.0.
 
 ===Indexing===
 
-Before discussing indexing, let's take a "philosophical detour"
+The simplest indexing arithmetic compatible with the mathematical model of Rebol series is the one used to define the above <code>pickz</code> function. In fact, is looks as the only indexing method compatible with the usage of both positive and negative integers for indexing purposes. (When traversing from positive to negative numbers to negative, or vice versa, we always traverse through 0.) Moreover, any attempt to take the overly complicated, overflow- and bug-ridden functions and define, e.g., the <code>pickz</code> function on top of them does not make sense.
 
-====Does 0 "exist"?====
+Any indexing trying to excommunicate zero from indexing continuing to use both positive and negative numbers is asking for trouble, making an obvious gotcha that caught not just ordinary users, but also Rebol designer.
 
-Some opponents of using 0 as an index state: "0 does not even exist, it should not be allowed as an index, then"
-
-Agreed, it is a matter of definition whether 0 is considered an integer or not. Moreover, no definition can be considered "wrong", exactly because it is a definition, not a proposition. Nevertheless, some definitions turn out to be more useful than others, and that is what we can observe here after a close inspection.
+Some particular questions worth discussing are:
 
 ====Does Rebol have 1-based indexing?====
 
@@ -405,30 +403,7 @@ I think that it is good to discuss why this happened to Rebol 2.7.8. The main re
 
 '''Task:'''
 
-Define a <code>head-index?</code> function obtaining a series <code>s</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression.
+Define a <code>head-index?</code> function obtaining a series <code>S</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression in Rebol 2.7.8. Do not forget about all overlows, bugs, etc.
 
-'''Solutions:'''
+I recommed everybody wanting to keep the current indexing to try to find all the problems the current indexing method brings.
 
-This is the solution working when the <code>index?</code> function and the <code>pick</code> function both use indexing method compatible with the <code>skip</code> function indexing method:
-
-<pre>
-head-index?: func [s [series!] i [integer!]] [i + index? s]
-</pre>
-
-This is the solution working when the <code>index?</code> function and the <code>pick</code> function use the indexing methods from R3:
-
-<pre>
-head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]
-</pre>
-
-This is the solution working in the present state of R2:
-
-<pre>
-head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]
-</pre>
-
-'''Summary:'''
-
-* The "skip indexing" uses the simplest index arithmetic, allowing the solution to be the simplest one.
-* The index arithmetic used in Rebol 2.100.111 is simple as well, but not as simple as the optimal indexing.
-* The non-arithmetic indexing used in Rebol 2.7.8 does not support any simple solution and it provokes errors even when experienced users are writing code.
