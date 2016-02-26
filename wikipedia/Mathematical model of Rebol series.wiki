@@ -156,7 +156,7 @@ Advantages if the two's complement representation is used:
 a = add-wrap b subtract-wrap a b
 </pre>
 
-Notes:
+'''Notes:'''
 
 * For example, the gcc does not offer any other representation of signed integers than two's complement.
 
