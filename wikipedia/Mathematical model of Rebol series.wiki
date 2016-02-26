@@ -172,11 +172,11 @@ offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 
 ====Determining the payload index====
 
-Given a series <code>S</code> and and index <code>i</code>, the task is to define a <code>payload-index</code> function such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
+Given a series <code>S</code> and and and index <code>i</code>, the task is to calculate a <code>payload-index(S,i)</code> value such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
 
 The function can be used to define the <code>pickz</code> function. However, this is not the only use of such a function. It would be useful for other indexing purposes as well.
 
-In my opinion, the simplest and most useful definition is:
+It turns out that the simplest definition is:
 
 <pre>
 payload-index(S,i) = add-wrap(S('displacement),i)
