@@ -226,7 +226,7 @@ mold/all b ; == #[block! [] 3]
 
 ====Pre-head and past-tail positions====
 
-As already discussed, at least past-tail positions cannot be suppressed. Under normal circumstances, it is also not possible to suppress the detection of past-tail series. For consistency, (not just between pre-head and past-tail handling, but also with functions using any signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail positions, but also the existence of pre-head positions. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing:
+As discussed above, least past-tail positions cannot be suppressed. It is also not possible to suppress the detection of past-tail series. For consistency, (not just between pre-head and past-tail handling, but also with functions accepting a signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail positions, but also the existence of pre-head positions. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing:
 
 Assume that a user wants to use a series of values <code>[d e]</code> indexed by numbers in the <code>[3..4]</code> range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
 
