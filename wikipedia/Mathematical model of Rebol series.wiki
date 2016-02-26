@@ -44,7 +44,7 @@ This article:
 
 * <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
-* for the same reasons as above it only makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
+* for the same reasons as above it makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
 
 '''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the execution time of the expression, i.e., the time when the expression is evaluated.
 
