@@ -330,7 +330,7 @@ The main difference between the <code>offset-of</code> model function and the st
 ** Near: subtract index? series2 index? series1
 </pre>
 
-The problem does not occur in Rebol 2.101.0.
+The overflow does not occur in Rebol 2.101.0.
 
 ===Indexing===
 
