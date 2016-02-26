@@ -298,7 +298,7 @@ What about Rebol Parse dialect? Is it descriptive, procedural or “hybrid”?
 
 At the first sight it looks descriptive, but there is evidence supporting a point of view that it is purely procedural and the descriptive look is just an illusion.
 
-The procedurality of the dialect may be demonstrated by the fact that the choice rule is order-dependent (the [a | b] construct isn’t generally equivalent to the [b | a] construct), it isn’t distributive (the [[a | b] c] construct isn’t generally equivalent to the [a c | b c] construct), it has simple backtracking, rules are greedy, etc.
+The procedurality of the dialect may be demonstrated by the fact that the choice rule is order-dependent (the <code>[a | b]</code> construct isn’t generally equivalent to the <code>[b | a]</code> construct), it isn’t distributive (the <code>[[a | b] c]</code> construct isn’t generally equivalent to the <code>[a c | b c]</code> construct), it has simple backtracking, rules are greedy, etc.
 
 ==See also==
 
