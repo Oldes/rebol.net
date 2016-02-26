@@ -32,7 +32,7 @@ This article:
 
 * the value <code>D(t,'size)</code> is a nonnegative 32-bit signed integer value, i.e., <code>0 <= D(t,'size) <= 2147483647</code>,
 
-* and for every 32-bit signed integer <code>i</code> called the ''payload index'' holds:
+* and for every 32-bit signed integer <code>i</code> holds:
 
 ** <code>D(t,i) = #[none]</code> if <code>i < 0</code>,
 
