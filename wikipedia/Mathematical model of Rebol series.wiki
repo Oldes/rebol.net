@@ -72,7 +72,7 @@ Note that the <code>at-head?</code> function is time-independent.
 
 ===Finding out whether a series is at a pre-head position===
 
-The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position, i.e.
+The <code>pre-head?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the series is at a pre-head position:
 
 * <code>pre-head?(S) = #[true]</code> if <code>S('displacement)</code> is negative,
 
