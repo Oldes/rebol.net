@@ -82,7 +82,7 @@ Note that the <code>pre-head?</code> function is time-independent.
 
 ===The tail of a series===
 
-The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail, i.e., a series having the same datatype and payload as the original series, and a displacement equal to the size of the payload of the original series:
+The <code>tail</code> function is a function accepting a Rebol series. It returns tail of the given series, i.e., a series having the same datatype and payload as the given series, and a displacement equal to the size of the payload of the given series:
 
 * <code>tail(S)('datatype) = S('datatype)</code>,
 
