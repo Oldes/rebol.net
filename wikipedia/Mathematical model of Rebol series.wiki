@@ -405,4 +405,4 @@ I think that it is good to discuss why this happened to Rebol 2.7.8. The main re
 
 Define a <code>head-index?</code> function obtaining a series <code>s</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression in Rebol 2.7.8. Do not forget about to reflect all overflows, bugs, etc.
 
-I recommed everybody wanting to keep the current indexing to try to solve this task to make sure he knows how the indexing works.
+I recommed everybody wanting to keep the current indexing to try to solve this task and compare his solution to the above <code>payload-index</code> function to make sure he knows how the indexing works.
