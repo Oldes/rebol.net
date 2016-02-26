@@ -52,7 +52,7 @@ This article:
 
 The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head.
 
-We define the head of a series as a series having displacement 0 and the same datatype and payload as given series:
+We define the head of a series as a series having a zero displacement and the same datatype and payload as given series:
 
 * <code>head(S)('displacement) = 0</code>
 * <code>head(S)('datatype) = S('datatype)</code>
