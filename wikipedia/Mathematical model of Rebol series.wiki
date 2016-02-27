@@ -180,7 +180,7 @@ Sometimes it is useful to know the offset between two series. If the displacemen
 offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 </pre>
 
-Note that the <code>offset-of</code> is time-independent.
+Note that the <code>offset-of</code> function is time-independent.
 
 ====Determining the payload index====
 
