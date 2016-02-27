@@ -46,6 +46,8 @@ This article:
 
 * for the same reasons as above it makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
 
+Note that the payload is time-dependent.
+
 '''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the execution time of the expression, i.e., the time when the expression is evaluated.
 
 ===The head of a series===
@@ -84,11 +86,11 @@ Note that the <code>pre-head?</code> function is time-independent.
 
 The <code>tail</code> function is a function accepting a Rebol series. It returns the ''tail'' of the given series, i.e., a series having the same datatype and payload as the given series, and a displacement equal to the size of the payload of the given series:
 
-* <code>tail(S)('datatype) = S('datatype)</code>,
+* <code>tail(t,S)('datatype) = S('datatype)</code>,
 
-* <code>tail(S)('payload) = S('payload)</code>,
+* <code>tail(t,S)('payload) = S('payload)</code>,
 
-* and <code>tail(S)('displacement) = S('payload)(t,'size)</code>.
+* and <code>tail(t,S)('displacement) = S('payload)(t,'size)</code>.
 
 Note that as opposed to the <code>head</code> function, the <code>tail</code> function is time-dependent.
 
@@ -96,33 +98,41 @@ Note that as opposed to the <code>head</code> function, the <code>tail</code> fu
 
 The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail:
 
-* <code>at-tail?(S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
+* <code>at-tail?(t,S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
 
-* and <code>at-tail?(S) = #[false]</code> if <code>S('displacement) <> S('payload)(t,'size)</code>.
+* and <code>at-tail?(t,S) = #[false]</code> if <code>S('displacement) <> S('payload)(t,'size)</code>.
+
+Note that the <code>at-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is at a past-tail position===
 
 The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position:
 
-* <code>past-tail?(S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
+* <code>past-tail?(t,S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
-* and <code>past-tail?(S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
+* and <code>past-tail?(t,S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
+
+Note the the <code>past-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is empty===
 
 The <code>is-empty?</code> function is a function accepting a Rebol series. It yields a logic! type value determining whether the given series is empty:
 
-* <code>is-empty?(S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
+* <code>is-empty?(t,S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
 
-* and <code>is-empty?(S) = #[false]</pre> if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>.
+* and <code>is-empty?(t,S) = #[false]</pre> if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>.
+
+Note that the <code>is-empty?</code> function is time-dependent.
 
 ===Determining the length of a series===
 
 The <code>length-of</code> function is a function accepting a Rebol series. It returns a nonnegative integer determining the length of the given series:
 
 <pre>
-length-of(S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
+length-of(t,S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
 </pre>
+
+Note that the <code>length-of</code> function is time-dependent.
 
 ===Index arithmetic===
 
@@ -170,6 +180,8 @@ Sometimes it is useful to know the offset between two series. If the displacemen
 offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
 </pre>
 
+Note that the <code>offset-of</code> is time-independent.
+
 ====Determining the payload index====
 
 Given a series <code>S</code> and and and index <code>i</code>, the task is to calculate a <code>payload-index(S,i)</code> value such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
@@ -182,13 +194,17 @@ It turns out that the simplest definition is:
 payload-index(S,i) = add-wrap(S('displacement),i)
 </pre>
 
+Note that the <code>payload-index</code> function is time-independent.
+
 ===Picking values===
 
 A simple <code>pickz</code> function:
 
 <pre>
-pickz(S,i) = S('payload)(t,payload-index(S,i))
+pickz(t,S,i) = S('payload)(t,payload-index(S,i))
 </pre>
+
+Note that the <code>pickz</code> function is time-dependent.
 
 ==Implementations==
 
