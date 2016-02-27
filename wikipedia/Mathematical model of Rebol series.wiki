@@ -322,7 +322,7 @@ empty? #[block! [] -1] ; == false
 
 , while the <code>is-empty?</code> model function would yield <code>true</code>.
 
-In Rebol 2.101.0 the <code>empty?</code> appears to be equivalent to the <code>is-empty?</code> model function.
+In Rebol 2.101.0 the <code>empty?</code> function appears to be equivalent to the <code>is-empty?</code> model function.
 
 ===How long a series is?===
 
@@ -333,6 +333,8 @@ length? #[block! [] -2] ; == 3
 </pre>
 
 , while the <code>length-of</code> model function yields 0 in such case.
+
+In Rebol 2.101.0 the <code>length?</code> function appears to be equivalent to the <code>length-of</code> model function.
 
 ===What is the offset between two series?===
 
