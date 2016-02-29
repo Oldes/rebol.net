@@ -170,7 +170,7 @@ a = add-wrap b subtract-wrap a b
 
 * For example, the gcc does not offer any other representation of signed integers than two's complement.
 
-* The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that the two's complement is the only representation capable of representing all least absolute remainders of <code>2 ** 32</code>, i.e., it is the only representation for which the <code>LAR</code> function and the wrapping addition and subtraction always yield a representable 32-bit integer.
+* The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that the two's complement is the only representation capable of representing all least absolute remainders of division by <code>2 ** 32</code>, i.e., it is the only representation for which the <code>LAR</code> function and the wrapping addition and subtraction always yield a representable 32-bit integer.
 
 ====Determining the offset between two series====
 
