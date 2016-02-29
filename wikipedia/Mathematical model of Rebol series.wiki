@@ -216,7 +216,7 @@ In Rebol, there is no direct method to examine the displacement. However, there 
 
 * It is known that for indexing purposes Rebol uses signed 32-bit integers as many indexing functions in Rebol suggest.
 
-* Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which suggests that the displacement, should be a signed integer.
+* Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which suggests that the displacement should be a signed integer.
 
 * Suppose that in Rebol 2.7.8 there indeed is a native 32-bit signed displacement which is examined by the <code>index?</code> function, usually returning it increased by 1. Since the smallest signed integer in two's complement is -2147483648, it is logical to expect -2147483647 to be the smallest index value obtainable as a result of the <code>index?</code> function. And, indeed, in Rebol 2.7.8 <code>index? #[block! [1] -2147483647] ; == -2147483647</code>, while <code>index? #[block! [1] -2147483648] ; == 2</code>, which signals that there is some kind of arithmetic overflow present in the latter case.
 
