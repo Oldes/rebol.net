@@ -785,8 +785,8 @@ index? b ; == 1
 real-index? b ; == 2
 </pre>
 
-==Rebol identity doesn't depend on the '''same?''' function==
-While we used the '''same?''' function above to obtain an "efficient" implementation of '''identical?''', there is a possibility that '''identical?''' actually doesn't depend on the '''same?''' function. To check we create another (even though a less efficient) implementation of '''identical?''' not using '''same?''' or '''=?''' at all
+==Rebol identity is independent==
+While we used the '''same?''' function above to obtain an "efficient" implementation of '''identical?''', '''identical?''' actually doesn't depend on the '''same?''' function. To demonstrate this, we create another (even though a less efficient) implementation of '''identical?''' not using '''same?''' or '''=?''' at all:
 
 <pre>
 id2?: func [
