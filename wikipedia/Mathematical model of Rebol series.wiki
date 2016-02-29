@@ -352,7 +352,7 @@ The overflow does not occur in Rebol 2.101.0.
 
 ===Indexing===
 
-The simplest indexing arithmetic compatible with the mathematical model of Rebol series is the one used in the above <code>pickz</code> function. In fact, it looks as the only indexing method compatible with the usage of both positive and negative integers for indexing purposes: When traversing from positive numbers to negative or vice versa, we always traverse through 0. An attempt to take the overly complicated, overflow- and bug-ridden indexing functions available in Rebol 2.7.8 and define, e.g., the <code>pickz</code> function on top of them does not make sense.
+The simplest index arithmetic compatible with the mathematical model of Rebol series is the one used in the above <code>pickz</code> function. In fact, it looks as the only indexing method compatible with the usage of both positive and negative integers for indexing purposes: When traversing from positive numbers to negative or vice versa, we always traverse through 0. An attempt to take the overly complicated, overflow- and bug-ridden indexing functions available in Rebol 2.7.8 and define, e.g., the <code>pickz</code> function on top of them does not make sense.
 
 Any indexing trying to excommunicate zero from indexing continuing to use both positive and negative numbers is asking for trouble, making an obvious gotcha that caught not just ordinary users, but, verifiably, also Rebol designer.
 
