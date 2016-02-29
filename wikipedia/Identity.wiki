@@ -663,7 +663,7 @@ This equivalence can discern the above '''bs1''' and '''bs2''' bitsets
 equal-mutation? bs1 bs2 ; == false
 </pre>
 
-==Implementation of '''identical?'''==
+==Implementation of the identity==
 We have collected all the necessary informations. The '''same?''' function is close to our goal, so we will try to use it as much as possible and take care of the cases when it fails to do what we want.
 
 Observation: The finest equivalence in Rebol is
