@@ -412,7 +412,7 @@ Why this happened to Rebol 2.7.8? The main reason seems to be the "1 pointing at
 
 ====Indexing inconsistencies====
 
-* In Rebol 2.7.8 the <code>index?</code> function is not injective (one to one) function, because it assigns the tail index to all past-tail positions. This contradicts the principle of indexing that a one to one correspondence between indices and positions shall be established. In Rebol 2.100.111 this bug has been corrected.
+* In Rebol 2.7.8 the <code>index?</code> function is not injective (one to one) function, because it assigns the tail index to all past-tail positions. This violates the principle that a one to one correspondence between indices and positions shall be established. In Rebol 2.100.111 this problem has been corrected.
 * The <code>at</code> function is not injective (one to one) because it assigns the same series position to two different indices 0 and 1. Note that this is, in fact, a different property than the previous one. A mathematical object having both properties would not even be representable as a function. This bug is detectable in both Rebol 2.7.8 and Rebol 2.100.111.
 * In Rebol 2.7.8 the <code>pick</code> function subdivides its range to two arithmetically incompatible segments. This has been corrected in Rebol 2.100.111.
 * In Rebol 2.100.111 the index 0 "points backwards" when the <code>pick</code> function is used. This is not an inconsistency, but it contradicts the expectations of users unaccustomed to 0 "pointing backwards" meaning that this property is inconvenient for such users.
