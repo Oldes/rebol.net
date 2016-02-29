@@ -412,10 +412,10 @@ Why this happened to Rebol 2.7.8? The main reason seems to be the "1 pointing at
 
 ====Indexing inconsistencies====
 
-* In Rebol 2.7.8 the <code>index?</code> function is not injective (one to one) function, because it assigns the tail index to all past-tail positions. This violates the principle that a one to one correspondence between indices and positions shall be established. In Rebol 2.100.111 this has been corrected.
-* In both Rebol 2.7.8 and Rebol 2.100.111, the <code>at</code> function is not injective (one to one) because it assigns the same series position to two different indices: 0 and 1. Note that this also violates the principle of one to one correspondence between indices and positions, but it is a different problem than the previous one (above, one index was assigned to several positions, here, one position is assigned to several indices).
+* In Rebol 2.7.8 the <code>index?</code> function violates the principle of one to one correspondence between indices and positions, because it assigns the tail index to all past-tail positions. In Rebol 2.100.111 this has been corrected.
+* In both Rebol 2.7.8 and Rebol 2.100.111, the <code>at</code> function violates the principle of one to one correspondence between indices and positions, becayuse it assigns the same series position to two different indices: 0 and 1.
 * In Rebol 2.7.8 the <code>pick</code> function subdivides its range to two arithmetically incompatible segments, effectively destroying index arithmetic. This has been corrected in Rebol 2.100.111.
-* In Rebol 2.100.111 the index 0 "points backwards" when the <code>pick</code> function is used. This is not an inconsistency, but it contradicts the expectations of users unaccustomed to 0 "pointing backwards" meaning that this property is inconvenient for such users.
+* In Rebol 2.100.111 the index 0 "points backwards" when the <code>pick</code> function is used. This is not an inconsistency, but it contradicts the expectations of users unaccustomed to the "0 pointing backwards" case.
 
 ====Index arithmetic primer====
 
