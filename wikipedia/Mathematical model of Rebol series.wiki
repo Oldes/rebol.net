@@ -60,7 +60,7 @@ We define the ''head'' of a series as a series having a zero displacement and th
 * <code>head(S)('datatype) = S('datatype)</code>
 * <code>head(S)('payload) = S('payload)</code>
 
-Note that the <code>head</code> head function is time-independent.
+Note that the <code>head</code> function is time-independent.
 
 ===Finding out whether a series is at its head===
 
@@ -112,7 +112,7 @@ The <code>past-tail?</code> function is a function accepting a Rebol series. It 
 
 * and <code>past-tail?(t,S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
 
-Note the the <code>past-tail?</code> function is time-dependent.
+Note the <code>past-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is empty===
 
@@ -271,7 +271,7 @@ Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series,
 
 ===Head series===
 
-Tests suggest that the the <code>head</code> model function is equivalent to the <code>head</code> function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
+Tests suggest that the <code>head</code> model function is equivalent to the <code>head</code> function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
 
 ===Is a series a head?===
 
