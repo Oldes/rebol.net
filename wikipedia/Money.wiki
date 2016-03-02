@@ -1,4 +1,4 @@
-<b>All about the MONEY datatype - high-precision arithmetic for financial and scientific applications.</b>
+==All about the MONEY datatype - high-precision arithmetic for financial and scientific applications.==
 
 ==Overview==
 
