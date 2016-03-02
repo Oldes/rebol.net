@@ -413,46 +413,41 @@ emit: func [text [char! string! block!]] [
 ]
 
 colorize: func [
-
-
-{emit a table row containing text and the colorized code block}
-text [string!]
-/local space?
-
-
+    {emit a table row containing text and the colorized code block}
+    text [string!]
+    /local space?
 ] [
-
-
-emit ["^/|-^/| " text "^/| "]
-space?: ""
-parse code-block rule: [
-    (
-        emit [space? #"["]
-        space?: ""
-    )
-    any [
-        [
-            set word any-word! (
-                emit [
-                    space?
-                    {<font color="}
-                    case [
-                        not bind? :word ["brown"]
-                        global? :word ["blue"]
-                        equal? bind? :word bind? code-block/6/4 ["red"]
-                        equal? bind? :word bind? code-block/6/8/5 [
-                            "magenta"
+    emit ["^/|-^/| " text "^/| "]
+    space?: ""
+    parse code-block rule: [
+        (
+            emit [space? #"["]
+            space?: ""
+        )
+        any [
+            [
+                set word any-word! (
+                    emit [
+                        space?
+                        {<font color="}
+                        case [
+                            not bind? :word ["brown"]
+                            global? :word ["blue"]
+                            equal? bind? :word bind? code-block/6/4 ["red"]
+                            equal? bind? :word bind? code-block/6/8/5 [
+                                "magenta"
+                            ]
                         ]
+                        {">}
+                        mold :word
+                        </font>
                     ]
-                    {">}
-                    mold :word
-                    </font>
-                ]
-            ) | into rule | set word skip (
-                emit [space? mold :word]
-            )
+                ) | into rule | set word skip (
+                    emit [space? mold :word]
+                )
+            ]
+            (space?: " ")
         ]
-        (space?: " ")
     ]
 ]
 </pre>
