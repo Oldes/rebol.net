@@ -73,6 +73,4 @@ you'll also have access to cursor key command recall.  '''rlwrap''' comes with t
 
 The rxvt console is not great for stdio redirection so fallback to the Windows console for testing  anything not pure Rebol.
 
-<pre>
 Also, bugs should always be verified in the default Windows console before reporting.
-</pre>
