@@ -64,7 +64,7 @@ repeated-rule: [rule repeated-rule | none]
 
 , which is greedy since the first choice always takes precedence when possible.
 
-There is one formal difference between PARSE and the other members of the TDPL family: All other TDPL family members succeed when the start rule succeeds. As opposed to that, for PARSE to succeed the RULES rule (which is the PARSE counterpart of TDPL family start rule) has to succeed and the final PARSE position has to be the end of the input. This property is essential. It's part of the basic purpose of PARSE, and has been for years. If you are only concerned about a section of the data and are using the return value of the PARSE function, you can put [to end] on the end of your start (RULES) rule.
+There is one formal difference between PARSE and the other members of the TDPL family: All other TDPL family members succeed when the start rule succeeds. As opposed to that, for PARSE to succeed the RULES rule (which is the PARSE counterpart of TDPL family start rule) has to succeed and the final PARSE position has to be the end of the input. This property is essential. It's part of the basic purpose of PARSE, and has been for years. If you are only concerned about a section of the data and are using the return value of the PARSE function, you can put <code>[to end]</code> on the end of your start (RULES) rule.
 
 PARSE is provably able (see below) to recognize all the grammars the members of the TDPL family can recognize (and more), although it needs to use a couple of complicated idioms to represent the four basic family operators ([[#FAIL|FAIL]], [[#NOT|NOT]], [[#AND|AND]] and [[#THEN|THEN]]) it does not support directly yet.
 
