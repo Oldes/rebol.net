@@ -161,7 +161,7 @@ get word1 ; == 1
 get word2 ; == 2
 </pre>
 
-The test shows that W0RD1 and WORD2 have strict equal spelling and equal type. Their bindings are different. They can refer to different values at the same time, so they are distinct variables. Another test:
+The test shows that WORD1 and WORD2 have strict equal spelling and equal type. Their bindings are different. They can refer to different values at the same time, so they are distinct variables. Another test:
 
 <pre>
 word1: /a ; == /a
