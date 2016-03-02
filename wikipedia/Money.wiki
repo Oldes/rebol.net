@@ -74,9 +74,9 @@ The representation of money numbers uses a sign, unsigned significand (also coef
 
 The 96 bit binary representation consists of:
 
-*87 bits for unsigned significand (also coefficient/mantissa)
-*1 bit sign
-*8 bits for unbiased signed decimal exponent
+* 87 bits for unsigned significand (also coefficient/mantissa)
+* 1 bit sign
+* 8 bits for unbiased signed decimal exponent
 
 ===Speed===
 
@@ -86,31 +86,31 @@ The BCD representation using four bits per decimal digit is notorious for being 
 
 These actions are supported by the money datatype:
 
-*add
-*subtract
-*multiply
-*divide
-*remainder
-*negate
-*absolute
-*round
+* add
+* subtract
+* multiply
+* divide
+* remainder
+* negate
+* absolute
+* round
 
-*same?
-*equal?
-*strict-equal?
-*not-equal?
-*strict-not-equal?
-*greater?
-*lesser?
-*greater-or-equal?
-*lesser-or-equal?
+* same?
+* equal?
+* strict-equal?
+* not-equal?
+* strict-not-equal?
+* greater?
+* lesser?
+* greater-or-equal?
+* lesser-or-equal?
 
-*negative?
-*positive?
-*zero?
+* negative?
+* positive?
+* zero?
 
-*minimum
-*maximum
+* minimum
+* maximum
 
 In addition, all of the corresponding infix operators are supported.
 
@@ -118,14 +118,14 @@ In addition, all of the corresponding infix operators are supported.
 
 These conversions are supported:
 
-*string to money
-*money to string
-*integer to money
-*money to integer
-*decimal to money
-*money to decimal
-*binary to decimal
-*decimal to binary
+* string to money
+* money to string
+* integer to money
+* money to integer
+* decimal to money
+* money to decimal
+* binary to decimal
+* decimal to binary
 
 Auto conversion also occurs when the money type is mixed in functions with other numeric datatypes. Money is considered the "stronger type" -- producing the datatype of the result:
 
@@ -143,7 +143,7 @@ Auto conversion also occurs when the money type is mixed in functions with other
 </pre>
 
 ==Precision==
-*Money values are designed to keep precision (they are not normalized). Example:
+* Money values are designed to keep precision (they are not normalized). Example:
 
 <pre>
 >> a: $10
@@ -250,8 +250,10 @@ It is not advisable to give the SCALE argument as a decimal value, since we freq
 
 , which is most probably not what we wanted to get. If we use an accurate SCALE given as a money value, we obtain:
 
+<pre>
 >> round/to $1.15 $0.10
 == $1.20
+</pre>
 
 Note also, that it may make sense to use $0.10 as a scale, instead of $0.1!
 
