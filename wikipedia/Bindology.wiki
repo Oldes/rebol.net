@@ -143,11 +143,7 @@ different-binding: func [
     }
     word [any-word!] {the given word}
 ] [
-    bind :word case [
-        'self = :word [use [self] ['self]]
-        set-word? :word [make object! reduce [:word none]]
-        true [first second make function! reduce ['self :word] [self]]
-    ]
+    bind :word use reduce [to word! :word] reduce [to lit-word! :word]
 ]
 </pre>
 
