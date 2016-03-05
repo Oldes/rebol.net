@@ -28,7 +28,7 @@ This article:
 
 ===Payload===
 
-'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every execution time <code>t</code>:
+'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every invocation time <code>t</code>:
 
 * the value <code>D(t,'size)</code> is a nonnegative 32-bit signed integer value, i.e., <code>0 <= D(t,'size) <= 2147483647</code>,
 
@@ -42,13 +42,13 @@ This article:
 
 '''Notes:'''
 
-* The payload is time-dependent.
+* The payload is time-dependent, meaning that the results depend on the time of invocation.
 
 * <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
 * For the same reasons as above it makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
 
-'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the execution time of the expression, i.e., the time when the expression is evaluated.
+'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the invocation time, i.e., the time when the given function is invocated.
 
 ===The head of a series===
 
@@ -96,7 +96,7 @@ Note that as opposed to the <code>head</code> function, the <code>tail</code> fu
 
 ===Finding out whether a series is at its tail===
 
-The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail:
+The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail at the time of the invocation:
 
 * <code>at-tail?(t,S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
 
@@ -106,7 +106,7 @@ Note that the <code>at-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is at a past-tail position===
 
-The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position:
+The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position at the time of the invocation:
 
 * <code>past-tail?(t,S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
@@ -116,7 +116,7 @@ Note the <code>past-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is empty===
 
-The <code>is-empty?</code> function is a function accepting a Rebol series. It yields a logic! type value determining whether the given series is empty:
+The <code>is-empty?</code> function is a function accepting a Rebol series. It yields a logic! type value determining whether the given series is empty at the time of the invocation:
 
 * <code>is-empty?(t,S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
 
@@ -126,7 +126,7 @@ Note that the <code>is-empty?</code> function is time-dependent.
 
 ===Determining the length of a series===
 
-The <code>length-of</code> function is a function accepting a Rebol series. It returns a nonnegative integer determining the length of the given series:
+The <code>length-of</code> function is a function accepting a Rebol series. It returns a nonnegative integer determining the length of the given series at the time of the invocation:
 
 <pre>
 length-of(t,S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
@@ -204,7 +204,7 @@ A simple <code>pickz</code> function:
 pickz(t,S,i) = S('payload)(t,payload-index(S,i))
 </pre>
 
-Note that the <code>pickz</code> function is time-dependent.
+Note that the <code>pickz</code> function is time-dependent, i.e., that its result depends on the time of the invocation.
 
 ==Implementations==
 
