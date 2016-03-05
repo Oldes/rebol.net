@@ -94,7 +94,7 @@ Note that as opposed to the <code>head</code> function, the <code>tail</code> fu
 
 ===Finding out whether a series is at its tail===
 
-The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail at the time of the invocation:
+The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail at the time of invocation:
 
 * <code>at-tail?(t,S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
 
