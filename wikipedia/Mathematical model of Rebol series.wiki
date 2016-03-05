@@ -104,7 +104,7 @@ Note that the <code>at-tail?</code> function is time-dependent.
 
 ===Finding out whether a series is at a past-tail position===
 
-The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position at the time of the invocation:
+The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position at the time of invocation:
 
 * <code>past-tail?(t,S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
