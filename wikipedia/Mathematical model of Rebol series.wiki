@@ -202,7 +202,7 @@ A simple <code>pickz</code> function:
 pickz(t,S,i) = S('payload)(t,payload-index(S,i))
 </pre>
 
-Note that the <code>pickz</code> function is time-dependent, i.e., that its result depends on the time of the invocation.
+Note that the <code>pickz</code> function is time-dependent, i.e., that its result depends on the time of invocation.
 
 ==Implementations==
 
