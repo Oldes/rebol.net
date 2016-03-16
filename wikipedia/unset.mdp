@@ -19,10 +19,7 @@ Main uses of #[unset!]:
 
 ===Uninitialized variables
 
-The "unset" word suggests that the original purpose of the value is to handle dereferencing of uninitialized variables. Alternatives are:
-
-* Cause an error when an attempt to dereference an uninitialized variable is detected.
-* Yield some Rebol value when an unitialized variable is dereferenced.
+The "unset" word suggests that the original purpose of the value is to handle dereferencing of uninitialized variables. The original approach was to cause an error when an attempt to dereference an uninitialized variable is detected.
 
 ---Causing an error
 
