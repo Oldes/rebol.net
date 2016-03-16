@@ -35,7 +35,7 @@ Due to the feasibility (see below) and Carl's preferences, I originally supporte
 
 There is a question whether it is feasible to have an #[unset!] value that is designed to be optimal for the "error causing" alternative, i.e., #[unset!] that would be purely internal to the interpreter.
 
-A design aspect that should be considered is the fact that Rebol is designed as a reflexive language. For Rebol objects (or contexts), there is a reflector function called the BODY-OF, yielding a Rebol block. Let's have an object with an unset local variable:
+An aspect that should be considered is the fact that Rebol is designed as a reflexive language. For Rebol objects (or contexts), there is a reflector function called the BODY-OF, yielding a Rebol block:
 
     o: make object! [
 	    a: none
