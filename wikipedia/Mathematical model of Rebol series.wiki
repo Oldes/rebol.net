@@ -421,4 +421,4 @@ Why this happened to Rebol 2.7.8? The main reason seems to be the "1 pointing at
 
 Define a <code>head-index?</code> function obtaining a series <code>s</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression in Rebol 2.7.8. Do not forget to reflect all overflows, bugs, etc.
 
-I recommed everybody wanting to master and preserve the current indexing to try to solve this task and compare his solution to the above <code>payload-index</code> function to get truly familiar with Rebol indexing.
+I recommed everybody wanting to continue using current Rebol indexing to try to solve this task to find out what it takes to master it. It is also instuctive to compare the solution to the above <code>payload-index</code> function.
