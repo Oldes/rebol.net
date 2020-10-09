@@ -47,7 +47,6 @@ In addition to title, name, date, etc, the noteworthy fields and options of a fi
 
 ;signed: ''field'' - content is signed with a specified method.
 
-
 ==Classes of Modules==
 
 There are three main classes of modules:

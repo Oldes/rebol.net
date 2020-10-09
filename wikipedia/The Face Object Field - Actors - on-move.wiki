@@ -6,6 +6,8 @@ No return value is necessary.
 
 ===Examples===
 
- on-move: [
-   ; Write some.
- ]
+<pre>
+on-move: [
+  ; Write some.
+]
+</pre>

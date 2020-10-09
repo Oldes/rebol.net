@@ -1,11 +1,9 @@
 =These might be good ways to get the most from the wiki=
 
 
-
 ==Reference Card==
 
 This is [http://www.tinyurl.com/2ltqps a good reference page for mediaWiki syntax]
-
 
 
 ==Use Categories==
@@ -21,7 +19,6 @@ Install the [http://www.mediawiki.org/wiki/Extension:Dynamic_Article_List DAL ex
 They are easy to do and get standardized and flexible format
 
 
-
 ==To Do in the wiki content==
 
 [http://www.mediawiki.org/wiki/Extension:Todo_Tasks this one] looks useful for ToDo items embedded in the documentation (but haven't tried it).
@@ -30,12 +27,13 @@ They are easy to do and get standardized and flexible format
 
 Embedded pages work well - here is how to embed another article content - R3 Releases
 
-<nowiki>{{:R3 Releases}}</nowiki>
+<pre>
+{{:R3 Releases}}
+</pre>
 
 
 ==Standards Approach on Wiki==
 
 The [http://standards-catalogue.ukoln.ac.uk/index/JISC_Standards_Catalogue JISC Standards Catalogue on mediaWiki] looks like a good example including a PrintAll option which pulls them together (hopefully dynamically using the wiki engine)
-
 
 [[Category: Recommendations]]

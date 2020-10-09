@@ -17,7 +17,7 @@ Sets the style that will be used where lines are joined.
 '''bevel'''
 |}
 <br>'''Notes and Examples'''
-<code><pre>
+
 pen yellow
 line-width 15
 
@@ -37,12 +37,13 @@ polygon 20x20 180x130 10x100
 translate 0x140
 line-join bevel
 polygon 20x20 180x130 10x100
-</pre></code>
+
 [[images/LINE-JOIN-1.png|LINE-JOIN example 1]]
 
 <br>
 
 '''Additional notes about LINE-CAP and LINE-JOIN'''
+
 <pre>
 How are lines drawn
 

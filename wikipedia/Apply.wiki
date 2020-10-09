@@ -7,11 +7,15 @@ The APPLY function is new in R3.
 
 Normally, you evaluate a function by providing the function followed by its arguments. For example:
 
-  insert string "go"
+<pre>
+insert string "go"
+</pre>
 
 Functions also allow options, provided as a refinement path to the function. For example, to refine the above example:
 
-  insert/part string "go" 2
+<pre>
+insert/part string "go" 2
+</pre>
 
 This works just fine in most cases. But, what if you don't know in advance the refinements and arguments that are needed? How do you dynamically call a function with any arbitrary set of arguments and refinements?
 
@@ -23,7 +27,9 @@ Note that it is also possible to dynamically construct a block of code for handl
 
 APPLY takes a function value and applies a block of arguments to that function. The above example can be applied as:
 
-    apply :insert [string "go"]
+<pre>
+apply :insert [string "go"]
+</pre>
 
 Note these points:
 
@@ -36,11 +42,15 @@ Note these points:
 
 The order of the arguments in the block must match the function's formal argument order, including refinements. If you type:
 
-   help insert
+<pre>
+help insert
+</pre>
 
 You will see the order of the arguments is:
 
-   INSERT series value /part length /only /dup count
+<pre>
+INSERT series value /part length /only /dup count
+</pre>
 
 Note that unused arguments do not need to be provided and they will be set to NONE by default. For more on this, see [[Forgoing_faux_pas#apply_and_refinements|apply and refinements]].
 
@@ -48,13 +58,17 @@ Note that unused arguments do not need to be provided and they will be set to NO
 
 To apply a refinement, such as the /part option above:
 
-    apply :insert [string "go" true 123]
+<pre>
+apply :insert [string "go" true 123]
+</pre>
 
 The true value indicates that the refinement is in use and the 123 will be pasted for the length argument.
 
 If instead, the line was:
 
-    apply :insert [string "go" false 123]
+<pre>
+apply :insert [string "go" false 123]
+</pre>
 
 Even though the 123 was provided, it would not be passed because the refinement is not true.
 
@@ -64,11 +78,15 @@ It is so common to pass final values to a function that a REDUCE is part of the 
 
 What this means is that you can write:
 
-   apply :insert [string uppercase "go" get-ref n + 123]
+<pre>
+apply :insert [string uppercase "go" get-ref n + 123]
+</pre>
 
 In those cases where you do not want to reduce, just use the /only refinement:
 
-   apply/only :insert ["there" "go" #[true] 123]
+<pre>
+apply/only :insert ["there" "go" #[true] 123]
+</pre>
 
 Now the values of the arg block are used directly as-is. Not even variables are evaluated. This is useful if you need to safely control what is being applied.
 
@@ -99,8 +117,10 @@ To help make it easier to use APPLY, if the argument block includes more values 
 
 If argument values are missing from the block, NONE values are substituted in their place. This can be seen here:
 
-   >> apply :print []
-   none
+<pre>
+>> apply :print []
+none
+</pre>
 
 ''Note: we should examine if we want to use UNSET for this instead.''
 
@@ -110,9 +130,11 @@ APPLY will effect the error messages that may be produced when evaluating a func
 
 Because the value of the function is passed (not its name), APPLY does not know the name of the function. Therefore, you will see the name APPLIER used to refer to the function that was called. Here is an example:
 
- >> apply :sine ["xyz"]
- ** Script error: applier does not allow string! for its value argument
- ** Where: apply
+<pre>
+>> apply :sine ["xyz"]
+** Script error: applier does not allow string! for its value argument
+** Where: apply
+</pre>
 
 Although it seems obvious in this case that the function is SINE, in many cases, it will not be obvious because the function is a variable (e.g. passed as an argument).
 

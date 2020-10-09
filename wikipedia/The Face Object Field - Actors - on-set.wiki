@@ -6,14 +6,18 @@ The input argument is the value to set. A return value is not necessary.
 
 Simple setting of the state value:
 
- on-set: [
-   face/state/value: arg
- ]
+<pre>
+on-set: [
+  face/state/value: arg
+]
+</pre>
 
 Setting state value based on input datatype:
 
- on-set: [
-   if integer! type? arg [face/state/value: to-percent arg / 100]
-   if decimal! type? arg [face/state/value: to-percent arg / 100]
-   if percent! type? arg [face/state/value: arg]
- ]
+<pre>
+on-set: [
+  if integer! type? arg [face/state/value: to-percent arg / 100]
+  if decimal! type? arg [face/state/value: to-percent arg / 100]
+  if percent! type? arg [face/state/value: arg]
+]
+</pre>

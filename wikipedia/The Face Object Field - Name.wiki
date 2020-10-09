@@ -12,13 +12,15 @@ Note: for user coding convenience, the name of a face spans more than just its d
 </TD><TD VALIGN=TOP>
 For example, this code works as you would expect, even though the buttons are part of a sub-panel, not the panel in which the field name was defined:
 
-  panel [
-      user: field
-      group [
-          button "Reset" reset 'user
-          button "Clear" clear 'user
-      ]
-  ]
+<pre>
+panel [
+    user: field
+    group [
+        button "Reset" reset 'user
+        button "Clear" clear 'user
+    ]
+]
+</pre>
 
 In cases where it is necessary to open a new name-space, for example in unrelated sub-panels, this can be done with the style/facet/names field. See the [[GUI Panels]] document for more information.
 </TD></TR></TABLE>

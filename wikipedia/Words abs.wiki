@@ -4,22 +4,19 @@ ABS is an action value.
 ==== Arguments ==== 
 : '''value''' -- (Type: number! pair! money! time!)
 
-
 ==== Description ==== 
-
 
 Returns a positive value equal in magnitude.
 
 
-<code><pre>
+
 print absolute -123
 
 print absolute -1:23
-</pre></code>
+
 
 
 ==== Categories ==== 
-
 
 {|
 | [[Categories math|math]] 
@@ -27,7 +24,6 @@ print absolute -1:23
 |}
 
 ==== See also ==== 
-
 
 {|
 | [[Words -|-]] 
@@ -41,7 +37,6 @@ print absolute -1:23
 |}
 
 ==== Comments ==== 
-
 
 <blockquote>
 {|

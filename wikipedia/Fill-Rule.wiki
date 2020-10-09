@@ -19,7 +19,6 @@ Determines the algorithm used to determine what area to fill, if a path that int
 <p>http://www.w3.org/TR/SVG/painting.html#FillProperties</p>
 
 
-
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=15%>
 Pages
@@ -68,7 +67,6 @@ Pages
 *[[Translate]]
 *[[Triangle]]
 *[[Grad-Pen]]</font></TD>
-
 
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=15%>
 Pages

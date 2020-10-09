@@ -29,7 +29,9 @@ The MAP datatype works like a normal dictionary (associative array) type. Key va
 
 I don't think anyone uses it (but maybe I am wrong? Let me know.) It is equivalent to:
 
-  intchars: charset "0123456789"
+<pre>
+intchars: charset "0123456789"
+</pre>
 
 So, that's a better approach anyway. (And we should make some default charsets like that defined from boot.)
 
@@ -41,11 +43,18 @@ The change from 32 bit to 64 bit integer! influences:
 
 Care must be taken with any code that assumes the length of the ISSUE! data returned by to-hex.
 ;Rebol2
- >> to-hex 80
- == #00000050
+
+<pre>
+>> to-hex 80
+== #00000050
+</pre>
+
 ;Rebol3
- >> to-hex 80
- == #0000000000000050
+
+<pre>
+>> to-hex 80
+== #0000000000000050
+</pre>
 
 See [http://www.rebol.net/cgi-bin/r3blog.r?view=0031 R3 Blog article] for options and information on the <span style="background-color:yellow; color:black;">new</span> '''/size''' refinement.
 

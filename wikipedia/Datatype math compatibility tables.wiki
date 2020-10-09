@@ -1,12 +1,15 @@
-			<em>Note:</em> <br>
+<pre>
+<em>Note:</em> <br>
 
-			The SAME? table applies to all equality tests. <br>
+The SAME? table applies to all equality tests. <br>
 
-			The GREATER? table applies to all comparison tests. <br>
+The GREATER? table applies to all comparison tests. <br>
 
-			The MINIMUM table also applies to MAXIMUM. <br>
+The MINIMUM table also applies to MAXIMUM. <br>
 
-		<h3> add </h3> 
+<h3> add </h3>
+</pre>
+
 <table class="wikitable"> 
 <tr> 
 <th> </th> 

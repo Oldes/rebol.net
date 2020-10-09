@@ -64,12 +64,14 @@ Basically, in the Compiled Extension code you:
 ==Using custom gobs==
 If you require a gob to be managed by an external renderer, use the renderer: field.
 
-    my-gob: make gob! [
-        size: 100x100 
-        offset: 0x0 
-        renderer: 'MOAGL 
-        custom: [sphere [0 0 0] 30.0 blue]
-    ]
+<pre>
+my-gob: make gob! [
+    size: 100x100 
+    offset: 0x0 
+    renderer: 'MOAGL 
+    custom: [sphere [0 0 0] 30.0 blue]
+]
+</pre>
 
 This will invoke the appropriate renderer on it.
 
@@ -78,27 +80,40 @@ The reason we use ''CUSTOM:'' instead of ''DATA:'' is that higher-level APIs (ex
 ===Default Custom Renderers===
 You can also use the 'SET-DEFAULT-CUSTOM-RENDERER function.  This prevents you from having to set the ''RENDERER:'' field all the time. You must still use the ''CUSTOM:'' field in order to tell view that this gob uses the default renderer.
 
-    set-default-custom-renderer: 'MOAGL 
-    
-    my-gob: make gob! [
-        size: 100x100 
-        offset: 0x0 
-        custom: [sphere [0 0 0] 30.0 blue]
-    ]
+<pre>
+set-default-custom-renderer: 'MOAGL 
 
+my-gob: make gob! [
+    size: 100x100 
+    offset: 0x0 
+    custom: [sphere [0 0 0] 30.0 blue]
+]
+</pre>
+
+my-gob: make gob! [
+    size: 100x100 
+    offset: 0x0 
+    custom: [sphere [0 0 0] 30.0 blue]
+]
+</pre>
 
 =Changes required in current Rebol version (A107) to make it work=
-    Note: This is in a constent state of flux and for now is only intended as an example
-          of what to expect, eventually.
+
+<pre>
+Note: This is in a constent state of flux and for now is only intended as an example
+      of what to expect, eventually.
+</pre>
+
+<pre>
+Note: This is in a constent state of flux and for now is only intended as an example
+      of what to expect, eventually.
+</pre>
 
 Here is a list of files which will need editing.  I include some of the changes I can already *guess* will be needed.
 
-
 Note that these are still highly subjective assessments at this point.  Not everything here might be possible or feasible, based on knowledge which is kept within the core.
 
-
 Some of these have already been applied to the prototype and are undergoing testing right now.
-
 
 
 ==host_graphics.c==
@@ -114,46 +129,48 @@ Additionally, we could even support this for AGG rendering, allowing nice tricks
 *support gob/custom: [... data ...] ; ANY legal host-kit data
 *support gob/renderer: 'rendererID ; a word, ex: 'OpenGL
 
-
 ==reb_gob.h==
 *Add '''''custom''''' member to '''''rebol_gob struct'''''
 *add a new entry in the '''''GOB_TYPES''''' enum:  '''''GOBT_CUSTOM'''''
 *define IS_GOB_CUSTOM(g)   (GOB_CONTENT(g) && GOB_TYPE(g) == GOBT_CUSTOM)
 *define the '''''gob_renderer''''' struct something like (its changing daily and is not up to date):
-    struct gob_renderer {
-        //*************** 
-        //     payload
-        //*************** 
-        REBYTE *renderer_info; // a one-sentence string identifying this renderer
-        
-        
-        //*************** 
-        //     hooks
-        //*************** 
-        
-        // when the gob is given fresh data by assigning to its '''gob/custom:''' field
-        REBINT (* <u><i>on_data</i></u>)(REBGOB *gob);
-        
-        // when the gob is converted to a custom type (custom: [... data ...])
-        // note: also called when its created as a custom gob directly
-        REBINT (* <u><i>on_custom</i></u>)(REBGOB *gob);
-        
-        // when the gob leaves custom state.  This happens when you assign
-        // user data to the gob other than custom: data (ex:  my_custom_gob/draw: [line 0x0 100x100])
-        REBINT (* <u><i>on_internal</i></u>)(REBGOB *gob);
-        
-        // when gob is appended to a gob (pane) 
-        // note: converting to custom when its already appended, should also call this immediately after on_internal().
-        REBINT (* <u><i>on_append</i></u>)(REBGOB *gob, REBGOB *parent);  
-        
-        // when removed from a gob (pane)
-        // note: when an gob is switched from one pane to another, it should call 
-        REBINT (* <u><i>on_remove</i></u>)(REBGOB *gob, REBGOB *parent);  on_append() immediately.
-        
-        // when rendering is required by compositor and GOBT_EXTERNAL is set. 
-        // a function which receives an RGB (bgr) & alpha image buffer array (not image type), and x,y,w,h, specs.
-        REBINT (* <u><i>on_render</i></u>)(REBGOB *gob); 
-    };
+
+<pre>
+struct gob_renderer {
+    //*************** 
+    //     payload
+    //*************** 
+    REBYTE *renderer_info; // a one-sentence string identifying this renderer
+    
+    
+    //*************** 
+    //     hooks
+    //*************** 
+    
+    // when the gob is given fresh data by assigning to its '''gob/custom:''' field
+    REBINT (* <u><i>on_data</i></u>)(REBGOB *gob);
+    
+    // when the gob is converted to a custom type (custom: [... data ...])
+    // note: also called when its created as a custom gob directly
+    REBINT (* <u><i>on_custom</i></u>)(REBGOB *gob);
+    
+    // when the gob leaves custom state.  This happens when you assign
+    // user data to the gob other than custom: data (ex:  my_custom_gob/draw: [line 0x0 100x100])
+    REBINT (* <u><i>on_internal</i></u>)(REBGOB *gob);
+    
+    // when gob is appended to a gob (pane) 
+    // note: converting to custom when its already appended, should also call this immediately after on_internal().
+    REBINT (* <u><i>on_append</i></u>)(REBGOB *gob, REBGOB *parent);  
+    
+    // when removed from a gob (pane)
+    // note: when an gob is switched from one pane to another, it should call 
+    REBINT (* <u><i>on_remove</i></u>)(REBGOB *gob, REBGOB *parent);  on_append() immediately.
+    
+    // when rendering is required by compositor and GOBT_EXTERNAL is set. 
+    // a function which receives an RGB (bgr) & alpha image buffer array (not image type), and x,y,w,h, specs.
+    REBINT (* <u><i>on_render</i></u>)(REBGOB *gob); 
+};
+</pre>
 
 ==host_window.c==
 *Some Windowing functions, such as '''Find_window()''', are required by some gfx engines in order for us to retrieve the windowing/screen environment from the OS (OpenGL needs the window DC, for example).
@@ -163,11 +180,14 @@ Additionally, we could even support this for AGG rendering, allowing nice tricks
 
 ==agg_compo.cpp==
 *Adding a case within '''''compositor::cp_process_gobs()''''' to support the GOBT_CUSTOM gob type.
-    case GOBT_CUSTOM:
-        // call rendering hook here
-        // there are a lot of tests to do before proposing an explicit
-        // code example
-        break;
+
+<pre>
+case GOBT_CUSTOM:
+    // call rendering hook here
+    // there are a lot of tests to do before proposing an explicit
+    // code example
+    break;
+</pre>
 
 =Notes and Considerations=
 Here we store comments, questions, ideas, bugs, quirks or issues raised so we don't forget them further down the road.
@@ -215,13 +235,11 @@ So this leads me to have to decide on an integration path.  Ultimately, I'd like
 
 This is even more complicated since view allows rendering to bitmaps directly, for which some rendering engines might not even be able to provide any level of support.
 
-
 ===Rendering Modes===
 ----
 For the above reasons, I've added explicit management over chosen rendering methods within CGR API.
 
 Most of this is invisible to the user a part perhaps the fact that some modes will simply be ignored by some renderers, which will result in basically hidden gobs in the tree.
-
 
 I list here The different rendering methods which could (will?) be supported within CGR API.
 For OpenGL support, I will be starting with the container method since its what is basically used by everyone out there.
@@ -254,7 +272,11 @@ we tell The renderer Where to render, but it does not actually integrate within 
 *Rendering can be done in HW using off-screen rendering, on relatively old gfx cards (within 5-7 years old) 
 *we *can* draw under and over other gobs, as well as support alpha blending as normal in view.
 *this allows people to integrate custom graphic algorithms using VERY little C code to plug into view.
- 
+
+<pre>
+
+</pre>
+
 =====Cons:=====
 *Its going to be *very* slow on large displays anyways because we have to use CPU blitting at the end.
 *Older HW might have to use CPU rendering (even slower i.e. unacceptible for animation).

@@ -30,50 +30,71 @@ Set the arrow mode
 <p>Arrow marks are drawn at end-points, but not between the line
 that closes polygons, closed splines, etc.</p>
 
-
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    line 20x20 100x100
+
+<pre>
+line 20x20 100x100
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-1.png|200px 200px]]</TD>
 </TR><<TR>
 
 <TD WIDTH=60%>
-    arrow 1x2
-    curve 50x50 300x50 50x300 300x300
+
+<pre>
+arrow 1x2
+curve 50x50 300x50 50x300 300x300
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-2.png|200px 200px]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    arrow 1x2
-    spline 3 20x20 200x70 150x200 50x300 80x300 200x200
+
+<pre>
+arrow 1x2
+spline 3 20x20 200x70 150x200 50x300 80x300 200x200
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-3.png|200px 200px]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    arrow 1x2
-    spline closed 3 20x20 200x70 150x200 50x300 80x300 200x200
+
+<pre>
+arrow 1x2
+spline closed 3 20x20 200x70 150x200 50x300 80x300 200x200
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-4.png|200px 200px]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    arrow 1x2
-    box 20x20 150x200
+
+<pre>
+arrow 1x2
+box 20x20 150x200
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-5.png|200px 200px]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    arrow 1x2
-    polygon 20x20 200x70 150x200 50x300
+
+<pre>
+arrow 1x2
+polygon 20x20 200x70 150x200 50x300
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/ARROW-6b.png|No Description]]</TD>
 </TR></TABLE>
-
-
 
 
 
@@ -92,9 +113,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -113,7 +132,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -126,9 +144,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

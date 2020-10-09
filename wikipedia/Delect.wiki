@@ -8,7 +8,8 @@ DELECT is implemented as a native function because an unordered parse can be com
 
 The basic function form of DELECT is:
 
-<pre>USAGE:
+<pre>
+USAGE:
     DELECT dialect input output
 
 DESCRIPTION:
@@ -47,8 +48,10 @@ In order to help reduce the need to use paths in more complex environments, you 
 
 Example usage:
 
-  c: context [data: 10]
-  result: delect/in dialect [cmd data] output [c]
+<pre>
+c: context [data: 10]
+result: delect/in dialect [cmd data] output [c]
+</pre>
 
 This line will look for the data word in the C context before looking elsewhere.
 
@@ -93,7 +96,8 @@ Of course, this is a very trivial case, but it gives you the idea.
 
 A DELECT dialect is defined as an object. Here is an example that shows various cases:
 
-<pre>dil: context [
+<pre>
+dil: context [
 	default: [pair! binary!]
 	empty: []
 	single: [integer!]
@@ -123,27 +127,35 @@ Keywords that act as optional sections (like function refinements) are allowed a
 
 After the parse, the output block holds a series of values, one for each datatype specified. For example, if the command is:
 
-    double: [integer! string!]
+<pre>
+double: [integer! string!]
+</pre>
 
 then its result will always be
 
-    [double value1 value2]
+<pre>
+[double value1 value2]
+</pre>
 
 even if no integer or string is provided (in which case NONE is the value).
 
 Here are examples of all combinations of arguments to double and what it returns:
 
-    double => double none none
-    double 1 => double 1 none
-    double "abc" => double none "abc"
-    double 1 "abc" => double 1 "abc"
-    double "abc" 1 => double 1 "abc"
+<pre>
+double => double none none
+double 1 => double 1 none
+double "abc" => double none "abc"
+double 1 "abc" => double 1 "abc"
+double "abc" 1 => double 1 "abc"
+</pre>
 
 ==Numeric Type Conversion==
 
 Note that integers and decimal values will satisfy each other's type. If a decimal is provided for an integer:
 
-    double 1.2 => double 1 none
+<pre>
+double 1.2 => double 1 none
+</pre>
 
 And, an integer can be used for a decimal. Keep that in mind.
 
@@ -151,9 +163,11 @@ And, an integer can be used for a decimal. Keep that in mind.
 
 Note: During the parse, NONE values in the input stream will be ignored. This is allowed because NONE is the value returned for missing arguments. For example:
 
-    double none => double none none
-    double "abc" none => double none "abc"
-    double none 1 => double 1 none
+<pre>
+double none => double none none
+double "abc" none => double none "abc"
+double none 1 => double 1 none
+</pre>
 
 This is useful when preprocessing dialect input streams.
 
@@ -161,9 +175,11 @@ This is useful when preprocessing dialect input streams.
 
 Within the input stream, variables, paths, and parens are allowed:
 
-    double n - where n is integer
-    double obj/size - where size is integer in obj
-    double (1 + 2)
+<pre>
+double n - where n is integer
+double obj/size - where size is integer in obj
+double (1 + 2)
+</pre>
 
 Note that functional paths are not allowed and will cause an error.
 
@@ -173,24 +189,32 @@ As noted above, a * will indicate when a value is repeated.
 
 For example:
 
-    multi: [* pair!]
+<pre>
+multi: [* pair!]
+</pre>
 
 will accept and return:
 
-    multi
-    multi 1x2
-    multi 1x2 3x4
-    multi 1x2 3x4 5x6 ...
+<pre>
+multi
+multi 1x2
+multi 1x2 3x4
+multi 1x2 3x4 5x6 ...
+</pre>
 
 Any number of pairs can be provided.
 
 Currently, it is suggested to put the * types at the end of the block.  It is better to write:
 
-    line: [tuple! * pair!]
+<pre>
+line: [tuple! * pair!]
+</pre>
 
 rather than:
 
-    line: [* pair! tuple!]
+<pre>
+line: [* pair! tuple!]
+</pre>
 
 ==Literal Commands==
 
@@ -198,8 +222,10 @@ Literal commands are allowed as a variation of a normal command. This is used in
 
 So, for example:
 
-    double 1 "a" => double 1 "a"
-    'double 1 "a" => 'double 1 "a"
+<pre>
+double 1 "a" => double 1 "a"
+'double 1 "a" => 'double 1 "a"
+</pre>
 
 ==Default Types==
 
@@ -207,15 +233,21 @@ As noted above, the first word of the dialect can specify types that need no com
 
 For example, in the rich text dialect, you can write:
 
-   [red "This text is red"]
+<pre>
+[red "This text is red"]
+</pre>
 
 This is allowed because both the red value (a tuple) and the string are defined as default types. Example may be:
 
-   default: [tuple! string!]
+<pre>
+default: [tuple! string!]
+</pre>
 
 When the above input is parsed, the result will be:
 
-   [default 255.0.0 default "This text is red"]
+<pre>
+[default 255.0.0 default "This text is red"]
+</pre>
 
 Each default value is identified by the default word and each value is returned separately.
 
@@ -248,8 +280,10 @@ The general rules are:
 
 For example, write:
 
-    play: [integer! pair! string!]
-    stop: [word!]
+<pre>
+play: [integer! pair! string!]
+stop: [word!]
+</pre>
 
 if you expect play more often than stop, and you expect play integers more often than play strings.
 

@@ -1,16 +1,20 @@
 We now try to remove spaces that would sometimes appear before a newline. In the example below, there are no spaces following the c and the f before the newline.
 
-   [
-       abc
-       def
-   ]
+<pre>
+[
+    abc
+    def
+]
+</pre>
 
 
 Also, for /all keep in mind that just like in R2:
 
-   mold/all none => #[none]
-   mold/all true => #[true]
-   mold/all false => #[false]
+<pre>
+mold/all none => #[none]
+mold/all true => #[true]
+mold/all false => #[false]
+</pre>
 
 These are common shortcut cases. We make them easier because for these specific cases, programmers may actually type them into their code.
 
@@ -22,7 +26,9 @@ Should mold/only on objects remove the MAKE object! part of the mold and also th
 
 MOLD can potentially have quite a few other refinements. For example, the precision of decimal values or use of , not . for decimals. Rather than make each of these a refinement, it is more likely that we will allow an object to specify the variations.
 
-   mold/options block [decimal-precision: 10]
+<pre>
+mold/options block [decimal-precision: 10]
+</pre>
 
 ==MOLD/all==
 

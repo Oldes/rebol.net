@@ -1,5 +1,13 @@
 ==Introduction==
 
+Rebol series like strings and blocks incorporate:
+
+* fast index access
+
+* methods for traversing and skipping
+
+* built-in bounds checking
+
 This article:
 
 * defines a mathematical model of Rebol series
@@ -10,334 +18,343 @@ This article:
 
 '''Definition:''' we say that a mathematical function <code>S</code> is a ''Rebol series'' if:
 
-    S datatype
-is one of the series! datatypes
-    S displacement
-is an integer value
-    S payload
-is a payload.
+* <code>S('datatype)</code> is one of the series! datatypes (series! datatypes are: string!, binary!, block!, ...),
 
-Series! datatypes are: string!, binary!, block!, ...
+* <code>S('displacement)</code> is a 32-bit signed integer, i.e., an integer value such that <code>-2147483648 <= S('displacement) <= 2147483647</code>,
 
-'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every executionTime <code>t</code>
-    D t size
-is a nonnegative integer value <code>N</code> and for every integer value <code>i</code> such that <code>0 <= i < N</code>
-    D t i
-is a Rebol value.
+* and <code>S('payload)</code> is a payload.
 
-Note that <code>N = 0</code> is allowed, in which case the payload size is 0 and the payload is empty. Note also that payloads depend on execution time, i.e., they can change in time.
+'''Note:''' in the model, the series displacement is defined as a 32-bit signed integer, since in current interpreter versions, skips, offsets, etc. are implemented using 32-bit signed integers.
 
-==Some simple functions==
+===Payload===
 
-The goal of this section is to define some simple functions to establish basic terminology necessary to discuss the current state of the interpreter.
+'''Definition:''' we say that mathematical function <code>D</code> is a ''payload'' if for every invocation time <code>t</code>:
 
-'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the executionTime value of the time when the evaluation of the expression started.
+* the value <code>D(t,'size)</code> is a nonnegative 32-bit signed integer value, i.e., <code>0 <= D(t,'size) <= 2147483647</code>,
 
-===The <code>at-head?</code> function===
+* and for every 32-bit signed integer index <code>i</code> holds:
 
-The <code>at-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its head.
+** <code>D(t,i) = #[none]</code> if <code>i < 0</code>,
 
-    (at-head? S) = #[true]
-, if <code>(S displacement) = 0</code>
-    (at-head? S) = #[false]
-, if <code>(S displacement) <> 0</code>
+** <code>D(t,i)</code> is a Rebol value if <code>0 <= i < D(t,'size)</code>,
 
-Tests suggest that this model matches the <code>head?</code> function defined in the <code>rebol/version == 2.7.8.3.1</code> interpreter. The <code>at-head?</code> name has been chosen just for compatibility with the function naming convention in the subsequent cases.
+** and <code>D(t,i) = #[none]</code> if <code>D(t,'size) <= i</code>
 
-===The <code>head</code> function===
+'''Notes:'''
 
-The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head series <code>T</code>.
+* The payload is time-dependent, meaning that the results depend on the time of invocation.
 
-<code>T</code> is a Rebol series having the same datatype as <code>S</code>, displacement 0 and the same payload as <code>S</code>, i.e.,
+* <code>D(t,'size) = 0</code> is allowed, in which case we say that the payload is empty.
 
-    (T datatype)     = (S datatype)
-    (T displacement) = 0
-    (T payload)      = (S payload)
+* For the same reasons as above it makes sense to use 32-bit signed integers for payload size, and since negative sizes do not make sense, only nonnegative numbers are allowed.
 
-Tests suggest that this model of the <code>head</code> function is implemented in, e.g., the <code>rebol/version == 2.7.8.3.1</code> interpreter.
+'''Convention:''' from now on, unless otherwise stated, symbol <code>t</code> will denote the invocation time, i.e., the time when the given function is invocated.
 
-===The <code>pre-head?</code> function===
+===The head of a series===
 
-The <code>pre-head?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a pre-head position.
+The <code>head</code> function is a function accepting a Rebol series <code>S</code> and returning its head. The ''head'' of a series is defined as a series having a zero displacement and the same datatype and payload as the given series:
 
-    (pre-head? S) = #[true]
-, if <code>S displacement</code> is negative
-    (pre-head? S) = #[false]
-, if <code>S displacement</code> is nonnegative
+* <code>head(S)('displacement) = 0</code>
+* <code>head(S)('datatype) = S('datatype)</code>
+* <code>head(S)('payload) = S('payload)</code>
 
-This function is not available in the interpreter, even though the <code>rebol/version == 2.7.8.3.1</code> interpreter can construct such series, as this example demonstrates:
+Note that the <code>head</code> function is time-independent.
 
-    index? #[block! [a] -2] ; == -2
+===Finding out whether a series is at its head===
 
-This function can be defined as a mezzanine in the <code>rebol/version == 2.7.8.3.1</code> interpreter; for example:
+The <code>at-head?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is its own head:
 
-    pre-head?: func [
-        "Returns TRUE if SERIES is at a pre-head position"
-        series [series!]
-    ] [
-        0 >= index? :series
-    ]
+* <code>at-head?(S) = #[true]</code> if <code>S('displacement) = 0</code>,
 
-===The <code>at-tail?</code> function===
+* and <code>at-head?(S) = #[false]</code> if <code>S('displacement) <> 0</code>.
 
-The <code>at-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at its tail.
+Note that the <code>at-head?</code> function is time-independent.
 
-    (at-tail? S) = #[true]
-, if <code>(S displacement) = (do S payload t size)</code>
-    (at-tail? S) = #[false]
-, if <code>(S displacement) <> (do S payload t size)</code>
+===Finding out whether a series is at a pre-head position===
 
-This function does not exist in the current interpreter. It can be defined as a mezzanine:
+The <code>pre-head?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the series is at a pre-head position:
 
-    at-tail?: func [
-        "Returns TRUE if SERIES is exactly at its tail position."
-        series [series!]
-    ] [
-        same? :series tail :series
-    ]
+* <code>pre-head?(S) = #[true]</code> if <code>S('displacement)</code> is negative,
 
-===The <code>tail</code> function===
+* and <code>pre-head?(S) = #[false]</code> if <code>S('displacement)</code> is nonnegative.
 
-The <code>tail</code> function is a function accepting a Rebol series <code>S</code> and returning its tail series <code>T</code>.
+Note that the <code>pre-head?</code> function is time-independent.
 
-<code>T</code> is a Rebol series with the same datatype as <code>S</code>, a displacement equal to the current payload size and the same payload as <code>S</code>, i.e.,
+===The tail of a series===
 
-    (T datatype)     = (S datatype)
-    (T displacement) = (do S payload t size)
-    (T payload)      = (S payload)
+The <code>tail</code> function is a function accepting a Rebol series. It returns the ''tail'' of the given series, i.e., a series having the same datatype and payload as the given series, and a displacement equal to the size of the payload of the given series at the time of invocation:
 
-Tests suggest that this model is implemented in the <code>rebol/version == 2.7.8.3.1</code> interpreter as the <code>tail</code> function.
+* <code>tail(t,S)('datatype) = S('datatype)</code>,
 
-===The <code>past-tail?</code> function===
+* <code>tail(t,S)('payload) = S('payload)</code>,
 
-The <code>past-tail?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determining whether the series is at a past-tail position.
+* and <code>tail(t,S)('displacement) = S('payload)(t,'size)</code>.
 
-    (past-tail? S) = #[true]
-, if <code>(S displacement) > (do S payload t size)</code>
-    (past-tail? S) = #[false]
-, if <code>(S displacement) <= (do S payload t size)</code>
+Note that as opposed to the <code>head</code> function, the <code>tail</code> function is time-dependent.
 
-This function does not exist in the current interpreter, while the interpreter can construct such series as this example demonstrates:
+===Finding out whether a series is at its tail===
 
-    s: tail [a]
-    clear head s
-    same? s tail s ; == false
+The <code>at-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at its tail at the time of invocation:
 
-This function can be defined as a mezzanine:
+* <code>at-tail?(t,S) = #[true]</code> if <code>S('displacement) = S('payload)(t,'size)</code>,
 
-    past-tail?: func [
-        "Returns TRUE if SERIES is at a past-tail position"
-        series [series!]
-    ] [
-        and~ tail? :series not same? :series tail :series
-    ]
+* and <code>at-tail?(t,S) = #[false]</code> if <code>S('displacement) <> S('payload)(t,'size)</code>.
 
-===The <code>in-bounds?</code> function===
+Note that the <code>at-tail?</code> function is time-dependent.
 
-The <code>in-bounds?</code> function is a function accepting a Rebol series <code>S</code> and returning a logic value determinig whether the position of the series is in bounds, i.e., neither pre-head nor past-tail.
+===Finding out whether a series is at a past-tail position===
 
-    (in-bounds? S) = #[true]
-, if <code>((S displacement) >= 0) and ((S displacement) <= (do S payload t size))</code>
-    (in-bounds? S) = #[false]
-otherwise.
+The <code>past-tail?</code> function is a function accepting a Rebol series. It returns a logic value determining whether the given series is at a past-tail position at the time of invocation:
 
-This function is not defined in the current interpreter, but it can be defined as a mezzanine:
+* <code>past-tail?(t,S) = #[true]</code> if <code>S('displacement) > S('payload)(t,'size)</code>,
 
-    in-bounds?: func [
-        "Returns TRUE if SERIES is neither pre-head nor past-tail."
-        series [series!]
-    ] [
-        not any [pre-head? :series past-tail? :series]
-    ]
+* and <code>past-tail?(t,S) = #[false]</code> if <code>S('displacement) <= S('payload)(t,'size)</code>.
 
-===The <code>constrain</code> function===
+Note the <code>past-tail?</code> function is time-dependent.
 
-The <code>constrain</code> function is a function accepting a Rebol series <code>S</code> and returning a Rebol series <code>T</code> with a position constrained to range bounded by series head and tail positions.
+===Finding out whether a series is empty===
 
-    T = head S
-, if <code>pre-head? S</code>
-    T = S
-, unless <code>(pre-head? S) or (past-tail? S)</code>
-    T = tail S
-otherwise.
+The <code>is-empty?</code> function is a function accepting a Rebol series. It yields a logic! type value determining whether the given series is empty at the time of invocation:
 
-This function can be defined as a mezzanine:
+* <code>is-empty?(t,S) = #[true]</code> if <code>max(0,S('displacement)) < S('payload)(t,'size)</code>,
 
-    constrain: func [
-        "Returns SERIES constrained to the range bounded by the SERIES head and tail positions"
-        series [series!]
-    ] [
-        case [
-            pre-head? :series [head :series]
-            past-tail? :series [tail :series]
-            'else [:series]
-        ]
-    ]
+* and <code>is-empty?(t,S) = #[false]</pre> if <code>max(0,S('displacement)) >= S('payload)(t,'size)</code>.
 
-===The <code>length-of</code> function===
+Note that the <code>is-empty?</code> function is time-dependent.
 
-The <code>length-of</code> function is a function accepting a Rebol series <code>S</code> and returning a nonnegative integer determining the length of the series.
+===Determining the length of a series===
 
-    (length-of S) = (max 0 (do S payload t size) - (max 0 S displacement))
+The <code>length-of</code> function is a function accepting a Rebol series. It returns a nonnegative integer equal to the length of the given series at the time of invocation:
 
-The <code>length?</code> function in the <code>rebol/version == 2.7.8.3.1</code> interpreter does not work like that as this test demonstrates:
+<pre>
+length-of(t,S) = max(0,S('payload)(t,'size) - max(0,S('displacement)))
+</pre>
 
-    length? #[block! [] -2] ; == 3
+Note that the <code>length-of</code> function is time-dependent.
 
-, while the <code>length-of</code> function would yield 0.
+===Index arithmetic===
 
-==Discussion of the current interpreter state==
+====Least Absolute Remainder====
 
-===Pre-head series===
+For integer <code>a</code> and nonzero integer <code>b</code> we define
 
-'''Definition:''' ''Pre-head series'' are series displaced backwards from their head, i.e., series having a negative <code>displacement</code>.
+<code>r = LAR(a,b)</code> (read: "<code>r</code> is the Least Absolute Remainder of <code>a</code> divided by <code>b</code>") if
 
-====Inconsistencies====
+* <code>a - r</code> is divisible by <code>b</code>,
 
-In the <code>rebol/version == 2.7.8.3.1</code> interpreter these inconsistencies can be found:
+* and <code>-abs(b) <= r + r < abs(b)</code>,
 
-* When discussed (if discussed at all), pre-head series are called "Illegal series". That is inconsistent. If it is a bug for such a series to exist, a consistent interpreter shall not produce it.
-* Pre-head series are treated obscurely, as "Series that must not be mentioned in the documentation".
-* Simple functions and reflectors (like the ones defined above) for handling and detecting pre-head series are missing in the interpreter.
-* The <code>mold</code> function is not able to handle pre-head series triggering an error (while <code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
-* The <code>pick</code> function acknowledges pre-head positions allowing picking at such positions without triggering an error.
-* The <code>back</code>, <code>skip</code> and <code>at</code> functions refuse to go to pre-head positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
+Where <code>abs</code> is the absolute value.
 
-====Possible amendments====
+====32-bit signed arithmetic with wrapping====
 
-There are two different methods trying to handle the inconsistencies
+For integer <code>a,b</code> we define
 
-=====Amend the interpreter to not produce pre-head series at all=====
+<code>add-wrap(a,b) = LAR(a + b,2 ** 32)</code>,
 
-The <code>rebol/version == 2.100.111.3.1</code> interpreter has been amended so that it does not produce pre-head series now. However, this leads to
+and <code>subtract-wrap(a,b) = LAR(a - b,2 ** 32)</code>.
 
-======Inconsistencies======
+Advantages if the two's complement representation is used:
 
-    s: load "#[block! [a] -3]"
-    mold/all s ; == "#[block! [a] 2]"
+* both functions accept any pair of 32-bit signed integers and yield a 32-bit signed integer as a result
 
-* The inconsistency is that if it is "illegal" for the interpreter to create the <code>#[block! [a] -3]</code> block, why does the <code>load</code> function accept the source string as "legal" and produce a result that is incompatible with the specification instead of triggering an error?
+* for every pair of 32-bit signed integers <code>a,b</code> holds that
 
-* As discussed below, this provision is not usable for past-tail series meaning that for past-tail series a different (incompatible and therefore inconsistent with this) provision should take place.
+<pre>
+a = add-wrap b subtract-wrap a b
+</pre>
 
-* As noted above this provision is incompatible with the behaviour of the <code>pick</code> function. It would be possible to change the behaviour of the function, but there is a broad agreement between Rebol users that the current behaviour of the function when picking at pre-head positions is convenient.
+'''Notes:'''
 
-======Usability limitations======
+* For example, the gcc does not offer any other representation of signed integers than two's complement.
 
-This provision is less comfortable than the alternative proposed below.
+* The advantage of the two's complement representation compared to one's complement or sign/magnitude representations are that the two's complement is the only representation capable of representing all least absolute remainders of division by <code>2 ** 32</code>, i.e., it is the only representation for which the <code>LAR</code> function and the wrapping addition and subtraction always yield a representable 32-bit integer.
 
-'''Example:''' Let's assume that a user wants to use a series of values [d e] indexed by numbers in the [3..4] range. To be able to do it using the <code>rebol/version == 2.100.111.3.1</code> interpreter the user needs to define:
+====Determining the offset between two series====
 
-    my-series: [#[none] #[none] d e]
+Sometimes it is useful to know the offset between two series. If the displacements of the series are signed 32-bit numbers, it is possible to calculate the offset as a signed 32-bit number too, using the formula:
+
+<pre>
+offset-of(S,T) = subtract-wrap(T('displacement),S('displacement))
+</pre>
+
+Note that the <code>offset-of</code> function is time-independent.
+
+====Determining the payload index====
+
+Given a series <code>S</code> and and and index <code>i</code>, the task is to calculate a <code>payload-index(S,i)</code> value such that the <code>i</code>-th position in <code>S</code> corresponds to the <code>payload-index(S,i)</code>-th position in its payload.
+
+The function can be used to define the <code>pickz</code> function. However, this is not the only use of such a function. It would be useful for other indexing purposes as well.
+
+It turns out that the simplest definition is:
+
+<pre>
+payload-index(S,i) = add-wrap(S('displacement),i)
+</pre>
+
+Note that the <code>payload-index</code> function is time-independent.
+
+===Picking values===
+
+A simple <code>pickz</code> function:
+
+<pre>
+pickz(t,S,i) = S('payload)(t,payload-index(S,i))
+</pre>
+
+Note that the <code>pickz</code> function is time-dependent, i.e., that its result depends on the time of invocation.
+
+==Implementations==
+
+===Displacement===
+
+In Rebol, there is no direct method to examine the displacement. However, there are numerous indirect informations we can use:
+
+* Rebol interpreters are implemented in C, i.e., C is the native code of the interpreter.
+
+* It is known that Rebol uses signed 32-bit integers as arguments to indexing functions.
+
+* Rebol 2.7.8 can construct pre-head series like <code>#[block! [1] -1]</code>, which suggests that the displacement should be a signed integer.
+
+* Suppose that in Rebol 2.7.8 there is a native 32-bit signed displacement which is examined by the <code>index?</code> function, and that the function usually returns the displacement increased by 1. Since the smallest signed integer in two's complement is -2147483648, it is logical to expect -2147483647 to be the smallest value obtainable as a result of the <code>index?</code> function. And, indeed, in Rebol 2.7.8 <code>index? #[block! [1] -2147483647] ; == -2147483647</code>, while <code>index? #[block! [1] -2147483648] ; == 2</code>, which signals that there is some kind of arithmetic overflow in the latter case.
+
+* The past-tail series can not only be created, but, in accordance with the mathematical model, their creation cannot be suppressed (Series have time-independent displacement and time-dependent payload, which can shrink.) This does not hold just for the mathematical model, but it also turns out to be true both in Rebol 2.7.8 and in Rebol 2.101.0:
+
+<pre>
+a: [1 2]
+b: skip a 2
+mold/all b ; == #[block! [1 2] 3]
+clear a
+mold/all b ; == #[block! [] 3]
+</pre>
+
+* Handling of past-tail series has several inconsistencies:
+
+** While <code>mold/all</code> handles past-tail series correctly, <code>mold</code> errors on them in Rebol 2.7.8. This leads to interpreter crashes when <code>mold</code> is used to print error causing code. In Rebol 2.101.0 this error has been corrected. Example of error: <code>error? try [mold b] ; == true</code>
+
+** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>index?</code> function truncates past-tail indices to tail indices, which is another inconsistent behaviour, since there always is a way how to determine the correct (untruncated) value.
+
+** In Rebol 2.7.8 as well as in Rebol 2.101.0, the <code>load</code> function truncates past-tail indices to tail indices, which is inconsistent with the behaviour of the <code>mold</code> function. Example: <code>mold/all load "#[block! [] 3]" ; == "[]"</code>
+
+* In Rebol 2.101.0, the <code>load</code> function always truncates negative indices in construction syntax to tail. Example: <code>mold/all #[block! [1] -1] ; == "#[block! [1] 2]"</code>
+
+* The fact that Rebol 2.101.0 always truncates negative indices in construction syntax to tail suggests that Rebol 2.101.0 considers them to be greater than positive 32-bit numbers (positive indices are truncated to tail only when they are greater than the payload size). This would happen if Rebol 2.101.0 handled the negative indices as unsigned "under the hood". On one hand, this suggests that the assumption in the mathematical model that the displacement is a signed integer is not valid for Rebol 2.101.0. Due to unsigned displacement, pre-head positions were suppressed in Rebol 2.101.0. On the other hand, this makes the design of Rebol 2.101.0 inconsistent with the usage of signed numbers in the construction syntax, and in series functions such as <code>pick</code>. This is also inconsistent with the handling of past-tail series (As opposed to pre-head positions, past-tail positions cannot be suppressed in this way.)
+
+====Pre-head and past-tail positions====
+
+As discussed above, past-tail positions cannot be suppressed. It is also not possible to suppress the detection of past-tail positions. For consistency, (not just between pre-head and past-tail handling, but also with functions accepting a signed index such as <code>pick</code>) it appears to be best to acknowledge not just the existence of past-tail positions, but also the existence of pre-head positions. The acknowledgment does not just improve consistency, it also improves flexibility and can simplify indexing:
+
+Assume that a user wants to use a series of values <code>[d e]</code> indexed by numbers in the <code>[3..4]</code> range. To be able to do it using the Rebol 2.100.111 interpreter the user needs to define:
+
+<pre>
+my-series: [#[none] #[none] d e]
+</pre>
 
 Now:
 
-    pick my-series 3 ; == d
-    pick my-series 4 ; == e
+<pre>
+pick my-series 3 ; == d
+pick my-series 4 ; == e
+</pre>
 
-In <code>rebol/version == 2.7.8.3.1</code> the following works:
+In Rebol 2.7.8 the following works:
 
-    index? my-series: #[block! [d e] -1] ; == -1
-    pick my-series 3 ; == d
-    pick my-series 4 ; == e
+<pre>
+index? my-series: #[block! [d e] -1] ; == -1
+pick my-series 3 ; == d
+pick my-series 4 ; == e
+</pre>
 
-Comparing the two alternatives we see that in <code>rebol/version == 2.7.8.3.1</code> we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the same effect, i.e., the <code>rebol/version == 2.7.8.3.1</code> solution is faster and more memory efficient.
+Comparing the two alternatives we see that in Rebol 2.7.8 using pre-head series, we did not have to insert the extraneous <code>#[none]</code> values to the block to achieve the desired effect. Thus, in addition to consistency, the approach acknowledging the existence of pre-head series turns out to be more flexible.
 
-In addition to that, the <code>length?</code> function yields:
+===Head series===
 
-    length? my-series ; == 4
+Tests suggest that the <code>head</code> model function is equivalent to the <code>head</code> function implemented in both Rebol 2.7.8 and Rebol 2.101.0 interpreters.
 
-, which does not look desirable. The <code>length-of</code> function defined above would yield a more natural result 2 if used for the <code>rebol/version == 2.7.8.3.1</code> case.
+===Is a series a head?===
 
-=====The alternative is to handle pre-head series consistently=====
+Comparing the <code>at-head?</code> model function to the <code>head?</code> function, we find out that:
 
-This includes:
+* In Rebol 2.7.8, the <code>head?</code> function is time-dependent
 
-* Mention pre-head series in the documentation (a definition suffices, in my opinion).
-* Stop calling pre-head series "Illegal series" (this is the "easiest to implement" part of the proposal).
-* Define the simple functions described above (quite easy as well).
-* Amend the <code>mold</code> function to not trigger an error. An expression like <code>mold #[block! [a] -2]</code> can yield "[a]".
-* Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
-* Define new <code>back-any</code> function going to the previous position even when it is a pre-head position.
-* Define new <code>skip-any</code> function going to the specified position even if it is a pre-head position.
+<pre>
+a: [1 2]
+b: skip a 2
+head? b ; == false
+clear a
+same? b head b ; == false
+head? b ; == true
+insert a [1 2]
+head? b ; == false
+</pre>
 
-'''Advantages:'''
+* If we take the <code>head</code> function as the definition of the head, the <code>head?</code> function in Rebol 2.7.8 is incorrect. To be correct, it should work like the <code>at-head?</code> function.
 
-* consistence
-* comfortable indexing (see below)
+* In Rebol 2.101.0 the <code>head?</code> function appears to be equivalent to the <code>at-head?</code> model function.
 
-===Past-tail series===
+===Tail series===
 
-'''Definition:''' ''Past-tail'' series are series having <code>displacement</code> greater than the payload size.
+Tests suggest that the <code>tail</code> model function is equivalent to the <code>tail</code> function implemented in the Rebol 2.7.8 interpreter as well as in the Rebol 2.101.0 interpreter.
 
-====Inconsistencies====
+===Is a series a tail?===
 
-'''Example:''' In <code>rebol/version == 2.7.8.3.1</code> interpreter the help string of the <code>tail?</code> function states:
+Comparing the <code>at-tail?</code> model function to the <code>tail?</code> function, we find out that for Rebol 2.7.8 as well as for Rebol 2.101.0:
 
-    "Returns TRUE if a series is at its tail."
+* If we take the <code>tail</code> function as the definition of the tail, the <code>tail?</code> function is incorrect. To be correct, it should work like the <code>at-tail?</code> model function. Problem example:
 
-However, the the actual behaviour is:
+<pre>
+a: [1 2 3]
+b: skip a 2
+clear a
+same? b tail b ; == false
+tail? b ; == true
+</pre>
 
-    s: skip  [a b c d] 3
-    clear skip s -2
-    same? s tail s ; == false
-    tail? s ; == true
+===Is a series empty?===
 
-, which, in my opinion, contradicts the help string. In the <code>rebol/version == 2.100.111.3.1</code> interpreter the help string of the <code>tail?</code> function has been corrected, but the 'tail' and 'tail?' function names alone (when not reading their help strings) still look misleading. Also, we obtain:
+Comparing the <code>is-empty?</code> model function and the <code>empty?</code> function in Rebol 2.7.8 we find out that
 
-    index? s ; == 2
+<pre>
+empty? #[block! [] -1] ; == false
+</pre>
 
-, while
+, while the <code>is-empty?</code> model function would yield <code>true</code>.
 
-    mold/all s ; == "#[block![a]4]"
+In Rebol 2.101.0 the <code>empty?</code> function appears to be equivalent to the <code>is-empty?</code> model function.
 
-, which shows the correct result.
+===How long a series is?===
 
-'''Example:'''
+The <code>length?</code> function in the Rebol 2.7.8 interpreter does not work like the <code>length-of</code> model function as this test demonstrates:
 
-    mold/all load "#[block! [a] 4]" ; == "#[block![a]2]"
+<pre>
+length? #[block! [] -2] ; == 3
+</pre>
 
-* The inconsistency is that if it is "illegal" for the interpreter to create the <code>#[block! [a] 4]</code> block, why does the <code>load</code> function accept the string as "legal" and produce a result that is incompatible with the specification instead of triggering an error? This is strange knowing that the interpreter does (and cannot stop, in fact) produce the <code>#[block! [a] 4]</code> series as demonstrated above.
-* In <code>rebol/version == 2.7.8.3.1</code> interpreter the <code>index?</code> function pretends that the past-tail positions it encounters aren't past-tail. This just impairs the reflexivity of the language, because the user can obtain correct informations using other means as demonstrated.
-* The <code>tail?</code> function yields <code>#[true]</code> for past-tail, which looks misleading even if the help string of the function is amended (some users may not read help strings).
-* Past-tail series are treated as "Series that must not be mentioned in the documentation".
-* When discussed (if discussed at all), past-tail series are called "Illegal series". That is inconsistent. If it is a bug for such a value to exist, a consistent interpreter shall not produce it.
-* Simple functions and reflectors defined above designed for handling and detecting past-tail series are missing in the interpreter.
-* The <code>mold</code> function is not able to handle past-tail series triggering an error (<code>mold/all</code> works without a quirk). This is a serious problem - the <code>mold</code> function is used to print error reports and must not trigger an error when printing an error report unless we want the interpreter to crash.
-* The <code>pick</code> function acknowledges past-tail positions allowing picking at such positions without triggering an error.
-* The <code>mext</code>, <code>skip</code> and <code>at</code> functions refuse to go to past-tail positions, ignoring that such positions exist and are acknowledged by <code>pick</code>.
+, while the <code>length-of</code> model function yields 0 in such case.
 
-====Possible amendments====
+In Rebol 2.101.0 the <code>length?</code> function appears to be equivalent to the <code>length-of</code> model function.
 
-Just the incorrect behaviour of the <code>index?</code> function has been corrected in <code>rebol/version == 2.100.111.3.1</code> interpreter. Due to the fact that series payloads can be cleared, any series with positive displacement can become past-tail. The interpreter cannot detect which series become past-tail when a payload is cleared, because that would make the <code>remove</code> and <code>clear</code> operations slower and more complicated than acceptable. Thus, it is not possible to amend the interpreter to not produce past-tail series at all. Therefore, the only serious alternative is to handle past-tail series consistently, which includes:
+===What is the offset between two series?===
 
-* Mention past-tail series in the documentation (a definition suffices, in my opinion).
-* Stop calling past-tail series "Illegal series" (this is the easiest part of the proposal).
-* Define the simple functions described above (quite easy as well).
-* Amend the <code>load</code> function to yield the specified result when handling the "#[block! [a] 4]" source string.
-* Amend the <code>mold</code> function to not trigger an error when handling past-tail series. An expression like <code>mold #[block! [a] 4]</code> can yield "[a]".
-* Amend the <code>length?</code> function to work like the <code>length-of</code> function above.
-* Define new <code>next-any</code> function going to the next position even when it is a past-tail position.
-* Define the <code>skip-any</code> function so that it goes to the specified position even if it is a past-tail position.
+The main difference between the <code>offset-of</code> model function and the standard <code>offset?</code> function in Rebol 2.7.8 is that there are series for which the <code>offset?</code> function does not work due to overflow:
 
-'''Advantages:'''
+<pre>
+>> a: #[block! [1 2] -2147483646] none
+>> offset? tail a a
+** Math Error: Math or number overflow
+** Where: offset?
+** Near: subtract index? series2 index? series1
+</pre>
 
-* consistence
-* comfortable indexing (see below)
+The overflow does not occur in Rebol 2.101.0.
 
 ===Indexing===
 
-Before discussing indexing, let's take a "philosophical detour"
+The simplest index arithmetic compatible with the mathematical model of Rebol series is the one used in the above <code>pickz</code> function. In fact, it looks as the only indexing method compatible with the usage of both positive and negative integers for indexing purposes: When traversing from positive numbers to negative or vice versa, we always traverse through 0. An attempt to take the overly complicated, overflow- and bug-ridden indexing functions available in Rebol 2.7.8 and define, e.g., the <code>pickz</code> function on top of them does not make sense.
 
-====Does 0 "exist"?====
+Any indexing trying to excommunicate zero from indexing continuing to use both positive and negative numbers is asking for trouble, making an obvious gotcha that caught not just ordinary users, but, verifiably, also Rebol designer.
 
-Some opponents of 0 state: "0 does not even exist, it should not be allowed as an index, then"
-
-It is fair to admit that the question whether 0 "exists" may indeed be resolved by stating that it actually does not "exist". However, that does not mean the opponents of 0 could start to celebrate. The situation is the same as with the number 1, e.g. Does 1 "exist"? Not "much", we cannot find it in the real world any easier than we can find 0. Note that many Greek mathematicians did not consider 1 to be "a number", so to them 2 was "the smallest number" (they used the term "multitude" and it is easy to see why they considered inappropriate to call 1 "multitude").
-
-It suffices to say that 1 is not something that "exists" in the common sense of the word, it is just an abstract notion invented by clever people to point to the common property of a hand containing one apple, a letter consisting of one page, a room in which one man is sitting, a net containing just one fish, a purse containing just one coin, etc.
-
-In a similar sense 0 is an abstract notion pointing to the common property of a hand containing no apple, an empty envelope, a room in which nobody is sitting, a net containing no fish, an empty purse, etc.
+Some particular questions worth discussing are:
 
 ====Does Rebol have 1-based indexing?====
 
@@ -345,9 +362,11 @@ Unsurprisingly, the answer is "yes".
 
 '''Example:'''
 
-    block: [a b]
-    pick block 1 ; == a
-    pick block 2 ; == b
+<pre>
+block: [a b]
+pick block 1 ; == a
+pick block 2 ; == b
+</pre>
 
 ====Is Rebol indexing 1-based?====
 
@@ -355,74 +374,51 @@ Perhaps surprisingly, the answer is "no".
 
 '''Example:'''
 
-    index? block: #[block! [a b] 0] ; == 0
-    pick block 2 ; == a
-    pick block 3 ; == b
+<pre>
+index? block: #[block! [a b] 0] ; == 0
+pick block 2 ; == a
+pick block 3 ; == b
+</pre>
 
 As we use indices from the <code>2 <= index < 4</code> range to pick the values of the <code>block</code>, we are actually using 2-based indexing.
 
 ====Does Rebol have 0-based indexing?====
 
-<code>rebol/version == 2.100.111.3.1</code> actually does.
+Rebol 2.100.111 actually does.
 
 '''Example:'''
 
-    block: #[block! [a b] 2]
-    pick block 0 ; == a
-    pick block 1 ; == b
+<pre>
+block: #[block! [a b] 2]
+pick block 0 ; == a
+pick block 1 ; == b
+</pre>
 
 , i.e., we are using indices in the <code>0 <= index < 2</code> range to pick the values of the block, which means that we are using 0-based indexing.
 
-However, <code>rebol/version == 2.7.8.3.1</code> does not have 0-based indexing:
+However, Rebol 2.7.8 does not have 0-based indexing:
 
-    block: #[block! [a b] 2]
-    pick block -1 ; == a
-    pick block 1 ; == b
+<pre>
+block: #[block! [a b] 2]
+pick block -1 ; == a
+pick block 1 ; == b
+</pre>
 
-, i.e., in this case, the "index space" consists of two ranges, in fact. The first is the range containing just -1 (, i.e., -1-based), while the second is the range containing just 1 (, i.e., 1-based). This also demonstrates that <code>rebol/version == 2.7.8.3.1</code> does not have true -1-based, or negative-based indexing, because the <code>pick</code> function uses a discontinuous range made of two arithmetically incompatible (using different index arithmetic) segments.
+, i.e., in this case, the index range consists of two segments, in fact. The first is the segment containing just -1, and using -1-based indexing, while the second is the segment containing just 1, and using 1-based indexing. This also demonstrates that Rebol 2.7.8.3.1 does not have true -1-based (or negative-based) indexing.
 
-I think that it is good to discuss why this happened to <code>rebol/version == 2.7.8.3.1</code>. The main reason seems to be the "1 pointing at the current position" indexing. This, when using the "common indexing principle" assigning the previous position the previous integer number induces the "0 pointing backwards" case. "0 pointing backwards" looks incomfortable/unusual as some users object. However, the approach using smell of garlic to take away the smell of onion (removing 0 from the set of possible index values) did not bring any good. Hurting the index arithmetic this way is not just incomfortable as the "0 pointing backwards" case was, it is inconsistent. (Even the Rebol designer felt victim to the problem in his code.)
+Why this happened to Rebol 2.7.8? The main reason seems to be the "1 pointing at the current position" indexing. The common indexing principle assigns the previous position the previous integer number (only if this predecessor/successor relation is kept, index arithmetic really exists), and since 1 points at the current position, this enforces unusual "0 points backwards" indexing. "0 pointing backwards" looks unusual and unexpected, which is the probable reason why 0 was removed from the set of possible index values. However, this is like using smell of garlic to take away the smell of onion, since hurting the index arithmetic this way is not just incomfortable and unexpected as the "0 pointing backwards" was, it is inconsistent. Even the Rebol designer fell victim to this gotcha.
 
 ====Indexing inconsistencies====
 
-* In <code>rebol/version == 2.7.8.3.1</code> the <code>index?</code> function is not injective (one to one) function, because it assigns the tail index to all past-tail positions. This contradicts the principle of indexing that a one to one correspondence between indices and positions shall be established. In <code>rebol/version == 2.100.111.3.1</code> this bug has been corrected.
-* The <code>at</code> function is not injective (one to one) because it assigns the same series position to two different indices 0 and 1. Note that this is, in fact, a different property than the previous one. A mathematical object having both properties would not even be representable as a function. This bug is detectable in both <code>rebol/version == 2.7.8.3.1</code> and <code>rebol/version == 2.100.111.3.1</code>.
-* In <code>rebol/version == 2.7.8.3.1</code> the <code>pick</code> function subdivides its range to two arithmetically incompatible segments. This has been corrected in <code>rebol/version == 2.100.111.3.1</code>.
-* In <code>rebol/version == 2.100.111.3.1</code> the index 0 "points backwards" when the <code>pick</code> function is used. This is not an inconsistency, but it contradicts the expectations of users unaccustomed to 0 "pointing backwards" meaning that this property is inconvenient for such users.
+* In Rebol 2.7.8 the <code>index?</code> function violates the principle of one to one correspondence between indices and positions, because it assigns the tail index to all past-tail positions. In Rebol 2.100.111 this has been corrected.
+* In both Rebol 2.7.8 and Rebol 2.100.111, the <code>at</code> function violates the principle of one to one correspondence between indices and positions, becayuse it assigns the same series position to two different indices: 0 and 1.
+* In Rebol 2.7.8 the <code>pick</code> function subdivides its range to two arithmetically incompatible segments, effectively destroying index arithmetic. This has been corrected in Rebol 2.100.111.
+* In Rebol 2.100.111 the index 0 "points backwards" when the <code>pick</code> function is used. This is not an inconsistency, but it contradicts the expectations of users unaccustomed to the "0 pointing backwards" case.
 
 ====Index arithmetic primer====
 
 '''Task:'''
 
-Define a <code>head-index?</code> function obtaining a series <code>s</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression.
+Define a <code>head-index?</code> function obtaining a series <code>s</code> and an index value <code>i</code> yielding an index value <code>j</code> such that the <code>pick s i</code> expression will be equivalent to the <code>pick head s j</code> expression in Rebol 2.7.8. Do not forget to reflect all overflows, bugs, etc.
 
-'''Solutions:'''
-
-This is the solution working when the <code>index?</code> function and the <code>pick</code> function both use indexing method compatible with the <code>skip</code> function indexing method:
-
-<pre>head-index?: func [s [series!] i [integer!]] [i + index? s]</pre>
-
-This is the solution working when the <code>index?</code> function and the <code>pick</code> function use the indexing methods from R3:
-
-<pre>head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]</pre>
-
-This is the solution working in the present state of R2:
-
-<pre>head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]</pre>
-
-'''Summary:'''
-
-* The "skip indexing" uses the simplest index arithmetic, allowing the solution to be the simplest one.
-* The index arithmetic used in <code>rebol/version == 2.100.111.3.1</code> is simple as well, but not as simple as the optimal indexing.
-* The non-arithmetic indexing used in <code>rebol/version == 2.7.8.3.1</code> does not support any simple solution and it provokes errors even when experienced users are writing code.
-
-==Proposed functions==
-
-===The <code>curr</code> function===
-
-The <code>curr</code> function is a function accepting a Rebol series <code>S</code> and returning the Rebol value at its current position.
-
-    (curr S) = (do S payload t S displacement)
-, if <code>in-bounds? S</code>
-    (curr S) = #[none]
-otherwise.
+I recommed everybody wanting to continue using current Rebol indexing to try to solve this task to find out what it takes to master it. It is also instuctive to compare the solution to the above <code>payload-index</code> function.

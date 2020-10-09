@@ -11,7 +11,6 @@ The "Source" button will display the source code of the layouts.
 </TR></TABLE>
 
 
-
 ----
 {{Template:Scripting_with_VID_TOC}}
 [[Category:GUI]]

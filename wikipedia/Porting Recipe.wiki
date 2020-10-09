@@ -12,7 +12,8 @@ This is what's happening at startup, when a user run a Rebol exe:
 
 The file src/include/host-lib.h show the list of OS dependent callback functions.
 
-<pre>extern void *OS_Make(size_t size);    // host-lib.c
+<pre>
+extern void *OS_Make(size_t size);    // host-lib.c
 extern void OS_Free(void *mem);    // host-lib.c
 extern void OS_Exit(int code);    // host-lib.c
 extern void OS_Crash(const char *title, const char *content);    // host-lib.c
@@ -316,43 +317,57 @@ Ways to call make:
 
 Builds R3.
 
- make build
+<pre>
+make build
+</pre>
 
 ===rebuild===
 
 Creates necessary Rebol script(s) and builds R3.
 
- make rebuild
+<pre>
+make rebuild
+</pre>
 
 ===clean===
 
 Removes object files and rebuild.
 
- make clean
+<pre>
+make clean
+</pre>
 
 ===prep===
 
 Prepare building process by creating necessary Rebol script(s).
 
- make prep
+<pre>
+make prep
+</pre>
 
 ===make===
 
 Creates the makefile and perform a clean build.
 
- make make
+<pre>
+make make
+</pre>
 
 ===all===
 
 Cleans object files directory, copies dll and builds R3.
 
- make all
+<pre>
+make all
+</pre>
 
 ===getlib===
 
 Copies dll.
 
- make getlib
+<pre>
+make getlib
+</pre>
 
 ==Cookbook References==
 

@@ -19,7 +19,9 @@ How do you solve these problems? You can use some of the large file techniques d
 
 To read a small file, such as a photo, into memory:
 
-    data: read %photo.jpg
+<pre>
+data: read %photo.jpg
+</pre>
 
 Note that the JPEG data is not decoded. It remains as binary. (If you want to load it as an image datatype, you use the '''load''' function.)
 
@@ -27,7 +29,9 @@ Note that the JPEG data is not decoded. It remains as binary. (If you want to lo
 
 To write a small file, such as the one read above:
 
-    write %photo1.jpg data
+<pre>
+write %photo1.jpg data
+</pre>
 
 The data must be binary (as it would be from the above '''read''' example.)
 
@@ -35,7 +39,9 @@ The data must be binary (as it would be from the above '''read''' example.)
 
 Here is an example that copies a file using a '''read''' and '''write''':
 
-    write %photo2.jpg read %photo1.jpg
+<pre>
+write %photo2.jpg read %photo1.jpg
+</pre>
 
 Notes:
 
@@ -47,11 +53,13 @@ Notes:
 
 For large files, such as movies, you will want to break a file read into chunks. Here's how:
 
-    file: open %movie.mpg
-    while [not empty? data: read/part file 32000] [
-        ;process data
-    ]
-    close file
+<pre>
+file: open %movie.mpg
+while [not empty? data: read/part file 32000] [
+    ;process data
+]
+close file
+</pre>
 
 The /part refinement tells '''read''' to only read 32000 bytes at a time.
 
@@ -59,19 +67,21 @@ The /part refinement tells '''read''' to only read 32000 bytes at a time.
 
 Building on the above example, here's a function that shows how to copy a large file without using a lot of memory:
 
-    copy-file: func [
-        "Copy a large file"
-        from-file to-file
-        /local file1 file2 data
-    ] [
-        file1: open from-file
-        file2: open/new to-file
-        while [not empty? data: read/part file1 32000] [
-            write file2 data
-        ]
-        close file1
-        close file2
+<pre>
+copy-file: func [
+    "Copy a large file"
+    from-file to-file
+    /local file1 file2 data
+] [
+    file1: open from-file
+    file2: open/new to-file
+    while [not empty? data: read/part file1 32000] [
+        write file2 data
     ]
+    close file1
+    close file2
+]
+</pre>
 
 Of course, in most applications, you would also want to check for possible errors.
 
@@ -81,21 +91,25 @@ If you want to only read specific parts of a large file, you can do that also.
 
 First, we define a table of chunk positions and sizes:
 
-    parts: [
-    ; position size
-         10000 30000
-        123000 40000
-        254000 20000
-    ]
+<pre>
+parts: [
+; position size
+     10000 30000
+    123000 40000
+    254000 20000
+]
+</pre>
 
 Using that table:
 
-    file: open/seek %movie.mpg
-    foreach [pos size] parts [
-        data: read/seek/part file pos size
-        if not empty? data [print checksum data]
-    ]
-    close file
+<pre>
+file: open/seek %movie.mpg
+foreach [pos size] parts [
+    data: read/seek/part file pos size
+    if not empty? data [print checksum data]
+]
+close file
+</pre>
 
 Here we use the /seek refinement for '''open''' as a hint to tell the operating system we will be doing non-sequential file access. That helps it optimize its buffers.
 
@@ -105,23 +119,31 @@ The /seek in '''read''' indicates what position the read should begin at.
 
 You can use the same method as shown above for read. Of course, you would change the line:
 
-        data: read/seek/part file pos size
+<pre>
+data: read/seek/part file pos size
+</pre>
 
 to
 
-        write/seek/part file data pos size
+<pre>
+write/seek/part file data pos size
+</pre>
 
 === Appending to a large file ===
 
 For writing logs and journals, you will often want to append to the end of a large file. Here's how.
 
-    file: open/seek %log.dat
-    write/append file data
-    close file
+<pre>
+file: open/seek %log.dat
+write/append file data
+close file
+</pre>
 
 There is also a handy shortcut for this common action:
 
-    write/append %log.dat data
+<pre>
+write/append %log.dat data
+</pre>
 
 == Other File Operations ==
 
@@ -167,7 +189,9 @@ pending
 
 To read a web page, you would normally type:
 
-    page: read http://www.rebol.net
+<pre>
+page: read http://www.rebol.net
+</pre>
 
 Easy, but not very educational. So, take a look at the next example.
 

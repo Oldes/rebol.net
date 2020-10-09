@@ -11,6 +11,8 @@ Return value is not necessary.
 
 ===Examples===
 
- on-drag-over: [
-   ; write this example
- ]
+<pre>
+on-drag-over: [
+  ; write this example
+]
+</pre>

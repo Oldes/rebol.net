@@ -1,0 +1,258 @@
+Rebol design and #[unset!]
+
+    Author: Ladislav Mecir
+    Date: 18-Mar-2016/10:15:20+1:00
+
+=toc
+
+===Introduction
+
+*Terminology*: ~To dereference a variable~ means "to make an attempt to get the value to which the variable refers".
+
+*Terminology*: ~Strong typo protection~ means that when the interpreter detects an invalid-looking dereference, it causes an error.
+
+*Terminology*: By ~globals~ I mean the words from the global context in Rebol 2 and module words in Rebol 3. By ~global contexts~ I mean the global context in Rebol 2 and modules in Rebol 3.
+
+The observed inconsistencies and inconveniences in the current variable access design urge us to try to find a better alternative. This article lists the relevant informations trying to find the optimum. Perhaps surprisingly, recent informations support a different design than the one deemed optimal a few years ago.
+
+According to Carl Sassenrath, the main use of #[unset!] is strong typo protection. There is an additional use: #[unset!] is a result of some functions or expressions that do not yield an otherwise interesting value.
+
+===Strong typo protection
+
+According to his own words, when Carl Sassenrath introduced #[unset!], he wanted to support strong detection of typos. Example:
+
+	>> print "OK"
+	OK
+
+is a correct Rebol code without a typo.
+
+With a typo:
+
+	>> primt "OK"
+	** Script Error: primt has no value
+	** Near: primt "OK"
+
+an error is caused, which is helpful for debugging.
+
+When we used the 'primt word, we fully specified it as a Rebol word. The error message suggests that when used as a variable, 'primt has no value. In other words, the finding is that while the 'primt word is a fully specified Rebol word, it is not a fully specified Rebol variable, since, used as a variable, it is expected to refer to some Rebol value.
+
+Another way how to obtain the same information without causing an error is:
+
+	>> value? 'primt
+	== false
+
+---Inconsistency
+
+The interpreter claims that 'primt, used as a variable, "has no value". On the other hand, the GET function
+
+	>> mold/all get/any 'primt
+	== "#[unset!]"
+
+claims that the value of 'primt is #[unset!]. Both claims can be true only if #[unset!] is not a value. That is questionable:
+
+* the MOLD function accepts #[unset!] as an argument. The claim that a value acceptable as an argument of Rebol functions is not a value does not look credible.
+* the GET function yields #[unset!] as a result. The claim that a result of Rebol function is not a value does not look credible either.
+
+---Consistent design?
+
+Can we get rid of the inconsistency by changing only the above error message and the description of the VALUE? function? That is problematic, because, regardless of the texts, #[unset!] being a result of Rebol functions and expressions and acceptable as argument of Rebol functions means that it is a Rebol value. Therefore, there should be a method how to set Rebol variables to it. That is the reason for the availability of the SET/ANY method. Undoubtedly, a variable set to #[unset!] using this method is a fully specified Rebol variable. The problem is that its dereference will still cause an error, which is a false alarm in this case. That makes the typo protection causing false alarms for fully specified variables inconsistent.
+
+---Consistent design with stronger protection
+
+As discussed above, the strong typo protection can be consistent only when #[unset!] is not a Rebol value.
+
+These amendments can make the design stronger and consistent:
+
+* make #[unset!] internal to the interpreter, including:
+** cancel the #[unset!] syntax
+** cancel the UNSET! datatype
+** cancel the UNSET? function
+** disallow Rebol functions to accept #[unset!] as argument
+** disallow Rebol expressions to yield #[unset!]
+*** in particular, neither Rebol functions,
+*** nor natives shall be allowed to return #[unset!]
+*** functions and natives shall return #[none] when not having a more interesting value to return
+* strongly typo-protect only global variables, in particular
+** automatically initialize all local variables to #[none]
+* cancel the UNSET function
+* cancel the /ANY refinement of the GET function
+* cancel the /ANY refinement of the SET function
+
+*Explanations*:
+
+Why strongly typo-protect only globals?
+
+* due to the "automatic global" design, a word with typo automatically becomes global
+
+Why cancel the UNSET function?
+
+* UNSET is useful only when unsetting a fully specified variable, but fully specified variables are not subject to strong typo protection
+* UNSET can be currently used on any variable, but local variables are fully specified, and therefore, not subject to strong typo protection
+* local contexts (e.g. objects) shall have reflectors (e.g. BODY-OF or WORDS-OF), but, for consistency, reflectors cannot contain #[unset!]
+
+Why should Rebol functions return #[none] when not having a more interesting value to return?
+
+* because functions like FIND, SELECT, ANY, BOUND? or PICK date 'time for dates without the time component already return #[none] when not being able to return the value of interest
+
++++Problems
+
+...Object attribute access
+
+Correct object attribute access:
+
+	>> obj: make object! [attr: 1]
+	>> get in obj 'attr
+	== 1
+
+Object attribute access with a typo:
+
+	>> obj: make object! [attr: 1]
+	>> get in obj 'atrr
+	== none
+
+We see that for object attribute access there is no strong typo protection. Since Rebol users actually requested the change instead of protesting against it, and since Carl Sassenrath implemented it, we have got a clear evidence that for Rebol, strong typo protection is not important, after all. It is a relatively recent change to Rebol 2 ported also to Rebol 3, and it demonstrates that the trend in Rebol is to get rid of strong typo protection, preferring uniformity, consistency and convenience. I list it as a "problem" here because the conservation of strong typo protection for words does not feel consistent with its suppression for object attributes (which are words too).
+
+...Block element access
+
+Correct block element access:
+
+	>> block: ["OK1" "OK2" "OK3"]
+	>> pick block 2
+	== "OK2"
+
+Block element access with a typo:
+
+	>> block: [a b c]
+	>> pick block 22
+	== none
+
+Evaluating the code with a typo we obtained #[none], i.e., for block elements there is no strong typo protection in Rebol. User polls reveal that Rebol users actually like this feature (preferring uniformity, consistency and convenience), and in Rebol 3 Carl Sassenrath implemented the same rules also for ordinal functions. I list it as a "problem" here because the conservation of strong typo protection for words does not feel consistent with its suppression for block element access.
+
+...Reflectors for modules
+
+The above amendments make local contexts (like closure contexts, USE contexts, objects, errors) fully specified in the sense that they cannot contain unset variables. Therefore, there is no problem with reflectors for such contexts. However, due to the stronger typo protection, the global contexts may contain unset variables, and that makes reflectors like VALUES-OF problematic, since the result of the VALUES-OF is a block that is not allowed to contain #[unset!]. A way around it may be to support only the WORDS-OF reflector for problematic contexts, yielding, e.g., #[none] for VALUES-OF reflector. The BODY-OF reflector is not problematic, it may contain only the initializations of fully initialized variables.
+
++++Positive effects
+
+* simplification, Rebol will not need the #[unset!] value
+* simplification, Rebol will not need the UNSET! datatype
+* simplification, Rebol will not need the "#[unset!]" syntax
+* simplification, there will be no need for the UNSET? function
+* correction, there will be no bodies of objects containing #[unset!] not usable as MAKE OBJECT! spec arguments
+* simplification, there will be no need for the UNSET function
+* unification, there will be no difference between (type: any) and (type: any-type!) in function parameter help
+* simplification, the GET function will not need the /ANY refinement
+* simplification, the SET function will not need the /ANY refinement
+* unification, the "uninteresting return value" will always be #[none]
+
++++Popularity estimate
+
+These days many people don't respond in Rebol polls, so it may be useful to have an estimate of popularity at least.
+
+The discussed design is both simpler and more consistent than the current Rebol 3, but, on the other hand, it looks too much like Rebol 1, which is the design that was gradually abandoned. There are also minor problems with reflection listed above. Summing up, I am not giving this altenative many chances that it becomes popular between Rebol users, and think that it will be less popular than any of the alternatives proposed below.
+
+---History lesson
+
+The history shows that the strength of the typo protection is gradually becoming lower and ceases to exist in some cases. Moreover, the #[unset!] value is gradually becoming more and more like the #[none] value.
+
+* since Rebol 2, #[unset!] can be used as an argument of Rebol functions and natives (see above)
+* since Rebol 2, #[unset!] can be a result of Rebol functions and natives (see above)
+* since Rebol 2, GET/ANY expressions do not have strong typo protection (see above)
+* since Rebol 2, object attribute access does not have strong typo protection (see above)
+* since Rebol 2, block element access using PICK does not have strong typo protection (see above)
+* since Rebol 3, block element access using ordinal function does not have strong protection 
+* since Rebol 3, get-word access does not have strong typo protection:
+
+	>> print mold/all :primt
+	#[unset!]
+
+* since Rebol 2, function locals are automatically initialized to #[none]:
+
+	>> f: func [/local x] [print mold/all x]
+	>> f
+	#[none]
+
+* since Rebol 3, USE locals are automatically initialized to #[none]
+
+	>> use [x] [print mold/all x]
+	#[none]
+
+* note also that due to the way how objects are constructed, object attributes (object locals) are fully specified
+
+---Consistent design without strong protection
+
+Extrapolating the evolution, this design completely abandons #[unset!], replacing it by #[none] and cancels the strong protection. The list of positive effects below describes this design.
+
++++Positive effects
+
+* simplification, Rebol will not need the #[unset!] value
+* simplification, Rebol will not need the UNSET! datatype
+* simplification, Rebol will not need the "#[unset!]" syntax
+* simplification, there will be no need for the UNSET? function
+* comfort, all variables will be automatically initialized to #[none]
+* unification, the behaviour of variables and block elements will be essentially the same in this respect
+* unification, all variables will be handled the same way as function locals and USE locals
+* correction, there will be no bodies of objects containing #[unset!] not usable as MAKE OBJECT! spec arguments
+* simplification, Rebol will not need the NO-VALUE script error
+* simplification, there will be no need for the VALUE? function
+* simplification, there will be no need for the UNSET function
+* unification, there will be no difference between (type: any) and (type: any-type!) in function parameter help
+* simplification, the GET function will not need the /ANY refinement
+* simplification, the SET function will not need the /ANY refinement
+* unification, the "uninteresting return value" will always be #[none]
+* comfort, users voted that this behaviour is more comfortable than the error-causing behaviour in case of block elements
+
++++Popularity estimate
+
+Since it is based on and extrapolates the changes demanded by Rebol users, this design looks like having the highest chance to become popular.
+
+---Consistent design with lower strong protection
+
+For some users, the design without the strong protection may look too radical, while the design with the stronger protection may look outdated. That is why I introduce a kind of compromise between the two. For consistency, this design also completely abandons #[unset!] replacing it by #[none]. Similarly as the current Rebol 3, it protects only word dereferencing, i.e., it does not protect the get-word access.
+
+To achieve this kind of protection, it makes the word-access illegal when the dereferenced word refers to #[none]. Example:
+
+    >> primt: none
+	>> primt "OK"
+	** Script Error: illegal access to 'primt
+	** Near: primt "OK"
+
+, while
+
+	>> print mold/all :primt
+	== #[none]
+
++++Positive effects
+
+* simplification, Rebol will not need the #[unset!] value
+* simplification, Rebol will not need the UNSET! datatype
+* simplification, Rebol will not need the "#[unset!]" syntax
+* simplification, there will be no need for the UNSET? function
+* comfort, all variables will be automatically initialized to #[none]
+* unification, all variables will be handled the same way as function locals and USE locals
+* correction, there will be no bodies of objects containing #[unset!] not usable as MAKE OBJECT! spec arguments
+* simplification, there will be no need for the VALUE? function
+* simplification, there will be no need for the UNSET function
+* unification, there will be no difference between (type: any) and (type: any-type!) in function parameter help
+* simplification, the GET function will not need the /ANY refinement
+* simplification, the SET function will not need the /ANY refinement
+* unification, the "uninteresting return value" will always be #[none]
+
++++Problems
+
+There are two main problems with this design:
+
+* The design changes the access rules for variables referring to #[none], making it, in this sense, incompatible with Rebol 2
+* It does not look comfortable to make word access to variables referring to #[none] illegal when, in reality, only a small minority of accesses may be illegal
+
++++Popularity estimate
+
+I think that the incompatibility makes this design less popular than the design without the strong protection.
+
+===User poll
+
+I welcome user preferences related to the available design alternatives. My preferences are (from the most preferred to the least preferred):
+
+[without-strong-protection lower-strong-protection stronger-protection]
+
+The End

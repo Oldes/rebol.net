@@ -10,7 +10,6 @@ The Docbase Wiki is constantly evolving, not many pages should be considered to 
 </TD></TR></TABLE>
 
 
-
 ----
 {{Template:R3_Introduction_TOC}}
 [[Category:R3_Introduction]]

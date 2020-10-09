@@ -2,7 +2,9 @@
 
 This article is meant as an illustration of the principles behind indexing. Unless stated otherwise, the examples were tested using:
 
-    rebol/version ; == 2.7.8.3.1
+<pre>
+rebol/version ; == 2.7.8.3.1
+</pre>
 
 ==Does 0 "exist"?==
 
@@ -48,33 +50,43 @@ The <code>next</code> function is not an "indexing operator" not doing any index
 
 The help string of the <code>next</code> function says:
 
-    "Returns the series at its next position."
+<pre>
+"Returns the series at its next position."
+</pre>
 
 Let's test how it works:
 
-    s: [a]
-    index? s ; == 1
-    mold/all s ; == [a]
-    next-s: next s
-    index? next-s ; == 2
-    mold/all next-s ; == #[block! [a] 2]
-    same? next-s s ; == false
+<pre>
+s: [a]
+index? s ; == 1
+mold/all s ; == [a]
+next-s: next s
+index? next-s ; == 2
+mold/all next-s ; == #[block! [a] 2]
+same? next-s s ; == false
+</pre>
 
 In this case we took series <code>s</code> and used the <code>next</code> function to obtain its successor <code>next-s</code>. We obtained a new, distinct, "successor" series, as all our examinations proved.
 
 Also, there is one more property worth mentioning. The <code>next-s</code> series is a tail, as the following test reveals:
 
-    same? next-s tail next-s ; == true
+<pre>
+same? next-s tail next-s ; == true
+</pre>
 
 However, if we continue using the <code>next</code> function on <code>next-s</code>:
 
-    next-next-s: next next-s
+<pre>
+next-next-s: next next-s
+</pre>
 
 we get:
 
-    index? next-next-s ; == 2
-    mold/all next-next-s ; == #[block! [a] 2]
-    same? next-next-s next-s ; == true
+<pre>
+index? next-next-s ; == 2
+mold/all next-next-s ; == #[block! [a] 2]
+same? next-next-s next-s ; == true
+</pre>
 
 This illustrates that when supplying the tail series, the <code>next</code> function does not yield its successor, instead it just yields the series tail.
 
@@ -84,7 +96,8 @@ To determine whether the <code>next</code> function is the successor operator we
 
 It turns out that our concerns are justified. To prove it, let's define:
 
-<pre>succ: func [
+<pre>
+succ: func [
     "Returns the series at its next position."
     series [series!]
     /local t
@@ -94,13 +107,16 @@ It turns out that our concerns are justified. To prove it, let's define:
     series: next :series
     clear :t
     :series
-]</pre>
+]
+</pre>
 
 Now our testing reveals:
 
-    succ-next-s: succ next-s
-    mold/all succ-next-s ; == "#[block![a]3]"
-    same? succ-next-s next-s ; == false
+<pre>
+succ-next-s: succ next-s
+mold/all succ-next-s ; == "#[block![a]3]"
+same? succ-next-s next-s ; == false
+</pre>
 
 , i.e., we really obtained the successive position confirming our concerns.
 
@@ -116,11 +132,15 @@ The help string of the <code>succ</code> function isn't misleading. This is not 
 
 This is a bigger advantage. To demonstrate it, let's see how the current <code>next</code> function behaves:
 
-    same? s: tail [a] back next s ; == false
+<pre>
+same? s: tail [a] back next s ; == false
+</pre>
 
 , while:
 
-    same? s: tail [a] back succ s ; == true
+<pre>
+same? s: tail [a] back succ s ; == true
+</pre>
 
 ====More flexible indexing====
 
@@ -134,13 +154,17 @@ Defining the new <code>curr</code> function and <code>pick</code> function diffe
 
 The <code>back</code> function help string states:
 
-    "Returns the series at its previous position."
+<pre>
+"Returns the series at its previous position."
+</pre>
 
 Similarly as with the <code>next</code> function we may want to determine whether the help string is misleading or not. We can find out that the <code>back</code> function does not yield the preceding position in case it obtains a head series.
 
 Now we may want to find out whether it is actually possible to obtain a position preceding the head. Like in the case of the <code>next</code> function, such series exist in Rebol:
 
-    index? #[block! [1 2] -2] ; == -2
+<pre>
+index? #[block! [1 2] -2] ; == -2
+</pre>
 
 Therefore, it makes sense to redefine the <code>back</code> function as proposed for the <code>next</code> function, i.e., so that the function yields a predecessor of the given <code>series</code> without stopping at head.
 
@@ -157,13 +181,16 @@ The <code>index?</code> function uses 1-based indexing, the "base element" being
 
 When testing the above <code>succ-next-s</code> series we obtain:
 
-    index? succ-next-s ; == 2
+<pre>
+index? succ-next-s ; == 2
+</pre>
 
 , while we know that all other indicators (the <code>mold/all</code> output, the <code>same?</code> function) demonstrate that it is not true.
 
 Similarly as we patched the <code>next</code> function we can patch also the <code>index?</code> function:
 
-<pre>index?': func [
+<pre>
+index?': func [
     {Returns the index number of the current position in the series.}
     series [series! port!]
     /local t i
@@ -175,25 +202,32 @@ Similarly as we patched the <code>next</code> function we can patch also the <co
     i: index? :series
     clear :t
     i
-]</pre>
+]
+</pre>
 
 Now we obtain:
 
-    index?' next-s ; == 2
-    index?' next-next-s ; == 3
+<pre>
+index?' next-s ; == 2
+index?' next-next-s ; == 3
+</pre>
 
 ==The AT function==
 
 This function uses different indexing than the <code>index?</code> function, the indexing of positions is "relative to the given <code>series</code> argument". If we examine the function thoroughly, we find that "the base element" (the element with the smallest index) can actually (depending on the situation) have any index not exceeding 1. Example:
 
-    s: skip [a b c d e f] 3
-    at s -2 ; == [b c d e f]
-    at s -3 ; == [a b c d e f]
+<pre>
+s: skip [a b c d e f] 3
+at s -2 ; == [b c d e f]
+at s -3 ; == [a b c d e f]
+</pre>
 
 However, the <code>at</code> function uses "ambiguous indexing":
 
-    at s 1 ; == [d e f g]
-    at s 0 ; == [d e f g]
+<pre>
+at s 1 ; == [d e f g]
+at s 0 ; == [d e f g]
+</pre>
 
 , since it assigns two different indices (0 and 1) to one position. The ambiguous indexing cannot maintain the successor to successor correspondence. Moreover, it is the only ambiguous-type indexing used, i.e., it is not compatible with any other indexing used.
 
@@ -209,19 +243,25 @@ Note that if <code>skip</code> were able to skip past head as well as past tail,
 
 The <code>pick</code> function uses indexing relative to the given <code>series</code>. It is able to refer to the past-head:
 
-    pick [a b] -1 ; == none
+<pre>
+pick [a b] -1 ; == none
+</pre>
 
 yielding <code>#[none]</code> in such case or past tail:
 
-    pick [a b] 3 ; == none
+<pre>
+pick [a b] 3 ; == none
+</pre>
 
 yielding <code>#[none]</code> as well.
 
 However, the <code>pick</code> function does not maintain the successor to successor correspondence. Example:
 
-    s: skip [a b c d e f g] 3
-    pick s -1 ; == c
-    pick s 1 ; == d
+<pre>
+s: skip [a b c d e f g] 3
+pick s -1 ; == c
+pick s 1 ; == d
+</pre>
 
 R2 assigns index -1 to the <code>c</code> element, while it does not assign 0 (the successor of -1) to the <code>d</code> element, assigning 1 to it instead. Because of that, the index arithmetic (the arithmetic correspondence between indices and positions in the series) is broken.
 
@@ -231,19 +271,25 @@ Define a <code>head-index?</code> function obtaining a series <code>s</code> and
 
 The solution working when the <code>index?</code> function and the <code>pick</code> function both use indexing method compatible with the <code>skip</code> function indexing method:
 
-<pre>head-index?: func [s [series!] i [integer!]] [i + index? s]</pre>
+<pre>
+head-index?: func [s [series!] i [integer!]] [i + index? s]
+</pre>
 
 (This solution is the simplest.)
 
 The solution working when the <code>index?</code> function and the <code>pick</code> function use the indexing methods from R3:
 
-<pre>head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]</pre>
+<pre>
+head-index?: func [s [series!] i [integer!]] [i - 1 + index? s]
+</pre>
 
 (This solution is the second simplest.)
 
 The solution working in the present state of R2:
 
-<pre>head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]</pre>
+<pre>
+head-index?: func [s [series!] i [integer!]] [case [i < 0 [i - index? s] i > 0 [i - 1 + index? s] i = 0 [0]]]
+</pre>
 
 (This solution is the most complicated and it is neither "simple" nor "arithmetic". Neither it can be, having to deal with a successor to successor incompatible non-arithmetic indexing method.)
 

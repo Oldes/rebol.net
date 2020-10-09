@@ -15,35 +15,34 @@ Sets the origin for drawing commands.
 |}
 <br>'''Notes and Examples'''
 <p>Multiple translate commands will have a cumulative effect:</p>
-<code><pre>
+
 fill-pen blue box 50x50 150x150
 translate 50x50 fill-pen red box 50x50 150x150
 translate 50x50 fill-pen yellow box 50x50 150x150
-</pre></code>
+
 [[images/TRANSLATE-1.png|TRANSLATE example 1]]
 
 <br>
 <p>You can use RESET-MATRIX to avoid that if you want:</p>
-<code><pre>
+
 fill-pen blue box 50x50 150x150
 translate 50x50 fill-pen red box 50x50 150x150
 reset-matrix
 translate 50x50 fill-pen yellow box 100x100 300x300
-</pre></code>
+
 [[images/TRANSLATE-2.png|TRANSLATE example 2]]
 
 <br>
 <p>Another way to reset the matrix is to use the PUSH command:</p>
-<code><pre>
+
 fill-pen blue box 50x50 150x150
 push [translate 50x50 fill-pen red box 50x50 150x150]
 translate 50x50 fill-pen yellow box 100x100 300x300
-</pre></code>
+
 [[images/TRANSLATE-3.png|TRANSLATE example 3]]
 
 <br>
 <p>See also: http://www.w3.org/TR/SVG/coords.html#EstablishingANewUserSpace</p>
-
 
 ----
 <TABLE WIDTH=100%><TR><TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
@@ -60,9 +59,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -81,7 +78,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -94,9 +90,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

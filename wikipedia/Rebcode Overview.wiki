@@ -58,12 +58,14 @@ Rebcode is written in a block, just like normal Rebol code. However, unlike Rebo
 
 Here is an example rebcode block:
 
- [
-    div.i val 2
-    add.i val num
-    mul.i val 100
-    div.i val 50
- ]
+<pre>
+[
+   div.i val 2
+   add.i val num
+   mul.i val 100
+   div.i val 50
+]
+</pre>
 
 The words '''div.i''', '''add.i''', and '''mul.i''' are opcodes; they are low level functions that perform integer math operations. Each opcode is followed by two arguments that are used in the operation, and the result is stored back into the first argument (val). Thus, rebcode is implemented in what is known as the "two-address" model of computation. This technique permits optimal performance within the virtual machine.
 
@@ -77,19 +79,23 @@ All rebcode must be written within a special type of function, called a rebcode 
 
 Here is a simple example that makes a rebcode function:
 
- md32: rebcode [
-    "Returns two integers multiplied then divided by 32."
-    a [integer!]
-    b [integer!]
- ][
-    mul.i a b
-    div.i a 32
-    return a
- ]
+<pre>
+md32: rebcode [
+   "Returns two integers multiplied then divided by 32."
+   a [integer!]
+   b [integer!]
+][
+   mul.i a b
+   div.i a 32
+   return a
+]
+</pre>
 
 The rebcode function works just like the func function. It accepts an interface specification and a function body, and returns a rebcode! datatype. Like func, the rebcode function is shorthand for:
 
- make rebcode! args body
+<pre>
+make rebcode! args body
+</pre>
 
 The args block is the interface specification. It can contain embedded comments, formal argument words, and optional datatype restrictions.
 
@@ -97,15 +103,21 @@ The body block holds opcodes and their arguments. They must be written in specif
 
 Once defined, a rebcode function can be evaluated like all other Rebol functions. You can evaluate it and set its result to a variable:
 
- result: md32 5 30
+<pre>
+result: md32 5 30
+</pre>
 
 or pass the result to other functions:
 
- print md32 3 60
+<pre>
+print md32 3 60
+</pre>
 
 or use it along with other functions:
 
- print md32 random 10 now/month
+<pre>
+print md32 random 10 now/month
+</pre>
 
 Just keep in mind that rebcode is not a normal function. It is evaluated by a special interpreter that is very fast, but also very strict about the format of the rebcode block.
 
@@ -113,13 +125,17 @@ Just keep in mind that rebcode is not a normal function. It is evaluated by a sp
 
 The general form of rebcode is:
 
- opcode argument1 argument2
+<pre>
+opcode argument1 argument2
+</pre>
 
 A rebcode block contains one or more such opcodes:
 
- add.i val 10
- mul.i val 100
- randz val
+<pre>
+add.i val 10
+mul.i val 100
+randz val
+</pre>
 
 As with all Rebol dialects, line breaks are not relevant to the meaning of the code.
 
@@ -133,42 +149,52 @@ There are three types of opcodes:
 
 The compute opcodes perform an operation and store the result into the variable that is provided by the first argument. Here are examples:
 
- set   count 0
- add.i count 1
- sqrt  num
- length? len string
+<pre>
+set   count 0
+add.i count 1
+sqrt  num
+length? len string
+</pre>
 
 The '''count''', '''num''', and '''len''' variables are all modified by these compute-type opcodes to hold the result.
 
 The compare opcodes perform an operation but do not store the result into a variable. Instead they affect an internal flag called the T flag. If the comparison is true the T flag is set to true, otherwise it is false. The T flag is then tested by a number of other opcodes that can act on it. Here are examples of the opcodes:
 
- eq.i  count 100
- gte.d num 5.8
- head? ages
+<pre>
+eq.i  count 100
+gte.d num 5.8
+head? ages
+</pre>
 
 To be useful these opcodes must be followed by a control opcode that checks the T flag. Here are examples that show the typical combinations of compare and control opcodes:
 
- gteq.i count 100
- ift [set.i count 0]
- 
- gteq.d num 5.8
- brat   reset-num
- 
- until [
-    pick  num ages 1
-    add.i total num
-    tail? ages
- ]
+<pre>
+gteq.i count 100
+ift [set.i count 0]
+
+gteq.d num 5.8
+brat   reset-num
+
+until [
+   pick  num ages 1
+   add.i total num
+   tail? ages
+]
+</pre>
 
 Other opcodes can appear between the comparison and the control opcode, as long as they do not affect the T flag. For example:
 
- geq.i count 100
- add.i count 1
- ift   [set.i count 0]
+<pre>
+geq.i count 100
+add.i count 1
+ift   [set.i count 0]
+</pre>
 
 A complete list of rebcode opcodes and their interface specifications can be obtained directly from Rebol with the following line:
 
- print system/internal/rebcodes
+<pre>
+print system/internal/rebcodes
+</pre>
 
 ===Variable Usage===
 
@@ -178,21 +204,25 @@ Rule 1: Always initialize your local variables. When you define a local variable
 
 In this code:
 
- code: rebcode [arg /local sum] [
-    set   sum 0
-    add.i sum arg
-    ...
- ]
+<pre>
+code: rebcode [arg /local sum] [
+   set   sum 0
+   add.i sum arg
+   ...
+]
+</pre>
 
 The sum variable is set to an integer value before it is used with the add.i opcode - an integer operation. If you forget this step, the variable will become a corrupt datatype. It may act like an integer in rebcode, but it will print as none.
 
 Rule 2: Force variables to be of the correct datatype in the function interface. The code above is better written like this:
 
- code: rebcode [arg [integer!] /local sum] [
-    set   sum 0
-    add.i sum arg
-    ...
- ]
+<pre>
+code: rebcode [arg [integer!] /local sum] [
+   set   sum 0
+   add.i sum arg
+   ...
+]
+</pre>
 
 Now the arg variable is guaranteed to be an integer when it is used with the add.i opcode.
 
@@ -200,27 +230,31 @@ Rule 3: Beware of opcodes that may modify the datatype of a variable. Some opcod
 
 Here is an example:
 
- block: [123 "name" 1.2]
- 
- code: rebcode [arg series /local sum] [
-    set   sum 0
-    add.i sum arg
-    ...
-    pick  arg block 2
- ]
+<pre>
+block: [123 "name" 1.2]
+
+code: rebcode [arg series /local sum] [
+   set   sum 0
+   add.i sum arg
+   ...
+   pick  arg block 2
+]
+</pre>
 
 The pick opcode will modify the arg variable to make it a string datatype. It is no longer an integer, and should not be used as such. This type of reuse of variables is common for larger functions because it reduces the number of local variables that are needed within the function.
 
 Rule 4: For high performance code, use opcodes that are datatype specific. For example:
 
- code: rebcode [arg1 [integer!] arg2 [decimal!]] [
-    ...
-    set.i arg1 2
-    add.i arg1 count
-    ...
-    set.d arg2 1.0
-    add.d arg2 value
- ]
+<pre>
+code: rebcode [arg1 [integer!] arg2 [decimal!]] [
+   ...
+   set.i arg1 2
+   add.i arg1 count
+   ...
+   set.d arg2 1.0
+   add.d arg2 value
+]
+</pre>
 
 Here the set.i, add.i, set.d, and add.d opcodes only modify the values of their variables. They do not set the datatype. You should only use these opcodes when you know that the datatype is correct. This rule applies to many of opcodes within rebcode.
 
@@ -234,16 +268,20 @@ Rebcode functions do not return a result by default. This behavior is different 
 
 Here is an example of a normal Rebol function. The result is returned automatically:
 
- f1: func [a [integer!] b [integer!]] [
-    max a b
- ]
+<pre>
+f1: func [a [integer!] b [integer!]] [
+   max a b
+]
+</pre>
 
 However, written in rebcode, the result must be returned explicitly:
 
- f2: rebcode [a [integer!] b [integer!]] [
-    max.i  a b
-    return a
- ]
+<pre>
+f2: rebcode [a [integer!] b [integer!]] [
+   max.i  a b
+   return a
+]
+</pre>
 
 To exit a function without returning a result, use the exit opcode. This is the same as normal Rebol functions.
 
@@ -253,17 +291,21 @@ One way that rebcode differs from most other virtual machine designs is that it 
 
 For example, the ift and iff opcodes conditionally execute a block of rebcode depending on the state of the T flag (described earlier).
 
- add.i  a 10
- gteq.i a 100
- ift    [set.i a 0]
+<pre>
+add.i  a 10
+gteq.i a 100
+ift    [set.i a 0]
+</pre>
 
 Other functions such as while and until use the same method:
 
- set a 0
- while [lt.i a 100] [
-    pick  n vals 1
-    add.i a n
- ]
+<pre>
+set a 0
+while [lt.i a 100] [
+   pick  n vals 1
+   add.i a n
+]
+</pre>
 
 Note that the binding of rebcode remains the same in these types of control blocks. The opcodes are bound to the VM context. There is currently only one exception to this rule, the do opcode. See below for more.
 
@@ -281,22 +323,26 @@ The opcodes listed in the summary section under Compare Opcodes alter the T flag
 
 The following opcodes check the T flag and act accordingly.
 
- braf
- brat
- breakf
- breakt
- either
- iff
- ift
- until
- while
+<pre>
+braf
+brat
+breakf
+breakt
+either
+iff
+ift
+until
+while
+</pre>
 
 The state of the T flag can also be set from or to a variable. The sett sets the T flag from a variable, and gett gets the T flag and puts it in a variable. This is useful if you need to combine the results of multiple comparisons (and using conditional branches alone is not enough).
 
 How to remember gett and sett. Read them as:
 
- SET T flag from a variable
- GET T flag and put it in a variable
+<pre>
+SET T flag from a variable
+GET T flag and put it in a variable
+</pre>
 
 These two opcodes will be a source of problems unless this rule is memorized. If you just remember SET T it will be enough. An easy way to remember it is this: SETT is the same as "SET T".
 
@@ -308,10 +354,12 @@ Although the higher level control opcodes like ift, either, while, until, loop, 
 
 Four branch opcodes are supported:
 
- 	bra	unconditional branch
- 	brat	branch if T flag is true
- 	braf	branch if T flag is false
- 	brab	branch via an index into a block table
+<pre>
+bra	unconditional branch
+brat	branch if T flag is true
+braf	branch if T flag is false
+brab	branch via an index into a block table
+</pre>
 
 The argument to the branch opcodes is an integer value, representing how much of an offset you want the branch to perform. Branch offsets are always relative to the location after the branch opcode, not the absolute offset within the block. Positive values branch forward; negative, backward. The branch target must always fall within the current code block.
 
@@ -319,13 +367,15 @@ To make it easier to write branch offsets, labels are allowed. A label is create
 
 Here is an example of branches and labels:
 
- label top
- add.i n 1
- gt.i  n 100
- brat  done
- ...
- bra   top
- label done
+<pre>
+label top
+add.i n 1
+gt.i  n 100
+brat  done
+...
+bra   top
+label done
+</pre>
 
 Notice that the label word is also an opcode; however, it performs no operation. The label is kept in the code block to support reflection (molding) of the block.
 
@@ -333,20 +383,24 @@ The brab opcode allows you to branch to an offset selected at runtime by an inde
 
 Here is an example:
 
- brab  [4 6 8] n
- print "default"
- bra   done
- print 1
- print 2
- print 3
- label done
+<pre>
+brab  [4 6 8] n
+print "default"
+bra   done
+print 1
+print 2
+print 3
+label done
+</pre>
 
 Note that if the branch index is past the tail of the block, the brab will fall through to the next opcode. This allows you to create default cases without requiring prior testing of the index value.
 
 The contents of the branch block can also be labels, which will be converted to integer offsets by the assembler, similar to normal branches.
 
- brab [lab1 lab2 lab3] num
- bra  error-case
+<pre>
+brab [lab1 lab2 lab3] num
+bra  error-case
+</pre>
 
 There is also a special case of operation. If the block argument to brab is an integer (created from a label), then the branch is made to that relative location plus the value of the index argument.
 
@@ -368,30 +422,38 @@ The args block must be fully reduced to a block of values and/or variable words.
 
 Here is an example of rebcode that calls the checksum native:
 
- apply num checksum [string]
- mul.i num 10
- ...
+<pre>
+apply num checksum [string]
+mul.i num 10
+...
+</pre>
 
 Rebcode functions can be called in the same way. For instance, if you define the function:
 
- add-mul: rebcode [a [integer!] b [integer!] c [integer!]] [
-    add.i  a b
-    mul.i  a c
-    return a
- ]
+<pre>
+add-mul: rebcode [a [integer!] b [integer!] c [integer!]] [
+   add.i  a b
+   mul.i  a c
+   return a
+]
+</pre>
 
 It can be called from rebcode with a line such as:
 
- apply num add-mul [n m 10]
+<pre>
+apply num add-mul [n m 10]
+</pre>
 
 If a function allows refinements, they can also be specified in the argument block. The position of the refinement arguments is that specified by the function interface. For example, if you ask for help on checksum, you see:
 
- >> ? checksum
- USAGE:
-    CHECKSUM data /tcp /secure /hash size /method word /key key-value
- To invoke the checksum function with the /secure refinement, you would write:
+<pre>
+>> ? checksum
+USAGE:
+   CHECKSUM data /tcp /secure /hash size /method word /key key-value
+To invoke the checksum function with the /secure refinement, you would write:
 
- apply num checksum [string none true]
+apply num checksum [string none true]
+</pre>
 
 This specifies the /secure refinement as being enabled, but not /tcp refinement.
 
@@ -403,11 +465,15 @@ In normal Rebol code, you are allowed to change the position of refinements with
 
 For instance, this function:
 
- bub: func [val /normal /only] [...]
+<pre>
+bub: func [val /normal /only] [...]
+</pre>
 
 can be changed to:
 
- bub: func [val /only /normal] [...]
+<pre>
+bub: func [val /only /normal] [...]
+</pre>
 
 Without affecting normal Rebol code. However, it will have an affect on rebcode that calls it, because the order of refinements in rebcode is specified by position, not by name.
 
@@ -415,7 +481,9 @@ Without affecting normal Rebol code. However, it will have an affect on rebcode 
 
 The do opcode is used to invoke the normal Rebol interpreter. This allows your rebcode to evaluate any Rebol expression from within your rebcode function. This is a useful "escape" when your code needs to perform more complicated actions or access functions or objects that are not easy to use directly in rebcode.
 
- do plat [reduce [system/version/4 system/version/3]]
+<pre>
+do plat [reduce [system/version/4 system/version/3]]
+</pre>
 
 Note that do opcode does not bind the contents of its block to the VM context. This allows you to use normal Rebol code within the block.
 
@@ -425,80 +493,98 @@ The do opcode escapes to Rebol, meaning it is much slower than the rebcode VM. I
 
 As described above, rebcode functions are created with rebcode function such as:
 
- md32: rebcode [
-    "Returns two integers multiplied then divided by 100."
-    a [integer!]
-    b [integer!]
- ][
-    mul.i  a b
-    div.i  a 100
-    return a
- ]
+<pre>
+md32: rebcode [
+   "Returns two integers multiplied then divided by 100."
+   a [integer!]
+   b [integer!]
+][
+   mul.i  a b
+   div.i  a 100
+   return a
+]
+</pre>
 
 The value of variable md32 is of the rebcode! datatype. This is a functional datatype, the same as function!, native!, action!, and others.
 
 Rebol datatype functions apply to rebcode. For example:
 
- print type? :md32
- rebcode!
+<pre>
+print type? :md32
+rebcode!
+</pre>
 
 To check if a value is rebcode, you can write:
 
- if rebcode? :md32 [...]
+<pre>
+if rebcode? :md32 [...]
+</pre>
 
 Rebcode also satisfies the general function check:
 
- if any-function? :md32 [...]
+<pre>
+if any-function? :md32 [...]
+</pre>
 
 Like other functions, help can provide usage information for rebcode functions:
 
- help md32
- USAGE:
-    md32 a b
- DESCRIPTION:
-     Returns two integers multiplied then divided by 100.
-     md32 is a rebcode value.
- ARGUMENTS:
-     a -- (Type: integer)
-     b -- (Type: integer)
+<pre>
+help md32
+USAGE:
+   md32 a b
+DESCRIPTION:
+    Returns two integers multiplied then divided by 100.
+    md32 is a rebcode value.
+ARGUMENTS:
+    a -- (Type: integer)
+    b -- (Type: integer)
+</pre>
 
 To obtain the context words for a rebcode function:
 
- first :md32
- [a b]
+<pre>
+first :md32
+[a b]
+</pre>
 
 To get the body block of a rebcode function:
 
- second :md32
- [
-    mul.i  a b
-    div.i  a 100
-    return a
- ]
+<pre>
+second :md32
+[
+   mul.i  a b
+   div.i  a 100
+   return a
+]
+</pre>
 
 Note that the body may be different than that used for the creation of the function. The changes are the result of the rebcode assembly process.
 
 To get the function interface specification:
 
- third :md32
- [
-    {Returns two integers multiplied then divided by 100.}
-    a [integer!]
-    b [integer!]
- ]
+<pre>
+third :md32
+[
+   {Returns two integers multiplied then divided by 100.}
+   a [integer!]
+   b [integer!]
+]
+</pre>
 
 The mold, save, and source functions also work on rebcode. Here is an example of source:
 
- source md32
- md32: rebcode [
-    {Returns two integers multiplied then divided by 100.}
-    a [integer!]
-    b [integer!]
- ][
-    mul.i a b
-    div.i a 100
-    return a
- ]
+<pre>
+source md32
+md32: rebcode [
+   {Returns two integers multiplied then divided by 100.}
+   a [integer!]
+   b [integer!]
+][
+   mul.i a b
+   div.i a 100
+   return a
+]
+</pre>
 
 The save/all function also creates a properly formed rebcode literal block.
 
@@ -508,15 +594,19 @@ The comment opcode lets you embed comments into your code. They differ from norm
 
 For example, to add a string comment to your code:
 
- comment "This is a comment"
+<pre>
+comment "This is a comment"
+</pre>
 
 You can also use a comment to temporarily remove sections of code by putting it within a block:
 
- comment [
-    add.i n 1
-    eq.i  n 10
-    ift   [set n 0]
- ]
+<pre>
+comment [
+   add.i n 1
+   eq.i  n 10
+   ift   [set n 0]
+]
+</pre>
 
 ===Debugging===
 
@@ -539,7 +629,9 @@ The assembler may also include other features in the future. The current format 
 
 The source code for the assembler can be viewed with:
 
- probe system/internal
+<pre>
+probe system/internal
+</pre>
 
 More information about the rebcode assembler will be added in future updates to this documentation.
 
@@ -559,190 +651,216 @@ Programmers must check their work carefully to be sure that no errors exist in t
 
 Produces the same result as the Rebol log-2 function.
 
- log-2: rebcode [n [decimal!]] [
-    log-e  n
-    mul.d  n 1.44269504088896       ; 1.44... = 1 / log-e 2
-    return n
- ]
+<pre>
+log-2: rebcode [n [decimal!]] [
+   log-e  n
+   mul.d  n 1.44269504088896       ; 1.44... = 1 / log-e 2
+   return n
+]
+</pre>
 
 ===Factorial===
 
 Here is a factorial function written in rebcode as an example. It's about 10 times faster than plain Rebol, but if you really need speed for a function like this, you may be better of with a memoization approach if that can be done.
 
- factorial: rebcode [
-    n [number!] 
-    /local res d
- ] [
-    set res 1.0
-    set d   0.0
-    to-int  n
-    loop n [
-        add.d d 1.0
-        mul.d res d
-    ]
-    return res
- ]
+<pre>
+factorial: rebcode [
+   n [number!] 
+   /local res d
+] [
+   set res 1.0
+   set d   0.0
+   to-int  n
+   loop n [
+       add.d d 1.0
+       mul.d res d
+   ]
+   return res
+]
+</pre>
 
 ===Ackermann Function===
 
 The Ackermann function is often used for benchmark tests. It is defined as:
 
- ack: func [m n] [
-    either zero? :m [:n + 1] [
-        either zero? :n [ack (:m - 1) 1] [
-            ack (:m - 1) ack :m (:n - 1)
-        ]
-    ]
- ]
+<pre>
+ack: func [m n] [
+   either zero? :m [:n + 1] [
+       either zero? :n [ack (:m - 1) 1] [
+           ack (:m - 1) ack :m (:n - 1)
+       ]
+   ]
+]
+</pre>
 
 Here it is written in rebcode:
 
- ack-rc: rebcode [m [integer!] n [integer!] /local result] [
-    eq.i m 0
-    either [
-        set result n
-        add.i result 1
-    ] [
-        eq.i n 0
-        either [
-            sub.i m 1
-            apply result ack-rc [m 1]
-        ] [
-            sub.i n 1
-            apply result ack-rc [m n]
-            sub.i m 1
-            apply result ack-rc [m result]
-        ]
-    ]
-    return result
- ]
+<pre>
+ack-rc: rebcode [m [integer!] n [integer!] /local result] [
+   eq.i m 0
+   either [
+       set result n
+       add.i result 1
+   ] [
+       eq.i n 0
+       either [
+           sub.i m 1
+           apply result ack-rc [m 1]
+       ] [
+           sub.i n 1
+           apply result ack-rc [m n]
+           sub.i m 1
+           apply result ack-rc [m result]
+       ]
+   ]
+   return result
+]
+</pre>
 
 ===Power (**)===
 
- power: rebcode [val [decimal!] exp [decimal!] "Exponent"] [
-    log-e  val
-    mul.d  val exp
-    exp    val
-    return val
- ]
+<pre>
+power: rebcode [val [decimal!] exp [decimal!] "Exponent"] [
+   log-e  val
+   mul.d  val exp
+   exp    val
+   return val
+]
+</pre>
 
 ===Root===
 
- root: rebcode [val [decimal!] exp [decimal!] "Exponent"] [
-    log-e  val
-    div.d  val exp
-    exp    val
-    return val
- ]
+<pre>
+root: rebcode [val [decimal!] exp [decimal!] "Exponent"] [
+   log-e  val
+   div.d  val exp
+   exp    val
+   return val
+]
+</pre>
 
 ===Compound Comparisons===
 
 Let's say you need to perform two comparisons and act on the result. For example:
 
- (a = 1) and (b = 2):
+<pre>
+(a = 1) and (b = 2):
+</pre>
 
 This can be implemented by doing the comparisons in this manner:
 
- eq.i  a 1
- gett c1
- eq.i  b 2
- gett c2
- and  c1 c2
- ift  [...]
+<pre>
+eq.i  a 1
+gett c1
+eq.i  b 2
+gett c2
+and  c1 c2
+ift  [...]
+</pre>
 
 If the comparison is used for a loop, a faster method is:
 
- eq.i a 1
- brat here
- eq.i b 2
- brat here
+<pre>
+eq.i a 1
+brat here
+eq.i b 2
+brat here
+</pre>
 
 Or, to exit the loop:
 
- eq.i a 1
- breakt
- eq.i b 2
- breakt
+<pre>
+eq.i a 1
+breakt
+eq.i b 2
+breakt
+</pre>
 
 ===rgba-to-int===
 
 Here is a function that will convert separate RGBA components into a single RGBA integer value:
 
- rgba-to-int: rebcode [
-    r [integer!] g [integer!] b [integer!] a [integer!]
- ] [
-    lsl a 24
-    lsl r 16
-    lsl g 8
-    or  a r
-    or  a g
-    or  a b
-    return a
- ]
+<pre>
+rgba-to-int: rebcode [
+   r [integer!] g [integer!] b [integer!] a [integer!]
+] [
+   lsl a 24
+   lsl r 16
+   lsl g 8
+   or  a r
+   or  a g
+   or  a b
+   return a
+]
+</pre>
 
 ===bin-str-to-int===
 
 Converts a string of binary digits, zeros or ones, to a signed integer value. The first digit represents the sign bit.
 
- bin-str-to-int: rebcode [
-    s "string of binary digits; up to 32 chars"
-    /local len res dig bit
- ] [
-    tail? s
-    ift   [return 0]        ; bail if empty string
-    length? len s
-    gt.i  len 32
-    ift   [return none] ; bail if s more than 32 chars
- 
-    set   res 0         ; this is our accumulator
-    tail  s             ; we'll be walking the string backwards
-    set   bit 1         ; which bit are we going to flip for 1's
- 
-    until [
-        back s
-        pick dig s 1
-        eq.i dig 49     ; 49 = #"1"
-        braf not-a-one  ; not a 1, skip bit flipping
-        or   res bit    ; it's a 1; flip the bit
- 
-    label not-a-one
-        lsl   bit 1     ; shift our bit so we flip the next one  
-                        ; on each pass.
-        head? s         ; done when we hit the head
-    ]
- 
-    return res
- ]
+<pre>
+bin-str-to-int: rebcode [
+   s "string of binary digits; up to 32 chars"
+   /local len res dig bit
+] [
+   tail? s
+   ift   [return 0]        ; bail if empty string
+   length? len s
+   gt.i  len 32
+   ift   [return none] ; bail if s more than 32 chars
+
+   set   res 0         ; this is our accumulator
+   tail  s             ; we'll be walking the string backwards
+   set   bit 1         ; which bit are we going to flip for 1's
+
+   until [
+       back s
+       pick dig s 1
+       eq.i dig 49     ; 49 = #"1"
+       braf not-a-one  ; not a 1, skip bit flipping
+       or   res bit    ; it's a 1; flip the bit
+
+   label not-a-one
+       lsl   bit 1     ; shift our bit so we flip the next one  
+                       ; on each pass.
+       head? s         ; done when we hit the head
+   ]
+
+   return res
+]
+</pre>
 
 ===int-to-bin-str===
 
 Converts a signed integer value to a string of binary digits; zeros or ones; the first digit represents the sign bit.
 
- int-to-bin-str: rebcode [
-    val [integer!]
-    /local res tmp bit
- ] [
-    copy res "00000000000000000000000000000000" -1
- 
-    tail res            ; we'll be walking the string backwards
-    set bit 1           ; which bit are we going to flip for 1's
-    set tmp 0           ; intialize datatype
-    until [
-        back   res
-        set.i  tmp val
-        and    tmp bit
-        neq.i  tmp 0
-        braf not-a-one  ; not a 1, skip digit setting
-        poke res 1 49   ; 49 = #"1"
+<pre>
+int-to-bin-str: rebcode [
+   val [integer!]
+   /local res tmp bit
+] [
+   copy res "00000000000000000000000000000000" -1
 
-    label not-a-one
-        lsl   bit 1     ; shift our bit so we flip the next one  
-                        ; on each pass.
-        head? res       ; done when we hit the head
-    ]
- 
-    return res
- ]
+   tail res            ; we'll be walking the string backwards
+   set bit 1           ; which bit are we going to flip for 1's
+   set tmp 0           ; intialize datatype
+   until [
+       back   res
+       set.i  tmp val
+       and    tmp bit
+       neq.i  tmp 0
+       braf not-a-one  ; not a 1, skip digit setting
+       poke res 1 49   ; 49 = #"1"
+
+   label not-a-one
+       lsl   bit 1     ; shift our bit so we flip the next one  
+                       ; on each pass.
+       head? res       ; done when we hit the head
+   ]
+
+   return res
+]
+</pre>
 
 ==Opcode Summary==
 
@@ -752,133 +870,155 @@ This section provides a summary of all rebcode opcodes. For more information abo
 
 ====Integer Math====
 
- 	abs.i	Changes the operand to its absolute value.
- 	add.i	Integer add; adds operand and value.
- 	div.i	Divides operand by value; the integral result goes in the operand.
- 	max.i	Sets the operand to the greater of the two values.
- 	min.i	Sets the operand to the lesser of the two values.
- 	mul.i	Multiplies operand by value.
- 	neg.i	Negate. Changes the sign of the operand.
- 	randz	Zero-based random number generator; sets operand to value from 0 to (value - 1).
- 	rem.i	Remainder. Divides operand by value; the integer remainder goes in the operand.
- 	sub.i	Subtracts value from operand.
+<pre>
+abs.i	Changes the operand to its absolute value.
+add.i	Integer add; adds operand and value.
+div.i	Divides operand by value; the integral result goes in the operand.
+max.i	Sets the operand to the greater of the two values.
+min.i	Sets the operand to the lesser of the two values.
+mul.i	Multiplies operand by value.
+neg.i	Negate. Changes the sign of the operand.
+randz	Zero-based random number generator; sets operand to value from 0 to (value - 1).
+rem.i	Remainder. Divides operand by value; the integer remainder goes in the operand.
+sub.i	Subtracts value from operand.
+</pre>
 
 ====Decimal Math====
 
- 	abs.d	Changes the operand to its absolute value.
- 	acos	Arccosine.
- 	add.d	Decimal add; adds operand and value.
- 	asin	Arcsine.
- 	atan	Arctangent.
- 	cos	Cosine.
- 	div.d	Divides operand by value.
- 	exp	Exponential; raise a number to a power.
- 	log-10	Log base 10.
- 	log-e	Natural log.
- 	max.d	Sets the operand to the greater of the two values.
- 	min.d	Sets the operand to the lesser of the two values.
- 	mul.d	Multiplies operand by value; result goes in the operand.
- 	neg.d	Change sign
- 	sin	Sine.
- 	sqrt	Square root.
- 	sub.d	Subtracts value from operand; result goes in the operand.
- 	tan	Tangent.
+<pre>
+abs.d	Changes the operand to its absolute value.
+acos	Arccosine.
+add.d	Decimal add; adds operand and value.
+asin	Arcsine.
+atan	Arctangent.
+cos	Cosine.
+div.d	Divides operand by value.
+exp	Exponential; raise a number to a power.
+log-10	Log base 10.
+log-e	Natural log.
+max.d	Sets the operand to the greater of the two values.
+min.d	Sets the operand to the lesser of the two values.
+mul.d	Multiplies operand by value; result goes in the operand.
+neg.d	Change sign
+sin	Sine.
+sqrt	Square root.
+sub.d	Subtracts value from operand; result goes in the operand.
+tan	Tangent.
+</pre>
 
 ====Integer Logic / Bitwise Operations====
 
- 	and	Bitwise AND of two integers; result goes in the operand.
- 	bswap	Byte swap. Converts integer endian-ness.
- 	compl	Bitwise complement.
- 	ext8	Sign extend; 8-bits to integer.
- 	ext16	Sign extend; 16-bits to integer.
- 	lsl	Logical shift left; toward MSB.
- 	lsr	Logical shift right; toward LSB.
- 	rotl	Rotate left; toward MSB.
- 	rotr	Rotate right; toward LSB.
- 	not	Logic datatype complement
- 	or	Bitwise OR of two integers; result goes in operand.
- 	xor	Bitwise XOR of two integers; result goes in operand.
+<pre>
+and	Bitwise AND of two integers; result goes in the operand.
+bswap	Byte swap. Converts integer endian-ness.
+compl	Bitwise complement.
+ext8	Sign extend; 8-bits to integer.
+ext16	Sign extend; 16-bits to integer.
+lsl	Logical shift left; toward MSB.
+lsr	Logical shift right; toward LSB.
+rotl	Rotate left; toward MSB.
+rotr	Rotate right; toward LSB.
+not	Logic datatype complement
+or	Bitwise OR of two integers; result goes in operand.
+xor	Bitwise XOR of two integers; result goes in operand.
+</pre>
 
 ====Series Traversal====
 
- 	back	Moves the current position of the series backward by one.
- 	head	Changes the current position of the series to its head.
- 	next	Moves the current position of the series forward by one.
- 	skip	Changes the current position of the series forward or backward.
- 	tail	Changes the current position of the series to its tail.
+<pre>
+back	Moves the current position of the series backward by one.
+head	Changes the current position of the series to its head.
+next	Moves the current position of the series forward by one.
+skip	Changes the current position of the series forward or backward.
+tail	Changes the current position of the series to its tail.
+</pre>
 
 ====Series Modification====
 
- 	change	Changes count values at the specified position in a series.
- 	clear	Removes all values from current index to tail. Leaves reference at tail.
- 	copy	Copies count items from series. Operand modified.
- 	insert	Inserts one series into another and sets the operand to the series at the insert point.
- 	pick	Sets the operand to refer to the value at the specified position in a series.
- 	pickz	Zero-based pick. Operand modified.
- 	poke	Changes the value at the specified position in a series.
- 	pokez	Zero-based poke.
- 	remove	Remove count items from the series, at the current position.
+<pre>
+change	Changes count values at the specified position in a series.
+clear	Removes all values from current index to tail. Leaves reference at tail.
+copy	Copies count items from series. Operand modified.
+insert	Inserts one series into another and sets the operand to the series at the insert point.
+pick	Sets the operand to refer to the value at the specified position in a series.
+pickz	Zero-based pick. Operand modified.
+poke	Changes the value at the specified position in a series.
+pokez	Zero-based poke.
+remove	Remove count items from the series, at the current position.
+</pre>
 
 ====Series Checks====
 
- 	index?	Sets the operand to the index number of the current position in the series.
- 	length?	Sets the operand to the length of the series from the current position.
+<pre>
+index?	Sets the operand to the index number of the current position in the series.
+length?	Sets the operand to the length of the series from the current position.
+</pre>
 
 See Also: Compare Opcodes/Series Comparisons
 
 ====Other Opcodes====
 
- 	apply	Apply a function to arg block. Set operand to result.
- 	comment	Includes a comment in the code
- 	do	Escape to normal evaluation. Set operand to result.
- 	gett	Get the TRUE flag and store in a variable. Operand modified.
- 	getw	Get the value of a word (indirect). Result modified.
- 	set	Set a variable to any value. Operand modified.
- 	set.d	Set decimal variable only. Operand modified.
- 	set.i	Set integer variable only. Operand modified.
- 	sett	Set the TRUE flag from contents of a variable
- 	setw	Set the value of a word (indirect).
- 	to-dec	Convert integer to decimal. Operand modified.
- 	to-int	Convert decimal to integer. Operand modified.
- 	type?	Sets the operand to the value's datatype.
- 	value?	Set TRUE flag if the variable has a value.
+<pre>
+apply	Apply a function to arg block. Set operand to result.
+comment	Includes a comment in the code
+do	Escape to normal evaluation. Set operand to result.
+gett	Get the TRUE flag and store in a variable. Operand modified.
+getw	Get the value of a word (indirect). Result modified.
+set	Set a variable to any value. Operand modified.
+set.d	Set decimal variable only. Operand modified.
+set.i	Set integer variable only. Operand modified.
+sett	Set the TRUE flag from contents of a variable
+setw	Set the value of a word (indirect).
+to-dec	Convert integer to decimal. Operand modified.
+to-int	Convert decimal to integer. Operand modified.
+type?	Sets the operand to the value's datatype.
+value?	Set TRUE flag if the variable has a value.
+</pre>
 
 ====Debugging Functions====
 
- 	??	Works like ?? in Rebol.
- 	escape?	Check if user pressed escape key. If so, halt to console.
- 	print	Works like print in Rebol.
- 	probe	Works like probe in Rebol.
+<pre>
+??	Works like ?? in Rebol.
+escape?	Check if user pressed escape key. If so, halt to console.
+print	Works like print in Rebol.
+probe	Works like probe in Rebol.
+</pre>
 
 ===Compare Opcodes===
 
 ====Integer Comparisons====
 
- 	eq.i	Sets the TRUE flag if the values are equal.
- 	glt.i	Sets the TRUE flag if: value1 < operand < value2.
- 	glte.i	Sets the TRUE flag if: value1 <= operand <= value2.
- 	gt.i	Sets the TRUE flag if the first value is greater than the second value.
- 	gteq.i	Sets the TRUE flag if the first value is greater than or equal to the second value.
- 	lt.i	Sets the TRUE flag if the first value is less than the second value.
- 	lteq.i	Sets the TRUE flag if the first value is less than or equal to the second value.
- 	neq.i	Sets the TRUE flag if the values are not equal.
+<pre>
+eq.i	Sets the TRUE flag if the values are equal.
+glt.i	Sets the TRUE flag if: value1 < operand < value2.
+glte.i	Sets the TRUE flag if: value1 <= operand <= value2.
+gt.i	Sets the TRUE flag if the first value is greater than the second value.
+gteq.i	Sets the TRUE flag if the first value is greater than or equal to the second value.
+lt.i	Sets the TRUE flag if the first value is less than the second value.
+lteq.i	Sets the TRUE flag if the first value is less than or equal to the second value.
+neq.i	Sets the TRUE flag if the values are not equal.
+</pre>
 
 ====Decimal Comparisons====
 
- 	eq.d	Sets the TRUE flag if the values are equal.
- 	glt.d	Sets the TRUE flag if: value1 < operand < value2.
- 	glte.d	Sets the TRUE flag if: value1 <= operand <= value2.
- 	gt.d	Sets the TRUE flag if the first value is greater than the second value.
- 	gteq.d	Sets the TRUE flag if the first value is greater than or equal to the second value.
- 	lt.d	Sets the TRUE flag if the first value is less than the second value.
- 	lteq.d	Sets the TRUE flag if the first value is less than or equal to the second value.
- 	neq.d	Sets the TRUE flag if the values are not equal.
+<pre>
+eq.d	Sets the TRUE flag if the values are equal.
+glt.d	Sets the TRUE flag if: value1 < operand < value2.
+glte.d	Sets the TRUE flag if: value1 <= operand <= value2.
+gt.d	Sets the TRUE flag if the first value is greater than the second value.
+gteq.d	Sets the TRUE flag if the first value is greater than or equal to the second value.
+lt.d	Sets the TRUE flag if the first value is less than the second value.
+lteq.d	Sets the TRUE flag if the first value is less than or equal to the second value.
+neq.d	Sets the TRUE flag if the values are not equal.
+</pre>
 
 ====Series Comparisons====
 
- 	head?	Sets the TRUE flag if a series is at its head.
- 	past?	Sets the TRUE flag if the series is past its end.
- 	tail?	Sets the TRUE flag if a series is at its tail.
+<pre>
+head?	Sets the TRUE flag if a series is at its head.
+past?	Sets the TRUE flag if the series is past its end.
+tail?	Sets the TRUE flag if a series is at its tail.
+</pre>
 
 See also: SETT, VALUE?
 
@@ -886,32 +1026,40 @@ See also: SETT, VALUE?
 
 ====Conditional====
 
- 	iff	If the TRUE flag is not set, evaluate the block.
- 	ift	If the TRUE flag is set, evaluate the block.
- 	either	If the TRUE flag is set, evaluate the first block; otherwise evaluate the second block.
+<pre>
+iff	If the TRUE flag is not set, evaluate the block.
+ift	If the TRUE flag is set, evaluate the block.
+either	If the TRUE flag is set, evaluate the first block; otherwise evaluate the second block.
+</pre>
 
 ====Looping====
 
- 	breakf	If the T flag is not set, break out of the currently executing block.
- 	breakt	If the T flag is set, break out of the currently executing block.
- 	loop	Evaluates the block a specified number of times.
- 	repeat	Evaluates a block a number of times or over a series.
- 	repeatz	Zero-based repeat (0 to n-1)
- 	until	Evaluate a block until the TRUE flag is set
- 	while	While the condition block sets the TRUE flag, evaluate the body block.
+<pre>
+breakf	If the T flag is not set, break out of the currently executing block.
+breakt	If the T flag is set, break out of the currently executing block.
+loop	Evaluates the block a specified number of times.
+repeat	Evaluates a block a number of times or over a series.
+repeatz	Zero-based repeat (0 to n-1)
+until	Evaluate a block until the TRUE flag is set
+while	While the condition block sets the TRUE flag, evaluate the body block.
+</pre>
 
 ====Branching====
 
- 	bra	Unconditional branch
- 	brab	Branch block table
- 	braf	Branch to target if the TRUE flag is not set.
- 	brat	Branch to target if the TRUE flag is set.
- 	label	Define target label
+<pre>
+bra	Unconditional branch
+brab	Branch block table
+braf	Branch to target if the TRUE flag is not set.
+brat	Branch to target if the TRUE flag is set.
+label	Define target label
+</pre>
 
 ====Function Return====
 
- 	exit	Exits a rebcode function, returning no value.
- 	return	Return value from rebcode function.
+<pre>
+exit	Exits a rebcode function, returning no value.
+return	Return value from rebcode function.
+</pre>
 
 ==Thanks and Credits==
 

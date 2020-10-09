@@ -24,17 +24,23 @@ It appears that the above Quick Edit change also enables the scroll wheel. Of co
 
 For large output, Rebol provides an echo mode. You can enable it with:
 
-   echo on
+<pre>
+echo on
+</pre>
 
 to produce a file called output.txt or you can write:
 
-   echo %textfile.txt
+<pre>
+echo %textfile.txt
+</pre>
 
 for any filename you want.
 
 Use:
 
-   echo off
+<pre>
+echo off
+</pre>
 
 to close the file. It is also closed when you exit Rebol.
 
@@ -53,12 +59,13 @@ For developers, there are a few special "Unix-like" functions that may be of hel
 ; rm : to delete a file
 
 
-
 ==Cygwin Alternative console, rxvt==
 
 Cygwin includes a package, '''rxvt''' which includes a split-personality mode when running without an X11 server.  It looks nice and if you start the alpha with
 
- $ rlwrap rebhost.exe 
+<pre>
+$ rlwrap rebhost.exe
+</pre>
 
 you'll also have access to cursor key command recall.  '''rlwrap''' comes with the GNU readline utilities within Cygwin.  Cygwin can be found at [http://www.cygwin.com Cygwin Home]. The rxvt package needs to be included separately after the Base install.  Tests ok under Win98 and Windows Vista and does not require the X11 server.
 
@@ -66,4 +73,4 @@ you'll also have access to cursor key command recall.  '''rlwrap''' comes with t
 
 The rxvt console is not great for stdio redirection so fallback to the Windows console for testing  anything not pure Rebol.
 
- Also, bugs should always be verified in the default Windows console before reporting.
+Also, bugs should always be verified in the default Windows console before reporting.

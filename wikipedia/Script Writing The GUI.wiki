@@ -3,7 +3,6 @@
 <TABLE CELLPADDING=20 CELLSPACING=10 WIDTH=70%><TR><TD VALIGN=TOP WIDTH=50%>
 Domain Specific Dialecting. Doctors express their ideas in medical terms, stockbrokers in trade terms, and quarterbacks in football terms. Why? Because it's more efficient and productive. That's the benefit of dialecting. Dialecting is the ability to create sub-languages that provide you with extra leverage and productivity by expressing your solutions in terms that are best suited to your purpose.
 
-
 VID is Rebol's Visual Interface Dialect. A dialect is an extension of the Rebol language that makes it easier to express or describe information, actions, or interfaces. VID is a dialect that provides a powerful method of describing user interfaces.
 </TD></TR></TABLE>
 ==General Syntax Of The Visual Interface Dialect==
@@ -12,7 +11,11 @@ VID is Rebol's Visual Interface Dialect. A dialect is an extension of the Rebol 
 GUI's are created by specifying a series of faces and their attributes.
 The script to the right illustrates the general syntax of a face written with the VID dialect:
 </TD><TD>
-  ''variable: face inline-options'' OPTIONS ''options'' '' actions''
+
+<pre>
+''variable: face inline-options'' OPTIONS ''options'' '' actions''
+</pre>
+
 </TD></TR>
 </TABLE>
 <TABLE style="color:green; cellpadding="20" cellspacing="0" border="0" width=100%>
@@ -46,16 +49,24 @@ Here are some examples to illustrate how the syntax may be applied:
 '''variable, face, inline option, options block'''</FONT>
 </TD></TR></TABLE>
 
-
 '''Note:''' ''The images shown here with a temporary, prototype skin designed for development purposes only.''
 
 ==Begin with Buttons==
 
 Just to provide a simple starting point, here's a GUI that consists of two buttons:
 <TABLE style="color:green; background-color:#ffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
-   <TD WIDTH=50%>
+
+<pre>
+<TD WIDTH=50%>
+</pre>
+
 [[images/Gui-basics-buttons.jpg|No Description]]
 
+<pre>
+<TD WIDTH=50%>
+</pre>
+
+[[images/Gui-basics-buttons.jpg|No Description]]
 
 Rebol [ ]
 :load-gui
@@ -63,8 +74,11 @@ Rebol [ ]
 ::button "Rebol" browse http://www.rebol.com
 ::button "Close" close
 :]
-   </TD>
-   <TD align=center valign=MIDDLE>
+
+<pre>
+</TD>
+<TD align=center valign=MIDDLE>
+</pre>
 
 <TABLE CELLPADDING=10 CELLSPACING=0><TR><TD WIDTH=90% VALIGN=TOP ALIGN=LEFT BGCOLOR=#ffffcc>
 
@@ -124,8 +138,11 @@ For the sake of illustration, let's toss in a few more faces and their styles to
 :::button "Cancel" close
 ::]
 :]
-   </TD>
-   <TD align=center valign=MIDDLE>[[images/Gui-basics-survey2.jpg|216px 221px]]
+
+<pre>
+</TD>
+<TD align=center valign=MIDDLE>[[images/Gui-basics-survey2.jpg|216px 221px]]
+</pre>
 
 <TABLE CELLPADDING=10 CELLSPACING=0><TR><TD WIDTH=50% VALIGN=TOP ALIGN=LEFT BGCOLOR=#ffffcc>
 1. Several more faces (title, text, panel, etc.) along with their options have been added.<BR><BR>
@@ -173,7 +190,10 @@ view [
 :] options [spacer: -3x-3]
 ]
 </TD>
-   <TD align=center valign=MIDDLE>[[images/Gui-basics-test-panel2.jpg|298px 393px]]
+
+<pre>
+<TD align=center valign=MIDDLE>[[images/Gui-basics-test-panel2.jpg|298px 393px]]
+</pre>
 
 <TABLE CELLPADDING=10 CELLSPACING=0><TR><TD WIDTH=90% VALIGN=TOP ALIGN=LEFT BGCOLOR=#ffffcc>
 

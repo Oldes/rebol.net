@@ -23,7 +23,6 @@ Here are the primary requirements:
 #Comments - an ability to either keep or strip comments from the built application.
 #Standardization - provide a standard, not forcing the usage of ad hoc methods.
 
-
 Standardization is a key element. Without it, there is no easy way to create public areas where code can be easily shared and used by others. It also means we'll each continue to build our own solutions that fill very common needs. E.g., a MAKE system. Finally, if we ever want to move towards true PitL, or have an IDE, we will have to address the need for some kind of project definition. Without standards for how resources are included, and systems are built and deployed, we can't do that.
 
 ==Survey of Methods==
@@ -32,9 +31,11 @@ Standardization is a key element. Without it, there is no easy way to create pub
 
 It is common to use DO to include other code files in a program.
 
-   do %file1.r
-   do %file2.r
-   if something [do %file3.r]
+<pre>
+do %file1.r
+do %file2.r
+if something [do %file3.r]
+</pre>
 
 ====How it satisfies the needs====
 
@@ -66,18 +67,22 @@ The disadvantages are:
 
 The LOAD function is often used instead of DO. For example, to load data files.
 
-    data: load %data.r
+<pre>
+data: load %data.r
+</pre>
 
 It is also used often to build distributions, using this simple method:
 
-    files: [
-        %file1.r
-        %file2.r
-        ...
-    ]
-    code: []
-    foreach file files [append code load file]
-    save %program.r code
+<pre>
+files: [
+    %file1.r
+    %file2.r
+    ...
+]
+code: []
+foreach file files [append code load file]
+save %program.r code
+</pre>
 
 It turns out, ''this is how the programs that run most RT tools and websites are built''.
 
@@ -111,9 +116,11 @@ The Rebol 3.0 method of dynamically including modules in a program at runtime.
 
 Summary of usage:
 
-    import 'module    ; converts to .r and will use search path
-    import %module.r  ; will use search path
-    import <nowiki>http://www.rebol.com/module.r</nowiki>
+<pre>
+import 'module    ; converts to .r and will use search path
+import %module.r  ; will use search path
+import <nowiki>http://www.rebol.com/module.r</nowiki>
+</pre>
 
 Imported modules are fully encapsulated when loaded. Exported functions are controlled via an export list (see below).
 
@@ -156,11 +163,13 @@ The Rebol 3.0 method of including modules in a program at LOAD time.
 
 Summary of usage:
 
-    Rebol [type: module imports: ['module]]   ; converts to .r and will use search path
-    Rebol [type: module imports: [%module.r]] ; will use search path
-    Rebol [type: module imports: <nowiki>[http://www.rebol.com/module.r]</nowiki>]
-    Rebol [type: module exports: [myfunc myobject]] ; Exported words.
-    Rebol [type: module exports: all] ; Export all locally set words.
+<pre>
+Rebol [type: module imports: ['module]]   ; converts to .r and will use search path
+Rebol [type: module imports: [%module.r]] ; will use search path
+Rebol [type: module imports: <nowiki>[http://www.rebol.com/module.r]</nowiki>]
+Rebol [type: module exports: [myfunc myobject]] ; Exported words.
+Rebol [type: module exports: all] ; Export all locally set words.
+</pre>
 
 Imported modules are fully encapsulated when loaded. Exported words are controlled via an export list.
 
@@ -197,8 +206,10 @@ The Rebol SDK introduced a method called PRebol (Rebol preprocessing).
 
 This method uses the ISSUE! datatype (which is rarely used in code itself) as a type of markup.
 
-    #include %file.r
-    #include %file.r
+<pre>
+#include %file.r
+#include %file.r
+</pre>
 
 ====How it satisfies the needs====
 #Does not execute code.
@@ -229,7 +240,8 @@ Disadvantages:
 
 If the usage of #issue values as dialect keywords is undesirable, there is still a variant to use words. They just need to be somewhat "outstanding" to make them immediately visible and to suppress the probability, that the keywords will be used for other, incompatible purposes. For example, the INCLUDE function already took the <code>comment</code> word (since it is highly unlikely that it can cause any undesirable interference) as its keyword to support automatic stripping of comments. The following alternatives look like being available:
 
-<pre>!include
+<pre>
+!include
 &include
 *include
 +include
@@ -244,7 +256,8 @@ _include
 ~include
 .include.
 *include*
-**include</pre>
+**include
+</pre>
 
 etc.
 

@@ -15,7 +15,9 @@ When you open a port (or read or write on an unopened file or URL), if you do no
 
 For example:
 
-  data: read %file
+<pre>
+data: read %file
+</pre>
 
 will return data as a binary value, as sequence of raw bytes. No conversion is done.
 
@@ -23,7 +25,9 @@ will return data as a binary value, as sequence of raw bytes. No conversion is d
 
 To read the file as a string:
 
-  data: read/string %file
+<pre>
+data: read/string %file
+</pre>
 
 The file will be decoded into a string using some simple rules about the encoding:
 
@@ -36,11 +40,15 @@ See more about READ options below.
 
 When you write to a port, file, or URL, the default is to use binary as well:
 
-   write %file data
+<pre>
+write %file data
+</pre>
 
 It is also possible to write it as a string:
 
-   write/string file data
+<pre>
+write/string file data
+</pre>
 
 However, this is not required. Rebol knows the datatype of the content data and will do the right thing for binary and string. So, WRITE will auto-encode the content, using the default encoding (UTF-8).
 
@@ -50,11 +58,15 @@ See more about WRITE options below.
 
 The above change has an impact the line conversion method we often use in Rebol. The code:
 
-   write %file2 read %file1
+<pre>
+write %file2 read %file1
+</pre>
 
 '''no longer converts line terminators''' (e.g. CRLF). Instead, this line must be used:
 
-   write %file2 read/string %file1
+<pre>
+write %file2 read/string %file1
+</pre>
 
 This tells READ to decode the file into a string. Note that the WRITE does not require a /string refinement, because it is being provided with a string datatype. The default encoding is applied.
 

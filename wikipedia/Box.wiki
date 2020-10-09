@@ -30,33 +30,43 @@ The BOX command provides a shortcut for a rectangular polygon. Only the upper-le
 
 <TABLE style="color:green; background-color:#fffffcc;" cellpadding="20" cellspacing="0" border="1" width=100%><TR>
 <TD WIDTH=60%>
-    fill-pen blue
-    box 20x20 200x200
+
+<pre>
+fill-pen blue
+box 20x20 200x200
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/BOX-1b.png|No Description]]</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    fill-pen logo.gif
-    box 20x20 200x200
+
+<pre>
+fill-pen logo.gif
+box 20x20 200x200
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/BOX-2b.png|No Description]] <BR>
 Repititions of Small Image.</TD>
 </TR><TR>
 
 <TD WIDTH=60%>
-    pen red
-    line-pattern yellow 50 30
-    line-width 30
-    line-join round
-    box 50x50 350x350
+
+<pre>
+pen red
+line-pattern yellow 50 30
+line-width 30
+line-join round
+box 50x50 350x350
+</pre>
+
 </TD>
 <TD align=center valign=MIDDLE>[[images/BOX-3b.png|No Description]]<BR>
 Line widths, patterns, joins are fully supported.</TD>
 </TR>
 </TABLE>
-
-
 
 
 
@@ -75,9 +85,7 @@ Pages
 *[[Ellipse]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>
@@ -96,7 +104,6 @@ Pages
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
 
 
-
 <font size=1>
 *[[Line-Join]]
 *[[Line-Pattern]]
@@ -109,9 +116,7 @@ Pages
 *[[Rotate]]
 </font></TD>
 
-
 <TD ALIGN=LEFT VALIGN=TOP WIDTH=14%>
-
 
 
 <font size=1>

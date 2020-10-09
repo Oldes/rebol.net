@@ -31,16 +31,20 @@ Point your web browser to rebol.com and from there follow the Download link, cli
 
 Starting small; from the Rebol console, try typing
 
- view [text "Hello World"]
+<pre>
+view [text "Hello World"]
+</pre>
 
 and you will have a graphical window of Rebol VID announcing itself to the world.
 
 You'll have to close the window using the system menu that comes with your windowing system, usually an &times; in the very top left or top right corner.  So let's fix that, and add our own close button.
 
- view [
-     text "Hello World"
-     button "Goodbye" [unview none]
- ]
+<pre>
+view [
+    text "Hello World"
+    button "Goodbye" [unview none]
+]
+</pre>
 
 Press the goodbye button and the window will go away.
 
@@ -63,7 +67,9 @@ So what is going on?
 
 Now for an example of how VID simplfies some aspects of Graphical User Interface development.
 
- view [progress slider attach]
+<pre>
+view [progress slider attach]
+</pre>
 
 While of no real use beyond demonstration; that short three word VID input block creates a functional window.
 
@@ -71,10 +77,12 @@ You end up with a progress meter that is attached to a slider.  Move the slider 
 
 And yet, it still needs a close button.
 
- view [
-     progress slider attach
-     button "Goodbye" [unview none]
- ]
+<pre>
+view [
+    progress slider attach
+    button "Goodbye" [unview none]
+]
+</pre>
 
 The Goodbye button is fairly easy code to type, somewhat easy to remember, but there may be a better way. VID allows for certain customizations that enable consistent look and feel within and across applications.
 
@@ -88,18 +96,20 @@ VID allows for the development of new styles.  New styles can be
 There is a whole section of this document on [[VID User Guide Stylize|STYLIZE]] but for now; lets just create a simple button we can use for to close example windows.
 {{Need|Need to wait for stylize/master for this example. Code below is way too complicated for page 1.}}
 
- stylize [
-     goodbye: button [
-         [
-             on-init: override :on-init [
-                 super face spec
-                 spec/text: copy "Goodbye"
-                 spec/action: [unview none]
-             ]
-         ]
-         []
-     ]
- ]
+<pre>
+stylize [
+    goodbye: button [
+        [
+            on-init: override :on-init [
+                super face spec
+                spec/text: copy "Goodbye"
+                spec/action: [unview none]
+            ]
+        ]
+        []
+    ]
+]
+</pre>
 
 | style="width:40%; background:#F8FFF8; border-left:1px solid #A3B1BF; padding:1.2em;" valign="top" |
 <!-- RIGHT COLUMN -->
@@ -267,7 +277,9 @@ Style Options
 == Style Option Reference ==
 VID offers a lot.  There are many styles and each have a variety of options.  Options are applied to styles using the '''options''' keyword and a block! holding the option specification.  For example
 
-  button "Quit" options [rounding: 10  material: 'sand]
+<pre>
+button "Quit" options [rounding: 10  material: 'sand]
+</pre>
 
 Would build a button in the layout with more rounded corners than the default, and a white beach sand look.
 

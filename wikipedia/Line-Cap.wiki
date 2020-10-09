@@ -16,7 +16,7 @@ Sets the style that will be used when drawing the ends of lines.
 '''rounded'''
 |}
 <br>'''Notes and Examples'''
-<code><pre>
+
 line-cap butt
 pen yellow
 line-width 1
@@ -65,7 +65,7 @@ line-width 9
 line 20x100 150x100
 line-width 11
 line 20x120 150x120
-</pre></code>
+
 [[images/LINE-CAP-1.png|LINE-CAP example 1]]
 
 <br>

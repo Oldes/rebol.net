@@ -13,12 +13,14 @@ The purpose of this article is to find a coherent proposal solving the above pro
 
 The [http://www.rebol.com/r3/notes/errors.html R3 Exception/Error Mechanism] article mentions that there are two types of exceptions in Rebol: unwinds and throws. Since every exception type can be emulated using the other one, I decided to make a couple of speed tests to find out what the relative speed of the respective exception types is:
 
-<pre>; the relative speed of throw is 100%
+<pre>
+; the relative speed of throw is 100%
 base-throw: time-block [try [none]] 0,05
 base-unwind: round to percent! base-throw / time-block [catch [none]] 0,05 ; == 106% 
 error: make error! ""
 handled-throw: time-block [try [do error]] 0,05
-handled-unwind: round to percent! handled-throw / time-block [catch [throw none]] 0,05 ; == 139%</pre>
+handled-unwind: round to percent! handled-throw / time-block [catch [throw none]] 0,05 ; == 139%
+</pre>
 
 This simple test seems to suggest, that unwinds are faster than throws, which suggests, that it is preferable to replace throws by unwinds whenever possible (and it should be always possible, as noted above; this should be handled as an implementation detail, and should not "leak" into the user space anyway, correcting the corresponding unwind bugs mentioned in CureCode).
 
@@ -38,13 +40,15 @@ The '''use''' function was proposed by Brian as a good example to illustrate the
 
 ====Closure based USE implementation====
 
-<pre>use: func [
+<pre>
+use: func [
     "Defines words local to a block."
     vars [block! word!] "Local word(s) to the block"
     body [block!] "Block to evaluate"
 ] [
     apply make closure! reduce [to block! vars copy/deep body] []
-]</pre>
+]
+</pre>
 
 This '''use''' implementation does not work as required when:
 
@@ -59,13 +63,15 @@ One more note to the implementation: Since the inner closure is called just once
 
 Instead of using a closure, we can implement the '''use''' function as follows:
 
-<pre>use: func [
+<pre>
+use: func [
     "Defines words local to a block."
     vars [block! word!] "Local word(s) to the block"
     body [block!] "Block to evaluate"
 ] [
     foreach (vars) [#[none]] body
-]</pre>
+]
+</pre>
 
 Advantages:
 *This implementation is simpler than the closure based one.
@@ -79,13 +85,15 @@ Disadvantages:
 
 Those last two disadvantages can be solved by using the following modification:
 
-<pre>use: func [
+<pre>
+use: func [
     "Defines words local to a block."
     vars [block! word!] "Local word(s) to the block"
     body [block!] "Block to evaluate"
 ] [
     do foreach (vars) [#[none]] reduce [to paren! reduce [:break 'return] body]
-]</pre>
+]
+</pre>
 
 Now the '''foreach''' loop in the '''use''' implementation just binds the body, and does nothing else. This way, when evaluating the body block, the '''foreach''' loop is not running, which precludes any interference between the '''foreach''' loop and any '''break'''/'''continue''' call made when the body is evaluated. This can be made even simpler with a helper function that calls '''break'''/return. However, this begins to illustrate the problem with requiring regular developers to do such workarounds.
 
@@ -95,7 +103,8 @@ The '''use''' function is not the only one currently caught by this problem, so 
 
 ====FUNC based COLLECT====
 
-<pre>collect: make function! [[
+<pre>
+collect: make function! [[
     {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
     body [block!] "Block to evaluate"
     /into {Insert into a buffer instead (returns position after insert)}
@@ -107,13 +116,15 @@ The '''use''' function is not the only one currently caught by this problem, so 
         :value
     ]
     either into [output] [head output]
-]]</pre>
+]]
+</pre>
 
 Notice that the given body is bound when the new anonymous function is created; '''func''' is used so that the function bodies are copied. This operation is problematic, if the anonymous function has a definitional return, since in that case all 'return word occurrences in the body are bound, which is not desirable.
 
 ====FOREACH based COLLECT====
 
-<pre>collect: make function! [[
+<pre>
+collect: make function! [[
     {Evaluates a block, storing values via KEEP function, and returns block of collected values.}
     body [block!] "Block to evaluate"
     /into {Insert into a buffer instead (returns position after insert)}
@@ -127,7 +138,8 @@ Notice that the given body is bound when the new anonymous function is created; 
         ]
     ] reduce [body]
     either into [output] [head output]
-]]</pre>
+]]
+</pre>
 
 Notice, that here no 'return in the given body can be bound, as opposed to the word 'keep, binding of which ''is'' wanted. This case is less problematic than the '''use''' solution above.
 
@@ -280,14 +292,17 @@ None of the above mentioned problems is too serious (except [http://curecode.org
 ===Example mezzanine implementation of definitional CATCH/THROW===
 
 If we had a definitional '''return''' in Rebol, the definitional '''catch'''/'''throw''' pair could be defined as a mezzanine, using code like:
-<pre>catch: func [
+
+<pre>
+catch: func [
     {Catches a throw from a block and returns its value.}
     body [block!]
 ] [
     ; create a new function to have a new definitional RETURN available
     ; use the new definitional RETURN as THROW in the BODY
     do func [] [do foreach throw reduce [:return] reduce [body]]
-]</pre>	
+]
+</pre>	
 
 Notice, how the definitional '''return''' of the new function defined in '''catch''' is used as definitional '''throw''' in the body.
 
@@ -309,7 +324,9 @@ Disadvantages (mostly to all uses of '''throw/'''name at the moment):
 *Name conflicts when the flow of execution goes through code that is written by different people who aren't coordinating their efforts well enough. Also solved by [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744].
 
 Here's an unspoofable '''quit/'''now replacement implemented using dynamic '''throw/'''name with [http://curecode.org/rebol3/ticket.rsp?id=1518 #1518] and [http://curecode.org/rebol3/ticket.rsp?id=1744 #1744] fixed:
-<pre>use [name] [ ; Local 'name makes it unspoofable
+
+<pre>
+use [name] [ ; Local 'name makes it unspoofable
     quit-now: func [retcode] [throw/name retcode 'name]
     catch-quit-now: func [body [block! file! url!]] [quit/return catch/name [return do body] 'name]
 ]
@@ -322,7 +339,8 @@ chat: funct [
         either err/id = 'protocol [print "Cannot load chat from web."] [do err]
     ]
     exit
-]</pre>
+]
+</pre>
 
 Then the chat script at the url would call '''quit-now''' instead of '''quit/'''now'''/'''return.
 
